@@ -1,0 +1,12 @@
+\beamer@endinputifotherversion {3.06pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Introducci\'on}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{El GnuPG}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Curvas{} el\'{\i }pticas}{14}{0}{1}
+\beamer@sectionintoc {2}{Cifrado tipo ElGamal}{18}{0}{2}
+\beamer@subsectionintoc {2}{1}{ElGamal en grupos c\'{\i }clicos cualesquiera}{18}{0}{2}
+\beamer@subsectionintoc {2}{2}{ElGamal en el grupo multiplicativo de un cuerpo finito primo}{25}{0}{2}
+\beamer@subsectionintoc {2}{3}{Esquema El\'{\i }ptico ElGamal: ECElGamal}{31}{0}{2}
+\beamer@sectionintoc {3}{Esquema ECDH+ElGamal}{39}{0}{3}
+\beamer@sectionintoc {4}{Esquema alternativo ECDH+AES256}{44}{0}{4}
+\beamer@sectionintoc {5}{Conclusi\'on}{52}{0}{5}

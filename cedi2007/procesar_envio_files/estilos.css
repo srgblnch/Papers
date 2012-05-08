@@ -1,0 +1,203 @@
+.titulo1 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #CE3623;
+	text-decoration: none;
+
+}
+.titulo1:link{
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #CE3623;
+	text-decoration: none;
+
+}
+.titulo1:visited{
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #CE3623;
+	text-decoration: none;
+
+}
+.titulo1:hover{
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #CE3623;
+	text-decoration: none;
+
+}
+.titulo1:active{
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #CE3623;
+	text-decoration: none;
+
+}
+.titulo2 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #CE3623;
+	font-weight: bold;
+}
+.titulo2:link {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #CE3623;
+	font-weight: bold;
+}
+.titulo2:visited {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #CE3623;
+	font-weight: bold;
+}
+.titulo2:hover {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #CE3623;
+	font-weight: bold;
+}
+.titulo2:active {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #CE3623;
+	font-weight: bold;
+}
+.texto {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #073657;
+	text-align: justify;
+}
+.texto-g {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #073657;
+	text-align: justify;
+}
+a:link {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #073657;
+	text-decoration: none;
+
+}
+a:visited {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #073657;
+	text-decoration: none;
+}
+a:hover {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #ce3623;
+}
+a:active {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #073657;
+	text-decoration: none;
+}
+
+.normal {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #073657;
+	z-index:0;
+}
+.normal-blanco {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #FFFFFF;
+}
+.nota-al-pie {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-style: italic;
+	color: #c25501;
+}
+.normal-p {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #073657;
+	text-decoration: none;
+}
+.normal-p:link{
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #073657;
+	text-decoration: none;
+}
+.normal-p:hover {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #073657;
+	text-decoration: none;
+}
+.normal-p:visited {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #073657;
+	text-decoration: none;
+}
+.normal-p:active {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #073657;
+	text-decoration: none;
+}
+.formulario {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #073657;
+	text-decoration: none;
+	text-align: center;
+}
+.formulario2 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #073657;
+
+}
+.normal-form {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	text-decoration: none;
+	color: #073657;
+
+}
+.normal-form:link {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	text-decoration: none;
+	color: #073657;
+}
+.normal-form:visited {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	text-decoration: none;
+	color: #073657;
+}
+.normal-form:hover {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	text-decoration: none;
+	color: #073657;
+	font-weight:bold;
+}
+.normal-form:active {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	text-decoration: none;
+	color: #073657;
+}
