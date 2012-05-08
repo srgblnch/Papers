@@ -1,0 +1,46 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {1.1}Objectives}{3}
+\contentsline {section}{\numberline {1.2}Organization and Planning}{5}
+\contentsline {chapter}{\numberline {2}ECC}{7}
+\contentsline {section}{\numberline {2.1}Introduction to Elliptic Curves}{8}
+\contentsline {subsection}{\numberline {2.1.1}Arithmetic over Elliptic Curves}{12}
+\contentsline {subsection}{\numberline {2.1.2}Rule P1363 of IEEE}{13}
+\contentsline {subsection}{\numberline {2.1.3}NIST Standard }{14}
+\contentsline {section}{\numberline {2.2}ECElGamal }{15}
+\contentsline {subsection}{\numberline {2.2.1}IFP ElGamal weakness.\let \reserved@d =[\def \par }{18}
+\contentsline {section}{\numberline {2.3}ECDSA }{19}
+\contentsline {chapter}{\numberline {3}GnuPG}{20}
+\contentsline {section}{\numberline {3.1}Program structure }{21}
+\contentsline {subsection}{\numberline {3.1.1}Autotools }{23}
+\contentsline {section}{\numberline {3.2}ECC Module}{25}
+\contentsline {subsection}{\numberline {3.2.1}Needed algorithmics}{26}
+\contentsline {subsubsection}{\numberline {3.2.1.1}EC Key Generation }{26}
+\contentsline {subsubsection}{\numberline {3.2.1.2}EC auxiliary functions to the Key Generation. }{27}
+\contentsline {subsubsection}{\numberline {3.2.1.3}ECElGamal}{30}
+\contentsline {subsubsection}{\numberline {3.2.1.4}ECDSA}{31}
+\contentsline {subsubsection}{\numberline {3.2.1.5}Closed operation between Elliptic Curve Points (over $\mathbb {F}_{p}$, with projective coordinates) }{32}
+\contentsline {subsection}{\numberline {3.2.2}Mathematical functions}{38}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Existing functions}{39}
+\contentsline {subsubsection}{\numberline {3.2.2.2}New Functions }{42}
+\contentsline {subsection}{\numberline {3.2.3}Cryptographic functions }{44}
+\contentsline {section}{\numberline {3.3}Final result }{45}
+\contentsline {chapter}{\numberline {4}Conclusions and Future work}{47}
+\contentsline {chapter}{\numberline {A}Key uses}{48}
+\contentsline {section}{\numberline {A.1}Key generation}{48}
+\contentsline {subsection}{\numberline {A.1.1}Program dump}{48}
+\contentsline {subsection}{\numberline {A.1.2}Ecc key}{52}
+\contentsline {section}{\numberline {A.2}Encryption}{53}
+\contentsline {subsection}{\numberline {A.2.1}Program dump}{53}
+\contentsline {subsection}{\numberline {A.2.2}Ecc encrypted message}{55}
+\contentsline {section}{\numberline {A.3}Digital signature}{56}
+\contentsline {subsection}{\numberline {A.3.1}Program dump}{56}
+\contentsline {subsection}{\numberline {A.3.2}Ecc signed message}{59}
+\contentsline {chapter}{\numberline {B}Execution procedure}{60}
+\contentsline {section}{\numberline {B.1}Key generation}{61}
+\contentsline {section}{\numberline {B.2}Encryption}{62}
+\contentsline {subsection}{\numberline {B.2.1}Encrypt}{62}
+\contentsline {subsection}{\numberline {B.2.2}Decrypt}{63}
+\contentsline {section}{\numberline {B.3}Signature}{63}
+\contentsline {subsection}{\numberline {B.3.1}Sign}{63}
+\contentsline {subsection}{\numberline {B.3.2}Verify}{64}

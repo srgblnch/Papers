@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src
+END
+encrypt.dia
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/encrypt.dia
+END
+verify.dia
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/verify.dia
+END
+decrypt.dia
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/decrypt.dia
+END
+ECElGamal.dia
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/ECElGamal.dia
+END
+apendixc.dia
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/apendixc.dia
+END
+DH.dia
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/DH.dia
+END
+key-gen.dia
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/key-gen.dia
+END
+sign.dia
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/sign.dia
+END
+autotools.fig
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/repos/eccGnuPG/!svn/ver/60/documentacio/tfc/ims_src/autotools.fig
+END

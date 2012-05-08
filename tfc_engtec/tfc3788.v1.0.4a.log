@@ -1,0 +1,1540 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.8.16)  29 AUG 2008 22:24
+entering extended mode
+ %&-line parsing enabled.
+**tfc3788.v1.0.4a.tex
+(./tfc3788.v1.0.4a.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, arabic, farsi, croatian, ukrainian, russian, bulgarian, czech, slov
+ak, danish, dutch, finnish, basque, french, german, ngerman, ibycus, greek, mon
+ogreek, ancientgreek, hungarian, italian, latin, mongolian, norsk, icelandic, i
+nterlingua, turkish, coptic, romanian, welsh, serbian, slovenian, estonian, esp
+eranto, uppersorbian, indonesian, polish, portuguese, spanish, catalan, galicia
+n, swedish, ukenglish, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/book.cls
+Document Class: book 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/bk11.clo
+File: bk11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+Package: inputenc 2006/05/05 v1.1b Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+
+(/usr/share/texmf-texlive/tex/latex/base/latin1.def
+File: latin1.def 2006/05/05 v1.1b Input encoding file
+))
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks17
+\ex@=\dimen103
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks18
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks19
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks20
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks22
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count100
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
+)
+\c@thm=\count101
+
+(/usr/share/texmf-texlive/tex/latex/tools/verbatim.sty
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks23
+\verbatim@line=\toks24
+\verbatim@in@stream=\read1
+)
+(/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+Package: babel 2005/11/23 v3.8h The Babel package
+
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+Language: english 2005/03/30 v3.3o English support from the babel system
+
+(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+File: babel.def 2005/11/23 v3.8h Babel common definitions
+\babel@savecnt=\count102
+\U@D=\dimen114
+)
+\l@british = a dialect from \language\l@english 
+\l@UKenglish = a dialect from \language\l@english 
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+No file tfc3788.v1.0.4a.aux.
+\openout1 = `tfc3788.v1.0.4a.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+(/usr/share/texmf/tex/context/base/supp-pdf.tex
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count103
+\scratchdimen=\dimen115
+\scratchbox=\box28
+\nofMPsegments=\count104
+\nofMParguments=\count105
+\MPscratchCnt=\count106
+\MPscratchDim=\dimen116
+\MPnumerator=\count107
+\everyMPtoPDFconversion=\toks25
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 89.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 89.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+) [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+No file tfc3788.v1.0.4a.toc.
+\tf@toc=\write3
+\openout3 = `tfc3788.v1.0.4a.toc'.
+
+[1
+
+] [2
+
+]
+Chapter 1.
+[3
+
+]
+Overfull \hbox (3.44139pt too wide) in paragraph at lines 132--133
+[]\T1/cmr/m/n/10.95 Werner Koch be-gan the im-ple-men-ta-tion of a soft-ware, b
+ased on OpenPGP,
+ []
+
+[4] [5] [6]
+Chapter 2.
+[7
+
+] [8]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.254 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.254 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \@@par 
+l.254 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.254 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.255 \end{equation}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! You can't use `\eqno' in vertical mode.
+\endmathdisplay@a ...\df@tag \@empty \else \veqno 
+                                                  \alt@tag \df@tag \fi \ifx ...
+l.255 \end{equation}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.255 \end{equation}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.255 \end{equation}
+                    
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+
+LaTeX Warning: Reference `eq:corba' on page 9 undefined on input line 267.
+
+
+LaTeX Warning: Reference `eq:reduida' on page 9 undefined on input line 279.
+
+
+LaTeX Warning: Reference `eq:corba' on page 9 undefined on input line 287.
+
+
+LaTeX Warning: Reference `eq:reduida' on page 9 undefined on input line 287.
+
+[9] [10] [11] [12] [13] [14]
+
+LaTeX Warning: Citation `P1363' on page 15 undefined on input line 463.
+
+
+LaTeX Warning: Reference `DH.eps' on page 15 undefined on input line 463.
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.467 \includegraphics[scale=0.5]{./eps/DH.eps}
+                                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.474 ...egraphics[scale=0.4]{./eps/ECElGamal.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[15] [16] [17]
+! Argument of \@sect has an extra }.
+<inserted text> 
+                \par 
+l.546 ...Mylnikov report it.} \label{elgamalweak}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+{\normalfont \large \bfseries }{\@xfootnote }\def \reserved@b {\stepcounter \ET
+C.
+! Paragraph ended before \@sect was complete.
+<to be read again> 
+                   \par 
+l.546 ...Mylnikov report it.} \label{elgamalweak}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+LaTeX Warning: Reference `ECElGamal' on page 18 undefined on input line 548.
+
+
+LaTeX Warning: Reference `fig:hybrid' on page 18 undefined on input line 548.
+
+
+LaTeX Warning: Reference `alg:ElGamal_cipher' on page 18 undefined on input lin
+e 550.
+
+
+LaTeX Warning: Citation `DJN' on page 18 undefined on input line 550.
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.556 ...degraphics[width=10cm]{./eps/general.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `fig:asym' on page 18 undefined on input line 561.
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.567 \includegraphics[width=10cm]{./eps/ecc.eps}
+                                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[18]
+
+! LaTeX Error: Unknown graphics extension: .mod.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.574 ...degraphics[width=10cm]{./eps/ecc.mod.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Citation `P1363' on page 19 undefined on input line 581.
+
+
+LaTeX Warning: Reference `alg:Firma' on page 19 undefined on input line 581.
+
+
+LaTeX Warning: Reference `alg:Verificacio-firma' on page 19 undefined on input 
+line 581.
+
+
+LaTeX Warning: Citation `NIST' on page 19 undefined on input line 583.
+
+[19]
+Chapter 3.
+
+LaTeX Warning: Citation `rfc2440' on page 20 undefined on input line 589.
+
+
+LaTeX Warning: Reference `sec:Autotools' on page 20 undefined on input line 595
+.
+
+[20
+
+] [21]
+
+LaTeX Warning: Reference `sec:Autotools' on page 22 undefined on input line 634
+.
+
+
+LaTeX Warning: Citation `rfc2440' on page 22 undefined on input line 640.
+
+[22] [23]
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.654 \includegraphics{./eps/autotools.eps}
+                                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `sec:estruc' on page 24 undefined on input line 663.
+
+[24]
+
+LaTeX Warning: Citation `P1363' on page 25 undefined on input line 683.
+
+[25]
+Overfull \hbox (2.9746pt too wide) in paragraph at lines 692--693
+[]\T1/cmr/m/it/10.95 Input: Prime of big or-der '$\OML/cmm/m/it/10.95 p$\T1/cmr
+/m/it/10.95 '($\OML/cmm/m/it/10.95 ord []$\T1/cmr/m/it/10.95 ). /*$[] \OMS/cmsy
+/m/n/10.95 2 []$\T1/cmr/m/it/10.95 */ 
+ []
+
+
+Overfull \hbox (22.64098pt too wide) in paragraph at lines 694--695
+[]\T1/cmr/m/it/10.95 Output: Pa-ram-e-ters of the el-lip-tic curve ($\OML/cmm/m
+/it/10.95 E []$\T1/cmr/m/it/10.95 )./*$\OML/cmm/m/it/10.95 p$ \T1/cmr/m/it/10.9
+5 ($\U/msb/m/n/10.95 F[]$\T1/cmr/m/it/10.95 );$\OML/cmm/m/it/10.95 a$\T1/cmr/m/
+it/10.95 ,$\OML/cmm/m/it/10.95 b$ \T1/cmr/m/it/10.95 ($\OML/cmm/m/it/10.95 E []
+$\T1/cmr/m/it/10.95 );$\OML/cmm/m/it/10.95 n$\T1/cmr/m/it/10.95 ,$\OML/cmm/m/it
+/10.95 h \OT1/cmr/m/n/10.95 =
+ []
+
+
+LaTeX Warning: Reference `alg:Obtenir-generador' on page 26 undefined on input 
+line 699.
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 707.
+
+(/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [26]
+
+LaTeX Warning: Reference `genkey' on page 27 undefined on input line 738.
+
+
+LaTeX Warning: Reference `alg:Generar-setup' on page 27 undefined on input line
+ 740.
+
+
+Overfull \hbox (24.65085pt too wide) in paragraph at lines 743--744
+[]\T1/cmr/m/it/10.95 Obtain a gen-er-a-tor point with a big prime or-der (\T1/c
+mtt/m/it/10 p1363-A.11.3\T1/cmr/m/it/10.95 ) 
+ []
+
+[27]
+Overfull \hbox (9.804pt too wide) in paragraph at lines 765--766
+[]\T1/cmr/m/it/10.95 Input: A prime in-te-ger ($\OML/cmm/m/it/10.95 p > \OT1/cm
+r/m/n/10.95 3$\T1/cmr/m/it/10.95 ), the pa-ram-e-ters from the el-lip-tic curve
+($\OML/cmm/m/it/10.95 a; b \OMS/cmsy/m/n/10.95 2
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 831--832
+
+ []
+
+[29]
+
+LaTeX Warning: Reference `ECElGamal' on page 30 undefined on input line 881.
+
+[30]
+
+LaTeX Warning: Reference `ECDSA' on page 31 undefined on input line 930.
+
+[31] [32]
+
+LaTeX Warning: Citation `P1363' on page 33 undefined on input line 996.
+
+[33]
+Overfull \hbox (26.68854pt too wide) in paragraph at lines 1032--1033
+[]\T1/cmr/m/n/10.95 If ($\OML/cmm/m/it/10.95 h[] \OT1/cmr/m/n/10.95 = 1$ \T1/cm
+r/m/n/10.95 && $\OML/cmm/m/it/10.95 k[] \OT1/cmr/m/n/10.95 = 0$\T1/cmr/m/n/10.9
+5 ){$[] \OMS/cmsy/m/n/10.95   [] \OT1/cmr/m/n/10.95 + []$\T1/cmr/m/n/10.95 } 
+ []
+
+
+Overfull \hbox (45.54689pt too wide) in paragraph at lines 1033--1034
+[]\T1/cmr/m/n/10.95 If ($\OML/cmm/m/it/10.95 h[] \OT1/cmr/m/n/10.95 = 0$ \T1/cm
+r/m/n/10.95 && $\OML/cmm/m/it/10.95 k[] \OT1/cmr/m/n/10.95 = 1$\T1/cmr/m/n/10.9
+5 ){$[] \OMS/cmsy/m/n/10.95   [] \OT1/cmr/m/n/10.95 + []$\T1/cmr/m/n/10.95 } 
+ []
+
+
+LaTeX Warning: Citation `Men93' on page 34 undefined on input line 1042.
+
+
+Overfull \hbox (2.6297pt too wide) in paragraph at lines 1042--1043
+[]\T1/cmr/m/it/10.95 Point ad-di-tion be-tween equal or dif-fer-ent points, de-
+scribed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1049
+
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1051 \item \lambda
+                    = \left\{
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Command \end{enumerate} invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1063 \end{enumerate}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1063 \end{enumerate}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1063 \end{enumerate}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1063 \end{enumerate}
+                      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (2.26431pt too wide) in paragraph at lines 1070--1072
+[]\T1/cmr/m/it/10.95 Input: Points to add $\OML/cmm/m/it/10.95 P[] \OT1/cmr/m/n
+/10.95 = [] \OML/cmm/m/it/10.95 ; P[] \OT1/cmr/m/n/10.95 = [] \OMS/cmsy/m/n/10.
+95 j [] ^
+ []
+
+[34] [35]
+
+LaTeX Warning: Citation `P1363' on page 36 undefined on input line 1122.
+
+[36] [37] [38]
+Underfull \hbox (badness 10000) in paragraph at lines 1210--1212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1212--1214
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1214--1216
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1216--1218
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1218--1220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1222--1224
+
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 1224--1226
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1226--1228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1228--1234
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1236--1238
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1238--1240
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1240--1242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1244
+
+ []
+
+[40]
+Underfull \hbox (badness 10000) in paragraph at lines 1244--1246
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1246--1248
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1248--1250
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1250--1252
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1252--1254
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1254--1256
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1256--1258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1258--1260
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1260--1262
+
+ []
+
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 1262--1264
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1264--1266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1266--1268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1268--1270
+
+ []
+
+
+LaTeX Warning: Reference `func_cript' on page 42 undefined on input line 1274.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1277--1279
+
+ []
+
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 1282--1284
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1290--1292
+
+ []
+
+
+LaTeX Warning: Reference `ops_tancades' on page 43 undefined on input line 1300
+.
+
+
+LaTeX Warning: Reference `alg:Bool-P-infinit' on page 43 undefined on input lin
+e 1300.
+
+
+LaTeX Warning: Reference `alg:duplicatePoints' on page 43 undefined on input li
+ne 1300.
+
+
+LaTeX Warning: Reference `alg:duplicatePoints' on page 43 undefined on input li
+ne 1302.
+
+[43]
+
+LaTeX Warning: Reference `mathnewfunc' on page 44 undefined on input line 1308.
+
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1317--1319
+
+ []
+
+[44]
+
+LaTeX Warning: Citation `NIST' on page 45 undefined on input line 1329.
+
+
+LaTeX Warning: Reference `NIST' on page 45 undefined on input line 1329.
+
+
+LaTeX Warning: Reference `mathnewfunc' on page 45 undefined on input line 1329.
+
+
+[45] [46]
+Chapter 4.
+
+LaTeX Warning: Reference `result' on page 47 undefined on input line 1351.
+
+[47
+
+]
+Appendix A.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 4245
+.
+(/usr/share/texmf-texlive/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+! Undefined control sequence.
+<argument> \I 
+              
+l.4252 ...'{\I}S: esteu usant mem\`oria insegura!}
+                                                  \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \I 
+              
+l.4252 ...'{\I}S: esteu usant mem\`oria insegura!}
+                                                  \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+<argument> ~ (8) ECDSA &
+                         ECElGamal
+l.4258 \textsf{~   (8) ECDSA & ECElGamal}
+                                         \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<argument> About to generate a new ECELG &
+                                           ECDSA keypair.
+l.4265 ...o generate a new ECELG & ECDSA keypair.}
+                                                  \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Overfull \hbox (14.28665pt too wide) in paragraph at lines 4245--4399
+\T1/cmss/m/n/10.95 gpg: in-put=F80A60815D587A17FF9D6DA1A8E3F8ABEC5693B23BF0C7D0
+E1D5 
+ []
+
+
+Overfull \hbox (15.64674pt too wide) in paragraph at lines 4245--4399
+\T1/cmss/m/n/10.95 gpg: out-put=F80A60815D587A17FF9D6DA1A8E3F8ABEC5693B23BF0C7D
+0E1D 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Overfull \hbox (1.04434pt too wide) in paragraph at lines 4245--4399
+\T1/cmss/m/n/10.95 gpg: [ecc] p= FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FF 
+ []
+
+
+Overfull \hbox (1.04434pt too wide) in paragraph at lines 4245--4399
+\T1/cmss/m/n/10.95 gpg: [ecc] n= FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FF 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4245--4399
+
+ []
+
+[48
+
+] [49] [50] [51]
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 mQGcBD+NE4JnAYD//////////////////////////////////////////v//
+//8A 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 AAAAAAAAAP////8AAgMBgLMxL6fiPufkmI4Fa+P4LRkYHZxu/oFBEgMUCI9Q
+E4da 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 xlY5jYou0Z0qhcjt0+wq7wGAqofKIr6LBTeOscce8yCtdG4dO2KLp5uYWfdB
+4IJU 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 KjhVAvJdv1UpbDpUXjhydgq3AX42F95KliYsb12emL+Sktwp+PQdvSiaFHzp
+2jET 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 tfC4wApgsc4dfoGdekMdfJDqDl8AAQEBgP//////////////////////////
+//// 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 /8djTYH0Ny3fWBoNskiwp3rs7BlqzMUpcwGAvA3jdAqwZloJafqBqRclX6FN
+S3X0 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 fyZ3RmmlsDIfYdanz6rq8jVvku2ugCoFKBHQAX0cIBZXYvThPHFAU5zFRCGG
+f4er 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 FBcr0l316UrZuytHLXtA98xsUr6xMIVJ2W/4oo8BfiTFMN2I2XvYeEtM5C7n
+hLOV 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 1OakiOk/hVOlLURvkbDs09fImBhMv6FFE8f3djk9frQFbm8zODSIkQQTZwIA
+GQUC 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 P40TggQLBwMCAxUCAwMWAgECHgECF4AACgkQLyg4Lsr9a2/cKQGA4kYoXM6s
+jWyn 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4403--4419
+\T1/cmtt/m/n/10.95 I1Rlnyz4azqrSDyluGakKDHiHURtaWqdTy+n2JIFSraiwIGuPKnrAYDuJQy+
+d1id 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4403--4419
+
+ []
+
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 4426--4498
+
+ []
+
+
+Overfull \hbox (15.76799pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: pkey:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFF 
+ []
+
+
+Overfull \hbox (8.68591pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: pkey:AA87CA22BE8B05378EB1C71EF320AD746E1D3B628BA79B9859
+F74 
+ []
+
+
+Overfull \hbox (9.22331pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: pkey:3617DE4A96262C6F5D9E98BF9292DC29F8F41DBD289A147CE9
+DA3 
+ []
+
+
+Overfull \hbox (13.17484pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: pkey:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC7
+634 
+ []
+
+
+Overfull \hbox (5.48029pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: pkey:24C530DD88D97BD8784B4CE42EE784B395D4E6A488E93F8553
+A52 
+ []
+
+
+Overfull \hbox (6.16689pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: data:290E0AE92B19A7BD5FB3E8248B6159C91680B50BD8C997C968
+A8B 
+ []
+
+
+Overfull \hbox (69.98982pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 30980ED8D088B46D3A32F1CF45EF5C6C018D2839B7BFDDFC5F3836DAE87C
+949EF4C9288 
+ []
+
+
+Overfull \hbox (78.9575pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 9C493BBC7E7E5837CAB5DFCCA87D69692BB3ED4CA161BC0C1B3F4AC93FFE
+5FFCB9E3778 
+ []
+
+
+Overfull \hbox (12.85622pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: encr:AED3A94B5F11B9F31BD0799BD342ED4EB845A020E58EEED06B
+66B 
+ []
+
+
+Overfull \hbox (9.18272pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: encr:51123177BE7008BB7C98E5ED3D7236C0766AAE4DF0DBCF73C3
+CC0 
+ []
+
+
+Overfull \hbox (7.16362pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 gpg: encr:1E288A33D93E90DA830AC4F0CA5D2CF4919B4733BF0E30980E
+D8D 
+ []
+
+
+Overfull \hbox (70.74055pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 088B46D3A32F1CF45EF5C6C018D2839B7BFDDFC5F3836DAE87C949EF4C92
+889C493BBC7 
+ []
+
+
+Overfull \hbox (41.5017pt too wide) in paragraph at lines 4426--4498
+\T1/cmss/m/n/10.95 E7E5837CAB5DFCCA87D69692BB3ED4CA161BC0C1B3F4AC93FFE5FFCB9E37
+78B30 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4426--4498
+
+ []
+
+[53] [54]
+Underfull \hbox (badness 10000) in paragraph at lines 4501--4537
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4501--4537
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4501--4537
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4501--4537
+
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 hQEDAy8oOC7K/WtvZwGArtOpS18RufMb0Hmb00LtTrhFoCDlju7Qa2a9zJoT
+3YNQ 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 pVppIZaBTbKOwGH+9Sw1AX9REjF3vnAIu3yY5e09cjbAdmquTfDbz3PDzAOq
+B5Vw 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 ydZ/sVUc2XAbNbKjZmhOeKkBf1kgNgs2/PCj8IMx5XrxuF8HkhwsDTMXsPaw
+GIOb 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 PMWo+7iqrnQgpvnJv800BLRfvgLxAeKIoz2T6Q2oMKxPDKXSz0kZtHM78OMJ
+gO2N 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 CItG06MvHPRe9cbAGNKDm3v938Xzg22uh8lJ70ySiJxJO7x+flg3yrXfzKh9
+aWkr 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 s+1MoWG8DBs/Ssk//l/8ueN3izAAANLA4gHqaNARg/9orwRNAKpnBIqWuWGn
+N3bi 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 d4GMef3QlN/x9UV/BY6O/nlz7PSwRle9uO7F8u8y4UCUjPuI6TbGe4+SdjxC
+8U6p 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 n7f66CAreRU/a1sG2C7bLJ1QOlaimOexDxt3NpLXSQqWGXis6AfwKyEAwW9m
+qTEm 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 J2b6f4MLjlvCMsHpxxyZ7vqPaTlYj8mP1JXpZxO23oBMhwQ58z9VRfKwiITk
+KXWO 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 3Y+yboptMEuCvCW6JRHRkRwz0f3MQ04PaBhvohBtQJO3EI8r+20ltdlqFCwl
+1UCX 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 /HURSguZpQZlp0g5ymCHOihryIs7KG2vWQaSScJzuavP7+wPlrEXotQvvThD
+N9uF 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 D8HEItzpcjpNI4+cRMkDDnT3nl9bq+DXQln8Yeb9JPJJSS4xqbza/UIRWAq+
+uInk 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 3SBfesaTMJ9xulVvIPTDJSe1PaT+AGs8ICKP0+gCC95XfwwWcEtJOlEQv/O2
+0GdA 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4501--4537
+\T1/cmtt/m/n/10.95 n/otX9BK93AKYKj8SxvKIaZ1orK8Z8TcNdJXT/tEv3ZzgTohGproBHIqAt7h
+WOkH 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4501--4537
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 4543--4653
+
+ []
+
+
+Overfull \hbox (14.34766pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: skey:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFF 
+ []
+
+
+Overfull \hbox (7.26558pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: skey:AA87CA22BE8B05378EB1C71EF320AD746E1D3B628BA79B9859
+F74 
+ []
+
+
+Overfull \hbox (7.80298pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: skey:3617DE4A96262C6F5D9E98BF9292DC29F8F41DBD289A147CE9
+DA3 
+ []
+
+
+Overfull \hbox (11.7545pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: skey:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC7
+634 
+ []
+
+
+Overfull \hbox (4.05995pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: skey:24C530DD88D97BD8784B4CE42EE784B395D4E6A488E93F8553
+A52 
+ []
+
+
+Overfull \hbox (2.51413pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: sig:F01C5381A2AD9E526E8EB235D815798323E0BCBD9AE0608A079
+22E 
+ []
+
+
+Overfull \hbox (4.99895pt too wide) in paragraph at lines 4543--4653
+\T1/cmss/m/n/10.95 gpg: sig:1B5ADA16F3AEC326A632C70B256DD471F10068ACB14A6F3017E
+F37 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4543--4653
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4543--4653
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4543--4653
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4543--4653
+
+ []
+
+[56] [57] [58]
+Underfull \hbox (badness 10000) in paragraph at lines 4656--4665
+
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4656--4665
+\T1/cmtt/m/n/10.95 iHcDBQA/lkZMLyg4Lsr9a29nArtsAYDwHFOBoq2eUm6OsjXYFXmDI+C8vZrg
+YIoH 
+ []
+
+
+Overfull \hbox (2.13574pt too wide) in paragraph at lines 4656--4665
+\T1/cmtt/m/n/10.95 ki4BUK/JnfbZLQRAxDed92QsngmVGyMBfRta2hbzrsMmpjLHCyVt1HHxAGis
+sUpv 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4656--4665
+
+ []
+
+[59]
+Appendix B.
+[60
+
+]
+Overfull \hbox (52.52545pt too wide) in paragraph at lines 4686--4687
+\T1/cmr/m/n/10.95 code an this func-tion is in the mod-ule in-ter-face that cal
+l '\T1/cmtt/m/n/10.95 cipher/ecc.c:generateKey()\T1/cmr/m/n/10.95 '
+ []
+
+[61]
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4690 ...=0.4,keepaspectratio]{./eps/key-gen.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (53.74666pt too wide) in paragraph at lines 4701--4702
+\T1/cmtt/m/n/10.95 ----encrypt\T1/cmr/m/n/10.95 ', and the pro-gram do the same
+ than al-ways: per-form the '\T1/cmtt/m/n/10.95 g10/g10.c:main()\T1/cmr/m/n/10.
+95 '
+ []
+
+
+Overfull \hbox (47.47676pt too wide) in paragraph at lines 4701--4702
+\T1/cmr/m/it/10.95 name func-tion ta-ble \T1/cmr/m/n/10.95 with the func-tion '
+\T1/cmtt/m/n/10.95 cipher/pubkey.c:pubkey_table[i].encrypt\T1/cmr/m/n/10.95 '.
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4705 ...=0.4,keepaspectratio]{./eps/encrypt.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (10.78203pt too wide) in paragraph at lines 4712--4713
+\T1/cmr/m/n/10.95 pre-pare the mem-ory struc-ture and call '\T1/cmtt/m/n/10.95 
+g10/mainproc.c:do_proc_packets()\T1/cmr/m/n/10.95 '.
+ []
+
+
+Overfull \hbox (49.21819pt too wide) in paragraph at lines 4712--4713
+\T1/cmr/m/n/10.95 are in the last points, in the call to the func-tion '\T1/cmt
+t/m/n/10.95 cipher/pubkey.c:pubkey_decrypt()\T1/cmr/m/n/10.95 ',
+ []
+
+
+Overfull \hbox (32.67612pt too wide) in paragraph at lines 4712--4713
+\T1/cmr/m/n/10.95 that ac-cess to the trans-la-tion ta-ble '\T1/cmtt/m/n/10.95 
+cipher/pubkey.c:pubkey_table[i].decrypt\T1/cmr/m/n/10.95 ',
+ []
+
+[62]
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4716 ...=0.4,keepaspectratio]{./eps/decrypt.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (24.42088pt too wide) in paragraph at lines 4727--4728
+\T1/cmr/m/n/10.95 com-mand la-bel vari-able '\T1/cmtt/m/n/10.95 aSign\T1/cmr/m/
+n/10.95 ', and call the func-tion '\T1/cmtt/m/n/10.95 g10/sign.c:sign_file()\T1
+/cmr/m/n/10.95 '.
+ []
+
+[63]
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4731 ...ale=0.4,keepaspectratio]{./eps/sign.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (62.22093pt too wide) in paragraph at lines 4738--4739
+\T1/cmr/m/n/10.95 into this file ('\T1/cmtt/m/n/10.95 proc_signature_packets()\
+T1/cmr/m/n/10.95 ', '\T1/cmtt/m/n/10.95 do_proc_packets()\T1/cmr/m/n/10.95 ', '
+\T1/cmtt/m/n/10.95 add_onepass_sig()\T1/cmr/m/n/10.95 ',
+ []
+
+
+Overfull \hbox (23.80559pt too wide) in paragraph at lines 4738--4739
+\T1/cmr/m/n/10.95 '\T1/cmtt/m/n/10.95 release_list()\T1/cmr/m/n/10.95 ', '\T1/c
+mtt/m/n/10.95 proc_tree()\T1/cmr/m/n/10.95 ', '\T1/cmtt/m/n/10.95 check_sig_and
+_print()\T1/cmr/m/n/10.95 ', '\T1/cmtt/m/n/10.95 do_check_sig()\T1/cmr/m/n/10.9
+5 ',
+ []
+
+
+Overfull \hbox (69.02869pt too wide) in paragraph at lines 4738--4739
+\T1/cmr/m/n/10.95 pher code sec-tion with the call to the func-tion '\T1/cmtt/m
+/n/10.95 cipher/sig-check.c:signature_check2()\T1/cmr/m/n/10.95 '
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4742 ...e=0.4,keepaspectratio]{./eps/verify.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Unknown graphics extension: .eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4750 ...spectratio,angle=90]{./eps/apendixc.eps}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[64]
+Underfull \hbox (badness 10000) in paragraph at lines 4757--4758
+[]\T1/cmr/m/n/10.95 FIPS PUB 186-2, Dig-i-tal Sig-na-ture Stan-dard (DSS),
+ []
+
+
+Underfull \hbox (badness 1028) in paragraph at lines 4757--4758
+\T1/cmr/m/n/10.95 U.S.Department of Com-merce/National In-sti-tute of Stan-dard
+s and
+ []
+
+[65
+
+] [66] [67] (./tfc3788.v1.0.4a.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2553 strings out of 94080
+ 30011 string characters out of 1165311
+ 85936 words of memory out of 1500000
+ 5778 multiletter control sequences out of 10000+50000
+ 29445 words of font info for 72 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 27i,13n,24p,1494b,355s stack positions out of 5000i,500n,6000p,200000b,5000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-
+texlive/fonts/type1/bluesky/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1
+/bluesky/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi6.p
+fb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi8.pfb></usr/share/texmf
+-texlive/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1
+/bluesky/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr8.pfb>
+</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf-t
+exlive/fonts/type1/bluesky/cm/cmsy6.pfb></usr/share/texmf-texlive/fonts/type1/b
+luesky/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/ams/msbm10.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/f
+onts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfit1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit1095.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sfsi1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></
+usr/share/texmf/fonts/type1/public/cm-super/sfss1095.pfb></usr/share/texmf/font
+s/type1/public/cm-super/sfsx1095.pfb></usr/share/texmf/fonts/type1/public/cm-su
+per/sfti0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb></u
+sr/share/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts
+/type1/public/cm-super/sftt1095.pfb>
+Output written on tfc3788.v1.0.4a.pdf (68 pages, 670784 bytes).
+PDF statistics:
+ 354 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
