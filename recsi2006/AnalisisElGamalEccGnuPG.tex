@@ -1,0 +1,350 @@
+% Este es el fichero EsquemaAlternativo.tex escrito para participar en la 
+% IX RESCI que se celebrar\'a en Barcelona conjuntamente la UAB y la UOC.
+% Sigue el esquema de publicaci\'on Lecture Notes in Computer Science
+% version 2.2 for LaTeX2e
+%% Fitxer creat per descriure la debilitat descoberta en el esquema ECElGamal.
+
+\documentclass{llncs}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{pstricks,pst-plot,pst-tree}
+\usepackage[final]{graphicx}
+\usepackage{algorithmic,algorithm}
+\usepackage[spanish]{babel}
+
+%%% Control de Versiones
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\version}{Versi\'on 1.00}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ?? una ' en latex
+
+%%% Abreviaturas
+
+\def\ce{curva{} el\'{\i}ptica}%
+\def\ces{curvas{} el\'{\i}pticas}%
+\def\CE{Curva{} El\'{\i}ptica}%
+\def\CEs{Curvas{} El\'{\i}pticas}%
+\def\cf{cuerpo finito}%
+\def\cfs{cuerpos finitos}%
+
+%%% Definiciones matem\'aticas especiales
+
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}%			Enteros
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}%			Racionales
+\newcommand{\A}{\ensuremath{\mathbb{A}_{2}}}%			Plano Af\'{\i}n
+\newcommand{\Proy}{\ensuremath{\mathbb{P}_{2}}}%		Plano Proyectivo
+\newcommand{\K}{\ensuremath{\mathbb{K}}}%			Cuerpo en general
+\newcommand{\F}{\ensuremath{\mathbb{F}}}%			Cuerpo finito en general
+\newcommand{\Fp}{\ensuremath{\mathbb{F}_p}}%			Cuerpo finito de orden p (primo)
+\newcommand{\EFp}{\ensuremath{E(\mathbb{F}_p})}%		Curva el\'\{i}ptica sobre un cuerpo finito de orden p (primo)
+\newcommand{\Fm}{\ensuremath{\mathbb{F}_{2^m}}}%                Cuerpo finito de caractar\'{\i}stica 2, grado m
+\newcommand{\Fq}{\ensuremath{\mathbb{F}_q}}%			Idem id. q (q=p^m, p primo y m entero pos.)
+\newcommand{\Zn}[1]{\ensuremath{\mathbb{Z}/#1\mathbb{Z}}}%	Anillo de los enteros mod n
+\newcommand{\PaI}{\ensuremath{\mathcal{O}}}%                    Punto en el Infinito
+\newcommand{\PaIe}{\ensuremath{\mathcal{O}_{E}}}%               Punto en el Infinito de la curva
+
+%%%% ``Castellanizaci\'on'' de 'algorithmic.sty'
+
+\renewcommand{\algorithmicrequire}{\textbf{Prerequisito:}}%
+\renewcommand{\algorithmicensure}{\textbf{Postrequisito:}}%
+\renewcommand{\algorithmiccomment}[1]{/* #1 */}%	
+\renewcommand{\algorithmicend}{\textbf{fin}}%
+\renewcommand{\algorithmicif}{\textbf{si}}%
+\renewcommand{\algorithmicthen}{\textbf{entonces}}%
+\renewcommand{\algorithmicelse}{\textbf{si no}}%
+\renewcommand{\algorithmicfor}{\textbf{para}}%
+\renewcommand{\algorithmicforall}{\textbf{para todo}}%
+\renewcommand{\algorithmicdo}{\textbf{hacer}}%
+\renewcommand{\algorithmicwhile}{\textbf{mientras}}%
+\renewcommand{\algorithmicloop}{\textbf{bucle}}%
+\renewcommand{\algorithmicrepeat}{\textbf{repetir}}%
+\renewcommand{\algorithmicuntil}{\textbf{hasta}}%
+
+\floatname{algorithm}{Algoritmo}%
+
+%%% Teoremas y dem\'as
+\theoremstyle{plain}        			% Cargar el paquete theorem.sty o amsthm.sty
+
+\theoremstyle{definition}   			% Cargar el paquete amsthm.sty
+
+\newtheoremstyle{saltolinea}% name   		% Sacado del 'thmtest.tex'
+  {9pt}%               Space above, empty = `usual value'
+  {9pt}%               Space below
+  {}%                  Body font
+  {}%                  Indent amount (empty = no indent, \parindent = para indent)
+%  {\bfseries}%         Thm head font
+  {\scshape}%          Thm head font
+  {}%                  Punctuation after thm head
+  {\newline}%          Space after thm head: \newline = linebreak
+  {}%                  Thm head spec
+
+\theoremstyle{saltolinea}   			% Cargar el paquete amsthm.sty
+\newtheorem{algo}{Algoritmo}
+
+%%%%
+
+\begin{document}
+
+\title{An\'alisis del cifrado ElGamal de un m\'odulo con \ces{} propuesto para el GnuPG}%%%%%%%%%%%%%%% !!
+
+%\author{Sergi Blanch i Torn\'e\inst{1} y Ramiro Moreno Chiral\inst{2}}
+%\institute{
+%Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
+%\email{\tt d4372211@alumnes.eps.udl.es}
+%\and 
+%Departament de Matem\`atica. Universitat de Lleida. Spain.\\
+%\email{\tt ramiro@matematica.udl.es}
+%}
+
+\author{sergi@calcurco.org}
+
+\maketitle
+
+%% Esquema de \'{\i}ndice:
+%   1. Introducci\'on (al proyecto)
+%   2. Cifrado tipo ElGamal
+%      2.1 Esquema cl\'asico (sin curvas)
+%      2.2 Esquema El\'{\i}ptico
+%   3. Esquema alternativo ECDH + ElGamal
+%   4. Esquema alternativo ECDH + AES256
+% *    4.1 Riesgos para AES256
+% *    4.1.1 Semaforos con AES
+% *    4.1.2 Paralelizaci\'on
+% *    4.2 Riesgos para SHA256
+
+
+\begin{abstract}
+En la RECSI VIII presentamos un m\'odulo de cifrado y firma digital sobre \ces{} para incorporar al GnuPG. El esquema de criptosistema tipo ElGamal utilizado en el desarrollo de ese m\'odulo presenta una debilidad relacionada con la factorizaci\'on de enteros. Se proponen esquemas alternativos y se analiza la seguridad de los mismos.
+\end{abstract}
+
+\section{Introducci\'on.} 
+Hace un tiempo (ver \cite{bm:proyecto,bm:gnupgces}) nos propusimos la implementaci\'on y desarrollo de un m\'odulo de cifrado y firma digitales con \ces{} para incorporarlo al GnuPG. Los algoritmos fundamentales del m\'odulo consist\'{\i}an en un cifrado tipo ElGamal y en el conocido algoritmo ECDSA. Usamos \ces{} definidas sobre cuerpos finitos primos, dadas por la forma reducida de Weierstra\ss{}
+\begin{equation}\label{eq:WRF} E/\Fp:\; y^2=x^3+ax+b,\end{equation}
+donde $a,b\in\Fp$ y el discriminante $-16(4a^3+27b^2)\ne 0$.
+
+La base normativa del m\'odulo implementado (\cite{P1363,NIST}) nos daba una garant\'{\i}a de seguridad inicial. Pero ya ten\'{\i}amos claro que la fase de desarrollo deb\'{\i}a ir avanzando en paralelo con la de an\'alisis. Y gracias a que as\'{\i} ha sido y gracias tambi\'en a la potencia de reflexi\'on y comunicaci\'on que ofrece liberarlo como software libre, hemos visto una debilidad importante en el cifrado ElGamal implementado en el m\'odulo. Una vez m\'as, esa debilidad no est\'a causada por el algoritmo en s\'{\i}, sino por el contexto en que se aplica.
+
+Veremos como el cifrado ElGamal, tanto sobre el grupo multiplicativo de los cuerpos finitos como en algunas versiones sobre \ces{}, tiene asociada una operaci\'on producto que esconde el mensaje a cifrar como un factor de ese producto. En los sistemas \emph{h\'{\i}bridos}, como el GnuPG, en los que se usa un sistema sim\'etrico para cifrar los mensajes largos y un sistema de clave p\'ublica o asim\'etrico, que cifra la clave del sim\'etrico, es normal que ese factor sea precisamente la clave del sistema sim\'etrico. Normalmente, esas claves son enteros de no m\'as de 256 bits. Entonces es planteable una factorizaci\'on \emph{selectiva} de ese producto ElGamal, que es p\'ublico, que revele la clave en cuesti\'on.
+
+As\'{\i} ocurre en nuestro caso, y esa debilidad permite atacar el cifrado de la clave sim\'etrica con bastantes garant\'{\i}as de \'exito. Hemos analizado todo ello e intentado solucionar la debilidad.
+
+\section{Cifrado tipo ElGamal.} % Visi\'o Abstracta de la debilitat.
+
+El algoritmo de cifrado ElGamal est\'a ampliamente extendido en aplicaciones criptogr\'aficas y multitud de desarrollos, entre otros en el Gnu Privacy Guard (GnuPG). En un sistema de clave p\'ublica, este algoritmo implementa de forma muy eficiente un intercambio de claves Diffie-Hellman (DH) para compartir un secreto entre dos comunicandos, con el que, al mismo tiempo, cifra un mensaje. A pesar de que tambi\'en existe un esquema de firma ElGamal, no goza de gran difusi\'on y es ampliamente superado por el esquema DSA. De hecho, el esquema de firma ElGamal se considera comprometido desde finales de 2000 (ver \cite{insecure}).
+
+Ahora nos proponemos poner a prueba el esquema usado en el cifrado, no s\'olo cuando el esquema o algoritmo ElGamal se usa sobre el grupo de puntos de las {\ces}, sino tambi\'en cuando es utilizado sobre el grupo multiplicativo de los cuerpos finitos, $\Fq^*$.
+
+\subsection{Esquema cl\'asico ElGamal.}
+
+El siguiente algoritmo~\ref{alg:ElGamal} es el esquema b\'asico de cifrado tipo ElGamal en el grupo $\Fp^*$. Con $pkey_M$ se denota un \emph{registro} que es la clave p\'ublica del usuario $M$. Se supone que tal registro est\'a formado por los siguentes campos
+
+\begin{center}\begin{tabular}{c|l}$pkey_M.p$ & \hspace{2mm} orden del cuerpo finito en el que se plantea el DLP \\ \hline $pkey_M.g$ & \hspace{2mm} generador de ese grupo\\ \hline $pkey_M.y$ & \hspace{2mm} clave p\'ublica ($y=g^x$, siendo $x$ la clave privada)\end{tabular}\end{center}
+
+\begin{algo}[Cifrado ElGamal]\label{alg:ElGamal}
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+{\bf INPUT}: Clave p\'ublica $pkey_{M}$ y entero a cifrar $z$.
+
+{\bf OUTPUT}: Cifrado formado por un par de enteros, $(a,c)$.
+\vspace{1.5mm}
+\hrule
+}%
+\begin{algorithmic}[1]
+\STATE Generar aleatoriamente una clave de sesi\'on $k\in_{R}\left[1,\left(pkey_{M}.p\right)-2\right]$;
+\STATE $a=(pkey_{M}.g)^{k}\mod p$;
+\STATE $b=(pkey_{M}.y)^{k}\mod p$; \COMMENT{$y=g^x\mod p$; $b=(g^x)^k\mod p$}
+\STATE $c=z\cdot b$;
+\STATE Return $(a,c)$;
+\end{algorithmic}
+\end{algo}%
+
+Tal algoritmo basa su robustez en los siguientes hechos,
+\begin{itemize}
+	\item La aleatorizaci\'on de la clave de sesi\'on (paso~1) lo hace sem\'anticamente seguro.
+	\item El uso del esquema Diffie-Hellman (DH) en los pasos~2 y~3 (el valor $b$ es la clave compartida que no viajar\'a por el canal).
+	\item La dificultad de resolver el IFP (\emph{Integer Factorization Problem}) en el paso~4. 
+\end{itemize}
+Si un atacante resuelve el logaritmo discreto calculando $k$ a partir de $a$, consigue el secreto compartido $b$ que se usa para camuflar la informaci\'on a cifrar en el producto $c=z\cdot b$, que es la operaci\'on ElGamal propiamente dicha y, por lo tanto, el mensaje original $z$. Pero tambi\'en puede ser atacado directamente el esquema de ElGamal resolviendo el problema de factorizaci\'on de enteros (IFP) y factorizar $c$. Esta factorizaci\'on deber\'{\i}a ser lo suficientemente dif\'{\i}cil, pero dependiendo de c\'omo sean los factores $z$ y $b$, puede no serlo.
+
+\subsection*{Estudio del esquema.}
+
+Las claves usadas comunmente en criptograf\'{\i}a est\'an definidas sobre cuerpos finitos, y las opciones de criptosistema m\'as frecuentes son RSA o ElGamal/DSA. De todos modos, las longitudes de claves sobre cuerpos finitos, como es habitual, siguen creciendo: lo que hace unos a\~nos se consideraba una clave segura, hoy no tiene una longitud suficiente; as\'{\i}, las claves de 1024 bits son ya cosa del pasado: las recomendables han aumentado hasta longitudes de 2048 bits. Esto que parecer\'{\i}a una mejora, puede constituir un problema.
+
+Fij\'emonos en la operaci\'on de ElGamal. Es un simple producto, cuyos factores son de muy distintos tama\~nos. Efectivamente, el factor que proviene del protocolo de intercambio Diffie-Hellman, tiene una longitud considerable y podr\'{\i}amos decir que s\'olo rompiendo el protocolo lo obtendr\'{\i}amos. Con las longitudes actuales comentadas, ser\'a frecuentemente un valor de 2048 bits.
+
+El principal problema est\'a en el valor que queremos cifrar, $z$. ?`Qu\'e tama\~no tiene? Al usar sistemas h\'{\i}bridos de cifrado, como el GnuPG, se genera una clave de sesi\'on para cifrar con un sistema sim\'etrico el grueso del mensaje y es esta clave la informaci\'on que ciframos de forma asim\'etrica. Por lo tanto, el tama\~no de ese factor estar\'a entre 128 y 256 bits. Aunque eso constituye una ventaja, ya que ciframos individualmente para cada destinatario un dato relativamente peque\~no, evitando la expansi\'on de bits propia de los sistemas asim\'etricos en el cifrado de todo el mensaje, tambi\'en puede ser una debilidad por la gran diferencia de tama\~no con el otro factor del cifrado. Efectivamente, se puede pensar en una factorizaci\'on de $c$ que busque factores relativamente peque\~nos como son esos valores $z$: tal factorizaci\'on, aunque dif\'{\i}cil, es viable.
+
+Esa clave de sesi\'on es, pues, nuestro problema. Su origen le da unas caracter\'{\i}sticas muy peculiares, que debilitan el cifrado tipo ElGamal.
+
+\subsection{Esquema El\'{\i}ptico ElGamal: ECElGamal.}
+
+Nuestro trabajo consisti\'o en el desarrollo de un m\'odulo criptogr\'afico con \ces{} definidas sobre cuerpos finitos primos $\Fp$ y su inclusi\'on dentro del GnuPG: uno de nuestros prop\'ositos era hacer llegar el uso generalizado de los criptosistemas sobre \ces{} al p\'ublico no especializado por medio del software libre. Veamos, pues, c\'omo funciona un cifrado de este tipo. En el algoritmo~\ref{alg:ECElGamal} podemos ver la descripci\'on del esquema con \ces{} ECElGamal, que es una ``traducci\'on'' directa del algoritmo~\ref{alg:ElGamal} sobre cuerpos finitos $\Fp$. En este caso los campos de la clave p\'ublica $pkey_M$ son $n$, el orden del grupo de puntos generado por $G$, $n=|\langle G\rangle|$, el propio punto generador $G$, y el punto $P$, clave p\'ublica, tal que $P=d\cdot G$, siendo $d$ un entero que se usa como clave privada.
+
+\begin{algo}[Cifrado ECElGamal]\label{alg:ECElGamal}
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+{\bf INPUT}: Clave p\'ublica $pkey_{M}$ y entero a cifrar $z$.
+
+{\bf OUTPUT}: Cifrado formado por un par de puntos, $(R,C)$.
+\vspace{1.5mm}
+\hrule
+}%
+\begin{algorithmic}[1]
+\STATE Generar aleatoriamente una clave de sesi\'on $k\in_{R}\left[1,\left(pkey_{M}.n\right)-1\right]$;
+\STATE $R=k\cdot pkey_{M}.G$;
+\STATE $Q=k\cdot pkey_{M}.P$; \COMMENT{$P=d\cdot G$; $Q=k\cdot (d\cdot G)$}
+\STATE Convertir el mensaje a punto de la \ce{} $z\rightarrow Z$;
+\STATE $C=Z+Q$;
+\STATE Return $(R,C)$;
+\end{algorithmic}
+\end{algo}
+
+La ``traducci\'on'' a \ces{} es sencilla: esencialmente consiste en sustituir el grupo multiplicativo c\'{\i}clico $(\Fp^*,\cdot)$ por un subgrupo c\'{\i}clico $(\langle G\rangle,+)$ del grupo de puntos de la \ce{}, $E(\Fp)$, con lo que
+\begin{itemize}
+	\item la notaci\'on cambia de multiplicativa a aditiva (productos a sumas, y potencias a productos de puntos por enteros);
+	\item el orden del grupo $\langle G\rangle$, ha de ser lo m\'as pr\'oximo posible al del grupo total $E(\Fp)$;
+	\item el mensaje $z$ se ha de convertir a punto.
+\end{itemize}
+
+
+\subsection*{Estudio del esquema.}
+
+Este esquema con \ces{}, tiene una clara ventaja: el producto que se usa como operaci\'on b\'asica del cifrado ElGamal sobre $\Fp^*$ y que constituye la debilidad ya indicada, es ahora una suma de puntos $C=Z+Q$ que no se puede ``deshacer'' sin conocer alguno de los sumandos, y eso s\'olo es posible si resolvemos alguno de los ECDLP subyacentes en los pasos 2 y 3 del algoritmo~\ref{alg:ECElGamal}.
+
+Pero la conversi\'on del mensaje $z$ a cifrar a punto $Z$ de la \ce{} {\bf no} es trivial. No siempre resulta $z$ una abscisa de un punto de $E(\Fp)$, ya que, obviamente, no siempre $z^3+az+b$ es un cuadrado en el cuerpo base $\Fp$. Aunque se han usado diferentes soluciones para este problema, todas adolecen de un defecto u otro. Y, en general, en todas ellas es pensable que se podr\'{\i}a estar dando informaci\'on adicional sobre el valor de $z$. Por ello debemos descartar este esquema de cifrado.
+
+\section{Esquema ECDH+ElGamal.}
+
+Entendiendo el esquema inicial del algoritmo~\ref{alg:ElGamal} como dos partes separadas, por un lado el intercambio DH de claves y por otro la operaci\'on producto, asociada propiamente al cifrado ElGamal, podemos buscar una soluci\'on al anterior problema. Si realizamos un intercambio de claves del tipo Diffie-Hellman sobre \ces{} obtendremos un secreto compartido con el cual realizar la operaci\'on ElGamal sobre enteros, resultando el algoritmo~\ref{alg:ECDH} descrito a continuaci\'on.
+
+\begin{algo}[Cifrado ECDH+ElGamal]\label{alg:ECDH}
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+{\bf INPUT}: Clave p\'ublica $pkey_{M}$ y texto en claro num\'erico $z$.
+
+{\bf OUTPUT}: Punto resultante $R$, cifra $c$.
+\vspace{1.5mm}
+\hrule
+}%
+\begin{algorithmic}[1]
+\STATE Generar aleatoriamente una clave de sesi\'on $k\in_{R}\left[1,\left(pkey_{M}.n\right)-1\right]$;
+\STATE $R=k\cdot pkey_{M}.G$;
+\STATE $Q=k\cdot pkey_{M}.P$; \COMMENT{$P=d\cdot G$; $Q=k\cdot (d\cdot G)$}
+\STATE $c=z\cdot Q_x$; \COMMENT{Aqu\'{\i} $Q_x$ es la abscisa del punto $Q$, es decir, $Q_x=x(Q)$}
+\STATE Return $(R,c)$
+\end{algorithmic}
+\end{algo}
+
+
+Conseguimos evitar la molesta conversi\'on de la informaci\'on a cifrar en punto de la \ce{}, resultando, en ese sentido, un esquema m\'as simple que el del algoritmo~\ref{alg:ECElGamal}, que estaba implementado usando s\'olo operaciones sobre los puntos de la curva. Pero volvemos a encontrarnos con el problema inicialmente plantado: la debilidad del producto ElGamal y de su posible ataque mediante una factorizaci\'on selectiva.
+
+\subsection*{Estudio del esquema.}
+
+Por lo tanto, con este algoritmo hemos vuelto al principio: recaemos en la debilidad IFP que sufre la operaci\'on ElGamal. Con algunas diferencias sobre la situaci\'on descrita en el estudio del algoritmo~\ref{alg:ElGamal}. 
+
+Suponiendo que el intercambio DH el\'{\i}ptico ha de tener una seguridad equivalente a ElGamal 2048 sobre cuerpos finitos (a su vez equivalente a un RSA con m\'odulo de 2048 bits), el orden del grupo de puntos $E(\Fp)$ habr\'{\i}a de ser de unos 256 bits, es decir, el punto $Q$, obtenido en el paso 3, vendr\'a dado por dos coordenadas de ese tama\~no (igualmente el punto $R$ y el punto--clave p\'ublica $P$). La clave de sesi\'on que proviene del cifrado sim\'etrico tendr\'a como m\'{\i}nimo 128 bits. As\'{\i} pues, el producto planteado en el paso 4 del algoritmo~\ref{alg:ECDH} tendr\'a factores de esos rangos: 128 y 256 bits.
+
+Es decir, tenemos en este caso tama\~nos de los factores m\'as pr\'oximos entre s\'{\i} que los del algoritmo original: si en el estudio del primer esquema~\ref{alg:ElGamal} sobre cuerpos finitos, ten\'{\i}amos una gran distancia entre los operandos del producto, ahora tenemos valores de una longitud similar. Pero estamos en lo mismo, los operandos tienen caracter\'{\i}sticas que les hacen demasiado peculiares.
+
+Al factorizar el valor $c$ del producto, podemos encontrarnos con dos situaciones extremas. Una en la que ambos factores fuesen primos: se tratar\'{\i}a de factorizar un entero de 384 bits, producto de dos primos de tama\~no similar. No parece una tarea inabordable, sino todo lo contrario: por un lado, estamos realizando un intercambio de claves bastante robusto, mientras que por otro conf\'{\i}amos en una factorizaci\'on de un entero mucho menor de lo que aceptar\'{\i}amos para un RSA. En el otro extremo podemos encontrar unos operandos altamente compuestos, con lo que obtendr\'{\i}amos una amplia lista de factores r\'apidamente (mucho m\'as que en el otro caso). Y la labor mas pesada ahora ser\'{\i}a separar esa lista en dos grupos, uno para obtener un entero de 128 bits y el otro para uno de 256.
+
+\section{Esquema alternativo ECDH + AES256.}
+
+Llegamos a un punto en que hemos de aceptar que el esquema ElGamal no nos sirve para nuestros prop\'ositos. Si lo usamos con s\'olo operaciones en puntos de la \ce{}, como en el algoritmo~\ref{alg:ECElGamal}, nos encontramos con una soluci\'on poco pulcra y con la desconfianza de que el truco que usemos para convertir el mensaje en punto est\'e revelando informaci\'on a un criptoanalista. Y si jugamos a medias con el intercambio de claves en \ces{} y la operaci\'on producto de enteros cl\'asica de ElGamal, resulta fatal para el prop\'osito de seguridad cripotogr\'afica.
+
+S\'olo nos queda buscar una alternativa completa a la operaci\'on ElGamal. Tendremos que seguir pensando en una operaci\'on con enteros, como en el algoritmo~\ref{alg:ECDH}, pues recuperar algo del algoritmo~\ref{alg:ECElGamal} nos har\'{\i}a volver a caer en el problema de la conversi\'on del mensaje a punto de la \ce{}.
+
+Parece que lo m\'as sensato es pensar en una operaci\'on que sustituya al producto, pero de robustez garantizada. Planteamos como soluci\'on una operaci\'on basada en un cifrado sim\'etrico. El secreto compartido que nos genera la parte ECDH, cumple con el ideal de una clave de sesi\'on: nunca viaja por el canal y es conocido por ambos participantes l\'{\i}citos de la comunicaci\'on. Podemos ver este nuevo esquema en el algoritmo \ref{alg:AES}.
+
+\begin{algo}[Cifrado ECDH+AES]\label{alg:AES}
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+{\bf INPUT}: Clave p\'ublica $pkey_{M}$ y texto en claro num\'erico $z$.
+
+{\bf OUTPUT}: Par punto resultante $R$ y cifra $c$.
+\vspace{1.5mm}
+\hrule
+}%
+\begin{algorithmic}[1]
+\STATE Generar aleatoriamente una clave de sesi\'on $k\in_{R}\left[1,\left(pkey_{M}.n\right)-1\right]$;
+\STATE $R=k\cdot pkey_{M}.G$;
+\STATE $Q=k\cdot pkey_{M}.P$; \COMMENT{$P=d\cdot G$; $Q=k\cdot (d\cdot G)$}
+\STATE $c=\textrm{aes256}(z,\textrm{sha256}(Q_x))$;
+\STATE Return $(R,c)$;
+\end{algorithmic}
+\end{algo}
+
+Este esquema nos fu\'e propuesto inicialmente en \cite{MMR}. No solo se trata de sustituir la operaci\'on que ya hemos descartado por un cifrado sim\'etrico, sino de evitar futuros errores. Usando la operaci\'on basada en el AES garantizamos la seguridad de nuestro esquema mediante la del AES, intensa y regularmente analizado en la actualidad. Ante un hipot\'etico caso en el que el criptosistema AES se vea comprometido, la soluci\'on pasa por fortalecerlo o incluso llegar a usar otro esquema m\'as robusto.
+
+Como medida adicional se requiere introducir una funci\'on de resumen, $\textrm{sha256}$, para as\'{\i} obtener siempre una clave de cifrado sim\'etrico de la misma longitud, que sea m\'axima y que tambi\'en podr\'a ser computable al descifrar, seg\'un puede advertirse en el esquema de descifrado propuesto en el algoritmo~\ref{alg:descifrado}.
+
+\begin{algo}[Descifrado ECDH+AES]\label{alg:descifrado}
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+{\bf INPUT}: Clave secreta $skey_{M}$ y el par punto resultante $R$ y cifra $c$.
+
+{\bf OUTPUT}: Texto en claro num\'erico $z$.
+\vspace{1.5mm}
+\hrule
+}%
+\begin{algorithmic}[1]
+\STATE $Q=skey_{M}.d\cdot R$;
+\STATE $z=\textrm{aes256}^{-1}(c,\textrm{sha256}(Q_x))$;
+\STATE Return $(z)$;
+\end{algorithmic}
+\end{algo}
+
+En este caso $skey_{M}$ representa la estructura de clave secreta que contiene los campos de la clave p\'ublica adem\'as del campo $skey_{M}.d$ que es el entero que se usa como clave privada.
+
+\section{Conclusi\'on}
+
+Despu\'es de haber encontrado una situaci\'on en la que el esquema ElGamal se ve comprometido, no por su dise\~no sino por el caso particular en el que lo aplicamos, hemos encontrado una alternativa que parece resolver el compromiso. Se ha puesto en duda un esquema ampliamente utilizado, y esta duda afecta al m\'as importante de sus usos: los algoritmos h\'{\i}bridos, donde el ``texto'' a cifrar es una clave se sesi\'on con la que se ha cifrado sim\'etricamente el grueso de la informaci\'on.
+
+La soluci\'on aportada presenta una gran ventaja y es que es un esquema constantemente puesto a prueba ya que forma parte de otras soluciones. Actualmente el algoritmo AES esta bajo presi\'on (\cite{OHT05,BERN05}) debido a que durante este \'ultimo a\~no han aparecido nuevos puntos de partida para el criptoanalisis. Se trata de ataques eminentemente inform\'aticos que aprovechando peque\~nos detalles del computador, consiguen hacerse con informaci\'on \'util del cifrado. Por el momento, tiene un impacto comparable al producido por el riesgo de almacenar una frase de paso en la memoria de intercambio de disco.
+
+Debemos estar muy pendientes de la evoluci\'on de estos ataques y en especial de las contramedidas (\cite{OST05}) planteadas contra ellos. Por el momento, no se han propuesto soluciones factibles a nivel de la aplicaci\'on. Tan solo existe alguna propuesta, mas o menos aplicable, para ofrecer una protecci\'on desde el sistema operativo o incluso desde la arquitectura del computador.
+
+%%%  END  %%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliograf\'{\i}a
+
+%\bibliographystyle{amsalpha}
+%\bibliographystyle{amsplain}
+%\bibliography{tesis}
+
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{BM04}
+
+\bibitem[AES99]{AES99}J. Deamen and V. Rijmen, \textit{AES Proposal: Rijndael, version 2}, AES submission, 1999.
+\bibitem[BERN05]{BERN05}D. Bernstein, \textit{Cache-timing attacks on AES}, 2005.
+\bibitem[BJN]{insecure}D. Boneh, A. Joux and P.Q. Nguyen, \textit{Why textbook ElGamal and RSA encryption are insecure}, Proceedings of Asiacrypt'00, Lecture Notes in Computer Science, no. 1976 (2000), Springer, pp. 30-43.
+\bibitem[BM04]{bm:gnupgces}S.~Blanch and R.~Moreno, \emph{Implementaci\'on {GnuPG} con curvas el\'{\i}pticas}, Avances en Criptolog\'{\i}a y Seguridad de la Informaci\'on. Proceedings {RECSI VIII}, 2004, pp.~515--526.
+\bibitem[BMTFC]{bm:proyecto}S.~Blanch and R.~Moreno, \emph{GnuPG Implementation with Elliptic Curves}, Trabajo final de carrera, Marzo 2004.
+\bibitem[BRUM03]{BRUM03}D. Brumley and D. Boneh, \textit{Remote timing attacks are practical}, 2003.
+\bibitem[DHAES]{DHAES}M. Abdalla, M. Bellare and P. Rogeway, \textit{DHAES: An encryption scheme based on the Diffie-Hellman Problem}, 1999.
+\bibitem[KSWH98]{KSWH98}J. Kelsey, B. Scheneier and D. Warner, Chris Hall, \textit{Side channel cryptanalysis of product ciphers}, 5th European Symposium on Research in Computer Security, LNCS 1485, 97-110, Sptinger-Verlag, 1998.
+\bibitem[MMR]{MMR}Comunicaci\'on personal con M.~Mylnikov en Noviembre de 2004.
+\bibitem[NFS]{NFS sieving}A. Shamir and E. Tromer, \textit{Special-Purpose hardware for factoring: the NFS sieving step}, 2005.
+\bibitem[NIST186-2]{NIST}National Institute of Standards and Technology, \textit{Digital Signature Standard (DSS) (FIPS PUB 186-2)}, 2000 January 27.
+\bibitem[NIST180-2]{NIST180-2}National Institute of Standards and Technology, \textit{Secure Hash Standard (SHS) (FIPS PUB 180-2)},2002.
+\bibitem[NIST197]{NIST197}National Institute of Standards and Technology, \textit{Advanced Encryption Standard (AES) (FIPS PUB 197)}, 2001.
+\bibitem[OHT05]{OHT05}M. O'Hanlon and A. Tonge, \textit{Investigation of cache-timing attacks on AES}, 2005.
+\bibitem[OST05]{OST05}D. Arne Osvik, A. Shamir and E. Tromer, \textit{Cache attacks and countermeasures: the case of AES}, 2005.
+\bibitem[P1363]{P1363}IEEE P1363 Standard Specifications for Public key Cryptography. 2000 January 30.
+
+\end{thebibliography}
+
+\end{document}

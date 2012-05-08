@@ -1,0 +1,436 @@
+% Este es el fichero recsi.ecc.tex escrito para participar en la 
+% VIII RESCI que se celebrar.bŽá en la Universidad Carlos 3 de Madrid.
+% Sigue el esquema de publicaciŽón Lecture Notes in Computer Science
+% version 2.2 for LaTeX2e
+
+\documentclass{llncs}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{pstricks,pst-plot,pst-tree}
+\usepackage[final]{graphicx}
+\usepackage{algorithmic,algorithm}
+\usepackage[spanish]{babel}
+
+%%% Control de Versiones
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\version}{Versi\'on 1.4rc1}
+
+% 1.3 versi\'on enviada a los referees de la RECSI8 (15.may.04 ??)
+
+% 1.3 a 1.3.1
+% Inserci\'on algoritmo de generaci\'on
+% Cambios menores en la notaci\'on de los algoritmos
+
+% 1.3.1 a 1.3.2
+% Algunos comentarios sobre seguridad.
+% Recogiendo el comentario del referee sobre el ataque por ``lattices'' de
+% Phong Q. Nguyen (art\'{\i}culo de EUROCRYPT'04)
+% Actualizando tablas de tiempos.
+% A\~nadiendo tiempos de RSA.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Abreviaturas
+
+\def\ce{curva{} el\'{\i}ptica}%
+\def\ces{curvas{} el\'{\i}pticas}%
+\def\CE{Curva{} El\'{\i}ptica}%
+\def\CEs{Curvas{} El\'{\i}pticas}%
+
+%%% Definiciones matem\'aticas especiales
+
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}%			Enteros
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}%			Racionales
+\newcommand{\A}{\ensuremath{\mathbb{A}_{2}}}%			Plano Af\'{\i}n
+\newcommand{\Proy}{\ensuremath{\mathbb{P}_{2}}}%		Plano Proyectivo
+\newcommand{\K}{\ensuremath{\mathbb{K}}}%			Cuerpo en general
+\newcommand{\F}{\ensuremath{\mathbb{F}}}%			Cuerpo finito en general
+\newcommand{\Fp}{\ensuremath{\mathbb{F}_p}}%			Cuerpo finito de orden p (primo)
+\newcommand{\Fm}{\ensuremath{\mathbb{F}_{2^m}}}%                Cuerpo finito de caractar\'{\i}stica 2, grado m
+\newcommand{\Fq}{\ensuremath{\mathbb{F}_q}}%			Idem id. q (q=p^m, p primo y m entero pos.)
+\newcommand{\Zn}[1]{\ensuremath{\mathbb{Z}/#1\mathbb{Z}}}%	Anillo de los enteros mod n
+\newcommand{\PaI}{\ensuremath{\mathcal{O}}}%                    Punto en el Infinito
+\newcommand{\PaIe}{\ensuremath{\mathcal{O}_{E}}}%               Punto en el Infinito de la curva
+
+%%%% ``Castellanizaci\'on'' de 'algorithmic.sty'
+
+\renewcommand{\algorithmicrequire}{\textbf{Prerequisito:}}%
+\renewcommand{\algorithmicensure}{\textbf{Postrequisito:}}%
+\renewcommand{\algorithmiccomment}[1]{/* #1 */}%	
+\renewcommand{\algorithmicend}{\textbf{fin}}%
+\renewcommand{\algorithmicif}{\textbf{si}}%
+\renewcommand{\algorithmicthen}{\textbf{entonces}}%
+\renewcommand{\algorithmicelse}{\textbf{si no}}%
+\renewcommand{\algorithmicfor}{\textbf{para}}%
+\renewcommand{\algorithmicforall}{\textbf{para todo}}%
+\renewcommand{\algorithmicdo}{\textbf{hacer}}%
+\renewcommand{\algorithmicwhile}{\textbf{mientras}}%
+\renewcommand{\algorithmicloop}{\textbf{bucle}}%
+\renewcommand{\algorithmicrepeat}{\textbf{repetir}}%
+\renewcommand{\algorithmicuntil}{\textbf{hasta}}%
+
+\floatname{algorithm}{Algoritmo}%
+
+%%% Teoremas y dem\'as
+\theoremstyle{plain}        			% Cargar el paquete theorem.sty o amsthm.sty
+
+\theoremstyle{definition}   			% Cargar el paquete amsthm.sty
+
+\newtheoremstyle{saltolinea}% name   		% Sacado del 'thmtest.tex'
+  {9pt}%               Space above, empty = `usual value'
+  {9pt}%               Space below
+  {}%                  Body font
+  {}%                  Indent amount (empty = no indent, \parindent = para indent)
+%  {\bfseries}%         Thm head font
+  {\scshape}%          Thm head font
+  {}%                  Punctuation after thm head
+  {\newline}%          Space after thm head: \newline = linebreak
+  {}%                  Thm head spec
+
+\theoremstyle{saltolinea}   			% Cargar el paquete amsthm.sty
+\newtheorem{algo}{Algoritmo}
+
+%%%%
+
+\begin{document}
+
+\title{Implementaci\'on GnuPG con \CEs{}}
+
+\author{Sergi Blanch i Torn\'e\inst{1} y Ramiro Moreno Chiral\inst{2}}
+\institute{
+Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
+\email{\tt d4372211@alumnes.eup.udl.es}
+\and 
+Departament de Matem\`atica. Universitat de Lleida. Spain.\\
+\email{\tt ramiro@eup.udl.es}
+}
+
+\maketitle
+\vspace{1 cm}
+\begin{center}
+  {\version}
+\end{center}
+\newpage
+
+\begin{center}
+  {\Large\bf Implementaci\'on GnuPG con \CEs{}}  
+\end{center}
+\vspace{3cm}
+
+\begin{abstract}
+Usando normas y est\'andares ampliamente criptoanalizados, se ha colaborado con el Open Source realizando un m\'odulo que a\~nade los algoritmos ECElGamal y ECDSA a la aplicaci\'on criptogr\'afica GnuPG. Presentamos una descripci\'on de tal m\'odulo y de c\'omo se ha insertado en el GnuPG.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introducci\'on}
+Aunque para las implementaciones \emph{software} las \ces{} no parecen muy necesarias, para sistemas con capacidad limitada, los criptosistemas con \ces{} resultan ideales. Para equiparar la seguridad de una clave RSA de 1024 bits, s\'olo necesitaremos claves de 192 bits con \ces{} definidas sobre un cuerpo finito. Pero hay m\'as: para igualar la seguridad de una clave RSA de 7680 bits, muy lenta en los c\'alculos, y que podr\'{\i}amos considerar como ``de paranoia militar'', s\'olo necesitaremos 384 bits con las \ces{} y un tiempo de c\'omputo parecido al RSA de 2048 bits.
+
+Sin embargo, con la intenci\'on de colaborar con la comunidad criptogr\'afica mediante un peque\~no grano de arena, hemos realizado una de esas implementaciones \emph{poco necesarias}. Ya que, aunque se sepa que un criptosistema es muy robusto no nos sirve de mucho si no tenemos acceso pr\'actico a \'el. Qui\'enes conocen las \ces{} saben que son robustas, \'agiles y resistentes a ataques. Por ello nos ha parecido necesario a\~nadir los criptosistemas basados en \ces{} a alguna aplicaci\'on de prop\'osito general que nos permita a los usuarios usarlos y, hacerlo en convivencia con los criptosistemas que utilizamos ahora.
+
+Dos ideas han orientado nuestro trabajo. Por un lado, buscar una serie de algoritmos basados en est\'andares ampliamente criptoanalizados. La comunidad ha trabajado largamente en la norma \emph{P1363} del IEEE y en el est\'andar \emph{FIPS PUB 186-2} del NIST. Nunca podemos estar seguros de que estos est\'andares no tengan vulnerabilidades, pero es m\'as f\'acil confiar en ellos que en algo completamente nuevo.
+
+Por otro, usar \emph{software} libre. La balanza de nuestra decisi\'on se inclin\'o (como no pod\'{\i}a ser menos) por el programa llamado \emph{GnuPG (Gnu Privacy Guard)}. Basado en \emph{OpenPGP} y hecho con rigor, se puede considerar competente con el m\'{\i}tico y conocido \emph{Pretty Good Privacy (PGP)}, del que proviene. Actualmente este \emph{software} mantiene tres ramas de trabajo: \emph{stable} (1.2.x), \emph{developers} (1.3.x), y \emph{experimental} (1.9.x). Para introducir los criptosistemas basados en \ces{} nos pareci\'o id\'onea la versi\'on para desarrolladores, la 1.3.5.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Est\'andares y Algoritmos}
+Planteamos en esta secci\'on una breve descripci\'on de los est\'andares en los que se ha basado la implementaci\'on realizada, as\'{\i} como algunas razones del porque de la opci\'on elegida.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Norma P1363 del IEEE}
+
+En la b\'usqueda de un est\'andar que se pueda considerar suficientemente criptoanalizado, nos detuvimos a estudiar la norma P1363, publicada por el IEEE en 1999. El proyecto para llegar hasta la norma final empez\'o en 1994, pero no se incluy\'o el soporte para \ces{} hasta dos a\~nos despu\'es, en 1996. Inicialmente estandarizaba la algor\'{\i}tmica para los criptosistemas basados en los problemas cl\'asicos del \emph{IFP, Integer Factorization Problem} y del \emph{DLP, Discrete Logarithm Problem}, hasta a\~nadir los criptosistemas basados en el \emph{ECDLP, Elliptic Curve Discrete Logarithm Problem}.
+
+El hecho de extraer nuestra algor\'{\i}tmica de una norma como \'esta, no s\'olo nos da seguridad, ya que lleva largo tiempo en estudio, sino que, a la vez, tenemos una buena descripci\'on de las operaciones matem\'aticas en los distintos niveles que podemos requerir: aritm\'etica de multiprecisi\'on entera y la operatividad en el grupo de puntos de una \ce{}, $E(\F)$.
+
+En nuestra implementaci\'on hemos usado principalmente la secci\'on $7$ y la A.9 de la P1363. En la primera se describen las primitivas necesarias para tratar el problema del logaritmo discreto sobre \ces{}: primero los par\'ametros del dominio de la curva, que definen el \emph{setup} del criptosistema: permiten inicializarlo; luego los pares de claves, p\'ublica y privada, del usuario, para acabar con la resoluci\'on de problemas basados en el protocolo de intercambio de claves Diffie-Hellman.
+
+En la secci\'on 9 del Anexo A, se nos da una visi\'on sobre los algoritmos que podemos utilizar para realizar los operaciones con los puntos de la \ce{}. Y otras muchas m\'as posibilidades de las que realmente necesitaremos. Podremos elegir sobre qu\'e cuerpo finito definir el grupo de puntos de la curva: si sobre $\Fm$ o sobre $\Fp$. En esta implementaci\'on se eligi\'o usar el segundo tipo, trabajando as\'{\i} en el grupo de puntos $E(\Fp)$. Y la otra elecci\'on que hab\'{\i}a que hacer, era si usar coordenadas afines o proyectivas para la representaci\'on de los puntos de las \ces{}. Por una parte tenemos el plano af\'{\i}n, $\A(\Fp)=\Fp\times\Fp$, en el que no existe el punto del infinito, $\PaI$, y por otro lado tenemos el plano proyectivo $\Proy(\Fp)$ compuesto por ternas de elementos de $\Fp$ (dos dimensiones con tres coordenadas) en el que s\'{\i} est\'a definido el punto del infinito de la curva, $\PaIe$, y que permite sumar y doblar puntos sin tener que realizar cocientes en el cuerpo base. Estas dos caracter\'{\i}sticas del plano proyectivo lo hacen especialmente atractivo para usar en una implementaci\'on que pretende ser \'agil. Optamos, pues, por la representaci\'on proyectiva para los puntos de $E(\Fp)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{FIPS PUB 186-2 del NIST}
+
+El \emph{National Institute for Standars and Technology} (en adelante NIST), dependiente del departamento de Comercio de EEUU, public\'o al a\~no siguiente de la aparici\'on de la norma P1363 del IEEE, un est\'andar sobre el que deb\'{\i}an basarse los sistemas de firma digital del gobierno de ese pa\'{\i}s.
+
+En el Ap\'endice 6 de este documento, aparece detallada una recomendaci\'on de \emph{setup}, en la que se enumeran los par\'ametros de una lista de \ces{} y los \'ordenes de los cuerpos base sobre las que hay que definirlas (esos datos est\'an tambi\'en recogidos en el reciente libro [HMV04, p. 262]). Con la misma confianza que la que tuvieron en su d\'{\i}a las \emph{S-boxes} del criptosistema sim\'etrico DES, se puede seguir la recomendaci\'on de esta norma. Nuestra opci\'on fu\'e seleccionar las curvas recomendadas en el Ap\'endice de la FIPS PUB 186-2 para prefijarlas como \emph{setup} de la implementaci\'on realizada.
+
+Esta decisi\'on conlleva distintas ventajas a la vez que inconvenientes. Empezando por las ventajas, hay que decir que disponer de los par\'ametros de una \ce{}, sobre todo de su cardinal, es mucho mejor que calcularlos en tiempo de ejecuci\'on: har\'{\i}a falta un c\'omputo intensivo. Digamos una desventaja: al prefijar la \ce{} del criptosistema se pierde aleatoriedad en el \emph{setup}. Mejorar las desventajas, sin perder ninguna de las posibles ventajas, es lo que se tratar\'a de hacer en un futuro, y ser\'a comentado con m\'as detalle al final de este documento.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algunos detalles de la implementaci\'on}
+Esta secci\'on est\'a dedicada a expones con brevedad algunos aspectos b\'asicos del c\'omo de la implememtaci\'on: la definici\'on del \emph{setup} y los algoritmos de cifrado/descifrado y firma/verificaci\'on que se han usado.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Setup del criptosistema}
+
+Hemos hablado de los par\'ametros de una \ce{}, el conjunto de datos que constituye el \emph{setup} del criptosistema. Matem\'aticamente podemos describirlo como la sextupla
+$$\mathcal{S}=\{p,a,b,G,n,h\}$$
+El primer elemento de la tupla, $p$, define el m\'odulo del cuerpo base sobre el que se realizar\'an las operaciones aritm\'eticas b\'asicas. El segundo y tercer elemento, $a$ y $b$, son los par\'ametros de una \ce{} en la \emph{forma reducida de Weierstra\ss},
+$$y^2=x^3+ax+b,$$
+definida sobre un cuerpo finito primo $\Fp$, con $p>3$. Como cuarto elemento de la tupla, tenemos el punto generador, $G$, del subgrupo c\'{\i}clico de puntos sobre el que se plantea el ECDLP, es decir, $\langle G\rangle\subseteq E(\Fp)$. La relaci\'on entre el cardinal del grupo $\langle G\rangle$ y el n\'umero de puntos de la \ce{}, es decir el orden del grupo total $E(\Fp)$, est\'a definida por los dos \'ultimos elementos de la tupla $\mathcal{S}$ del \emph{setup}, siendo $n$ el orden del generador, i.e., $|\langle G\rangle|=n$, donde, siguiendo la P1363 del IEEE, $n$ ha pasado un test de primalidad de Rabin con 50 bases, i.e., la probabilidad de que no sea primo es de $1/2^{100}$. Y su relaci\'on con el cardinal de la curva est\'a dada por el \emph{cofactor} $h$,
+$$|E(\Fp)|=hn.$$
+
+En lo que sigue vamos a usar la nomenclatura de [HMV04]: $a\in_R [1,m],\; a,m\in\Z_{>0}$, con la que indicaremos que $a$ es un valor aleatorio entre $1$ y $m$ del mismo tama\~no en bits que $m$. As\'{\i}, la clave secreta $d$ de los criptosistemas basados en el ECDLP ser\'a un valor $d\in_R [1,n-1]$, tal que al sumar el generador consigo mismo $d$ veces obtengamos otro punto $Q$ que no sea el punto en el infinito $\PaIe$,
+$$Q=d\cdot G\neq \PaIe.$$
+
+\begin{algo}[GenKeyPair]\label{alg:GenKey}
+\begin{algorithmic}
+
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+
+{\bf INPUT}: \CE $ \left( E \left( \Fp \right) \right) $, y punto generador $G$.
+
+{\bf OUTPUT}: Clave secreta $d$, clave p\'ublica $Q$.
+\vspace{1.5mm}
+\hrule
+}%
+\vspace{1.5mm}
+\STATE Generar la clave secreta $d\in_{R}\left[1,n-1\right]$;
+\STATE Calcular $Q= d \dot G$;
+\IF{$Q=\mathcal{O}_E$}
+	\STATE Ir al principio del algoritmo
+\ENDIF
+\STATE Return($d$,$Q$);
+\end{algorithmic}
+\end{algo}
+
+En cuanto a las estructuras de datos b\'asicas implementadas, la clave p\'ublica contendr\'a tanto el \emph{setup} como el punto $Q$, y la clave secreta contendr\'a a la clave p\'ublica junto con el valor $d$,
+$$\begin{array}{rcl}\mathtt{ECC\_setup} &=& \mathcal{S}=\{p,a,b,G,n,1\}\\ \mathtt{ECC\_public\_key} &=& \{\mathcal{S},Q\}\\ \mathtt{ECC\_secret\_key} &=&\{\mathcal{S},Q,d\}\end{array}$$
+N\'otese que se ha tomado el cofactor $h=1$, para as\'i magnificar el tama\~no del subgrupo c\'{\i}clico $\langle G\rangle$: todas las curvas del NIST tienen cofactores ``bajos'', concretamente son $h\le 4$. Obviamente, para el cofactor elegido, es $\langle G\rangle=E(\Fp)$, es decir, usamos \ces{} con grupo de puntos c\'{\i}clico. Est\'a elecci\'on hace al grupo $\langle G\rangle$, en el que en realidad se plantea el ECDLP, perfectamente resistente al ataque Pohlig--Hellman, ya que su orden es primo. Las curvas elegidas son tambi\'en resistentes a los ataques por \emph{isomorfismos}, que se basan en la construcci\'on de alg\'un isomorfismo entre el grupo de puntos $\langle G\rangle$ y el grupo $\Fp^+$ (para el caso en que $\mid E(\Fp)\mid=p$), o el $\F_{p^k}^*$, en alguna extensi\'on de \'{\i}ndice $1<k\le 20$ del cuerpo $\Fp$ (cuando $\mathrm{mcd}(n,p)=1$), pero en las curvas del NIST no son viables ninguno de estos ataques.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Algoritmos de cifrado/descifrado ECElGamal}
+Los algoritmos descritos en estos dos apartados se han sacado del norma P1363 del IEEE, como ya se ha dicho, respetando simbolog\'{\i}a y nomenclatura. A\~nadimos un apartado dedicado a los ataques mediante \emph{lattices} de los sistemas tipo ElGamal\footnote{Agradecmos al \emph{referee} su indicaci\'on al respecto.} (ver [Ngu04], entre otros).
+
+\begin{algo}[Encrypt ($A\rightarrow B$)]\label{alg:Xifrat}
+\begin{algorithmic}
+
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+
+{\bf INPUT}: Clave p\'ublica $pkey_{B}$ y texto plano num\'erico $z$.
+
+{\bf OUTPUT}: Punto resultante $R$, cifra $c$.
+
+\vspace{1.5mm}
+\hrule
+}%
+\vspace{1.5mm}
+
+\STATE Generar una clave de sessi\'on $k\in_{R}\left[1,\left(pkey_{B}.n\right)-1\right]$;
+
+\STATE $P=k\cdot pkey_{B}.Q$ /{*}$Q_{B}=d_{B}\cdot G_{B}$; $P=k\cdot d_{B}\cdot G_{B}${*}/
+\STATE $R=k\cdot pkey_{B}.G$
+\STATE $c=z\cdot P_{x}$
+\IF{(size($c$) $<$ size($pkey_{B}.n$)}
+ \STATE ir al principio del algoritmo;
+\ENDIF
+
+\STATE Return($R$,$c$);
+\end{algorithmic}
+\end{algo}
+
+
+\begin{algo}[Decrypt]\label{alg:Desxifrat}
+\begin{algorithmic}
+
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+
+{\bf INPUT}: Punto resultante $R$, cifra $c$, y clave privada $skey_{B}$.
+
+{\bf OUTPUT}: Texto plano num\'erico $z$.
+\vspace{1.5mm}
+\hrule
+}%
+\vspace{1.5mm}
+
+\STATE Recibido ($R$,$c$)
+\STATE $P=skey_{B}.d\cdot R$ /{*}$P=d_{B}\cdot k\cdot G_{B}${*}/
+\STATE $z=c\cdot P_{x}^{-1}\:\pmod{p}$.
+
+\STATE Return($z$);
+\end{algorithmic}
+\end{algo}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Algoritmos de firma/verificaci\'on ECDSA}
+
+\begin{algo}[Sign ($A \rightarrow B$)]\label{alg:Firma}
+\begin{algorithmic}
+
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+
+{\bf INPUT}: Clave secreta $skey_{A}$ y resumen del mensaje \#hash.
+
+{\bf OUTPUT}: Par de n\'umeros $\left(r,s\right)$ /{*}Se cumple $0<r,s<skey_{A}.n${*}/.
+
+\vspace{1.5mm}
+\hrule
+}%
+\vspace{1.5mm}
+
+\STATE Generar una clave se sessi\'on $k\in_{R}\left[1,\left(skey_{A}.n\right)-1\right]$;
+\STATE $I\leftarrow$$k\cdot\left(skey_{A}.G\right)$;
+\STATE $i\leftarrow I_{x}$;
+\STATE $r\leftarrow i\pmod{skey_{A}.n}$;
+\IF{$r=0$}
+ \STATE ir al principio del algoritmo;
+\ENDIF
+\STATE $s\leftarrow k^{-1}\cdot\left(\# hash+\left(skey_{A}.d\right)\cdot r\right)\pmod{skey_{A}.n}$;
+\IF{$s=0$}
+ \STATE ir al principio del algoritmo;
+\ENDIF
+\STATE Return $\left(r,s\right)$.
+\end{algorithmic}
+\end{algo}
+
+
+\begin{algo}[Sign verification]\label{alg:Verificacio-firma}
+\begin{algorithmic}
+
+\parbox[b]{\linewidth}{%
+\hrule
+\smallskip
+
+{\bf INPUT}: Calve p\'ublica ($pkey_{A}$), resumen del mensaje (\#hash), y par de n\'umeros $\left(r,s\right)$.
+
+{\bf OUTPUT}: Valor booleano de aceptaci\'on o repudio.
+
+\vspace{1.5mm}
+\hrule
+}%
+\vspace{1.5mm}
+
+\STATE Verificar $\left(r,s\right)\in\left[1,\left(pkey_{A}.n\right)-1\right]$;
+\STATE $h\leftarrow s^{-1}\pmod{pkey_{A}.n}$;
+\STATE $h_{1}\leftarrow\left(\# hash\right)\cdot h\pmod{pkey_{A}.n}$;
+\STATE $h_{2}\leftarrow r\cdot h\pmod{pkey_{A}.n}$;
+\STATE $Q\leftarrow h_{1}\cdot\left(pkey_{A}.G\right)+h_{2}\cdot\left(pkey_{A}.P\right)$;
+\IF{$Q=\mathcal{O}_{E}$}
+ \STATE repudiar
+\ELSE
+\STATE $i=Q_{x}\pmod{pkey_{A}.n}$;
+ \IF{$i=r$}
+  \STATE aceptar
+ \ELSE
+  \STATE repudiar
+ \ENDIF
+\ENDIF
+\end{algorithmic}
+\end{algo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Ataques mediante \emph{lattices} a los criptosistemas tipo ElGamal}
+Durante bastante tiempo GPG permit\'{\i}a el uso de firma o de cifrado+firma con claves tipo ElGamal sobre grupos $\Fp^*$. Hasta que, en un anuncio en Internet el 27 de noviembre de 2003, el equipo de desarrollo del GPG hizo p\'ublico que tales claves eran d\'ebiles y quedaban descartadas del sistema. La raz\'on de tal debilidad estriba en que la clave secreta $d$ y la clave de sesi\'on o \emph{nonce} $k$ se elg\'{\i}an, por razones de eficiencia, de tama\~nos mucho menores que $p$: para cada tama\~no posible de $p$ se ten\'{\i}a un ``umbral'' para ambos valores, denotado como $q_{bit}$ y tabulado en la llamada \emph{tabla de Wiener}, de magnitudes siempre menores que $1/4$ del tama\~no de $p$ y al crecer $p$ mucho menores de $1/4$: por ejemplo, para $p$'s de 3840 bits es $q_{bit}=296$. Y por eso eran susceptibles de un ataque por \emph{lattices} o redes sobre $\Z^n$. Concretamente, una b\'usqueda del \emph{vector m\'as pr\'oximo} en la red es eficiente en esos casos, en los que $k=3/2q_{bit}$, y, mucho m\'as, si tambi\'en la clave secreta $d\ll p$: de ser as\'{\i} una firma basta para encontrar $d$ en un PC en menos de un segundo (cf. [Ngu04]). Pero todo ello no es aplicable a la implementaci\'on que hemos realizado en el m\'odulo ECC sobre el GnuPC. Veamos algunas razones.
+\begin{enumerate}
+	\item Nuestra implementaci\'on s\'olo usa el algoritmo ECC-ElGamal para cifrado: la firma se realiza siempre con ECC-DSA, que es un algoritmo resistente al ataque que nos ocupa, seg\'un se dice en [Ngu04].
+	\item Hemos evitado exp\'{\i}citamente el paso por los umbrales $q_{bit}$ de la tabla de Wiener: tanto las claves de sesi\'on, $k$, como las claves secretas, $d$, son del tama\~no de $p$. Eso se ha querido indicar m\'as arriba con el s\'{\i}mbolo $\in_R$.
+	\item Todas las inversiones de los algoritmos utilizados se realizan $\bmod{p}$ o $\bmod{n}$, as\'{\i} que no hay necesidad de imponer a las claves de sesi\'on ninguna restricci\'on adicicional, por lo que no se merma su aleatoriedad.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integraci\'on en el GnuPG del m\'odulo ECC implementado}
+Como gu\'{\i}a para todos los desarrolladores de \emph{software} criptogr\'afico, y bas\'andose en el primero de este tipo de prop\'osito general llamado \emph{PGP}, se dise\~no el \emph{OpenPGP} que se est\'a convirtiendo en un est\'andar . El \emph{PGP} o \emph{Pretty Good Privacy}, escrito por Phil Zimmermann fij\'o unas convenciones y unas estructuras de datos, desarrolladas posteriormente en un \emph{RFC} o \emph{Request For Comments} que, con n\'umero 2440 y bajo el t\'{\i}tulo \emph{OpenPGP Message Format}, hizo p\'ublico todo lo necesario para realizar una implementaci\'on compatible. Quedaba un vac\'{\i}o en la implementaci\'on de \emph{software} criptogr\'afico bajo Open Source, que llen\'o el proyecto iniciado por Werner Koch al que llam\'o \emph{Gnu Privacy Guard}, (\emph{GnuPG}). 
+
+Una vez decidido y visto el programa sobre el que realizaremos el m\'odulo de \ce{}, a\'un nos queda por decidir el lenguage con que programarlo. Pudiendo utilizar un lenguage orientado a objetos como {\tt C++}, con el cual podr\'iamos obtener un c\'odigo bastante natural, pulido y pr\'oximo al utilizado en la algor\'itmica de las normas. Sin embargo, los actuales m\'odulos del GnuPG estan realizados en {\tt C}. Para tomar una decisi\'on sobre el lenguaje result\'o muy \'util consultarlo a todos los desarrolladores del software. La respuesta fue muy clara: la decidi\'on pasa por valorar hasta que p\'ublico se desea llegar. Si se quiere realizar un m\'odulo para uso privado, usar objetos facilita la programaci\'on, pero, si se desea que el m\'odulo pueda llegar a trascender y ser criptoanalizado por la comunidad el lenguaje debe ser {\tt C}. Esto, junto con la integraci\'on en el entorno GnuPG, nos da todos los motivos para escoger este \'ultimo lenguaje.
+
+El m\'odulo programado, ha seguido un esquema de programaci\'on descendente que nos permite modular a la vez que facilita el posterior trabajo de integraci\'on en el programa GnuPG. Existe un primer nivel de programaci\'on que realiza la funci\'on de interficie con el resto del programa y que utiliza las estructuras de datos propias del programa general. En un segundo nivel de descenso se traducen esas estructuras y se sirven hacia el primer nivel o hacia este segundo, en el que ya aparecen ya las estructuras de datos propias del m\'odulo implementado. Podr\'{\i}amos considerar las funciones en estos dos niveles como repetidas, y su principal diferencia estriba en las estructuras que usa.
+
+Ya en los dos niveles inferiores, tercero y cuarto, se mezclan funciones criptogr\'aficas con otras espec\'{\i}ficamente matem\'aticas que podr\'{\i}an haberse separado e insertado en la librer\'{\i}a matem\'atica del programa. Debido a que este m\'odulo se desarroll\'o en un contexto acad\'emico, y sin renunciar a mejoras futuras, optamos por dispersar al m\'{\i}nimo las funciones programadas. El tercer nivel descendente describe las funciones que realizan operaciones con los puntos de la curva, mientras que en el cuarto est\'an las que son usadas con las coordenadas de dichos puntos, es decir, la aritm\'etica sobre el cuerpo base $\Fp$. Quedan algunos fragmentos de c\'odigo que no caben en el esquema descrito, ya que tienen un uso especialmente auxiliar. En este grupo se engloban desde funciones parciales hasta otras similares a los constructores y destructores de la programaci\'on orientada a objetos, en su versi\'on en lenguaje {\tt C}.
+
+Una vez programado el m\'odulo ECC e integrado mediante las \emph{Autotools}\footnote{Herramienta de \emph{software} libre que facilita enormemente la creaci\'on de grandes proyectos} en el GnuPG, hubo que modificar algunas partes del software para que \'este lo use e interaccione con \'el. La primera modificaci\'on que realizamos fu\'e integrar en la generaci\'on de claves del GnuPG las nuevas claves ECC. Por otro lado, al realizar las otras operaciones (cifrado-descifrado, firma-verificaci\'on) el programa realiza comprobaciones, entre ellas si el algoritmo indicado es v\'alido para realizar la operaci\'on. Finalmente, el GnuPG usa un identificador que aparece al listar las claves: una letra descriptiva del algoritmo, justo despu\'es de la medida de dicha clave. Para el m\'odulo ECC elegimos la descriptiva $E$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tests de pruebas}
+
+Con el m\'odulo ECC operativo, valoramos su comportamiento comparando sus tiempos de ejecuci\'on del cifrado y firma con \ces{} con los correspondientes est\'andares del GnuPG: ElGamal y la firma DSA, sobre el grupo multiplicativo $\Fp^*$. Tambi\'en con los algorimos RSA de cifrado y firma. Las pruebas se hicieron sobre las distintas operaciones del m\'odulo, a saber, generaci\'on de claves, cifrado y descifrado, firma y verificaci\'on y listado de claves, usando un total de $26$ claves distintas.
+% En el caso de la creaci\'on de las claves de $7680$ bits hay una excepci\'on importante, ya que su elevado tiempo de generaci\'on redujo el n\'umero de claves a testear a tres. Adem\'as, p%
+Para aquellas que requieren una interacci\'on, se utilizaron los ficheros ejemplo que se proporcionan con el GnuPG para el chequeo de su funcionamiento: cuatro ficheros binarios y tres de texto de variadas longitudes. Las condiciones iniciales son iguales para todos, salvo el algoritmo p\'ublico escogido y el nivel de entrop\'{\i}a que pueda tener en ese momento el ordenador.
+%%Lo he corregido directamente, pues no es un consejo sin\'o una correcci\'on. Deje los procesos en dos servidores distintos corriendo toda la noche para la generaci\'on de las claves con las mismas condiciones que las claves mas peque\~nas.
+
+El computador utilizado para realizar y estudiar dichos chequeos es un Intel Xeon dual a $3,06$GHz (bus frontal de $533$MHz) con $8$GB de RAM, con el Sistema Operativo Red Hat Linux Advanced Server 3, utilizando el compilador \emph{gcc 2.96}.
+
+\begin{table*}[ht]\begin{center}{\scriptsize%
+    \begin{tabular}{|c|l||r|r|r|r|r||r|r|r|r|r|r|r|r|}
+    \hline\multicolumn{2}{|c||}{Procesos} & \multicolumn{5}{|c||}{ECC} & \multicolumn{8}{|c|}{ELG/DSA (RSA)}\\
+    \hline\multicolumn{2}{|c||}{} & 192  & 224  & 256  & 384   & 521 &\multicolumn{2}{|c|}{1024}&\multicolumn{2}{|c|}{2048}&\multicolumn{2}{|c|}{4096} & 7680 & 8192 \\ \hline
+    \hline {\tt GenKey}  & user   & 1,22 & 1,44 & 1,78 &  4,36 & 10,62 & 48,48 &(3,35)& 701,00 &(47,92)& 7739,19 &(543,88)& 60438,40 & 78134,38\\
+                         & kernel & 0,19 & 0,23 & 0,24 &  0,34 &  0,33 &  0,16 &(0,11)&   0,22 & (0,12)&    0,35 &  (0,12)&     1,12 &     0,33\\
+                         & total  & 1,41 & 1,67 & 2,02 &  4,70 & 10,95 & 48,64 &(3,46)& 701,22 &(48,04)& 7739,54 &(544,00)& 60439,52 & 78134,71\\
+                         & media  & 0,05 & 0,06 & 0,08 &  0,18 &  0,42 &  1,87 &(0,13)&  26,97 & (1,85)&  297,68 & (20,92)&  2324,60 &  3005,18\\
+    \hline {\tt Encrypt} & user   & 3,88 & 4,29 & 5,06 & 11,74 & 25,80 &  6,10 &(0,99)&  20,29 & (0,96)&   76,48 &  (1,46)&   516,34 &   595,85\\
+                         & kernel & 0,63 & 0,91 & 0,97 &  0,97 &  1,17 &  0,61 &(0,46)&   0,60 & (0,61)&    0,50 &  (0,52)&     0,61 &     0,57\\
+                         & total  & 4,51 & 5,20 & 6,03 & 12,71 & 26,97 &  6,71 &(1,45)&  20,89 & (1,57)&   76,98 &  (1,98)&   516,95 &   596,42\\
+                         & media  & 0,03 & 0,03 & 0,03 &  0,07 &  0,15 &  0,04 &(0,01)&   0,12 & (0,01)&    0,43 &  (0,01)&     2,84 &     3,28\\
+    \hline {\tt Decrypt} & user   & 3,61 & 4,57 & 5,51 & 15,08 & 35,31 &  5,59 &(1,78)&  17,69 & (7,71)&  109,60 & (48,36)&   372,03 &   424,71\\
+                         & kernel & 0,65 & 0,63 & 0,87 &  1,27 &  1,31 &  0,35 &(0,44)&   0,51 & (0,40)&    0,42 &  (0,37)&     0,62 &     0,50\\
+                         & total  & 4,26 & 5,20 & 6,38 & 16,35 & 36,62 &  5,94 &(2,22)&  18,20 & (8,11)&  110,02 & (48,73)&   372,65 &   425,21\\
+                         & media  & 0,02 & 0,03 & 0,04 &  0,09 &  0,20 &  0,03 &(0,01)&   0,10 & (0,04)&    0,61 &  (0,27)&     2,05 &     2,34\\
+    \hline {\tt Sign}    & user   & 3,34 & 4,21 & 5,03 & 13,24 & 30,01 &  4,17 &(1,52)&  12,92 & (7,32)&   43,81 & (47,87)&   140,89 &   153,50\\
+                         & kernel & 0,59 & 0,53 & 0,66 &  0,84 &  1,46 &  0,39 &(0,28)&   0,29 & (0,34)&    0,41 &  (0,29)&     0,41 &     0,34\\
+                         & total  & 3,93 & 4,74 & 5,69 & 14,08 & 31,47 &  4,56 &(1,80)&  13,21 & (7,66)&   44,22 & (48,16)&   141,30 &   153,84\\
+                         & media  & 0,02 & 0,03 & 0,03 &  0,08 &  0,17 &  0,03 &(0,01)&   0,07 & (0,04)&    0,24 &  (7,14)&     0,78 &     0,85\\
+    \hline {\tt Verify}  & user   & 2,38 & 3,26 & 4,15 & 11,36 & 26,30 &  3,55 &(0,46)&  11,07 & (0,50)&   37,59 &  (0,91)&   120,02 &   130,91\\
+                         & kernel & 0,93 & 0,81 & 0,86 &  1,09 &  1,44 &  0,69 &(0,64)&   0,68 & (0,64)&    0,69 &  (0,71)&     0,62 &     0,59\\
+                         & total  & 3,31 & 4,07 & 5,01 & 12,45 & 27,74 &  4,24 &(1,10)&  11,75 & (1,14)&   38,28 &  (1,62)&   120,64 &   131,50\\
+                         & media  & 0,02 & 0,02 & 0,03 &  0,07 &  0,15 &  0,02 &(0,01)&   0,07 & (0,01)&    0,21 &  (0,01)&     0,66 &     0,72\\
+    \hline {\tt ListKey} & user   & 0,13 & 0,16 & 0,19 &  0,53 &  1,29 &  0,18 &(0,03)&   0,66 & (0,03)&    2,13 &  (0,08)&     6,93 &     7,51\\
+                         & kernel & 0,06 & 0,06 & 0,10 &  0,11 &  0,09 &  0,09 &(0,05)&   0,05 & (0,07)&    0,09 &  (0,03)&     0,06 &     0,07\\
+                         & total  & 0,19 & 0,22 & 0,29 &  0,64 &  1,38 &  0,27 &(0,08)&   0,71 & (0,10)&    2,22 &  (0,11)&     6,99 &     7,58\\
+                         & media  & 0,01 & 0,01 & 0,01 &  0,03 &  0,05 &  0,01 &(0,00)&   0,03 & (0,00)&    0,09 &  (0,00)&     0,27 &     0,29\\
+    \hline\multicolumn{2}{|c||}{Total Procesos}& 17,61& 21,10& 25,42& 60,93& 135,13& 70,36 &(10,11)&  765,98 &(66,62)& 8011,26 &(644,60)& 61598,05 & 79449,26\\
+    \hline\multicolumn{2}{|c||}{Media Procesos}& 0,03& 0,03& 0,04& 0,085& 0,19& 0,33 &(0,03)& 4,56 &(0,33)& 49,87 &(4,73)& 388,53 & 502,11\\
+    \hline
+    \end{tabular}
+}% del \footnotesize
+\vspace{.25cm}
+\caption{Tiempos de ejecuci\'on en segundos}\label{tab:tiempo}
+\end{center}\end{table*}
+
+La tabla nos muestra los tiempos obtenidos seg\'un las longitudes de las claves. Los cinco niveles elegidos, por orden creciente, son los correspondientes a los niveles de seguridad para los siguientes sistemas de cifrado sim\'etrico: SKIPJACK (80 bits), 3DES (112), AES-small (128), AES-medium (192) y AES-large (256), seg\'un tabla\footnote{Tambi\'en se encuentran datos similares en el Anexo D de la P1363 y en el FIPS PUB 186-2.} en [HMV04, p. 19]. Se detalla el tiempo consumido en las distintas operaciones, distinguiendo entre tiempo de ejecuci\'on en \emph{modo usuario} o en \emph{modo kernel}. El promedio del total es la medida que nos permite comparar el \emph{speedup} de los diferentes criptosistemas y tama\~nos de clave. Destacamos algunas comparaciones:
+\begin{itemize}
+	\item Los tiempos promedios para la generaci\'on de claves son mucho mejores en el m\'odulo ECC que en cualquier otro criptosistema de los tabulados.
+	\item Cualquier operaci\'on en el m\'odulo ECC es m\'as r\'apida que en ElGamal/DSA sobre $\Fp^*$.
+	\item En general, las operaciones tipo RSA son m\'as r\'apidas que las del m\'odulo ECC, sin embargo, al aumentar el tama\~no de las claves, la ventaja se decanta por el ECC en descifrado y firma.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Desarrollo futuro}
+
+Como casi siempre ocurre en los desarrollos de \emph{software}, nuestro c\'odigo no es perfecto: contiene puntos conocidos que podemos considerar \emph{bugs}, sin olvidar que adem\'as pueden existir otros que no conozcamos. El \emph{bug} que contiene nuestra implementaci\'on se centra en un error producido al intentar acceder a la clave secreta en el caso que \'esta haya sido protegida por una \emph{frase de paso}. Las claves funcionan correctamente en caso de no protegerlas con esa frase. Pero, muy probablemente, durante la creaci\'on de la clave (y de su cifrado sim\'etrico con la frase de paso) el proceso no se realiza correctamente. Estamos estudiando la posibilidad de que el fallo est\'e en la recuperaci\'on de la clave antes de ser usada para el descifrado o la firma digital.
+
+A pesar de parecer una limitaci\'on, el hecho de haber fijado los par\'ametros del \emph{setup} del criptosistema obedece al criterio de facilitar posibles ampliaciones por el que hemos optado en esta implementaci\'on. O bien fijamos esos par\'ametros, o bien los generamos cuando el usuario desee crearse un par de claves. Esta \'ultima opci\'on, genial desde el punto de vista criptoanal\'{\i}tico, tiene un coste muy elevado que se cargar\'{\i}a sobre el usuario final. Hay un t\'ermino medio entre ambas soluciones: mantener una tabla de \emph{setups candidatos} precalculados por parte de los desarrolladores. Si este n\'umero de setups precalculados es lo suficientemente grande, se acercar\'a mucho a generarlo en l\'{\i}nea sin sufrir la penalizaci\'on en tiempos de c\'omputo.
+
+La actual estructura del m\'odulo, que incluye todas las funciones, facilita su lectura y la visi\'on del flujo de instrucciones. En la direcci\'on hacia una versi\'on definitivamente integrada en el \emph{software}, y que siguiese la estructura del resto de m\'odulos, que s\'olo contienen las funciones criptogr\'aficas, ser\'{\i}a muy ventajoso extraer las funciones matem\'aticas e incluirlas directamente en la librer\'{\i}a de n\'umeros grandes que utiliza dicho programa. Con este paso, se ampliar\'{\i}an las funcionalidades directamente sobre la librer\'{\i}a \emph{gcrypt} a la vez que las funcionalidades del GnuPG.
+
+Cabe resaltar la existencia de distintas bases sobre las que montar un criptosistema de \ce{}: en la actual implementaci\'on se ha usado cuerpos finitos modulo un primo suficientemente grande, $\Fp$, pero tambi\'en hay otros cuerpos que podr\'{\i}amos haber utilizado. Principalmente destacan los cuerpos finitos de caracter\'{\i}stica $2$ con un grado de extensi\'on $m$ suficientemente grande, $\Fm$. Ampliar el m\'odulo a los cuerpos de caracter\'{\i}stica $2$ es uno de lo objetivos a alcanzar en un futuro por su rapidez operacional.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{1}
+
+
+%Estandares y RFCs
+\bibitem[1991]{rfc1991}PGP Message Exchange Formats. 1996 August.
+\bibitem[2440]{rfc2440}OpenPGP Message Format. 1998 November
+\bibitem[3156]{rfc3156}MIME Security with OpenPGP. 2001 August.
+\bibitem[3278]{rfc3278}Use of Elliptic Curve Cryptography (ECC) Algorithms in Cryptographic Message Syntax (CMS). 2002 April.
+\bibitem[NIST]{NIST}FIPS PUB 186-2, Digital Signature Standard (DSS), U.S.Department of Commerce/National Institute of Standards and Technology. 2000 January 27.
+\bibitem[P1363]{P1363}IEEE P1363/D13 (Draft Version 13) Standard Specifications for Public key Cryptography. 1999 November 12.
+\bibitem[PKCS\#1]{PKCS}PKCS\#1 v2.1: RSA Cryptography Standard. RSA Laboratories. 2002 June 14.
+
+%General
+\bibitem[HMV04]{hmv:geec} D. Hankerson, A. Menezes, S. Vanstone, \textit{Guide to Elliptic Curve Cryptography}. Springer, 2004.
+\bibitem[ECDSA]{JMV} D. Johnson, A. Menezes, S. Vanstone, \textit{The elliptic Curve Digital Signature Algorithm (ECDSA)}. Dept. of Combinatorics \& Optimization, University of Waterloo, Certicom, Canada.
+\bibitem[Men93]{Men93}Alfred Menezes, \textit{Elliptic Curve Public Key Cryptosystems}. Kluwer Academic Publishers, 1993
+\bibitem[MOV97]{handbook} Alfred J, Menezes, Paul C.van Oorschot, and Scott A. Vanstone. \textit{Handbook of Applied Cryptography}. CRC Press, first edition, 1997. http://cacr.math.uwaterloo.ca/hac/
+\bibitem[Mill86]{Mill86} V. Miller, \textit{Uses of elliptic curves in cryptography} Advances in Cryptology - Crypto '85, Lecture Notes in Computer Science, n218 (1986), Springer-Verlag, pp. 417--426.
+\bibitem[Ngu04]{Ngu04} P. Q. Nguyen, \textit{Can we trust cryptographic software? Cryptographic flaws in GNU Privacy Guard v1.2.3} Proceedings of Eurocrypt'04, Lecture Notes in Computer Science, 3027 (2004), Springer, pp. 555--570.
+
+\end{thebibliography}
+
+\end{document}
+
