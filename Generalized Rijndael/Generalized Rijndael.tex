@@ -1,34 +1,69 @@
-\documentclass[12pt,a4paper,twoside]{article}
+%\documentclass[12pt,a4paper,twoside]{article}
+\documentclass[a4paper,twoside]{llncs}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 
+\pagestyle{headings}%page numbers
+
 \title{Generalised Rijndael}
-\author{
-  Sergi Blanch-Torn\'e\\
-    \small Escola Polit\`ecnica Superior,\\
-    \small Universitat de Lleida. Spain.\\
-    \small \texttt{sblanch@alumnes.udl.es}\\
-  \and
-  Ramiro Moreno Chiral\\
-    \small Departament de Matem\`atica.\\
-    \small Universitat de Lleida. Spain.\\
-    \small \texttt{ramiro@matematica.udl.es}\\
-}
-\date{2012-08-20}
+\author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}}
+ \institute{
+ Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
+ \email{\tt sblanch@alumnes.udl.es}
+ \and 
+ Departament de Matem\`atica. Universitat de Lleida. Spain.\\
+ \email{\tt \{ramiro,fsebe\}@matematica.udl.es}
+ }
 
 \begin{document}
 \maketitle
+\begin{center}
+ \today
+\end{center}
 
- \begin{abstract}
+ \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
   This is the abstract
+% this article comes from a real request, for small block cipher, but the tuneable paramenters in rijndael creates the idea to, further than an small version, it can be generalized
+\\\\    
+{\bf Keywords:} Cryptography, Symmetrics, Rijndael
  \end{abstract}
 
  \section{Introduction}
+% There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
  \section{Approach to the Rijndael Schema}
+% what is a PRP? Why is Rijndael a secure PRP?
+ \subsection{Mathematical preliminaries}
+% do not repeat the ``aes proposal'', only review basic
+ \subsection{Design}
+% what is the state matrix
+% describe the transformations from the Shammir ``confussion and diffusion'' point of view.
  \section{Generalising the schema}
  \subsection{key expansion}
+% abstraction of what it is, independent from the #rows, #columns, wordsize
+% subBytes() is used, then the sboxes but is explained later on.
+% when key n#columns is different than message #columns
+ \subsection{Rounds}
+% why n rounds and not more, not less?
  \subsection{subBytes}
+% abstraction of what it is, independent from the #rows, #columns, wordsize
+% operations in the polynomial field F_{2^w} w: wordsize
+ \subsubsection{sboxes}
+% how the sbox was build and how to build a new one with different parameters
  \subsection{shiftColumns}
+% abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
  \subsection{mixColumns}
+% abstraction of what it is, independent from the #rows, #columns, wordsize
+% polynomial ring, where the coeficients are elements from a binary polynomial field
+%   F_{2^w}[x]/m(x), ord(m)=#rows
+%   (this is, in mho, one of the most important points of rijndael)
  \subsection{addRoundKey}
+% the operation where the key is used (from the 4 rijndael operations)
+% simply a xor operation (addition in F_2)
+ \section{Paramenter convinations}
+% how, with different parameters, can have the same block sizes, and what's different between them
+ \section{New useful sizes for rijndael}
+% because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
+
+%TODO: what else should be in the paper?
+
 \end{document}
