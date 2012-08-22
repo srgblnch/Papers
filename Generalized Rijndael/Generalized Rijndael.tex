@@ -1,7 +1,9 @@
 %\documentclass[12pt,a4paper,twoside]{article}
 \documentclass[a4paper,twoside]{llncs}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{algorithmic,algorithm}
 
 \pagestyle{headings}%page numbers
 
@@ -15,61 +17,175 @@
  \email{\tt \{ramiro,fsebe\}@matematica.udl.es}
  }
 
+%%% abreviaturas matem\'aticas
+% Enteros
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}} 
+
+% Anillo de los enteros mod n
+\newcommand{\Zn}[1]{\ensuremath{\mathbb{Z}/#1\mathbb{Z}}} 
+
+% Cuerpo finito de orden p (primo)
+\newcommand{\Fq}[1]{\ensuremath{\mathbb{F}_#1}} 
+
+% Cuerpo finito de caractar\'{\i}stica p, grado n
+\newcommand{\Fpn}[2]{\ensuremath{\mathbb{F}_{#1^#2}}} 
+
+% Anillo polinomial con coeficientes en un cuerpo polinomial binario
+\newcommand{\Fpnm}[2]{\ensuremath{\frac{\Fpn{2}{#1}[#2]}{m(#2)}}}
+
+\renewcommand{\algorithmicrequire}{\textbf{INPUT:}}%
+\renewcommand{\algorithmicensure}{\textbf{OUTPUT:}}%
+\renewcommand{\algorithmiccomment}[1]{/* #1 */}%	
+
+\floatname{algorithm}{Algorithm}%
+\floatname{definition}{Definition}%
+
 \begin{document}
 \maketitle
 \begin{center}
  \today
 \end{center}
 
- \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
-  This is the abstract
+\begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
+ This is the abstract
 % this article comes from a real request, for small block cipher, but the tuneable paramenters in rijndael creates the idea to, further than an small version, it can be generalized
 \\\\    
 {\bf Keywords:} Cryptography, Symmetrics, Rijndael
- \end{abstract}
+\end{abstract}
 
- \section{Introduction}
+%%%%%%%%%%%%%%%%
+\section{Introduction}
 % There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
+% problem aproach (rijndael scalability)
+% alternative cryptosystems
 \cite{Daemen:1998:BCR:646692.759487}
 \cite{Daemen98aesproposal:}
 \cite{rfc3394}
-\cite{Federal_processingstandards}
- \section{Approach to the Rijndael Schema}
-% what is a PRP? Why is Rijndael a secure PRP?
- \subsection{Mathematical preliminaries}
-% do not repeat the ``aes proposal'', only review basic
- \subsection{Design}
+\cite{AES-FIPS}
+
+
+%%%%%%%%%%%%%%%%
+\section{Approach to the Rijndael Schema}
+% what is a PRP? and why is Rijndael a secure PRP?
+% rijndael good characteristics
+% shannon: confusion & diffusion => substitution & permitation
+% structure of the input (fix block size)
+% format preserving encryption alternative?
+
+%%%%%%%%%%%%%%%%
+\subsection{Design}
 % what is the state matrix
 % describe the transformations from the Shammir ``confussion and diffusion'' point of view.
- \section{Generalising the schema}
- \subsection{key expansion}
+
+%%%%%%%%%%%%%%%%
+\section{Generalising the schema}
+
+%TODO: Draw the procedure as diagram
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.6,keepaspectratio=true]{./images/rijndaelDiagram.png}
+ % rijndaelDiagram.png: 521x887 pixel, 72dpi, 18.38x31.29 cm, bb=0 0 521 887
+ \caption{rijndael diagram}
+ \label{fig:RijndaelDiagram}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%
+\subsection{key expansion}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 % subBytes() is used, then the sboxes but is explained later on.
 % when key n#columns is different than message #columns
- \subsection{Rounds}
+
+\begin{algorithm}
+ \caption{KeyExpansion}
+ \label{alg:keyExpansion}
+ \begin{algorithmic}[1]
+  \REQUIRE byte k[nRows*nColumns], nRounds, nRowns, nColumns, wSize
+  \ENSURE word w[nRouns*(nRows+1)]
+  \STATE i := 0
+  \WHILE{i<nColumns}
+    \STATE w[i] := word(k[nRows*(i+c) for c in range(nColumns)])
+  \ENDWHILE
+  \STATE i := nColumns
+  \WHILE{i<nRouns*(nRows+1)}
+    \STATE temp := w[i-1]
+    \IF{i mod nColumns == 0}
+      \STATE temp := SubWord(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
+    \ELSE
+      \STATE temp := SubWord(temp)
+    \ENDIF
+    \STATE w[i] := w[i-nColumns] $\oplus$ temp
+    \STATE i++
+  \ENDWHILE
+ \end{algorithmic}
+\end{algorithm}
+
+% draw the algorithm as a diagram
+\begin{figure}[b]
+ \centering
+ \includegraphics[scale=0.6,keepaspectratio=true]{./images/rijndael_keyExpansionDiagram.png}
+ % rijndael_keyExpansionDiagram.png: 661x438 pixel, 72dpi, 23.32x15.45 cm, bb=0 0 661 438
+ \caption{Block diagram of the construction of the rijndael key expansion}
+\label{fig:keyExpansionDiagram}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%
+\subsection{Rounds}
 % why n rounds and not more, not less?
- \subsection{subBytes}
+
+%%%%%%%%%%%%%%%%
+\subsection{subBytes}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 % operations in the polynomial field F_{2^w} w: wordsize
- \subsubsection{sboxes}
+%TODO: draw schematic of this step
+
+%%%%%%%%%%%%%%%%
+\subsubsection{How to build different SBoxes}
 % how the sbox was build and how to build a new one with different parameters
- \subsection{shiftColumns}
+
+%%%%%%%%%%%%%%%%
+\subsection{shiftColumns}
 % abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
- \subsection{mixColumns}
+%TODO: draw schematic of this step
+
+%%%%%%%%%%%%%%%%
+\subsection{mixColumns}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 % polynomial ring, where the coeficients are elements from a binary polynomial field
-%   F_{2^w}[x]/m(x), ord(m)=#rows
+%   \Fpnm{x}{z}, ord(m)=#rows
 %   (this is, in mho, one of the most important points of rijndael)
- \subsection{addRoundKey}
+%TODO: draw schematic of this step
+\subsection{Operate in a polinomial ring, with coeficients in a polinomial field}
+$$\Fpnm{n}{y}\label{eq:polinomialRing}$$ where $m(y)$ is a composed polinomial of degree $r$ columns. This gives a polinomial ring. The coeficients of this polinomial ring are elements of a polinomial field $$\Fpn{2}{n}=\Fpnm{2}{x}\label{eq:polinomialField}$$ where $m(x)$ is irreductible and gives a polinomial field.
+Standard rijndael (AES) uses a circulan invertible matrix for this to simplify and speed up the operations in the ring.
+
+%%%%%%%%%%%%%%%%
+\subsection{addRoundKey}
 % the operation where the key is used (from the 4 rijndael operations)
 % simply a xor operation (addition in F_2)
- \section{Paramenter convinations}
+%TODO: draw schematic of this step
+
+%%%%%%%%%%%%%%%%
+\section{Parameter combinations}
 % how, with different parameters, can have the same block sizes, and what's different between them
- \section{New useful sizes for rijndael}
+
+%%%%%%%%%%%%%%%%
+\section{New useful sizes for Rijndael}
 % because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
 \cite{Daemen:1999:EBC:1267115.1267119}
-%TODO: what else should be in the paper?
 
+%%%%%%%%%%%%%%%%
+%TODO: what else should be in the paper?
+% \section{Attacking the schema}
+% 
+% \subsection{Side channel attacks}
+% %?difference between precalculated sbox and rcon or compute on the fly
+% % constant time operation intervals and equivalent memory use
+% % key expansion calculated during the encrypt/decrypt process
+% \section{Conclusions}
+
+%%%%%%%%%%%%%%%%
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/symmetrics.bib,../bibtex/rijndael.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
 
