@@ -58,6 +58,7 @@
 % TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
 % TODO problem aproach (rijndael scalability)
 % TODO alternative cryptosystems
+
 \cite{Daemen:1998:BCR:646692.759487}
 \cite{Daemen98aesproposal:}
 \cite{rfc3394}
@@ -68,7 +69,7 @@
 \section{Approach to the Rijndael Schema}
 % what is a PRP? 
 \begin{definition}\label{def:PRP}
- A PseudoRandom Permutation (PRP) is defined as a application from the message space $\mathcal{M}$ and the key space $\mathcal{K}$ to the cipher space $\mathcal{C}$:
+ A Pseudo-Random Permutation (PRP) is defined as a application from the message space $\mathcal{M}$ and the key space $\mathcal{K}$ to the cipher space $\mathcal{C}$:
  \begin{center}
   \begin{tabular}{llll}
    PRP: & $\mathcal{M} \times \mathcal{K}$ & $\rightarrow$ & $\mathcal{C}$ \\
@@ -76,10 +77,26 @@
  \end{center}
  such that:
  \begin{enumerate}
-  \item $\exists$ ``efficient'' algorithm $c=E(k,m)$
-  \item $\exists$ ``efficient'' inverse such that $m=D(k,c)$
-  \item The functions $E$ and $D$ are bijective
+  \item $\exists$ ``efficient'' \emph{deterministic} algorithm $c=E(k,m)$
+  \item The functions $E$ is bijective
+  \item $\exists$ ``efficient'' inversion algorithm such that $m=D(k,c)$
  \end{enumerate}
+\end{definition}
+
+A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys}. Also Shannon have defined the concept of the \emph{perfect secrecy}
+\begin{definition}
+ A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and a $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
+ \begin{center}
+  $Pr[E(k,m_1)=c] = Pr[E(k,m_2)=c]$
+ \end{center}
+\end{definition}
+
+This means that $c$ does not reveal \emph{any} information about the originam $m$. This can also by says like: The distribution of the cipher of a message is the same than the distribution from another message, or formally:
+\begin{definition}
+ For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is computationally indistinguishable:
+ \begin{center}
+  $\{ E(k,m_1) \} \approx_p \{ E(k,m_2) \} $
+ \end{center}
 \end{definition}
 
 Consider an scenario where an adversary has access to a random oracle where the output of this oracle can be or the output of the PRP or a truly random output, the advantage of the adversary to distinguish between if the output is get from one or the other can be described as:
@@ -119,6 +136,7 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 
 %%%%%%%%%%%%%%%%
 \subsection{key expansion}
+% TODO define s Pseudo-Random Generator (PRG)
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize
 % TODO subBytes() is used, then the sboxes but is explained later on.
 % TODO when key n#columns is different than message #columns
