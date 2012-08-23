@@ -67,6 +67,33 @@
 %%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}
 % what is a PRP? and why is Rijndael a secure PRP?
+\begin{definition}\label{def:PRP}
+ A PseudoRandom Permutation (PRP) is defined as a application from the message space $\mathcal{M}$ and the key space $\mathcal{K}$ to the cipher space $\mathcal{C}$:
+ \begin{center}
+  \begin{tabular}{llll}
+   PRP: & $\mathcal{M} \times \mathcal{K}$ & $\rightarrow$ & $\mathcal{C}$ \\
+  \end{tabular}
+ \end{center}
+ such that:
+ \begin{enumerate}
+  \item $\exists$ ``efficient'' algorithm $c=E(k,m)$
+  \item $\exists$ ``efficient'' inverse such that $m=D(k,c)$
+  \item The functions $E$ and $D$ are one-to-one
+ \end{enumerate}
+\end{definition}
+
+Consider an scenario where an adversary has access to a random oracle where the output of this oracle can be or the output of the PRP or a truly random output, the advantage of the adversary to distinguish between if the output is get from one or the other can be described as:
+\begin{equation}\label{eq:prpAdv}
+ {Adv}_{F}^{prp} = Pr[{Exp}_{F}^{r}(A)=1]-Pr[{Exp}_{F}^{prp}(A)=1]
+\end{equation}
+where ${Exp}_{F}^{r}$ represents an experiment of the truly random output and ${Exp}_{F}^{prp}$ the same but with the PRP.
+
+\begin{definition}\label{def:securePRP}
+ A PRP is secure if for all ``efficient'' adversary if the advantage to distinguish if the output is from the PRP or the truly random is ``negligible''
+\end{definition}
+
+The most efficient attacks on Rijndael      that means this algorithm is still secure.
+
 % rijndael good characteristics
 % shannon: confusion & diffusion => substitution & permitation
 % structure of the input (fix block size)
