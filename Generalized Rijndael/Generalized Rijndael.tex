@@ -48,16 +48,16 @@
 
 \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
  This is the abstract
-% this article comes from a real request, for small block cipher, but the tuneable paramenters in rijndael creates the idea to, further than an small version, it can be generalized
+% TODO this article comes from a real request, for small block cipher, but the tuneable paramenters in rijndael creates the idea to, further than an small version, it can be generalized
 \\\\    
 {\bf Keywords:} Cryptography, Symmetrics, Rijndael
 \end{abstract}
 
 %%%%%%%%%%%%%%%%
 \section{Introduction}
-% There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
-% problem aproach (rijndael scalability)
-% alternative cryptosystems
+% TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
+% TODO problem aproach (rijndael scalability)
+% TODO alternative cryptosystems
 \cite{Daemen:1998:BCR:646692.759487}
 \cite{Daemen98aesproposal:}
 \cite{rfc3394}
@@ -66,7 +66,7 @@
 
 %%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}
-% what is a PRP? and why is Rijndael a secure PRP?
+% what is a PRP? 
 \begin{definition}\label{def:PRP}
  A PseudoRandom Permutation (PRP) is defined as a application from the message space $\mathcal{M}$ and the key space $\mathcal{K}$ to the cipher space $\mathcal{C}$:
  \begin{center}
@@ -78,36 +78,36 @@
  \begin{enumerate}
   \item $\exists$ ``efficient'' algorithm $c=E(k,m)$
   \item $\exists$ ``efficient'' inverse such that $m=D(k,c)$
-  \item The functions $E$ and $D$ are one-to-one
+  \item The functions $E$ and $D$ are bijective
  \end{enumerate}
 \end{definition}
 
 Consider an scenario where an adversary has access to a random oracle where the output of this oracle can be or the output of the PRP or a truly random output, the advantage of the adversary to distinguish between if the output is get from one or the other can be described as:
 \begin{equation}\label{eq:prpAdv}
- {Adv}_{F}^{prp} = Pr[{Exp}_{F}^{r}(A)=1]-Pr[{Exp}_{F}^{prp}(A)=1]
+ {Adv}_{F}^{prp}(A) = Pr[{Exp}_{F}^{prp-1}(A)=1]-Pr[{Exp}_{F}^{prp-0}(A)=1]
 \end{equation}
-where ${Exp}_{F}^{r}$ represents an experiment of the truly random output and ${Exp}_{F}^{prp}$ the same but with the PRP.
+where ${Exp}_{F}^{PRP-1}$ is the probability to the adversary to win the bet that the output comes from a the PRP and ${Exp}_{F}^{PRP-0}$ when the output comes from a truly random.
 
 \begin{definition}\label{def:securePRP}
- A PRP is secure if for all ``efficient'' adversary if the advantage to distinguish if the output is from the PRP or the truly random is ``negligible''
+ A PRP is secure if for all ``efficient'' adversary, the advantage to distinguish if the output is from the PRP or the truly random is ``negligible''
 \end{definition}
-
+% TODO and why is Rijndael a secure PRP?
 The most efficient attacks on Rijndael      that means this algorithm is still secure.
 
-% rijndael good characteristics
-% shannon: confusion & diffusion => substitution & permitation
-% structure of the input (fix block size)
-% format preserving encryption alternative?
+% TODO rijndael good characteristics
+% TODO shannon: confusion & diffusion => substitution & permitation
+% TODO structure of the input (fix block size)
+% TODO format preserving encryption alternative?
 
 %%%%%%%%%%%%%%%%
 \subsection{Design}
-% what is the state matrix
-% describe the transformations from the Shammir ``confussion and diffusion'' point of view.
+% TODO what is the state matrix
+% TODO describe the transformations from the Shammir ``confussion and diffusion'' point of view.
 
 %%%%%%%%%%%%%%%%
 \section{Generalising the schema}
 
-%TODO: Draw the procedure as diagram
+% Draw the procedure as diagram
 \begin{figure}[h]
  \centering
  \includegraphics[scale=0.5,keepaspectratio=true]{./images/rijndaelDiagram.png}
@@ -115,13 +115,13 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
  \caption{rijndael diagram}
  \label{fig:RijndaelDiagram}
 \end{figure}
-
+% TODO 
 
 %%%%%%%%%%%%%%%%
 \subsection{key expansion}
-% abstraction of what it is, independent from the #rows, #columns, wordsize
-% subBytes() is used, then the sboxes but is explained later on.
-% when key n#columns is different than message #columns
+% TODO abstraction of what it is, independent from the #rows, #columns, wordsize
+% TODO subBytes() is used, then the sboxes but is explained later on.
+% TODO when key n#columns is different than message #columns
 
 \begin{algorithm}
  \caption{KeyExpansion}
@@ -159,17 +159,17 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 
 %%%%%%%%%%%%%%%%
 \subsection{Rounds}
-% why n rounds and not more, not less?
+% TODO why n rounds and not more, not less?
 
 %%%%%%%%%%%%%%%%
 \subsection{subBytes}
-% abstraction of what it is, independent from the #rows, #columns, wordsize
-% operations in the polynomial field F_{2^w} w: wordsize
-%TODO: draw schematic of this step
+% TODO abstraction of what it is, independent from the #rows, #columns, wordsize
+% TODO operations in the polynomial field F_{2^w} w: wordsize
+% TODO draw schematic of this step
 
 %%%%%%%%%%%%%%%%
 \subsubsection{How to build different SBoxes}
-% how the sbox was build and how to build a new one with different parameters
+% TODO how the sbox was build 
 \begin{figure}[h]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}\hline
@@ -196,36 +196,37 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 \label{tab:sbox8}
 \end{figure}
 
+% TODO and how to build a new one with different parameters
 
 %%%%%%%%%%%%%%%%
 \subsection{shiftColumns}
-% abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
-%TODO: draw schematic of this step
+% TODO abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
+% TODO draw schematic of this step
 
 %%%%%%%%%%%%%%%%
 \subsection{mixColumns}
-% abstraction of what it is, independent from the #rows, #columns, wordsize
-% polynomial ring, where the coeficients are elements from a binary polynomial field
+% TODO abstraction of what it is, independent from the #rows, #columns, wordsize
+% TODO polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, ord(m)=#rows
 %   (this is, in mho, one of the most important points of rijndael)
-%TODO: draw schematic of this step
+% TODO draw schematic of this step
 \subsection{Operate in a polinomial ring, with coeficients in a polinomial field}
 $$\Fpnm{n}{y}\label{eq:polinomialRing}$$ where $m(y)$ is a composed polinomial of degree $r$ columns. This gives a polinomial ring. The coeficients of this polinomial ring are elements of a polinomial field $$\Fpn{2}{n}=\Fpnm{2}{x}\label{eq:polinomialField}$$ where $m(x)$ is irreductible and gives a polinomial field.
 Standard rijndael (AES) uses a circulan invertible matrix for this to simplify and speed up the operations in the ring.
 
 %%%%%%%%%%%%%%%%
 \subsection{addRoundKey}
-% the operation where the key is used (from the 4 rijndael operations)
-% simply a xor operation (addition in F_2)
-%TODO: draw schematic of this step
+% TODO the operation where the key is used (from the 4 rijndael operations)
+% TODO simply a xor operation (addition in F_2)
+% TODO draw schematic of this step
 
 %%%%%%%%%%%%%%%%
 \section{Parameter combinations}
-% how, with different parameters, can have the same block sizes, and what's different between them
+% TODO how, with different parameters, can have the same block sizes, and what's different between them
 
 %%%%%%%%%%%%%%%%
 \section{New useful sizes for Rijndael}
-% because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
+% TODO because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
 \cite{Daemen:1999:EBC:1267115.1267119}
 
 %%%%%%%%%%%%%%%%
