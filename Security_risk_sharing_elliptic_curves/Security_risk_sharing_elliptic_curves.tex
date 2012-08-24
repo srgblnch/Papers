@@ -6,6 +6,8 @@
 \usepackage{amsmath,amsfonts,amssymb}%\usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{graphicx}
 \usepackage{algorithmic,algorithm}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
 
 \pagestyle{headings}%page numbers
 
@@ -330,6 +332,113 @@ For all the isogenies with a degree greater than 1, they can be factored into a 
 
 %% FIXME: define a volcano: as a graph of isogenies of a particular degree.
 To describe the structure of the $\ell$ degree isogeny class it has been proposed a graph. Using the different cases of isogenies in the same isogeny class two main parts of the graph can be described. There is a part of the graph that is cyclic, and from each node an edge goes down with a balanced $\ell$-tree. All the nodes in the circumference have each tree with the same altitude. The number of edges of each node is $(\ell+1)$
+
+% volcano graph
+% modification based on: http://hal.archives-ouvertes.fr/docs/00/63/28/41/TEX/VersionJournal.tex
+\begin{figure}
+\begin{center}
+\begin{pgfpicture}{-3cm}{1cm}{13cm}{4cm}
+%setup the graph frame
+\pgfsetxvec{\pgfpoint{0.6cm}{0cm}}
+\pgfsetyvec{\pgfpoint{0cm}{0.4cm}}
+% draw the crater as an ellipse
+\pgfellipse[stroke]{\pgfxy(5,10)}{\pgfxy(4,0)}{\pgfxy(0,1)}
+%vertex on the crater
+\pgfcircle[fill]{\pgfxy(1,10)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(9,10)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(5,9)}{0.05cm}
+%edges from 0 to 1
+\pgfline{\pgfxy(1,10)}{\pgfxy(0.5,8)}
+\pgfline{\pgfxy(1,10)}{\pgfxy(1.5,8)}
+\pgfline{\pgfxy(9,10)}{\pgfxy(8.5,8)}
+\pgfline{\pgfxy(9,10)}{\pgfxy(9.5,8)}
+\pgfline{\pgfxy(5,9)}{\pgfxy(5.5,7)}
+\pgfline{\pgfxy(5,9)}{\pgfxy(4.5,7)}
+%vertex on level 1
+\pgfcircle[fill]{\pgfxy(0.5,8)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(1.5,8)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(8.5,8)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(9.5,8)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(4.5,7)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(5.5,7)}{0.05cm}
+% edges left sheets
+\pgfxyline(0,4)(0.5,2)
+\pgfxyline(0,4)(0,2)
+\pgfxyline(0,4)(-0.5,2)
+\pgfxyline(2,4)(1.5,2)
+\pgfxyline(2,4)(2,2)
+\pgfxyline(2,4)(2.5,2)
+% edges central sheets
+\pgfxyline(4,4)(3.5,2)
+\pgfxyline(4,4)(4,2)
+\pgfxyline(4,4)(4.5,2)
+\pgfxyline(6,4)(5.5,2)
+\pgfxyline(6,4)(6,2)
+\pgfxyline(6,4)(6.5,2)
+% edges right sheets
+\pgfxyline(8,4)(8.5,2)
+\pgfxyline(8,4)(8,2)
+\pgfxyline(8,4)(7.5,2)
+\pgfxyline(10,4)(9.5,2)
+\pgfxyline(10,4)(10,2)
+\pgfxyline(10,4)(10.5,2)
+% from now, dashed edges
+\pgfsetdash{{0.1cm}{0.1cm}}{0.05cm}
+% middle left dashed edges
+\pgfxyline(0.5,8)(-0.5,6)
+\pgfxyline(0.5,8)(0,4)
+\pgfxyline(0.5,8)(0.95,6)
+\pgfxyline(1.5,8)(1.05,6)
+\pgfxyline(1.5,8)(2,4)
+\pgfxyline(1.5,8)(2.5,6)
+% middle center dashed edges
+\pgfxyline(4.5,7)(3.5,5)
+\pgfxyline(4.5,7)(4,4)
+\pgfxyline(4.5,7)(4.95,5)
+\pgfxyline(5.5,7)(5.05,5)
+\pgfxyline(5.5,7)(6,4)
+\pgfxyline(5.5,7)(6.5,5)
+% middle right dashed edges
+\pgfxyline(8.5,8)(7.5,6)
+\pgfxyline(8.5,8)(8,4)
+\pgfxyline(8.5,8)(8.95,6)
+\pgfxyline(9.5,8)(9.05,6)
+\pgfxyline(9.5,8)(10,4)
+\pgfxyline(9.5,8)(10.5,6)
+% vertex to the sheets
+\pgfcircle[fill]{\pgfxy(0,4)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(2,4)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(4,4)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(6,4)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(8,4)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(10,4)}{0.05cm}
+% sheet vertex left
+\pgfcircle[fill]{\pgfxy(0.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(0,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(-0.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(1.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(2,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(2.5,2)}{0.05cm}
+% sheet vertex center
+\pgfcircle[fill]{\pgfxy(3.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(4,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(4.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(5.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(6,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(6.5,2)}{0.05cm}
+% sheet vertex right
+\pgfcircle[fill]{\pgfxy(8.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(8,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(7.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(9.5,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(10,2)}{0.05cm}
+\pgfcircle[fill]{\pgfxy(10.5,2)}{0.05cm}
+\end{pgfpicture}
+\caption{A regular $\ell$-volcano, with $\ell=3$}
+\label{RegularVolcano}
+\end{center}
+\end{figure}
+
 %% FIXME: Is true the number of edges per node?
 
 %% FIXME: define ``serralada'' (volcanoes range or system): as the joint of graphs of isogenies with many primer degrees.
