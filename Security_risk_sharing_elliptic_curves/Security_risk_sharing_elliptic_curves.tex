@@ -12,7 +12,7 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\version}{Versi\'on 0.0.1}
+\newcommand{\version}{Versi\'on 0.0.4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %opening
@@ -55,7 +55,8 @@
 
 \maketitle
 \begin{center}
- \today
+ \today\\
+ \version
 \end{center}
 
 
@@ -112,12 +113,12 @@ And the \emph{elliptic curve discriminant} over the prime finite field also can 
 %% define the cardinality of an elliptic curve, (the order and the cofactor def in the nonsupersingularity)
 Another important parameter of an elliptic curve is the cardinality, who can be defined as:
 \begin{definition}\label{def:cardinality}
- The \emph{cardinality} of an elliptic curves $E$ over \Fq is defined as the number of \Fq-rational points.
+ The \emph{cardinality} of an elliptic curves $E$ over \Fq is defined as the number of \Fq-rational points. Where a \Fq-rational points is a pair $(x,y)\in \mathbb{F}_{q}^{2}$ such that follows the elliptic curve equation.
 \end{definition}
 %FIXME: this definition here is a bit forced, but where is this better?
 
 %% Introduce the PaI
-A curve over a general finite field $\mathbb{F}$ is composed by the points of the curve with the notation $E\left(\mathbb{F}\right)$. The points of an elliptic curve over a prime finite field are all ones that resolves the equation \ref{eq:WRF} union the point at infinity (the neutral element of the group, denoted \PaI) who does not have representation over the affine plane and other coordinate representations are better like the projectives \Proy or Jacobians \Jacob.
+A curve over a general finite field $\mathbb{F}$ is composed by the points of the curve with the notation $E\left(\mathbb{F}\right)$. The points of an elliptic curve over a prime finite field are all ones that resolves the equation \ref{eq:WRF} union the point at infinity (the neutral element of the group, denoted \PaI) who does not have representation over the affine plane and other coordinate representations are better like the projectives \Proy $\;$ or Jacobians \Jacob.
 
 %% affine coordinates
 \begin{definition}\label{def:afinproy}
@@ -148,21 +149,26 @@ There exist a equivalence relation between points in the projective plane follow
 \end{definition}
 
 %% Projective coordinates
-In the projective plane, three coordinates are used to represent a two-dimensional point, knowing $y=\frac{y}{z}$ and $x=\frac{X}{Z}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} will be $\frac{Y^{2}}{Z^{2}} = \frac{X^{3}}{Z^{3}} + a\frac{X}{Z} + b$, simplified:
+In the projective plane, three coordinates are used to represent a two-dimensional point, knowing $x=\frac{X}{Z}$ and $y=\frac{Y}{Z}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} will be $\frac{Y^{2}}{Z^{2}} = \frac{X^{3}}{Z^{3}} + a\frac{X}{Z} + b$, simplified:
 \begin{equation}\label{eq:WRFProy}
-        Y^{2}Z = X^{3} + aXZ^{2} + bX^{3} %\\
+        Y^{2}Z = X^{3} + aXZ^{2} + bX^{3}
 \end{equation}
 
-%% TODO: ??jacobian coordinates: Have they enough interest for the objective of this article?
+%% FIXME: ??jacobian coordinates: Have they enough interest for the objective of this article?
+Over a Jacobian plane, also three coordinate are used to represent the points, knowing $x=\frac{X}{Z^2}$ and $y=\frac{Y}{Z^3}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} is:
+\begin{equation}\label{eq:WRFJacobian}
+        Y^{2}Z = X^{3} + aXZ^{4} + bX^{6}
+\end{equation}
 
-%% TODO: projective coord. are better to point addition, and jacobian better for point doubling.
-\cite{EC&NT&crypt}
+As is described in \cite{EC&NT&crypt} the projective coordinates improves the operation of the point addition, but the jacobian coordinates gives an advantage over the doubling point operation.
+
 %% TODO: the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of of 0's an 1's are similar?
 
 An the joint of points of an elliptic curve over a prime finite field, described in projective coordinates is:
 \begin{equation}\label{eq:conjEK}
 E\left(\mathbb{F}_{p}\right) = \left\{ Y^{2}Z = X^{3} + aXZ^{2} + bZ^{3} \bigcup \PaIe \right\} \\
 \end{equation}
+Simplifying the definition \ref{def:cardinality}, the cardinality of an elliptic curve defined over \Fq is the number of elements in the joint of points of this curve. The cardinality is denoted as $|$\EFq$|$
 
 \subsection{Operation between points of an elliptic curve \label{sec:ce_ops}}
 
@@ -309,7 +315,7 @@ From this definition \ref{def:isogeny} must be extracted that the cardinality of
         \mathcal{I}\left(\PaIe\right) = \mathcal{O}_{E'}
 \end{equation}
 
-And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/\mathbb{K}$. Where can be assumed for the generator $G \in E/\mathbb{K}$ exist a $G' \in E'/\mathbb{K}$ and for the public key $P=d\cdot G \in E/\mathbb{K}$ exist a $P'=d\cdot G' \in E'/\mathbb{K}$ with the same secret key, because of $\mathcal{I}\left(P+Q\right) = \mathcal{I}\left(P\right)+\mathcal{I}\left(Q\right)$.
+And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/\mathbb{K}$. Where can be assumed for the generator $G \in E/\mathbb{K}$ exist a $G' \in E'/\mathbb{K}$ and for the public key $P=[d]G \in E/\mathbb{K}$ exist a $P'=[d]G' \in E'/\mathbb{K}$ with the same secret key, because of $\mathcal{I}\left(P+Q\right) = \mathcal{I}\left(P\right)+\mathcal{I}\left(Q\right)$.
 
 
 
