@@ -7,6 +7,10 @@
 
 \pagestyle{headings}%page numbers
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\version}{Versi\'on 0.0.1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \title{Generalised Rijndael}
 \author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}}
  \institute{
@@ -43,7 +47,8 @@
 \begin{document}
 \maketitle
 \begin{center}
- \today
+ \today\\
+ \version
 \end{center}
 
 \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
@@ -181,14 +186,9 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 
 %%%%%%%%%%%%%%%%
 \subsection{subBytes}
-% TODO abstraction of what it is, independent from the #rows, #columns, wordsize
-% TODO operations in the polynomial field F_{2^w} w: wordsize
-% TODO draw schematic of this step
+This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it.
 
-%%%%%%%%%%%%%%%%
-\subsubsection{How to build different SBoxes}
-% TODO how the sbox was build 
-\begin{figure}[h]{\tiny
+\begin{figure}[b]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}\hline
     & 0x0  & 0x1  & 0x2  & 0x3  & 0x4  & 0x5  & 0x6  & 0x7  & 0x8  & 0x9  & 0xA  & 0xB  & 0xC  & 0xD  & 0xE  & 0xF \\\hline\hline
@@ -214,7 +214,45 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 \label{tab:sbox8}
 \end{figure}
 
+From the programmatic point of view the use of those boxes is so simple. Because the wordsize is 8 bits, by splitting the data to transform in two parts of 4 bits you can get the row and the column, taking the value in the cell as the value of the substitution. In the decipher operation, is used the inverse of the box, and with the same procedure of split the word and find the coordinates, but now with the inverse S-Box, the value you get back is the original data.
+
+As an example, to transform the data \texttt{0x39} localise the cell in row \texttt{0x3} column \texttt{0x9}, and change the state matrix value with \texttt{0x12}. In the decipher procedure the transformation will be from the value \texttt{0x12}, reading the row \texttt{0x1} column \texttt{0x2} the cell have the value \texttt{0x39}, the original of this example.
+
+% abstraction of what it is, independent from the #rows, #columns, wordsize
+
+But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation.
+
+% operations in the polynomial field F_{2^w} w: wordsize
+The first transformation is to compute the multiplicative inverse in the field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original Rijndael). The second transformation is an affine transformation over the field \Fpn{2}{w}. In the original Rijndael is:
+\begin{equation}\label{eq:subBytes:affine}
+ b_{i}' = b_{i} \oplus b_{(i+4)mod8} \oplus b_{(i+5)mod8} \oplus 
+          b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
+\end{equation}
+Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation:
+\begin{equation}
+ \left[\begin{array}{c}b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'\end{array}\right]=
+ \left[\begin{array}{cccccccc}
+   1&0&0&0&1&1&1&1\\
+   1&1&0&0&0&1&1&1\\
+   1&1&1&0&0&0&1&1\\
+   1&1&1&1&0&0&0&1\\
+   1&1&1&1&1&0&0&0\\
+   0&1&1&1&1&1&0&0\\
+   0&0&1&1&1&1&1&0\\
+   0&0&0&1&1&1&1&1\\
+  \end{array}\right]\cdot
+  \left[\begin{array}{c}b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}\end{array}\right]+
+  \left[\begin{array}{c}1\\1\\0\\0\\0\\1\\1\\0\end{array}\right]
+\end{array}]
+\end{equation}
+
+% TODO draw schematic of this step
+
+%%%%%%%%%%%%%%%%
+\subsubsection{How to build different SBoxes}
+
 % TODO and how to build a new one with different parameters
+Using the same \emph{wordsize} there are two different things that can be changed: the \texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpn{2}{4}, over $16$ the field will be \Fpn{2}{{16}}, and the subparameters of the affine transformation must also be set up.
 
 %%%%%%%%%%%%%%%%
 \subsection{shiftColumns}
