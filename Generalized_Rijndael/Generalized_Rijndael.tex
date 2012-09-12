@@ -4,6 +4,8 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
 \usepackage{algorithmic,algorithm}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,decorations.pathmorphing,shapes,snakes}
 
 \pagestyle{headings}%page numbers
 
@@ -40,6 +42,15 @@
 \renewcommand{\algorithmicrequire}{\textbf{INPUT:}}%
 \renewcommand{\algorithmicensure}{\textbf{OUTPUT:}}%
 \renewcommand{\algorithmiccomment}[1]{/* #1 */}%	
+
+%used for schemas
+\newcommand{\myunit}{1 cm}
+\tikzset{
+    node style sp/.style={draw,circle,minimum size=\myunit},
+    node style ge/.style={circle,minimum size=\myunit},
+    arrow style mul/.style={draw,sloped,midway,fill=white},
+    arrow style plus/.style={midway,sloped,fill=white},
+}
 
 \floatname{algorithm}{Algorithm}%
 \floatname{definition}{Definition}%
@@ -171,13 +182,88 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 \end{algorithm}
 
 % draw the algorithm as a diagram TODO: redo this diagram
-\begin{figure}[b]
- \centering
- \includegraphics[scale=0.4,keepaspectratio=true]{./images/rijndael_keyExpansionDiagram.png}
- % rijndael_keyExpansionDiagram.png: 661x438 pixel, 72dpi, 23.32x15.45 cm, bb=0 0 661 438
- \caption{Block diagram of the construction of the rijndael key expansion}
+% \begin{figure}[b]
+%  \centering
+%  \includegraphics[scale=0.4,keepaspectratio=true]{./images/rijndael_keyExpansionDiagram.png}
+%  % rijndael_keyExpansionDiagram.png: 661x438 pixel, 72dpi, 23.32x15.45 cm, bb=0 0 661 438
+%  \caption{Block diagram of the construction of the rijndael key expansion}
+% \label{fig:keyExpansionDiagram}
+% \end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+\matrix (k0) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.3cm,row sep=-0.5cm,
+             ] at (0,0)
+        {
+          k_{0_{(0,0)}} & k_{0_{(0,1)}} & k_{0_{(0,2)}} & k_{0_{(0,3)}} \\
+          k_{0_{(1,0)}} & k_{0_{(1,1)}} & k_{0_{(1,2)}} & k_{0_{(1,3)}} \\
+          k_{0_{(2,0)}} & k_{0_{(2,1)}} & k_{0_{(2,2)}} & k_{0_{(2,3)}} \\
+          k_{0_{(3,0)}} & k_{0_{(3,1)}} & k_{0_{(3,2)}} & k_{0_{(3,3)}} \\
+        };
+\draw [] (k0-1-1.north west) rectangle (k0-4-4.south east);
+
+\matrix (k1) [matrix of math nodes,nodes = {node style ge},
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.3cm,row sep=-0.5cm,
+             ] at (4.5,0)
+        {
+          k_{1_{(0,0)}} & k_{1_{(0,1)}} & k_{1_{(0,2)}} & k_{1_{(0,3)}} \\
+          k_{1_{(1,0)}} & k_{1_{(1,1)}} & k_{1_{(1,2)}} & k_{1_{(1,3)}} \\
+          k_{1_{(2,0)}} & k_{1_{(2,1)}} & k_{1_{(2,2)}} & k_{1_{(2,3)}} \\
+          k_{1_{(3,0)}} & k_{1_{(3,1)}} & k_{1_{(3,2)}} & k_{1_{(3,3)}} \\
+        };
+\draw [] (k1-1-1.north west) rectangle (k1-4-4.south east);
+
+% \node [] (cdots) at (7,0) {$\cdots$};
+% 
+% \matrix (kn) [matrix of math nodes,nodes = {node style ge},
+%               %left delimiter  = (,right delimiter = ),
+%               column sep=-0.3cm,row sep=-0.5cm,
+%              ] at (9.5,0)
+%         {
+%           k_{n_{(0,0)}} & k_{n_{(0,1)}} & k_{n_{(0,2)}} & k_{n1_{(0,3)}} \\
+%           k_{n_{(1,0)}} & k_{n_{(1,1)}} & k_{n_{(1,2)}} & k_{n_{(1,3)}} \\
+%           k_{n_{(2,0)}} & k_{n_{(2,1)}} & k_{n_{(2,2)}} & k_{n_{(2,3)}} \\
+%           k_{n_{(3,0)}} & k_{n_{(3,1)}} & k_{n_{(3,2)}} & k_{n_{(3,3)}} \\
+%         };
+% \draw [] (kn-1-1.north west) rectangle (kn-4-4.south east);
+
+%boxes to get the necessary columns
+\draw [blue] (k0-1-2.north west) rectangle (k0-4-2.south east);
+\draw [blue] (k1-1-2.north west) rectangle (k1-4-2.south east);
+\draw [red] (k1-1-3.north west) rectangle (k1-4-3.south east);
+
+\node [diamond,draw,aspect=2] (imodc) at (3,-3) {i mod c};
+\node [rectangle,draw] (rotWord) at (1,-3.5) {rotWord()};
+\node [rectangle,draw] (subBytes) at (1,-4.4) {subBytes()};
+\node [circle,draw] (xor) at (3,-5) {};
+ \draw [-] (xor.north) -- (xor.south);
+ \draw [-] (xor.west) -- (xor.east);
+\node [] (eq0) at (1.7,-2.8) {=0};
+\node [] (neq) at (3.3,-3.7) {$\neq0$};
+\node [] (neq) at (k0-1-2.north) {$i-c$};
+\node [] (neq) at (k1-1-2.north) {$i$};
+\node [] (neq) at (k1-1-3.north) {$i+1$};
+
+%arrows to set into the algorithm
+\draw [|->] (k0-4-2.south) -- (-.45,-5) -- (xor.west);
+\draw [|->] (k1-4-2.south) -- (4.05,-2) -- (3,-2) -- (imodc);
+\draw [->] (imodc.west) -- (1,-3) -- (rotWord.north);
+\draw [->] (rotWord.south) -- (subBytes.north);
+\draw [->] (imodc.south) -- (xor.north);
+\draw [->] (subBytes.south) -- (1,-4.8) -- (xor.north);
+\draw [->] (xor.east) -- (4.95,-5) -- (k1-4-3.south);
+
+
+\end{tikzpicture}
+\caption{Block diagram of the construction of the Rijndael Key Expansion}
 \label{fig:keyExpansionDiagram}
+\end{center}
 \end{figure}
+
 
 
 %%%%%%%%%%%%%%%%
@@ -229,21 +315,32 @@ The first transformation is to compute the multiplicative inverse in the field \
           b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
 \end{equation}
 Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation:
+
 \begin{equation}
- \left[\begin{array}{c}b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'\end{array}\right]=
- \left[\begin{array}{cccccccc}
-   1&0&0&0&1&1&1&1\\
-   1&1&0&0&0&1&1&1\\
-   1&1&1&0&0&0&1&1\\
-   1&1&1&1&0&0&0&1\\
-   1&1&1&1&1&0&0&0\\
-   0&1&1&1&1&1&0&0\\
-   0&0&1&1&1&1&1&0\\
-   0&0&0&1&1&1&1&1\\
-  \end{array}\right]\cdot
-  \left[\begin{array}{c}b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}\end{array}\right]+
-  \left[\begin{array}{c}1\\1\\0\\0\\0\\1\\1\\0\end{array}\right]
-\end{array}]
+ \left[
+  \begin{array}{c}
+    b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'
+  \end{array}
+ \right]=\left[
+  \begin{array}{cccccccc}
+    1&0&0&0&1&1&1&1\\
+    1&1&0&0&0&1&1&1\\
+    1&1&1&0&0&0&1&1\\
+    1&1&1&1&0&0&0&1\\
+    1&1&1&1&1&0&0&0\\
+    0&1&1&1&1&1&0&0\\
+    0&0&1&1&1&1&1&0\\
+    0&0&0&1&1&1&1&1\\
+  \end{array}
+ \right]\cdot\left[
+  \begin{array}{c}
+    b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}
+  \end{array}
+ \right]+\left[
+  \begin{array}{c}
+    1\\1\\0\\0\\0\\1\\1\\0
+  \end{array}
+ \right]
 \end{equation}
 
 % TODO draw schematic of this step
