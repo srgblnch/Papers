@@ -181,85 +181,65 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
  \end{algorithmic}
 \end{algorithm}
 
-% draw the algorithm as a diagram TODO: redo this diagram
-% \begin{figure}[b]
-%  \centering
-%  \includegraphics[scale=0.4,keepaspectratio=true]{./images/rijndael_keyExpansionDiagram.png}
-%  % rijndael_keyExpansionDiagram.png: 661x438 pixel, 72dpi, 23.32x15.45 cm, bb=0 0 661 438
-%  \caption{Block diagram of the construction of the rijndael key expansion}
-% \label{fig:keyExpansionDiagram}
-% \end{figure}
-
+% draw the algorithm as a diagram
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[>=latex]
-\matrix (k0) [matrix of math nodes,nodes = {node style ge},%
+\matrix (k) [matrix of math nodes,nodes = {node style ge},%
               %left delimiter  = (,right delimiter = ),
-              column sep=-0.3cm,row sep=-0.5cm,
+              column sep=-0.1cm,row sep=-0.5cm,
              ] at (0,0)
         {
-          k_{0_{(0,0)}} & k_{0_{(0,1)}} & k_{0_{(0,2)}} & k_{0_{(0,3)}} \\
-          k_{0_{(1,0)}} & k_{0_{(1,1)}} & k_{0_{(1,2)}} & k_{0_{(1,3)}} \\
-          k_{0_{(2,0)}} & k_{0_{(2,1)}} & k_{0_{(2,2)}} & k_{0_{(2,3)}} \\
-          k_{0_{(3,0)}} & k_{0_{(3,1)}} & k_{0_{(3,2)}} & k_{0_{(3,3)}} \\
+          k_{0_{(0,0)}} & k_{0_{(0,1)}} & \cdots & k_{0_{(0,c)}} &
+          k_{1_{(0,0)}} & k_{1_{(0,1)}} & \cdots & k_{1_{(0,c)}} &
+          \cdots &
+          k_{n_{(0,0)}} & k_{n_{(0,1)}} & \cdots & k_{n_{(0,c)}} \\
+          k_{0_{(1,0)}} & k_{0_{(1,1)}} & \cdots & k_{0_{(1,c)}} &
+          k_{1_{(1,0)}} & k_{1_{(1,1)}} & \cdots & k_{1_{(1,c)}} &
+          \cdots &
+          k_{n_{(1,0)}} & k_{n_{(1,1)}} & \cdots & k_{n_{(1,c)}} \\
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \cdots        &
+          \vdots        & \vdots        & \ddots & \vdots        \\
+          k_{0_{(r,0)}} & k_{0_{(r,1)}} & \cdots & k_{0_{(r,c)}} &
+          k_{1_{(r,0)}} & k_{1_{(r,1)}} & \cdots & k_{1_{(r,c)}} &
+          \cdots &
+          k_{n_{(r,0)}} & k_{n_{(r,1)}} & \cdots & k_{n_{(r,c)}}\\
         };
-\draw [] (k0-1-1.north west) rectangle (k0-4-4.south east);
-
-\matrix (k1) [matrix of math nodes,nodes = {node style ge},
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.3cm,row sep=-0.5cm,
-             ] at (4.5,0)
-        {
-          k_{1_{(0,0)}} & k_{1_{(0,1)}} & k_{1_{(0,2)}} & k_{1_{(0,3)}} \\
-          k_{1_{(1,0)}} & k_{1_{(1,1)}} & k_{1_{(1,2)}} & k_{1_{(1,3)}} \\
-          k_{1_{(2,0)}} & k_{1_{(2,1)}} & k_{1_{(2,2)}} & k_{1_{(2,3)}} \\
-          k_{1_{(3,0)}} & k_{1_{(3,1)}} & k_{1_{(3,2)}} & k_{1_{(3,3)}} \\
-        };
-\draw [] (k1-1-1.north west) rectangle (k1-4-4.south east);
-
-% \node [] (cdots) at (7,0) {$\cdots$};
-% 
-% \matrix (kn) [matrix of math nodes,nodes = {node style ge},
-%               %left delimiter  = (,right delimiter = ),
-%               column sep=-0.3cm,row sep=-0.5cm,
-%              ] at (9.5,0)
-%         {
-%           k_{n_{(0,0)}} & k_{n_{(0,1)}} & k_{n_{(0,2)}} & k_{n1_{(0,3)}} \\
-%           k_{n_{(1,0)}} & k_{n_{(1,1)}} & k_{n_{(1,2)}} & k_{n_{(1,3)}} \\
-%           k_{n_{(2,0)}} & k_{n_{(2,1)}} & k_{n_{(2,2)}} & k_{n_{(2,3)}} \\
-%           k_{n_{(3,0)}} & k_{n_{(3,1)}} & k_{n_{(3,2)}} & k_{n_{(3,3)}} \\
-%         };
-% \draw [] (kn-1-1.north west) rectangle (kn-4-4.south east);
+\draw [] (k-1-1.north west) rectangle (k-4-13.south east);
+\draw [dashed] (k-1-1.north west) rectangle (k-4-4.south east);
+\draw [dashed] (k-1-5.north west) rectangle (k-4-8.south east);
+\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
 
 %boxes to get the necessary columns
-\draw [blue] (k0-1-2.north west) rectangle (k0-4-2.south east);
-\draw [blue] (k1-1-2.north west) rectangle (k1-4-2.south east);
-\draw [red] (k1-1-3.north west) rectangle (k1-4-3.south east);
-
-\node [diamond,draw,aspect=2] (imodc) at (3,-3) {i mod c};
-\node [rectangle,draw] (rotWord) at (1,-3.5) {rotWord()};
-\node [rectangle,draw] (subBytes) at (1,-4.4) {subBytes()};
-\node [circle,draw] (xor) at (3,-5) {};
+\draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
+\draw [blue,thick] (k-1-6.north west) rectangle (k-4-6.south east);
+\draw [red,thick] (k-1-7.north west) rectangle (k-4-7.south east);
+% 
+\node [diamond,draw,aspect=2] (imodc) at (-1.5,-3) {i mod c};
+\node [rectangle,draw] (rotWord) at (-3.5,-3.5) {rotWord()};
+\node [rectangle,draw] (subBytes) at (-3.5,-4.4) {subBytes()};
+\node [circle,draw] (xor) at (-1.5,-5) {};
  \draw [-] (xor.north) -- (xor.south);
  \draw [-] (xor.west) -- (xor.east);
-\node [] (eq0) at (1.7,-2.8) {=0};
-\node [] (neq) at (3.3,-3.7) {$\neq0$};
-\node [] (neq) at (k0-1-2.north) {$i-c$};
-\node [] (neq) at (k1-1-2.north) {$i$};
-\node [] (neq) at (k1-1-3.north) {$i+1$};
-
-%arrows to set into the algorithm
-\draw [|->] (k0-4-2.south) -- (-.45,-5) -- (xor.west);
-\draw [|->] (k1-4-2.south) -- (4.05,-2) -- (3,-2) -- (imodc);
-\draw [->] (imodc.west) -- (1,-3) -- (rotWord.north);
+\node [] (eq0) at (-2.7,-2.8) {=0};
+\node [] (neq) at (-1.2,-3.6) {$\neq0$};
+\node [] (neq) at (k-1-2.north) {$i-c$};
+\node [] (neq) at (k-1-6.north) {$i$};
+\node [] (neq) at (k-1-7.north) {$i+1$};
+% 
+% %arrows to set into the algorithm
+\draw [|->] (k-4-2.south) -- (-5.15,-5) -- (xor.west);
+\draw [|->] (k-4-6.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
+\draw [->] (imodc.west) -- (-3.5,-3) -- (rotWord.north);
 \draw [->] (rotWord.south) -- (subBytes.north);
 \draw [->] (imodc.south) -- (xor.north);
-\draw [->] (subBytes.south) -- (1,-4.8) -- (xor.north);
-\draw [->] (xor.east) -- (4.95,-5) -- (k1-4-3.south);
-
+\draw [->] (subBytes.south) -- (-3.5,-4.8) -- (xor.north);
+\draw [->] (xor.east) -- (0.05,-5) -- (k-4-7.south);
 
 \end{tikzpicture}
-\caption{Block diagram of the construction of the Rijndael Key Expansion}
+\caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
 \label{fig:keyExpansionDiagram}
 \end{center}
 \end{figure}
@@ -354,7 +334,69 @@ Using the same \emph{wordsize} there are two different things that can be change
 %%%%%%%%%%%%%%%%
 \subsection{shiftColumns}
 % TODO abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
-% TODO draw schematic of this step
+% FIXME(review) draw schematic of this step
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+ 
+%  \matrix (k) [matrix of math nodes,nodes = {node style ge},%
+%               %left delimiter  = (,right delimiter = ),
+%               column sep=-0.1cm,row sep=-0.5cm,
+%              ] at (0,0)
+%         {
+%           s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
+%           s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
+%           \vdots    & \vdots    & \ddots & \vdots    \\
+%           s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
+%         };
+
+\draw (0.0,0.0) rectangle (2.0,0.5);
+\draw (0.0,0.5) rectangle (2.0,1.0);
+\draw (0.0,1.0) rectangle (2.0,1.5);
+\draw (0.0,1.5) rectangle (2.0,2.0);
+\draw (0.5,0.0) rectangle (1.0,2.0);
+\draw (1.5,0.0) rectangle (2.0,2.0);
+\draw [dotted] (0.25,0.50) -- (0.25,1.0);
+\draw [dotted] (0.75,0.50) -- (0.75,1.0);
+\draw [dotted] (1.00,1.00) -- (1.50,0.50);
+\draw [dotted] (1.00,1.25) -- (1.50,1.25);
+\draw [dotted] (1.00,1.75) -- (1.50,1.75);
+
+\draw [fill=red] (2.50,1.0) rectangle (2.75,1.25);
+\draw (2.75,1.0) rectangle (3.00,1.25);
+\draw (3.00,1.0) rectangle (3.25,1.25);
+\draw (3.25,1.0) rectangle (3.50,1.25);
+\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.80)--(3.675,0.80)--(3.675,1.125)--(3.50,1.125);
+\draw [dotted] (3.0,1.125) rectangle (3.25,1.125);
+
+\draw [dotted] (3.00,0.65) -- (3.00,0.35);
+
+\draw [fill=red] (2.50,0.0) rectangle (2.75,0.25);
+\draw [fill=red] (2.75,0.0) rectangle (3.00,0.25);
+\draw [fill=red] (3.00,0.0) rectangle (3.25,0.25);
+\draw (3.25,0.0) rectangle (3.50,0.25);
+\draw [->] (2.500,0.125)--(2.325,0.125)--(2.325,-0.10)--(3.675,-0.10)--(3.675,0.125)--(3.50,0.125);
+\draw [dotted] (3.00,0.125) rectangle (3.25,0.125);
+
+\draw (4.0,0.0) rectangle (6.0,0.5);
+\draw (4.0,0.5) rectangle (6.0,1.0);
+\draw (4.0,1.0) rectangle (6.0,1.5);
+\draw (4.0,1.5) rectangle (6.0,2.0);
+\draw (4.5,0.0) rectangle (5.0,2.0);
+\draw (5.5,0.0) rectangle (6.0,2.0);
+\draw [dotted] (4.25,0.50) -- (4.25,1.0);
+\draw [dotted] (4.75,0.50) -- (4.75,1.0);
+\draw [dotted] (5.00,1.00) -- (5.50,0.50);
+\draw [dotted] (5.00,1.25) -- (5.50,1.25);
+\draw [dotted] (5.00,1.75) -- (5.50,1.75);
+
+
+\end{tikzpicture}
+\caption{Schematic diagram of the shiftColumns() transformation}
+\label{fig:shiftColumns}
+\end{center}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%
 \subsection{mixColumns}
@@ -362,7 +404,53 @@ Using the same \emph{wordsize} there are two different things that can be change
 % TODO polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, ord(m)=#rows
 %   (this is, in mho, one of the most important points of rijndael)
-% TODO draw schematic of this step
+% FIXME (review) draw schematic of this step
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+ 
+ \matrix (s) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (-4,0)
+        {
+          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
+          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
+        };
+
+\draw (-4.9,1.25)rectangle(-4,-1.25);
+
+ \matrix (s') [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (4,0)
+        {
+          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
+          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
+        };
+\draw (3.1,1.25)rectangle(4,-1.25);
+
+\node [rectangle,draw] (mixColumns) at (0,2) {mixColumns()};
+ \draw [->] (-4.5,1.25)--(mixColumns.west);
+ \draw [->] (mixColumns.east)--(3.5,1.25);
+
+\node [rectangle] (poli) at (0,1.0) {$s'(x)=a(x)\otimes s(x)$};
+\node [rectangle] (sx) at (0,-2) {$s(x)=s_{(0,1)}x^{c-1}+s_{(1,1)}x^{c-2}+\cdots+s_{(r,1)}x^{c-c+1}$};
+\node [rectangle] (fpnm) at (0,-2.5) {$ s(x),a(x),s'(x) \in$\Fpnm{w}{x} with $m(x)$ reductible and order $c$};
+\node [rectangle] (fpn) at (0,-3) {$s_{(i,j)} \in$\Fpnm{1}{z} with $m(z)$ irreductible and order $w$};
+
+\end{tikzpicture}
+\caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field}
+\label{fig:mixColumns}
+\end{center}
+\end{figure}
+
+
 \subsection{Operate in a polinomial ring, with coeficients in a polinomial field}
 $$\Fpnm{n}{y}\label{eq:polinomialRing}$$ where $m(y)$ is a composed polinomial of degree $r$ columns. This gives a polinomial ring. The coeficients of this polinomial ring are elements of a polinomial field $$\Fpn{2}{n}=\Fpnm{2}{x}\label{eq:polinomialField}$$ where $m(x)$ is irreductible and gives a polinomial field.
 Standard rijndael (AES) uses a circulan invertible matrix for this to simplify and speed up the operations in the ring.
