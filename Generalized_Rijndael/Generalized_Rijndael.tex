@@ -1,5 +1,4 @@
-%\documentclass[12pt,a4paper,twoside]{article}
-\documentclass[a4paper,twoside]{llncs}
+\documentclass[10pt,a4paper,twoside]{llncs}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
@@ -10,7 +9,7 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\version}{Versi\'on 0.0.1}
+\newcommand{\version}{Versi\'on 0.0.2}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Generalised Rijndael}
@@ -36,7 +35,7 @@
 % Cuerpo finito de caractar\'{\i}stica p, grado n
 \newcommand{\Fpn}[2]{\ensuremath{\mathbb{F}_{#1^#2}}} 
 
-% Anillo polinomial con coeficientes en un cuerpo polinomial binario
+% Anillo polynomial con coeficientes en un cuerpo polynomial binario
 \newcommand{\Fpnm}[2]{\ensuremath{\frac{\Fpn{2}{#1}[#2]}{m(#2)}}}
 
 \renewcommand{\algorithmicrequire}{\textbf{INPUT:}}%
@@ -64,15 +63,15 @@
 
 \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
  This is the abstract
-% TODO this article comes from a real request, for small block cipher, but the tuneable paramenters in rijndael creates the idea to, further than an small version, it can be generalized
+% TODO this article comes from a real request, for small block cipher, but the tuneable parameters in rijndael creates the idea to, further than an small version, it can be generalized
 \\\\    
-{\bf Keywords:} Cryptography, Symmetrics, Rijndael
+{\bf Keywords:} Cryptography, Symmetric, Rijndael
 \end{abstract}
 
 %%%%%%%%%%%%%%%%
 \section{Introduction}
-% TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with paramenters. AESwrap (rfc3394) can be mention as another possibility.
-% TODO problem aproach (rijndael scalability)
+% TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with parameters. AESwrap (rfc3394) can be mention as another possibility.
+% TODO problem approach (rijndael scalability)
 % TODO alternative cryptosystems
 
 \cite{Daemen:1998:BCR:646692.759487}
@@ -101,13 +100,13 @@
 
 A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys}. Also Shannon have defined the concept of the \emph{perfect secrecy}
 \begin{definition}
- A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and a $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
+ A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and  $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
  \begin{center}
   $Pr[E(k,m_1)=c] = Pr[E(k,m_2)=c]$
  \end{center}
 \end{definition}
 
-This means that $c$ does not reveal \emph{any} information about the originam $m$. This can also by says like: The distribution of the cipher of a message is the same than the distribution from another message, or formally:
+This means that $c$ does not reveal \emph{any} information about the original $m$. This can also by says like: The distribution of the cipher of a message is the same than the distribution from another message, or formally:
 \begin{definition}
  For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is computationally indistinguishable:
  \begin{center}
@@ -128,14 +127,14 @@ where ${Exp}_{F}^{PRP-1}$ is the probability to the adversary to win the bet tha
 The most efficient attacks on Rijndael      that means this algorithm is still secure.
 
 % TODO rijndael good characteristics
-% TODO shannon: confusion & diffusion => substitution & permitation
+% TODO Shannon: confusion & diffusion => substitution & permutation
 % TODO structure of the input (fix block size)
 % TODO format preserving encryption alternative?
 
 %%%%%%%%%%%%%%%%
 \subsection{Design}
 % TODO what is the state matrix
-% TODO describe the transformations from the Shammir ``confussion and diffusion'' point of view.
+% TODO describe the transformations from the Shammir ``confusion and diffusion'' point of view.
 
 %%%%%%%%%%%%%%%%
 \section{Generalising the schema}
@@ -223,6 +222,7 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 \node [circle,draw] (xor) at (-1.5,-5) {};
  \draw [-] (xor.north) -- (xor.south);
  \draw [-] (xor.west) -- (xor.east);
+\node [rectangle,draw] (rcon) at (-1.5,-5.7) {Rcon[i]};
 \node [] (eq0) at (-2.7,-2.8) {=0};
 \node [] (neq) at (-1.2,-3.6) {$\neq0$};
 \node [] (neq) at (k-1-2.north) {$i-c$};
@@ -237,6 +237,7 @@ The most efficient attacks on Rijndael      that means this algorithm is still s
 \draw [->] (imodc.south) -- (xor.north);
 \draw [->] (subBytes.south) -- (-3.5,-4.8) -- (xor.north);
 \draw [->] (xor.east) -- (0.05,-5) -- (k-4-7.south);
+\draw [->] (rcon.north)--(xor.south);
 
 \end{tikzpicture}
 \caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
@@ -323,7 +324,78 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
  \right]
 \end{equation}
 
-% TODO draw schematic of this step
+% FIXME (review) draw schematic of this step
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+
+ \matrix (s) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (-3,0)
+        {
+          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
+          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
+        };
+
+\draw (-3.9,0.5)rectangle(-3,0);
+
+ \matrix (s') [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (3,0)
+        {
+          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
+          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
+        };
+\draw (2.1,0.5)rectangle(3,0);
+
+%sbox
+\draw (-1,4)rectangle(1,2);
+%x
+\draw [dotted](-1,2.0)rectangle(1,2.1);
+\draw [dotted](-1,2.2)rectangle(1,2.3);
+\draw [dotted](-1,2.4)rectangle(1,2.5);
+\draw [dotted](-1,2.6)rectangle(1,2.7);
+\draw [dotted](-1,2.8)rectangle(1,2.9);
+\draw (-1,3)rectangle(1,3.1);
+\draw [dotted](-1,3.2)rectangle(1,3.3);
+\draw [dotted](-1,3.4)rectangle(1,3.5);
+\draw [dotted](-1,3.6)rectangle(1,3.7);
+\draw [dotted](-1,3.8)rectangle(1,3.9);
+%y
+\draw [dotted](-.9,4)rectangle(-.8,2);
+\draw [dotted](-.7,4)rectangle(-.6,2);
+\draw (-.5,4)rectangle(-.4,2);
+\draw [dotted](-.3,4)rectangle(-.2,2);
+\draw [dotted](-.1,4)rectangle(0,2);
+\draw [dotted](.1,4)rectangle(.2,2);
+\draw [dotted](.3,4)rectangle(.4,2);
+\draw [dotted](.5,4)rectangle(.6,2);
+\draw [dotted](.7,4)rectangle(.8,2);
+\draw [dotted](.9,4)rectangle(1,2);
+%cell
+\draw [fill=white] (-.55,2.95)rectangle(-.35,3.15);
+%arrows
+\draw [->] (-3.6,0.5)--(-1,3);%x
+\draw [->] (-3.3,0.5)--(-.4,2);%y
+\draw [->] (-.45,3.05)--(2.1,0.5);
+
+%text
+\node [rectangle] (sbox) at (0,4.3) {S-Box};
+\node [rectangle] (msb) at (-2.6,2.3) {$MSB(\frac{w}{2})$};
+\node [rectangle] (lsb) at (-1,1.2) {$LSB(\frac{w}{2})$};
+
+\end{tikzpicture}
+\caption{Schematic diagram of the subBytes() transformation}
+\label{fig:subBytes}
+\end{center}
+\end{figure}
 
 %%%%%%%%%%%%%%%%
 \subsubsection{How to build different SBoxes}
@@ -338,57 +410,69 @@ Using the same \emph{wordsize} there are two different things that can be change
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[>=latex]
- 
-%  \matrix (k) [matrix of math nodes,nodes = {node style ge},%
-%               %left delimiter  = (,right delimiter = ),
-%               column sep=-0.1cm,row sep=-0.5cm,
-%              ] at (0,0)
-%         {
-%           s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
-%           s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
-%           \vdots    & \vdots    & \ddots & \vdots    \\
-%           s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
-%         };
+%input state matrix
+\draw (-1.0,0.0) rectangle (1.0,0.5);%row 1
+\draw (-1.0,0.5) rectangle (1.0,1.0);%row 2
+\draw (-1.0,1.0) rectangle (1.0,1.5);%row ...
+\draw (-1.0,1.5) rectangle (1.0,2.0);%row r
+\draw (-0.5,0.0) rectangle (0.0,2.0);%c
+\draw (0.5,0.0) rectangle (1.0,2.0);%c
+\draw [dotted] (-0.75,0.50) -- (-0.75,1.0);
+\draw [dotted] (-0.25,0.50) -- (-0.25,1.0);
+\draw [dotted] (0.00,1.00) -- (0.50,0.50);
+\draw [dotted] (0.00,1.25) -- (0.50,1.25);
+\draw [dotted] (0.00,1.75) -- (0.50,1.75);
 
-\draw (0.0,0.0) rectangle (2.0,0.5);
-\draw (0.0,0.5) rectangle (2.0,1.0);
-\draw (0.0,1.0) rectangle (2.0,1.5);
-\draw (0.0,1.5) rectangle (2.0,2.0);
-\draw (0.5,0.0) rectangle (1.0,2.0);
-\draw (1.5,0.0) rectangle (2.0,2.0);
-\draw [dotted] (0.25,0.50) -- (0.25,1.0);
-\draw [dotted] (0.75,0.50) -- (0.75,1.0);
-\draw [dotted] (1.00,1.00) -- (1.50,0.50);
-\draw [dotted] (1.00,1.25) -- (1.50,1.25);
-\draw [dotted] (1.00,1.75) -- (1.50,1.75);
+%first row
+\draw [fill=red] (2.50,1.5) rectangle (2.75,1.75);
+\draw (2.75,1.5) rectangle (3.00,1.75);
+\draw (3.00,1.5) rectangle (3.25,1.75);
+\draw (3.25,1.5) rectangle (3.50,1.75);
+\draw [->] (2.500,1.625)--(2.325,1.625)--(2.325,1.40)--(3.775,1.40)--(3.775,1.625)--(3.50,1.625);
+\draw [dotted] (3.0,1.625) rectangle (3.25,1.625);
+%from to:
+\draw [->](1.125,1.75)--(2.25,1.675);
+\draw [->](3.875,1.675)--(4.85,1.75);
 
+%second row
 \draw [fill=red] (2.50,1.0) rectangle (2.75,1.25);
-\draw (2.75,1.0) rectangle (3.00,1.25);
+\draw [fill=red] (2.75,1.0) rectangle (3.00,1.25);
 \draw (3.00,1.0) rectangle (3.25,1.25);
 \draw (3.25,1.0) rectangle (3.50,1.25);
-\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.80)--(3.675,0.80)--(3.675,1.125)--(3.50,1.125);
+\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.90)--(3.775,0.90)--(3.775,1.125)--(3.50,1.125);
 \draw [dotted] (3.0,1.125) rectangle (3.25,1.125);
+%from to:
+\draw [->](1.125,1.225)--(2.25,1.125);
+\draw [->](3.875,1.125)--(4.85,1.225);
 
-\draw [dotted] (3.00,0.65) -- (3.00,0.35);
+%third row
+\draw [fill=red] (2.50,0.5) rectangle (2.75,0.75);
+\draw [fill=red] (2.75,0.5) rectangle (3.00,0.75);
+\draw [fill=red] (3.00,0.5) rectangle (3.25,0.75);
+\draw (3.25,0.5) rectangle (3.50,0.75);
+\draw [->] (2.500,0.625)--(2.325,0.625)--(2.325,0.40)--(3.775,0.40)--(3.775,0.625)--(3.50,0.625);
+\draw [dotted] (3.00,0.625) rectangle (3.25,0.625);
+%from to:
+\draw [->](1.125,0.75)--(2.25,0.675);
+\draw [->](3.875,0.675)--(4.85,0.75);
 
-\draw [fill=red] (2.50,0.0) rectangle (2.75,0.25);
-\draw [fill=red] (2.75,0.0) rectangle (3.00,0.25);
-\draw [fill=red] (3.00,0.0) rectangle (3.25,0.25);
-\draw (3.25,0.0) rectangle (3.50,0.25);
-\draw [->] (2.500,0.125)--(2.325,0.125)--(2.325,-0.10)--(3.675,-0.10)--(3.675,0.125)--(3.50,0.125);
-\draw [dotted] (3.00,0.125) rectangle (3.25,0.125);
+%vdots
+\draw [dotted] (3.00,0.3) -- (3.00,0.0);
+\draw [dotted] (1.75,0.5) -- (1.75,0.2);
+\draw [dotted] (4.25,0.5) -- (4.25,0.2);
 
-\draw (4.0,0.0) rectangle (6.0,0.5);
-\draw (4.0,0.5) rectangle (6.0,1.0);
-\draw (4.0,1.0) rectangle (6.0,1.5);
-\draw (4.0,1.5) rectangle (6.0,2.0);
-\draw (4.5,0.0) rectangle (5.0,2.0);
+%output state matrix
+\draw (5.0,0.0) rectangle (7.0,0.5);
+\draw (5.0,0.5) rectangle (7.0,1.0);
+\draw (5.0,1.0) rectangle (7.0,1.5);
+\draw (5.0,1.5) rectangle (7.0,2.0);
 \draw (5.5,0.0) rectangle (6.0,2.0);
-\draw [dotted] (4.25,0.50) -- (4.25,1.0);
-\draw [dotted] (4.75,0.50) -- (4.75,1.0);
-\draw [dotted] (5.00,1.00) -- (5.50,0.50);
-\draw [dotted] (5.00,1.25) -- (5.50,1.25);
-\draw [dotted] (5.00,1.75) -- (5.50,1.75);
+\draw (6.5,0.0) rectangle (7.0,2.0);
+\draw [dotted] (5.25,0.50) -- (5.25,1.0);
+\draw [dotted] (5.75,0.50) -- (5.75,1.0);
+\draw [dotted] (6.00,1.00) -- (6.50,0.50);
+\draw [dotted] (6.00,1.25) -- (6.50,1.25);
+\draw [dotted] (6.00,1.75) -- (6.50,1.75);
 
 
 \end{tikzpicture}
@@ -451,8 +535,8 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{figure}
 
 
-\subsection{Operate in a polinomial ring, with coeficients in a polinomial field}
-$$\Fpnm{n}{y}\label{eq:polinomialRing}$$ where $m(y)$ is a composed polinomial of degree $r$ columns. This gives a polinomial ring. The coeficients of this polinomial ring are elements of a polinomial field $$\Fpn{2}{n}=\Fpnm{2}{x}\label{eq:polinomialField}$$ where $m(x)$ is irreductible and gives a polinomial field.
+\subsection{Operate in a polynomial ring, with coeficients in a polynomial field}
+$$\Fpnm{n}{y}\label{eq:polynomialRing}$$ where $m(y)$ is a composed polynomial of degree $r$ columns. This gives a polynomial ring. The coeficients of this polynomial ring are elements of a polynomial field $$\Fpn{2}{n}=\Fpnm{1}{x}\label{eq:polynomialField}$$ where $m(x)$ is irreductible and gives a polynomial field.
 Standard rijndael (AES) uses a circulan invertible matrix for this to simplify and speed up the operations in the ring.
 
 %%%%%%%%%%%%%%%%
@@ -460,6 +544,58 @@ Standard rijndael (AES) uses a circulan invertible matrix for this to simplify a
 % TODO the operation where the key is used (from the 4 rijndael operations)
 % TODO simply a xor operation (addition in F_2)
 % TODO draw schematic of this step
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+ 
+\matrix (s) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (-5,0)
+        {
+          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
+          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
+        };
+
+\draw (-5.9,1.25)rectangle(-5,-1.25);
+
+ \matrix (s') [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (4,0)
+        {
+          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
+          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
+          \vdots    & \vdots    & \ddots & \vdots    \\
+          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
+        };
+\draw (3.1,1.25)rectangle(4,-1.25);
+%the central boxes of the key table
+\draw        (-1.875,1.5)rectangle(-1.125,-1.5);\node [] (wl) at (-1.5,0) {$w_{l}$};
+\draw        (-0.375,1.5)rectangle( 0.375,-1.5);\node [] (wld) at (0,0) {$\cdots$};
+\draw        ( 0.375,1.5)rectangle( 1.125,-1.5);\node [] (wlc) at (.75,0) {$w_{l+c}$};
+%the bigger column
+\draw [fill=white] (-1.225,1.6)rectangle(-0.275,-1.6);\node [] (wl1) at (-.75,0) {$w_{l+1}$};
+%the xor sign
+\node [circle,draw] (xor) at (-.75,-2) {};
+ \draw [-] (xor.north) -- (xor.south);
+ \draw [-] (xor.west) -- (xor.east);
+%algorithm lines
+\draw [->] (-5.45,-1.25)--(-5.45,-2)--(xor.west);
+\draw [->] (-.75,-1.6)--(xor.north);
+\draw [->] (xor.east)--(3.55,-2)--(3.55,-1.25);
+
+\node [] (l) at (0.75,1.7) {$l=round\cdot c$};
+
+\end{tikzpicture}
+\caption{Diagram of the addRoundKey()}%TODO}
+\label{fig:addRoundKey}
+\end{center}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%
 \section{Parameter combinations}
