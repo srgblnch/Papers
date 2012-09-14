@@ -10,7 +10,7 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\version}{Versi\'on 0.0.3}
+\newcommand{\version}{Version 0.0.4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Generalised Rijndael}
@@ -63,7 +63,7 @@
 \end{center}
 
 \begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
- This is the abstract
+ Here will be the abstract
 % TODO this article comes from a real request, for small block cipher, but the tuneable parameters in rijndael creates the idea to, further than an small version, it can be generalized
 \\\\    
 {\bf Keywords:} Cryptography, Symmetric, Rijndael
@@ -72,14 +72,26 @@
 %%%%%%%%%%%%%%%%
 \section{Introduction}
 % TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with parameters. AESwrap (rfc3394) can be mention as another possibility.
+\begin{itemize}
+ \item Short view on the symmetric algorithms history
+ \item Review on the AES contest
+ \begin{itemize}
+  \item From the proposal on 1998 \cite{Daemen98aesproposal:}, \cite{Daemen:1998:BCR:646692.759487} and the revision \cite{Daemen01aes-ammended}
+  \item to the approval \cite{AES-FIPS}
+  \item and the \cite{Daemen:2002:DR:560131} book
+ \end{itemize}
+ \item About the future of the aes with the AESwrap (rfc3394) \cite{rfc3394}
+\end{itemize}
+
 % TODO problem approach (rijndael scalability)
+\begin{itemize}
+ \item rijndael scalability
+\end{itemize}
+
 % TODO alternative cryptosystems
-
-\cite{Daemen:1998:BCR:646692.759487}
-\cite{Daemen98aesproposal:}
-\cite{rfc3394}
-\cite{AES-FIPS}
-
+\begin{itemize}
+ \item alternative symmetric cryptosystems
+\end{itemize}
 
 %%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}
@@ -100,7 +112,7 @@
 \end{definition}
 
 A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys}. Also Shannon have defined the concept of the \emph{perfect secrecy}
-\begin{definition}
+\begin{definition}\label{def:shannonPerfectSecrecy}
  A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and  $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
  \begin{center}
   $Pr[E(k,m_1)=c] = Pr[E(k,m_2)=c]$
@@ -127,20 +139,31 @@ where ${Exp}_{F}^{PRP-1}$ is the probability to the adversary to win the bet tha
 
 In other words, a \emph{PRP} is secure if the permutation given by it is indistinguishable from a truly random permutation. That means an Adversary can not take any advantage from the cipher text.
 
-% TODO and why is Rijndael a secure PRP?
-In the case of the Rijndael, the most efficient attacks on this symmetric cryptosystem, like the best key recovery attack it is \emph{only} $4$ times better than the exhaustive search using the biclique cryptoanalysis \cite{biclique-fullaes}. But this $4$ times means that we must think in aes-128 to be like an aes-126 and this is still far, far away to an efficient break becausse it must be down to an attack in the order of $2^{64}$. It means that this algorithm can be trusted as \emph{still secure}.
+% and why is Rijndael a secure PRP? FIXME: is this enough? Can explain deep from where the 2^64 comes from?
+In the case of the Rijndael, the most efficient attacks on this symmetric cryptosystem, like the best key recovery attack it is \emph{only} $4$ times better than the exhaustive search using the biclique cryptoanalysis \cite{biclique-fullaes}. But this $4$ times means that we must think in aes-128 to be like an aes-126 and this is still far, far away to an efficient break because it must be down to an attack in the order of $2^{64}$. It means that this algorithm can be trusted as \emph{still secure}.
 
 In the case of the key sizes $192$ and $256$ of the aes, and due to a weakness on the design of the key expansion, but this will be explained in section \ref{sec:keyExpansion}.
 
 % TODO rijndael good characteristics
-% TODO Shannon: confusion & diffusion => substitution & permutation
+\begin{itemize}
+ \item What gives to Rijndael the good characteristics that it has?
+\end{itemize}
+
 % TODO structure of the input (fix block size)
+\begin{itemize}
+ \item input structure of the aes standard: fixed block size, 3 possible key sizes
+\end{itemize}
+
 % TODO format preserving encryption alternative?
 
 %%%%%%%%%%%%%%%%
 \subsection{Design}
 % TODO what is the state matrix
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
+\begin{itemize}
+ \item what is in the state matrix?
+ \item Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-comTheorySecSys} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%
 \section{Generalising the schema}
@@ -158,14 +181,22 @@ In the case of the key sizes $192$ and $256$ of the aes, and due to a weakness o
 %%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
 % TODO define s Pseudo-Random Generator (PRG)
+\begin{itemize}
+ \item What a Pseudo-Random Generator is?
+\end{itemize}
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize (key things, message in another section)
 % TODO subBytes() is used, then the sboxes but is explained later on.
 % TODO when key n#columns is different than message #columns
+\begin{itemize}
+ \item What can be made with the KeyExpansion() ``playing'' with the parameters (\#rows, \#columns, wordsize) from the key point of view (message things later).
+ \item subBytes() is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
+ \item What means to have different number of columns in the message than in the key matrix representation.
+\end{itemize}
+
 % weakness in the key expansion of rijndael when key size != block size
 An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
 %FIXME:it may would be developed or rewritten better
 %FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
-
 
 \begin{algorithm}
  \caption{KeyExpansion}
@@ -259,9 +290,13 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 %%%%%%%%%%%%%%%%
 \subsection{Rounds}
 % TODO why n rounds and not more, not less?
+\begin{itemize}
+ \item Why 10 rounds? (or 12 or 14 in aes-192 and aes-256) Why not more, or less? \cite{Daemen01aes-ammended} section 7.6.
+\end{itemize}
+
 
 %%%%%%%%%%%%%%%%
-\subsection{subBytes}
+\subsection{subBytes}\label{sec:subBytes}
 This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
 \begin{figure}[b]{\tiny
@@ -439,9 +474,18 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
 % TODO and how to build a new one with different parameters
 Using the same \emph{wordsize} there are two different things that can be changed: the \texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpn{2}{4}, over $16$ the field will be \Fpn{2}{{16}}, and the subparameters of the affine transformation must also be set up.
 
+\begin{itemize}
+ \item how to build new ones with different parameters
+\end{itemize}
+
+
 %%%%%%%%%%%%%%%%
 \subsection{shiftColumns}
-% TODO abstraction of what it is, independent from the #rows,GeneralizedRijndael/sboxes.py #columns, wordsize
+% TODO abstraction of what it is, independent from the #rows, #columns, wordsize
+\begin{itemize}
+ \item What this means mathematically, independently to the parameters \#rows, \#columns, wordsize
+\end{itemize}
+
 
 
 % FIXME(review) draw schematic of this step
@@ -525,7 +569,12 @@ Using the same \emph{wordsize} there are two different things that can be change
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize
 % TODO polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, ord(m)=#rows
-%   (this is, in mho, one of the most important points of rijndael)
+%   (this is, imho, one of the most important points of rijndael)
+\begin{itemize}
+ \item What this means mathematically? And what implies the changes on the parameters \#rows, \#columns, wordsize
+ \item polynomial ring, where the coeficients are elements from a binary polynomial field \Fpnm{x}{z}, $ord(m)=\#rows$
+\end{itemize}
+
 % FIXME (review) draw schematic of this step
 
 \begin{figure}
@@ -638,11 +687,17 @@ Standard rijndael (AES) uses a circulan invertible matrix for this to simplify a
 %%%%%%%%%%%%%%%%
 \section{Parameter combinations}
 % TODO how, with different parameters, can have the same block sizes, and what's different between them
+\begin{itemize}
+ \item different parameter combinations can produce the same block (and key) sizes. What can help on the option chose?
+\end{itemize}
+
 
 %%%%%%%%%%%%%%%%
 \section{New useful sizes for Rijndael}
 % TODO because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
-\cite{Daemen:1999:EBC:1267115.1267119}
+\begin{itemize}
+ \item With the newer architectures (64bits) which parameter changes can improve the cost of the rijndael? \cite{Daemen:1999:EBC:1267115.1267119}
+\end{itemize}
 
 %%%%%%%%%%%%%%%%
 %TODO: what else should be in the paper?
@@ -656,6 +711,13 @@ Standard rijndael (AES) uses a circulan invertible matrix for this to simplify a
 
 %%%%%%%%%%%%%%%%
 \bibliographystyle{ieeetr}
-\bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/symmetrics.bib,../bibtex/rijndael.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
+\bibliography{../bibtex/sblanch.bib,
+              ../bibtex/rijndael.bib,
+              ../bibtex/symmetrics.bib,
+              ../bibtex/standards.bib,
+              ../bibtex/books.bib,
+              ../bibtex/crypto.bib,
+              ../bibtex/rfc.bib
+             }
 
 \end{document}
