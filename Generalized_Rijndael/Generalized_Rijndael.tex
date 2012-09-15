@@ -149,10 +149,7 @@ In the case of the key sizes $192$ and $256$ of the aes, and due to a weakness o
  \item \texttt{TODO:} What gives to Rijndael the good characteristics that it has?
 \end{itemize}
 
-% TODO structure of the input (fix block size)
-% \begin{itemize}
-%  \item \texttt{TODO:} input structure of the aes standard: fixed block size, 3 possible key sizes
-% \end{itemize}
+% structure of the input (fix block size)
 Out of the standard specification \cite{AES-FIPS}, the revision of 1999 of the Rijndael block cipher \cite{Daemen01aes-ammended} includes the section 12 about extensions. Is in this section where are mention block and key sizes different than the standardised having steps of 32 bits in between the 3 in the standard. This extensions can be because it only changes the number of columns. It already happens with the cases where the key have more columns than the block, and in a very similar way the block can also saw it number of columns increased.
 
 From the 4 basic operations of the Rijndael this change is the one than can need less modifications in the bases. Following what has been mention about the simplicity, and the mathematical beauty and elegance of this schema, the increase of the number of columns is the parameter that causes less modifications in the design. Let see the design in more detail in next section \ref{sec:design}.
@@ -187,6 +184,18 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 \begin{itemize}
  \item \texttt{TODO:} What a Pseudo-Random Generator is?
 \end{itemize}
+
+\begin{definition}\label{def:PRG}
+ A \emph{Pseudo-Random Generator} is a function that takes a seed and generates a much larger stream:
+ \begin{center}
+  \begin{tabular}{llllr}
+   PRG: & $\{0,1\}^{s}$ & $\rightarrow$ & $\{0,1\}^n$ & ,where $n \ggg s$\\
+  \end{tabular}
+ \end{center}
+ 
+\end{definition}
+The goal is that the \emph{PRG} must be efficiently computable by a deterministic algorithm and the output of it must look random and unpredictable. In fact, this is the most important property of a \emph{PRG}, the unpredictability.
+
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize (key things, message in another section)
 % TODO subBytes() is used, then the sboxes but is explained later on.
 % TODO when key n#columns is different than message #columns
@@ -364,7 +373,7 @@ As an example, to transform the data \texttt{0x39} localise the cell in row \tex
 But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation.
 
 % operations in the polynomial field F_{2^w} w: wordsize
-The first transformation is to compute the multiplicative inverse in the field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original Rijndael). The second transformation is an affine transformation over the field \Fpn{2}{w}. In the original Rijndael is:
+The first transformation is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original Rijndael). The second transformation is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is:
 \begin{equation}\label{eq:subBytes:affine}
  b_{i}' = b_{i} \oplus b_{(i+4)mod8} \oplus b_{(i+5)mod8} \oplus 
           b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
@@ -613,21 +622,52 @@ Using the same \emph{wordsize} there are two different things that can be change
  \draw [->] (-4.5,1.25)--(mixColumns.west);
  \draw [->] (mixColumns.east)--(3.5,1.25);
 
-\node [rectangle] (poli) at (0,1.0) {$s'(x)=a(x)\otimes s(x)$};
+\node [rectangle] (poli) at (0,1.0) {$s'(x)=c(x)\otimes s(x)$};
 \node [rectangle] (sx) at (0,-2) {$s(x)=s_{(0,1)}x^{c-1}+s_{(1,1)}x^{c-2}+\cdots+s_{(r,1)}x^{c-c+1}$};
-\node [rectangle] (fpnm) at (0,-2.5) {$ s(x),a(x),s'(x) \in$\Fpnm{w}{x} with $m(x)$ reductible and order $c$};
+\node [rectangle] (fpnm) at (0,-2.5) {$ s(x),c(x),s'(x) \in$\Fpnm{w}{x} with $m(x)$ reductible and order $c$};
 \node [rectangle] (fpn) at (0,-3) {$s_{(i,j)} \in$\Fpnm{1}{z} with $m(z)$ irreductible and order $w$};
 
 \end{tikzpicture}
-\caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field}
+\caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field. Invert is the same than operate with $c^{-1}(x)=d(x)$}
 \label{fig:mixColumns}
 \end{center}
 \end{figure}
 
 
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
-$$\Fpnm{n}{y}\label{eq:polynomialRing}$$ where $m(y)$ is a composed polynomial of degree $r$ columns. This gives a polynomial ring. The coeficients of this polynomial ring are elements of a polynomial field $$\Fpn{2}{n}=\Fpnm{1}{x}\label{eq:polynomialField}$$ where $m(x)$ is irreductible and gives a polynomial field.
-Standard rijndael (AES) uses a circulan invertible matrix for this to simplify and speed up the operations in the ring.
+The polynomial ring used in the Rijndael schema is denoted:
+$$\Fpnm{n}{x}\label{eq:polynomialRing}$$\label{eq:polynomialRing}
+where $m(x)$ is a composited polynomial with the same degree than the $c$ columns parameter. This describes a polynomial ring. The coefficients of this polynomial ring are elements of a polynomial field $\Fpn{2}{n}$, where this notation is a shorter of
+$$\Fpn{2}{n}=\Fpnm{1}{z}\label{eq:polynomialField}$$\label{eq:polynomialField}
+and in here, the polynomial $m(z)$ is an irreductible with the same degree than the wordsize ($w$). 
+
+An improvement of the modular operations in the polynomial ring, in the specification of the rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In \emph{mixColumns} operation is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
+
+Then the fix polynomial element in the ring is always $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$. Remember that each coefficient is an element of a polynomial field, but this notation can be simplified by a binary notation: $c(x) = `0x3'y^3+`0x1'y^2+`0x1'y+`0x2'$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the \emph{mixColumns}: $c(z) = `0xB'y^3+`0xD'y^2+`0x9'y+`0xE'$.
+
+The matrix multiplication of this polynomial ring operation can be written as:
+\begin{equation}\label{eq:MDS}
+  \begin{bmatrix}
+    s'_{(0,i)}\\s'_{(1,i)}\\s'_{(2,i)}\\s'_{(3,i)}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    z & z+1 & 1 & 1 \\
+    1 & z & z+1 & 1 \\
+    1 & 1 & z & z+1 \\
+    z+1 & 1 & 1 & z \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    s_{(0,i)}\\s_{(1,i)}\\s_{(2,i)}\\s_{(3,i)}
+  \end{bmatrix}
+\end{equation}
+
+% TODO: MaxDistanceSeparable.
+% TODO: Does this circulant matrix works with $c\neq 4$?
+\begin{enumerate}
+ \item \texttt{TODO:} Does this circulant matrix works with $c\neq 4$?
+\end{enumerate}
+
 
 %%%%%%%%%%%%%%%%
 \subsection{addRoundKey}\label{sec:addRoundKey}
