@@ -10,7 +10,10 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\version}{Version 0.0.5}
+\input{version.tex}
+%\usepackage{gitinfo}
+\newcommand{\version}{git: \GITAuthorDate \; (revision~\GITAbrHash)}
+%\newcommand{\version}{git: \gitCommitterDate (revision \gitAbbrevHash) }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Generalised Rijndael}
