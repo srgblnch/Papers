@@ -203,10 +203,12 @@ The goal is that the \emph{PRG} must be efficiently computable by a deterministi
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize (key things, message in another section)
 % TODO subBytes() is used, then the sboxes but is explained later on.
 % TODO when key n#columns is different than message #columns
+% TODO explain what is the proposal of the Rcon matrix
 \begin{itemize}
  \item \texttt{TODO:} What can be made with the KeyExpansion() ``playing'' with the parameters (\#rows, \#columns, wordsize) from the key point of view (message things later).
  \item \texttt{TODO:} subBytes() is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
  \item \texttt{TODO:} What means to have different number of columns in the message than in the key matrix representation.
+ \item \texttt{TODO:} Explain what is the proposal of the Rcon matrix (or as a recursive function).
 \end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
@@ -647,7 +649,9 @@ and in here, the polynomial $m(z)$ is an irreductible with the same degree than 
 
 An improvement of the modular operations in the polynomial ring, in the specification of the rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In \emph{mixColumns} operation is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
 
-Then the fix polynomial element in the ring is always $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$. Remember that each coefficient is an element of a polynomial field, but this notation can be simplified by a binary notation: $c(x) = `0x3'y^3+`0x1'y^2+`0x1'y+`0x2'$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the \emph{mixColumns}: $c(z) = `0xB'y^3+`0xD'y^2+`0x9'y+`0xE'$.
+Then the fix polynomial element in the ring have set in the standard:
+$$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$
+This is using the best notation to denote that the coefficients on the polynomial ring are elements of a polynomial field. The polynomial field have binary coefficients, then those polynomials can be shorted using a binary notation. Like $(z+1)=\texttt{0b11}=\texttt{0x3}$ and other like $(z^3+z+1)=\texttt{0b1011}=\texttt{0xB}$. Then this $c(x)$ can be shorted represented by: $c(x) = \texttt{0x3}x^3+\texttt{0x1}x^2+\texttt{0x1}x+\texttt{0x2}$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the \emph{mixColumns}: $c^{-1}(x) = \texttt{0xB}x^3+\texttt{0xD}x^2+\texttt{0x9}x+\texttt{0xE}=d(x)$.
 
 The matrix multiplication of this polynomial ring operation can be written as:
 \begin{equation}\label{eq:MDS}
