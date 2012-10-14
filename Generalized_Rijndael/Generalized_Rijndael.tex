@@ -1,7 +1,7 @@
 \documentclass[10pt,a4paper,twoside]{llncs}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
-\usepackage{graphicx}
+\usepackage{graphicx,float}
 \usepackage{algorithmic,algorithm}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
@@ -89,7 +89,7 @@
 
 % TODO problem approach (rijndael scalability)
 \begin{itemize}
- \item \texttt{TODO:} rijndael scalability
+ \item \texttt{TODO:} rijndael scalability. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
 \end{itemize}
 
 % TODO alternative cryptosystems
@@ -125,7 +125,7 @@ A pseudo-random permutation is used as a symmetric cryptosystem like Shannon hav
 
 This means that $c$ does not reveal \emph{any} information about the original $m$. This can also by says like: The distribution of the cipher of a message is the same than the distribution from another message, or formally:
 \begin{definition}
- For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is computationally indistinguishable:
+ For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is \emph{computationally indistinguishable}\footnote{Denoted the meaning of computationally indistinguishable by the symbol $\approx_p$}:
  \begin{center}
   $\{ E(k,m_1) \} \approx_p \{ E(k,m_2) \} $
  \end{center}
@@ -167,13 +167,14 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 \begin{itemize}
  \item \texttt{TODO:} what is in the state matrix?
  \item \texttt{TODO:} Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-comTheorySecSys} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
+ \item \texttt{TODO:} Explain the round transformation as one (composed) operation to provide diffusion and guarantee non-linear distribution.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%
 \section{Generalising the schema}\label{sec:generalising}
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
-\begin{figure}[h]
+\begin{figure}[h!]
  \centering
  \includegraphics[scale=0.3,keepaspectratio=true]{./images/rijndaelDiagram.png}
  % rijndaelDiagram.png: 521x887 pixel, 72dpi, 18.38x31.29 cm, bb=0 0 521 887
@@ -241,7 +242,7 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \end{algorithm}
 
 % draw the algorithm as a diagram
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
 \matrix (k) [matrix of math nodes,nodes = {node style ge},%
@@ -282,7 +283,7 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \node [circle,draw] (xor) at (.1,-5) {};
  \draw [-] (xor.north) -- (xor.south);
  \draw [-] (xor.west) -- (xor.east);
-\node [rectangle,draw] (rcon) at (0,-5.7) {Rcon[i]};
+\node [rectangle,draw] (rcon) at (.1,-5.7) {Rcon[i]};
 \node [] (eq0) at (-1,-2.8) {=0};
 \node [] (neq) at (.5,-3.6) {$\neq0$};
 \node [] (neq) at (k-1-1.north) {$i-c$};
@@ -309,16 +310,39 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 %%%%%%%%%%%%%%%%
 \subsection{Rounds}\label{sec:rounds}
 % TODO why n rounds and not more, not less?
+\begin{figure}[h!]{
+\begin{center}
+\begin{tabular}{|c||c|c|c|}
+\hline
+$N_r$     & $N_b = 4$ & $N_b = 6$ & $N_b = 8$ \\ \hline\hline
+$N_k = 4$ &    $10$   &    $12$   &    $14$   \\ \hline
+$N_k = 6$ &    $12$   &    $12$   &    $14$   \\ \hline
+$N_k = 8$ &    $14$   &    $14$   &    $14$   \\ \hline
+\end{tabular}
+\end{center}}
+\caption{Table of the number of rounds as function of block and key length}
+\label{tab:nrounds}
+\end{figure}
+
+In the AES proposal of the Rijndael \cite{Daemen01aes-ammended} the number of rounds is described as a function of the block and the key length. The table of the figure \ref{tab:nrounds} is a copy of the one from the cited Rijndael document, in section 4.1. But in section 7.6 is said that this number has been determined by looking in to the most efficient attacks (known at that time) and adding a security margin.
+
+Better is said in section 12.1 of the mention document where the number of rounds is described by a function:
+\begin{equation}\label{eq:nrounds}
+ N_r = max(N_k,N_b)+6
+\end{equation}
+And with this all the other possible alternatives can be interpolated.
+
 \begin{itemize}
- \item \texttt{TODO:} Why 10 rounds? (or 12 or 14 in aes-192 and aes-256) Why not more, or less? \cite{Daemen01aes-ammended} section 7.6 and section 12.1 mention $Nr = max(Nk,Nb)+6$
+ \item \texttt{TODO:} But, with this, there isn't a proof of why those sizes yet.
 \end{itemize}
+
 
 
 %%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
 This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
-\begin{figure}[b]{\tiny
+\begin{figure}[h!]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0 &0x1 &0x2 &0x3 &0x4 &0x5 &0x6 &0x7 &0x8 &0x9 &0xA &0xB &0xC &0xD &0xE &0xF \\\hline\hline
@@ -344,7 +368,7 @@ This transformation is a non-linear substitution of each word in the \emph{state
 \label{tab:sbox8}
 \end{figure}
 
-\begin{figure}[b]{\tiny
+\begin{figure}[h!]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0& 0x1& 0x2& 0x3& 0x4& 0x5& 0x6& 0x7& 0x8& 0x9& 0xA& 0xB& 0xC& 0xD& 0xE& 0xF\\\hline\hline
@@ -416,7 +440,7 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
 
 % FIXME (review) draw schematic of this step
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
 
@@ -508,7 +532,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 
 
 % FIXME(review) draw schematic of this step
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
 %input state matrix
@@ -596,7 +620,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 
 % FIXME (review) draw schematic of this step
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
  
@@ -684,7 +708,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 % TODO simply a xor operation (addition in F_2)
 % TODO draw schematic of this step
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
  
