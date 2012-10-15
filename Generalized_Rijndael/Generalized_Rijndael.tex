@@ -9,13 +9,13 @@
 
 \pagestyle{headings}%page numbers
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\input{version.tex}
 %\newcommand{\version}{git: \GITAuthorDate \; (revision~\GITAbrHash)}
 
 \usepackage{gitinfo}
 \newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Generalised Rijndael}
 \author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}}
@@ -73,7 +73,7 @@
 {\bf Keywords:} Cryptography, Symmetric, Rijndael
 \end{abstract}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}\label{sec:intro}
 % TODO There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with parameters. AESwrap (rfc3394) can be mention as another possibility.
 \begin{itemize}
@@ -101,7 +101,7 @@
  \item \texttt{TODO:} alternative symmetric cryptosystems. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size.
 \end{itemize}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
 % what is a PRP? 
 \begin{definition}\label{def:PRP}
@@ -164,7 +164,7 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 
 % TODO format preserving encryption alternative?
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Design}\label{sec:design}
 % TODO what is the state matrix
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
@@ -174,7 +174,7 @@ From the 4 basic operations of the Rijndael this change is the one than can need
  \item \texttt{TODO:} Explain the round transformation as one (composed) operation to provide diffusion and guarantee non-linear distribution.
 \end{itemize}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Generalising the schema}\label{sec:generalising}
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
@@ -187,7 +187,7 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 \end{figure}
 % TODO: describe
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
 % TODO define s Pseudo-Random Generator (PRG)
 \begin{itemize}
@@ -204,6 +204,35 @@ From the 4 basic operations of the Rijndael this change is the one than can need
  
 \end{definition}
 The goal is that the \emph{PRG} must be efficiently computable by a deterministic algorithm and the output of it must look random and unpredictable. In fact, this is the most important property of a \emph{PRG}, the unpredictability.
+
+\begin{definition}\label{def:unpredictability}
+ A \emph{PRG} $G: k \rightarrow \{0,1\}^n$ is \emph{unpredictable} if does not exist any efficient algorithm \emph{A} such that:
+ \begin{equation}
+  \underset{k\leftarrow\mathcal{K}}{Pr}\left[A(G(k)|_{1,...,i}) = G(k)|_{i+1}\right]>\frac{1}{2}
++\epsilon \end{equation}
+ for a non negligible $\epsilon$
+\end{definition}
+
+As an example, a non negligible $\epsilon$ usually is mention as a value $\geqslant\frac{1}{2^{30}}$.
+
+The definition \ref{def:unpredictability} says that for any efficient algorithm, given to this algorithm the $i$ first bits, the probability that this algorithm predicts the next element of the stream is negligible.
+
+The unpredictability of a \emph{PRG} is what gives to the the quality to be \emph{undistinguishable} from a \emph{pure random generator}. Even when the seed space $\mathcal{K}$ of the PRG is much smaller than the space of the output $\{0,1\}^n$.
+
+Like in the PRP, consider an scenario where the adversary has access to a random oracle where the output of this oracle can be the output of the PRG or a truly random stream. The advantage of the adversary to distinguish from where it comes any output it has take can be described as:
+\begin{equation}\label{eq:prgAdv}
+ {Adv}_{prg}[A,G] = \left|
+                     \underset{k\overset{R}{\leftarrow}\mathcal{K}}{Pr}\left[A(G(k))=1\right]-
+                     \underset{r\overset{R}{\leftarrow}\{0,1\}^n}{Pr}\left[A(r)=1\right]
+                    \right|\in [0,1]
+\end{equation}
+That means if the probability gets close to 1, the adversary can distinguish $G$ from random; and if it is close to 0 cannot.
+
+\begin{definition}
+ Given $G: k \rightarrow \{0,1\}^n$, is a \emph{secure PRG} if $\forall$ efficient statistical test ${Adv}_{prg}[A,G]$ is negligible.
+\end{definition}
+
+Following definition \ref{def:unpredictability} about the unpredictability, the $\epsilon$ is $\leqslant\frac{1}{2^{80}}$ to be considered as negligible.
 
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize (key things, message in another section)
 % TODO subBytes() is used, then the sboxes but is explained later on.
@@ -311,11 +340,13 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \end{center}
 \end{figure}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Rounds}\label{sec:rounds}
 % TODO why n rounds and not more, not less?
-\begin{figure}[h!]{
-\begin{center}
+
+In the AES proposal of the Rijndael \cite{Daemen01aes-ammended} (section 4.1) the number of rounds is described as a function of the block and the key length, followed by the table:
+\begin{equation}\label{tab:nrounds}
+%\begin{center}
 \begin{tabular}{|c||c|c|c|}
 \hline
 $N_r$     & $N_b = 4$ & $N_b = 6$ & $N_b = 8$ \\ \hline\hline
@@ -323,18 +354,14 @@ $N_k = 4$ &    $10$   &    $12$   &    $14$   \\ \hline
 $N_k = 6$ &    $12$   &    $12$   &    $14$   \\ \hline
 $N_k = 8$ &    $14$   &    $14$   &    $14$   \\ \hline
 \end{tabular}
-\end{center}}
-\caption{Table of the number of rounds as function of block and key length}
-\label{tab:nrounds}
-\end{figure}
+%\end{center}
+\end{equation}
 
-In the AES proposal of the Rijndael \cite{Daemen01aes-ammended} the number of rounds is described as a function of the block and the key length. The table of the figure \ref{tab:nrounds} is a copy of the one from the cited Rijndael document, in section 4.1. But in section 7.6 is said that this number has been determined by looking in to the most efficient attacks (known at that time) and adding a security margin.
-
-Better is said in section 12.1 of the mention document where the number of rounds is described by a function:
+ But is in section 7.6 where is said that this number has been determined by looking in to the most efficient attacks (known at that time) and adding a security margin. That is improved with in section 12.1, where the number of rounds is described by a function:
 \begin{equation}\label{eq:nrounds}
  N_r = max(N_k,N_b)+6
 \end{equation}
-And with this all the other possible alternatives can be interpolated.
+This function means that the number of rounds is the biggest number of columns between the block and the key, plus the security margin set as $6$.
 
 \begin{itemize}
  \item \texttt{TODO:} But, with this, there isn't a proof of why those sizes yet.
@@ -342,7 +369,7 @@ And with this all the other possible alternatives can be interpolated.
 
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
 This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
@@ -515,7 +542,7 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
 \end{center}
 \end{figure}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{How to build different SBoxes}\label{sec:sbox}
 
 % TODO and how to build a new one with different parameters
@@ -526,7 +553,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{itemize}
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{shiftColumns}\label{sec:shiftColumns}
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize
 \begin{itemize}
@@ -611,7 +638,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{mixColumns}\label{sec:mixColumns}
 % TODO abstraction of what it is, independent from the #rows, #columns, wordsize
 % TODO polynomial ring, where the coeficients are elements from a binary polynomial field
@@ -668,7 +695,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{center}
 \end{figure}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
 The polynomial ring used in the Rijndael schema is denoted:
 $$\Fpnm{n}{x}\label{eq:polynomialRing}$$
@@ -706,7 +733,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 \end{enumerate}
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{addRoundKey}\label{sec:addRoundKey}
 % TODO the operation where the key is used (from the 4 rijndael operations)
 % TODO simply a xor operation (addition in F_2)
@@ -764,7 +791,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parameter combinations}\label{sec:parameterCombinations}
 % TODO how, with different parameters, can have the same block sizes, and what's different between them
 \begin{itemize}
@@ -772,14 +799,14 @@ The matrix multiplication of this polynomial ring operation can be written as:
 \end{itemize}
 
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{New useful sizes for Rijndael}\label{sec:newSizes}
 % TODO because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
 \begin{itemize}
  \item \texttt{TODO:} With the newer architectures (64bits) which parameter changes can improve the cost of the rijndael? \cite{Daemen:1999:EBC:1267115.1267119}
 \end{itemize}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TODO: what else should be in the paper?
 % \section{Attacking the schema}
 % 
@@ -789,7 +816,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 % % key expansion calculated during the encrypt/decrypt process
 % \section{Conclusions}
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/rijndael.bib,../bibtex/symmetrics.bib,../bibtex/standards.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
 
