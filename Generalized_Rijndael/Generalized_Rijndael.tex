@@ -129,7 +129,7 @@ A pseudo-random permutation is used as a symmetric cryptosystem like Shannon hav
 
 This means that $c$ does not reveal \emph{any} information about the original $m$. This can also by says like: The distribution of the cipher of a message is the same than the distribution from another message, or formally:
 \begin{definition}
- For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is \emph{computationally indistinguishable}\footnote{Denoted the meaning of computationally indistinguishable by the symbol $\approx_p$}:
+ For a perfect secrecy system, the distributions of the ciphers between messages in the cipher space is \emph{computationally indistinguishable}\footnote{Denoted the meaning of computationally indistinguishable by the symbol $\approx_p$ because cannot be distinguished in a \emph{polynomial time}}:
  \begin{center}
   $\{ E(k,m_1) \} \approx_p \{ E(k,m_2) \} $
  \end{center}
@@ -189,10 +189,8 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
-% TODO define s Pseudo-Random Generator (PRG)
-\begin{itemize}
- \item \texttt{TODO:} What a Pseudo-Random Generator is?
-\end{itemize}
+% define s Pseudo-Random Generator (PRG), What a Pseudo-Random Generator is?
+The first important operation in the \emph{Rijndael} schema is the \emph{key expansion}. This operation takes the key as a seed to expand it until generate all the subkeys used on each round. In the smaller case of \emph{AES} standard, the 128 bits become expanded to 1280 extra bits to be used like if the key was this size. But why the usage 128 bits in the key, can be trusted like having an independent key 10 times longer? This important mathematical item where this security rest is what is called \emph{Pseudo-Random Generator}, PRG, generating a unique, and always the same, stream of bits from a much shorter seed. Lets define what PRG means:
 
 \begin{definition}\label{def:PRG}
  A \emph{Pseudo-Random Generator} is a function that takes a seed and generates a much larger stream:
@@ -203,10 +201,10 @@ From the 4 basic operations of the Rijndael this change is the one than can need
  \end{center}
  
 \end{definition}
-The goal is that the \emph{PRG} must be efficiently computable by a deterministic algorithm and the output of it must look random and unpredictable. In fact, this is the most important property of a \emph{PRG}, the unpredictability.
+The goal is that the \emph{PRG} must be efficiently computable by a deterministic algorithm and the output of it must look random and unpredictable. In fact, this is the most important property of a \emph{PRG}, the unpredictability. But what predictability means:
 
 \begin{definition}\label{def:unpredictability}
- A \emph{PRG} $G: k \rightarrow \{0,1\}^n$ is \emph{unpredictable} if does not exist any efficient algorithm \emph{A} such that:
+ Given a \emph{PRG} $G: k \rightarrow \{0,1\}^n$ is \emph{predictable} if exist an efficient algorithm \emph{A} such that:
  \begin{equation}
   \underset{k\leftarrow\mathcal{K}}{Pr}\left[A(G(k)|_{1,...,i}) = G(k)|_{i+1}\right]>\frac{1}{2}
 +\epsilon \end{equation}
@@ -234,22 +232,7 @@ That means if the probability gets close to 1, the adversary can distinguish $G$
 
 Following definition \ref{def:unpredictability} about the unpredictability, the $\epsilon$ is $\leqslant\frac{1}{2^{80}}$ to be considered as negligible.
 
-% TODO abstraction of what it is, independent from the #rows, #columns, wordsize (key things, message in another section)
-% TODO subBytes() is used, then the sboxes but is explained later on.
-% TODO when key n#columns is different than message #columns
-% TODO explain what is the proposal of the Rcon matrix
-\begin{itemize}
- \item \texttt{TODO:} What can be made with the KeyExpansion() ``playing'' with the parameters (\#rows, \#columns, wordsize) from the key point of view (message things later).
- \item \texttt{TODO:} subBytes() is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
- \item \texttt{TODO:} What means to have different number of columns in the message than in the key matrix representation.
- \item \texttt{TODO:} Explain what is the proposal of the Rcon matrix (or as a recursive function).
-\end{itemize}
-
-% weakness in the key expansion of rijndael when key size != block size
-An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
-%FIXME:it may would be developed or rewritten better
-%FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
-
+%What can be made with the KeyExpansion() ``playing'' with the parameters (\#rows, \#columns, wordsize) from the key point of view (message things later).
 \begin{algorithm}
  \caption{KeyExpansion}
  \label{alg:keyExpansion}
@@ -257,11 +240,11 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
   \REQUIRE byte k[nRows*nColumns], nRounds, nRowns, nColumns, wSize
   \ENSURE word w[nRouns*(nRows+1)]
   \STATE i := 0
-  \WHILE{i<nColumns}
-    \STATE w[i] := word(k[nRows*(i+c) for c in range(nColumns)])
+  \WHILE{$i<nColumns$}
+    \STATE w[i] := word($k[nRows*(i+c)$ for $c$ in $range(nColumns)]$)
   \ENDWHILE
   \STATE i := nColumns
-  \WHILE{i<nRouns*(nRows+1)}
+  \WHILE{$i<nRouns*(nRows+1)$}
     \STATE temp := w[i-1]
     \IF{i mod nColumns == 0}
       \STATE temp := SubWord(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
@@ -273,6 +256,10 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
   \ENDWHILE
  \end{algorithmic}
 \end{algorithm}
+
+Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+
+All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
 
 % draw the algorithm as a diagram
 \begin{figure}[h!]
@@ -306,7 +293,7 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 %\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
 
 %boxes to get the necessary columns
-\draw [blue,thick] (k-1-1.north west) rectangle (k-4-1.south east);
+\draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
 \draw [blue,thick] (k-1-5.north west) rectangle (k-4-5.south east);
 \draw [red,thick] (k-1-6.north west) rectangle (k-4-6.south east);
 % 
@@ -319,12 +306,12 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \node [rectangle,draw] (rcon) at (.1,-5.7) {Rcon[i]};
 \node [] (eq0) at (-1,-2.8) {=0};
 \node [] (neq) at (.5,-3.6) {$\neq0$};
-\node [] (neq) at (k-1-1.north) {$i-c$};
-\node [] (neq) at (k-1-5.north) {$i$};
-\node [] (neq) at (k-1-6.north) {$i+1$};
+\node [] (neq) at (k-1-2.north) {$i-c$};
+\node [] (neq) at (k-1-5.north) {$i-1$};
+\node [] (neq) at (k-1-6.north) {$i$};
 % 
 % %arrows to set into the algorithm
-\draw [|->] (k-4-1.south) -- (-4.1,-5) -- (xor.west);
+\draw [|->] (k-4-2.south) -- (-3,-5) -- (xor.west);
 %\draw [|->] (k-4-5.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
 \draw [|->] (k-4-5.south) -- (imodc);
 \draw [->] (imodc.west) -- (-1.7,-3) -- (rotWord.north);
@@ -339,6 +326,21 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \label{fig:keyExpansionDiagram}
 \end{center}
 \end{figure}
+
+Perhaps a better way to see the algorithm \ref{alg:keyExpansion} is the figure \ref{fig:keyExpansionDiagram}. With this figure seems to be easier to recognise this iterative algorithm, that is generating the new column $i$ by taking the previous (with may be some transformations when the key size is bigger than the block size) and the one in the same relative position of the previous \emph{subkey}, to do over it some transformations to introduce diffusion and confusion in the newer bits generation.
+
+Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \emph{Rijndael}. This is one of the bests characteristics of this algorithm.
+
+\begin{itemize}
+ \item \texttt{TODO:} subBytes() is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
+ \item \texttt{TODO:} What means to have different number of columns in the message than in the key matrix representation.
+ \item \texttt{TODO:} Explain what is the proposal of the Rcon matrix (or as a recursive function).
+\end{itemize}
+
+% weakness in the key expansion of rijndael when key size != block size
+An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
+%FIXME:it may would be developed or rewritten better
+%FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Rounds}\label{sec:rounds}
