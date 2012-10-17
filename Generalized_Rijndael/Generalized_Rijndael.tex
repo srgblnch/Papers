@@ -270,72 +270,102 @@ All those parameters are necessary to have in the output an expanded key large e
 
 % draw the algorithm as a diagram
 % TODO: rebuild with the fixed algorithm
-% \begin{figure}[h!]
-% \begin{center}
-% \begin{tikzpicture}[>=latex]
-% \matrix (k) [matrix of math nodes,nodes = {node style ge},%
-%               %left delimiter  = (,right delimiter = ),
-%               column sep=-0.1cm,row sep=-0.5cm,
-%              ] at (0,0)
-%         {
-%           k_{0_{(0,0)}} & k_{0_{(0,1)}} & \cdots & k_{0_{(0,c)}} &
-%           k_{1_{(0,0)}} & k_{1_{(0,1)}} & \cdots & k_{1_{(0,c)}} &
-%           \cdots \\%&
-%           %k_{n_{(0,0)}} & k_{n_{(0,1)}} & \cdots & k_{n_{(0,c)}} \\
-%           k_{0_{(1,0)}} & k_{0_{(1,1)}} & \cdots & k_{0_{(1,c)}} &
-%           k_{1_{(1,0)}} & k_{1_{(1,1)}} & \cdots & k_{1_{(1,c)}} &
-%           \cdots \\%&
-%           %k_{n_{(1,0)}} & k_{n_{(1,1)}} & \cdots & k_{n_{(1,c)}} \\
-%           \vdots        & \vdots        & \ddots & \vdots        &
-%           \vdots        & \vdots        & \ddots & \vdots        &
-%           \cdots        \\%&
-%           %\vdots        & \vdots        & \ddots & \vdots        \\
-%           k_{0_{(r,0)}} & k_{0_{(r,1)}} & \cdots & k_{0_{(r,c)}} &
-%           k_{1_{(r,0)}} & k_{1_{(r,1)}} & \cdots & k_{1_{(r,c)}} &
-%           \cdots \\%&
-%           %k_{n_{(r,0)}} & k_{n_{(r,1)}} & \cdots & k_{n_{(r,c)}}\\
-%         };
-% \draw [] (k-1-1.north west) rectangle (k-4-9.south east);
-% \draw [dashed] (k-1-1.north west) rectangle (k-4-4.south east);
-% \draw [dashed] (k-1-5.north west) rectangle (k-4-8.south east);
-% %\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
-% 
-% %boxes to get the necessary columns
-% \draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
-% \draw [blue,thick] (k-1-5.north west) rectangle (k-4-5.south east);
-% \draw [red,thick] (k-1-6.north west) rectangle (k-4-6.south east);
-% % 
-% \node [diamond,draw,aspect=2] (imodc) at (.1,-3) {i mod c};
-% \node [rectangle,draw] (rotWord) at (-1.7,-3.5) {rotWord()};
-% \node [rectangle,draw] (subBytes) at (-1.7,-4.4) {subBytes()};
-% \node [circle,draw] (xor) at (.1,-5) {};
-%  \draw [-] (xor.north) -- (xor.south);
-%  \draw [-] (xor.west) -- (xor.east);
-% \node [rectangle,draw] (rcon) at (.1,-5.7) {Rcon[i]};
-% \node [] (eq0) at (-1,-2.8) {=0};
-% \node [] (neq) at (.5,-3.6) {$\neq0$};
-% \node [] (neq) at (k-1-2.north) {$i-c$};
-% \node [] (neq) at (k-1-5.north) {$i-1$};
-% \node [] (neq) at (k-1-6.north) {$i$};
-% % 
-% % %arrows to set into the algorithm
-% \draw [|->] (k-4-2.south) -- (-3,-5) -- (xor.west);
-% %\draw [|->] (k-4-5.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
-% \draw [|->] (k-4-5.south) -- (imodc);
-% \draw [->] (imodc.west) -- (-1.7,-3) -- (rotWord.north);
-% \draw [->] (rotWord.south) -- (subBytes.north);
-% \draw [->] (imodc.south) -- (xor.north);
-% \draw [->] (subBytes.south) -- (-1.7,-4.8) -- (xor.north);
-% \draw [->] (xor.east) -- (1.2,-5) -- (k-4-6.south);
-% \draw [->] (rcon.north)--(xor.south);
-% 
-% \end{tikzpicture}
-% \caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
-% \label{fig:keyExpansionDiagram}
-% \end{center}
-% \end{figure}
+\begin{figure}[h!]
+\begin{center}
+\begin{tikzpicture}[>=latex]
+\matrix (k) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (0,0)
+        {
+          \cdots &
+          k_{s_{(0,0)}} & k_{s_{(0,1)}} & \cdots & k_{s_{(0,c)}} &
+          k_{t_{(0,0)}} & k_{t_{(0,1)}} & \cdots & k_{t_{(0,c)}} &
+          \cdots \\
+          \cdots &
+          k_{s_{(1,0)}} & k_{s_{(1,1)}} & \cdots & k_{s_{(1,c)}} &
+          k_{t_{(1,0)}} & k_{t_{(1,1)}} & \cdots & k_{t_{(1,c)}} &
+          \cdots \\
+          \cdots &
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \cdots        \\
+          \cdots &
+          k_{s_{(r,0)}} & k_{s_{(r,1)}} & \cdots & k_{s_{(r,c)}} &
+          k_{t_{(r,0)}} & k_{t_{(r,1)}} & \cdots & k_{t_{(r,c)}} &
+          \cdots \\
+        };
+ %dashed boxes to represent the subparts of the generated key
+ \draw [dashed] (k-1-2.north west) rectangle (k-4-5.south east);
+ \draw [dashed] (k-1-6.north west) rectangle (k-4-9.south east);
+ 
+ %boxes to indicate the steps of the algorithm
+ \node [] (j) at (k-1-7.north) {$j$};
+ \draw [red,thick] (k-1-7.north west) rectangle (k-4-7.south east);
+ 
+ \node [] (j-1) at (k-1-6.north) {$j-1$};
+ \draw [blue,thick] (k-1-6.north west) rectangle (k-4-6.south east);
+ 
+ \node [] (j-c) at (k-1-3.north) {$j-c$};
+ \draw [blue,thick] (k-1-3.north west) rectangle (k-4-3.south east);
+ 
+ % if (j mod nColumns == 0)
+ % w[0][j] := w[0][j-nColumns]$\oplus$SubBytes(w[1][j-1])$\oplus$Rcon[j/nColumns];
+ \draw [] (k-1-3.north west) rectangle (k-1-3.south east);%w[0][j-c]
+ \draw [] (k-2-6.north west) rectangle (k-2-6.south east);%w[1][j-1]
+ \node [rectangle,draw] (subBytes) at (0,2.5) {subBytes()};
+ \draw [->] (k-2-6.north west) -- (subBytes);
+ \node [rectangle,draw] (rcon) at (0,4) {Rcon[$j/c$]};
+ \node [circle,draw] (xor1) at (0,3.25) {};\draw [-] (xor1.north) -- (xor1.south);\draw [-] (xor1.west) -- (xor1.east);
+ \draw [->] (subBytes) -- (xor1.south);
+ \draw [->] (rcon) -- (xor1.north);
+ \draw [->] (k-1-3.north east) -- (-1,3.25) -- (xor1.west);
+ \draw [] (k-1-7.north west) rectangle (k-1-7.south east);%w[0][j]
+ \node [diamond,draw,aspect=1.5] (jmodc) at (1.65,3.25) {j mod c};
+ \draw [->] (xor1.east) -- (jmodc);
+ \draw [->] (jmodc) -- (k-1-7.north east);
+ \node [] (eq0) at (jmodc.south) {=0};
+ 
+ % if (j mod nColumns == 0)
+ % w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i+1 mod 4][j-1]);
+ % else if (nColumns > 6) and (j mod nColumns == 4)
+ % w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i][j-1]);
+ % else
+ % w[i][j] := w[i][j-nColumns]$\oplus$w[i][j-1];
+ 
+ \node [rectangle,draw] (subBytes2) at (-1,-2.5) {subBytes()};
+ \draw[|->] (k-4-6.south) -- (subBytes2.north);% w[x][j-1]
+ 
 
-Perhaps a better way to see the algorithm \ref{alg:keyExpansion} is the figure \ref{fig:keyExpansionDiagram}. With this figure seems to be easier to recognise this iterative algorithm, that is generating the new column $i$ by taking the previous (with may be some transformations when the key size is bigger than the block size) and the one in the same relative position of the previous \emph{subkey}, to do over it some transformations to introduce diffusion and confusion in the newer bits generation.
+ \node [diamond,draw,aspect=2] (jmodc2) at (1.65,-4) {j mod c};%j mod nColumns
+ \node (zero) at (jmodc2.west) {$=0$};
+ \node (four) at (jmodc2.north west) {$=4$};
+ \node (else) at (jmodc2.south) {else};
+ 
+ % w[i][j-nColumns]$\oplus$SubBytes(w[i+1 mod 4][j-1]);
+ \node [circle,draw] (xor0) at (-2,-4) {};\draw [-] (xor0.north) -- (xor0.south);\draw [-] (xor0.west) -- (xor0.east);
+ \draw[|->] (k-4-3.south) -- (xor0.west);% w[x][j-nColumns]
+ \draw[->] (subBytes2.south) -- (xor0.north);% 
+ \draw[->] (xor0.east) -- (jmodc2.west);
+ % w[i][j-nColumns]$\oplus$SubBytes(w[i][j-1]);
+ \draw[->] (xor0.east) -- (jmodc2.north west);%TODO: The nC > 6;
+ % w[i][j-nColumns]$\oplus$w[i][j-1];
+ \node [circle,draw] (xor_else) at (-1,-5) {};\draw [-] (xor_else.north) -- (xor_else.south);\draw [-] (xor_else.west) -- (xor_else.east);
+ \draw[|->] (k-4-6.south) -- (xor_else.north);% w[x][j-1]
+ \draw[|->] (k-4-3.south) -- (xor_else.west);% w[x][j-nColumns]
+ \draw[->] (xor_else.east) -- (jmodc2.south);
+ 
+ \draw[->] (jmodc2.north) -- (k-4-7.south);
+ 
+\end{tikzpicture}
+\caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
+\label{fig:keyExpansionDiagram}
+\end{center}
+\end{figure}
+
+Perhaps a better way to see the algorithm \ref{alg:keyExpansion} is the figure \ref{fig:keyExpansionDiagram}. From steps 1 to 5 in the algorithm it simply ``moves'' the input key to the first part of the generated output. The main part of the algorithm, starts on the step 6 where each column further than the original columns of the key are generated.
+
+With this figure seems to be easier to recognise this iterative algorithm, that is generating the new column $i$ by taking the previous (with may be some transformations when the key size is bigger than the block size) and the one in the same relative position of the previous \emph{subkey}, to do over it some transformations to introduce diffusion and confusion in the newer bits generation.
 
 Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \emph{Rijndael}. This is one of the bests characteristics of this algorithm.
 
