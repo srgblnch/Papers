@@ -237,39 +237,32 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
  \caption{KeyExpansion}
  \label{alg:keyExpansion}
  \begin{algorithmic}[1]
-  \REQUIRE byte k[nRows][nColumns], nRounds, nRowns, nColumns, wSize
-  \ENSURE word w[nRouns][nColumns*(nRows+1)]
-
-  \FOR{$(j=0$;$j<nColumns$;$j++)$}
-    \FOR{($i=0$;$i<nRows$;$i++)$}
-      \STATE w[i][j] := k[i][j];
-    \ENDFOR
-  \ENDFOR
-  \FOR{$(j=nColumns$;$j<(nColumns*(nRounds+1))$;$j++)$}
-    \IF{j mod nColumns == 0}
-      \STATE w[0][j] := w[0][j-nColumns]$\oplus$SubBytes(w[1][j-1])$\oplus$Rcon[j/nColumns];
-      \FOR{$(i=1$;$i<nRows$;$i++)$}
-        \STATE w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i+1 mod 4][j-1]);
-      \ENDFOR
-    \ELSIF{$(nColumns > 6)$ and $($j mod nColumns == 4$)$}
-      \FOR{$(i=0$;$i<nRows$;$i++)$}
-        \STATE w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i][j-1]);
-      \ENDFOR
+  \REQUIRE byte k[nRows*nColumns], nRounds, nRowns, nColumns, wSize
+  \ENSURE word w[nRouns*(nRows+1)]
+  \STATE i := 0
+  \WHILE{$i<nColumns$}
+    \STATE w[i] := word($k[nRows*(i+c)$ for $c$ in $range(nColumns)]$)
+  \ENDWHILE
+  \STATE i := nColumns
+  \WHILE{$i<nRouns*(nRows+1)$}
+    \STATE temp := w[i-1]
+    \IF{i mod nColumns == 0}
+      \STATE temp := SubWord(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
     \ELSE
-      \FOR{$(i=0$;$i<nRows$;$i++)$}
-        \STATE w[i][j] := w[i][j-nColumns]$\oplus$w[i][j-1];
-      \ENDFOR
+      \STATE temp := SubWord(temp)
     \ENDIF
-  \ENDFOR
+    \STATE w[i] := w[i-nColumns] $\oplus$ temp
+    \STATE i++
+  \ENDWHILE
  \end{algorithmic}
 \end{algorithm}
 
-Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from \cite{Daemen:2002:DR:560131} because is the latest document from the authors of the \emph{Rijndael}. The previous documents (the original proposal \cite{Daemen98aesproposal:} and the version 2 \cite{Daemen01aes-ammended}, have different versions each one.} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. But is different than the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+%TODO: check how it was the keyExpansion in the first proposal \cite{Daemen98aesproposal:}
 
 All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
 
 % draw the algorithm as a diagram
-% TODO: rebuild with the fixed algorithm
 \begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
@@ -278,85 +271,57 @@ All those parameters are necessary to have in the output an expanded key large e
               column sep=-0.1cm,row sep=-0.5cm,
              ] at (0,0)
         {
-          \cdots &
-          k_{s_{(0,0)}} & k_{s_{(0,1)}} & \cdots & k_{s_{(0,c)}} &
-          k_{t_{(0,0)}} & k_{t_{(0,1)}} & \cdots & k_{t_{(0,c)}} &
-          \cdots \\
-          \cdots &
-          k_{s_{(1,0)}} & k_{s_{(1,1)}} & \cdots & k_{s_{(1,c)}} &
-          k_{t_{(1,0)}} & k_{t_{(1,1)}} & \cdots & k_{t_{(1,c)}} &
-          \cdots \\
-          \cdots &
+          k_{0_{(0,0)}} & k_{0_{(0,1)}} & \cdots & k_{0_{(0,c)}} &
+          k_{1_{(0,0)}} & k_{1_{(0,1)}} & \cdots & k_{1_{(0,c)}} &
+          \cdots \\%&
+          %k_{n_{(0,0)}} & k_{n_{(0,1)}} & \cdots & k_{n_{(0,c)}} \\
+          k_{0_{(1,0)}} & k_{0_{(1,1)}} & \cdots & k_{0_{(1,c)}} &
+          k_{1_{(1,0)}} & k_{1_{(1,1)}} & \cdots & k_{1_{(1,c)}} &
+          \cdots \\%&
+          %k_{n_{(1,0)}} & k_{n_{(1,1)}} & \cdots & k_{n_{(1,c)}} \\
           \vdots        & \vdots        & \ddots & \vdots        &
           \vdots        & \vdots        & \ddots & \vdots        &
-          \cdots        \\
-          \cdots &
-          k_{s_{(r,0)}} & k_{s_{(r,1)}} & \cdots & k_{s_{(r,c)}} &
-          k_{t_{(r,0)}} & k_{t_{(r,1)}} & \cdots & k_{t_{(r,c)}} &
-          \cdots \\
+          \cdots        \\%&
+          %\vdots        & \vdots        & \ddots & \vdots        \\
+          k_{0_{(r,0)}} & k_{0_{(r,1)}} & \cdots & k_{0_{(r,c)}} &
+          k_{1_{(r,0)}} & k_{1_{(r,1)}} & \cdots & k_{1_{(r,c)}} &
+          \cdots \\%&
+          %k_{n_{(r,0)}} & k_{n_{(r,1)}} & \cdots & k_{n_{(r,c)}}\\
         };
- %dashed boxes to represent the subparts of the generated key
- \draw [dashed] (k-1-2.north west) rectangle (k-4-5.south east);
- \draw [dashed] (k-1-6.north west) rectangle (k-4-9.south east);
- 
- %boxes to indicate the steps of the algorithm
- \node [] (j) at (k-1-7.north) {$j$};
- \draw [red,thick] (k-1-7.north west) rectangle (k-4-7.south east);
- 
- \node [] (j-1) at (k-1-6.north) {$j-1$};
- \draw [blue,thick] (k-1-6.north west) rectangle (k-4-6.south east);
- 
- \node [] (j-c) at (k-1-3.north) {$j-c$};
- \draw [blue,thick] (k-1-3.north west) rectangle (k-4-3.south east);
- 
- % if (j mod nColumns == 0)
- % w[0][j] := w[0][j-nColumns]$\oplus$SubBytes(w[1][j-1])$\oplus$Rcon[j/nColumns];
- \draw [] (k-1-3.north west) rectangle (k-1-3.south east);%w[0][j-c]
- \draw [] (k-2-6.north west) rectangle (k-2-6.south east);%w[1][j-1]
- \node [rectangle,draw] (subBytes) at (0,2.5) {subBytes()};
- \draw [->] (k-2-6.north west) -- (subBytes);
- \node [rectangle,draw] (rcon) at (0,4) {Rcon[$j/c$]};
- \node [circle,draw] (xor1) at (0,3.25) {};\draw [-] (xor1.north) -- (xor1.south);\draw [-] (xor1.west) -- (xor1.east);
- \draw [->] (subBytes) -- (xor1.south);
- \draw [->] (rcon) -- (xor1.north);
- \draw [->] (k-1-3.north east) -- (-1,3.25) -- (xor1.west);
- \draw [] (k-1-7.north west) rectangle (k-1-7.south east);%w[0][j]
- \node [diamond,draw,aspect=1.5] (jmodc) at (1.65,3.25) {j mod c};
- \draw [->] (xor1.east) -- (jmodc);
- \draw [->] (jmodc) -- (k-1-7.north east);
- \node [] (eq0) at (jmodc.south) {=0};
- 
- % if (j mod nColumns == 0)
- % w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i+1 mod 4][j-1]);
- % else if (nColumns > 6) and (j mod nColumns == 4)
- % w[i][j] := w[i][j-nColumns]$\oplus$SubBytes(w[i][j-1]);
- % else
- % w[i][j] := w[i][j-nColumns]$\oplus$w[i][j-1];
- 
- \node [rectangle,draw] (subBytes2) at (-1,-2.5) {subBytes()};
- \draw[|->] (k-4-6.south) -- (subBytes2.north);% w[x][j-1]
- 
+\draw [] (k-1-1.north west) rectangle (k-4-9.south east);
+\draw [dashed] (k-1-1.north west) rectangle (k-4-4.south east);
+\draw [dashed] (k-1-5.north west) rectangle (k-4-8.south east);
+%\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
 
- \node [diamond,draw,aspect=2] (jmodc2) at (1.65,-4) {j mod c};%j mod nColumns
- \node (zero) at (jmodc2.west) {$=0$};
- \node (four) at (jmodc2.north west) {$=4$};
- \node (else) at (jmodc2.south) {else};
- 
- % w[i][j-nColumns]$\oplus$SubBytes(w[i+1 mod 4][j-1]);
- \node [circle,draw] (xor0) at (-2,-4) {};\draw [-] (xor0.north) -- (xor0.south);\draw [-] (xor0.west) -- (xor0.east);
- \draw[|->] (k-4-3.south) -- (xor0.west);% w[x][j-nColumns]
- \draw[->] (subBytes2.south) -- (xor0.north);% 
- \draw[->] (xor0.east) -- (jmodc2.west);
- % w[i][j-nColumns]$\oplus$SubBytes(w[i][j-1]);
- \draw[->] (xor0.east) -- (jmodc2.north west);%TODO: The nC > 6;
- % w[i][j-nColumns]$\oplus$w[i][j-1];
- \node [circle,draw] (xor_else) at (-1,-5) {};\draw [-] (xor_else.north) -- (xor_else.south);\draw [-] (xor_else.west) -- (xor_else.east);
- \draw[|->] (k-4-6.south) -- (xor_else.north);% w[x][j-1]
- \draw[|->] (k-4-3.south) -- (xor_else.west);% w[x][j-nColumns]
- \draw[->] (xor_else.east) -- (jmodc2.south);
- 
- \draw[->] (jmodc2.north) -- (k-4-7.south);
- 
+%boxes to get the necessary columns
+\draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
+\draw [blue,thick] (k-1-5.north west) rectangle (k-4-5.south east);
+\draw [red,thick] (k-1-6.north west) rectangle (k-4-6.south east);
+% 
+\node [diamond,draw,aspect=2] (imodc) at (.1,-3) {i mod c};
+\node [rectangle,draw] (rotWord) at (-1.7,-3.5) {rotWord()};
+\node [rectangle,draw] (subBytes) at (-1.7,-4.4) {subBytes()};
+\node [circle,draw] (xor) at (.1,-5) {};
+ \draw [-] (xor.north) -- (xor.south);
+ \draw [-] (xor.west) -- (xor.east);
+\node [rectangle,draw] (rcon) at (.1,-5.7) {Rcon[i]};
+\node [] (eq0) at (-1,-2.8) {=0};
+\node [] (neq) at (.5,-3.6) {$\neq0$};
+\node [] (neq) at (k-1-2.north) {$i-c$};
+\node [] (neq) at (k-1-5.north) {$i-1$};
+\node [] (neq) at (k-1-6.north) {$i$};
+% 
+% %arrows to set into the algorithm
+\draw [|->] (k-4-2.south) -- (-3,-5) -- (xor.west);
+%\draw [|->] (k-4-5.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
+\draw [|->] (k-4-5.south) -- (imodc);
+\draw [->] (imodc.west) -- (-1.7,-3) -- (rotWord.north);
+\draw [->] (rotWord.south) -- (subBytes.north);
+\draw [->] (imodc.south) -- (xor.north);
+\draw [->] (subBytes.south) -- (-1.7,-4.8) -- (xor.north);
+\draw [->] (xor.east) -- (1.2,-5) -- (k-4-6.south);
+\draw [->] (rcon.north)--(xor.south);
+
 \end{tikzpicture}
 \caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
 \label{fig:keyExpansionDiagram}
