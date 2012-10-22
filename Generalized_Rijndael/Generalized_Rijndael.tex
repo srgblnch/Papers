@@ -237,21 +237,21 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
  \caption{KeyExpansion}
  \label{alg:keyExpansion}
  \begin{algorithmic}[1]
-  \REQUIRE byte k[nRows*nColumns], nRounds, nRowns, nColumns, wSize
-  \ENSURE word w[nRouns*(nRows+1)]
+  \REQUIRE nRounds, nRowns, nColumns, wSize, array of words $k_{in}[nRows*nColumns]$
+  \ENSURE array of columns(array of words) $k_{out}[nColumns*(nRouns+1)]$
   \STATE i := 0
   \WHILE{$i<nColumns$}
-    \STATE w[i] := word($k[nRows*(i+c)$ for $c$ in $range(nColumns)]$)
+    \STATE $k_{out}[i]$ := column($k_{in}[nRows*(i+c)$ for $c$ in $range(nColumns)]$)
   \ENDWHILE
   \STATE i := nColumns
   \WHILE{$i<nRouns*(nRows+1)$}
-    \STATE temp := w[i-1]
+    \STATE temp := $k_{out}[i-1]$
     \IF{i mod nColumns == 0}
       \STATE temp := SubWord(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
     \ELSE
       \STATE temp := SubWord(temp)
     \ENDIF
-    \STATE w[i] := w[i-nColumns] $\oplus$ temp
+    \STATE $k_{out}[i]$ := $k_{out}[i-nColumns]$ $\oplus$ temp
     \STATE i++
   \ENDWHILE
  \end{algorithmic}
