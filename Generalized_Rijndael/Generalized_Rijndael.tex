@@ -433,21 +433,31 @@ This transformation is a non-linear substitution of each word in the \emph{state
 
 From the programmatic point of view the use of those boxes is so simple. Because the wordsize is 8 bits, by splitting the data to transform in two parts of 4 bits you can get the row and the column, taking the value in the cell as the value of the substitution. In the decipher operation, is used the inverse of the box, and with the same procedure of split the word and find the coordinates, but now with the inverse S-Box, the value you get back is the original data.
 
-As an example, to transform the data \texttt{0x39} localise the cell in row \texttt{0x3} column \texttt{0x9}, and change the state matrix value with \texttt{0x12}. In the decipher procedure the transformation will be from the value \texttt{0x12}, reading the row \texttt{0x1} column \texttt{0x2} the cell have the value \texttt{0x39}, the original of this example. Check any other example using figures \ref{tab:sbox8} and \ref{tab:inv-sbox8} to do it and undo.
+As an example, to transform the data \texttt{0x39} localise the cell in: row \texttt{0x3}, column \texttt{0x9}; and change the state matrix value with \texttt{0x12}. In the decipher procedure the transformation will be from the value \texttt{0x12}, reading: the row \texttt{0x1}, column \texttt{0x2}; the cell have the value \texttt{0x39}, the original of this example. Check any other example using figures \ref{tab:sbox8} and \ref{tab:inv-sbox8} to do it and undo.
+
+A schematic of how this step can be visualized if in the figure \ref{fig:subBytes}, but this drawing (and the \emph{S-Box} way) can be only used in the case that the word size $w$ has an even number of bits.
 
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 
-But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation.
+But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation. There can be implementations that have more memory limitations than cpu, and can make this transformation analytically better than maintain those tables (the \emph{S-Box} and its inverse), but for the generalization of the \emph{Rijndael} for new word sizes, at least, we must be capable to build those boxes for those new sizes.
 
 % operations in the polynomial field F_{2^w} w: wordsize
-The first transformation is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original Rijndael). The second transformation is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is:
+The first transformation (called $g$) is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original \emph{Rijndael} that has become \emph{AES}).
+\begin{equation}\label{eq:multInvPolyField}
+ g:a\rightarrow b = a^{-1} \in \Fpnm{w}{z} 
+\end{equation}
+Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreductible $m(z)$, in the original \emph{Rijndael}: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
+
+The second transformation (called $f$) is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is (where $w=8$):
 \begin{equation}\label{eq:subBytes:affine}
  b_{i}' = b_{i} \oplus b_{(i+4)mod8} \oplus b_{(i+5)mod8} \oplus 
           b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
 \end{equation}
 Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation:
+% TODO: from where the matrix comes from?
 
-\begin{equation}
+\begin{equation}\label{eq:subBytes:matrix}
+ f:
  \left[
   \begin{array}{c}
     b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'
@@ -463,19 +473,50 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
     0&0&1&1&1&1&1&0\\
     0&0&0&1&1&1&1&1\\
   \end{array}
- \right]\cdot\left[
+ \right]\times\left[
   \begin{array}{c}
     b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}
   \end{array}
- \right]+\left[
+ \right]\oplus\left[
   \begin{array}{c}
     1\\1\\0\\0\\0\\1\\1\\0
   \end{array}
  \right]
 \end{equation}
 
-% FIXME (review) draw schematic of this step
+Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:subBytes:matrix}:
 
+\begin{equation}\label{eq:invSubBytes:matrix}
+ f^{-1}:
+ \left[
+  \begin{array}{c}
+    b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}
+  \end{array}
+ \right]=\left[
+  \begin{array}{cccccccc}
+    0&1&0&1&0&0&1&0\\
+    0&0&1&0&1&0&0&1\\
+    1&0&0&1&0&1&0&0\\
+    0&1&0&0&1&0&1&0\\
+    0&0&1&0&0&1&0&1\\
+    1&0&0&1&0&0&1&0\\
+    0&1&0&0&1&0&0&1\\
+    1&0&1&0&0&1&0&0\\
+  \end{array}
+ \right]\times\left[
+  \begin{array}{c}
+    b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'
+  \end{array}
+ \right]\oplus\left[
+  \begin{array}{c}
+    0\\0\\0\\0\\0\\1\\0\\1\\
+  \end{array}
+ \right]
+\end{equation}
+
+The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}(z)=g^{-1}(f^{-1}(z))=g(f^{-1}(z))$
+
+% draw schematic of this step
 \begin{figure}[h!]
 \begin{center}
 \begin{tikzpicture}[>=latex]
@@ -550,11 +591,19 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{How to build different SBoxes}\label{sec:sbox}
 
-% TODO and how to build a new one with different parameters
-Using the same \emph{wordsize} there are two different things that can be changed: the \texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpn{2}{4}, over $16$ the field will be \Fpn{2}{{16}}, and the subparameters of the affine transformation must also be set up.
+% and how to build a new one with different parameters
+Using the same \emph{wordsize} there are two different things that can be changed: the \texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpnm{4}{z}, over $16$ the field will be \Fpnm{{16}}{z}, and the subparameters of the affine transformation must also be set up.
 
 \begin{itemize}
- \item \texttt{TODO:} how to build new ones with different parameters
+ \item \texttt{TODO:} how to build new $S$ and $S^{-1}$ for $w\neq 8$.
+ \begin{itemize}
+  \item build $g(z)$ in \Fpnm{w}{z}
+  \item build $f(z)$ and $f^{-1}(z)$ in \Fpnm{w}{z}
+  \begin{itemize}
+   \item How to chose the circulant matrix of the equation \ref{eq:subBytes:matrix} and the $c$ (and also for the inverse)?
+  \end{itemize}
+ \end{itemize}
+ \item \texttt{TODO:} summarize the $S$ and $S^{-1}$ using $w=4$ and $w=2$ in their \emph{S-Box}es and their inverse Boxes.
 \end{itemize}
 
 
