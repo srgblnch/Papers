@@ -190,6 +190,12 @@ From the standardised \emph{Rijndael}, 4 rows per 4 columns with words of 8 bit 
 \end{equation}
 This sets the block size of the $4\times4\times8=128$ bits, and later will be described that this representation gives many simplicity to use the bits on each cell as field of polynomials with binary coefficients, or the use the columns as a ring of polynomial where the coefficients are elements on the polynomial field, represented by the cells. Very smart, simplistic and versatile data representation.
 
+With this matrix, the input plain text is transformed by the algorithm to the cipher text and the state matrix is the snapshot of each modification made with this transformation. Also with the decipher algorithm this state matrix contains the conversions to recover, from a cypher text the original plain text.
+
+Understanding the \emph{Rijndael} schema as a \emph{Pseudo-Random Permutation}, the PRP from definition \ref{def:PRP} on section \ref{sec:approach}, with the \emph{State Matrix} the full \emph{message space} $\mathcal{M}$ can be represented.
+
+Also for the key a similar representation is used having a matrix but, because the standard allows different key sizes, in that case the number of columns is in the range between $4$, $6$ and $8$ (for $128$, $192$, $256$ key sizes).
+
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
 \begin{itemize}
  \item Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}
