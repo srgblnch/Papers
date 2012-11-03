@@ -88,7 +88,6 @@
   \item From the proposal on 1998 \cite{Daemen98aesproposal:}, \cite{Daemen:1998:BCR:646692.759487} and the revision \cite{Daemen01aes-ammended}, passing by the decision in 2000 of Rijndael chosen \cite{AES-FIPS}.
   \item and the \cite{Daemen:2002:DR:560131} book
  \end{itemize}
- \item \texttt{TODO:} About the future of the aes with the AESwrap (rfc3394) \cite{rfc3394}
 \end{itemize}
 
 % TODO problem approach (rijndael scalability)
@@ -103,7 +102,8 @@
 
 % TODO
 \begin{itemize}
- \item \texttt{TODO:} key recovery attacks \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it), 
+ \item \texttt{TODO:} key recovery attacks \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it).
+ \item \texttt{TODO:} Like \emph{$3$-DES} helps the algorithm to \emph{survive} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}).
 \end{itemize}
 
 
@@ -173,10 +173,25 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Design}\label{sec:design}
+
 % TODO what is the state matrix
+The design of the \emph{Rijndael} starts its elegance by the data structure of the \emph{State matrix}. This algorithm represents the data with in a matrix of a given number of rows and columns. On each cell of this matrix is allocated information in binary grouped in sets of the word size.
+
+From the standardised \emph{Rijndael}, 4 rows per 4 columns with words of 8 bit size.
+\begin{equation}\label{eq:stateMatrix}
+ \left[
+ \begin{tabular}{cccc}
+  $S_{(0,0)}$ & $S_{(0,1)}$ & $S_{(0,2)}$ & $S_{(0,3)}$ \\
+  $S_{(1,0)}$ & $S_{(1,1)}$ & $S_{(1,2)}$ & $S_{(1,3)}$ \\
+  $S_{(2,0)}$ & $S_{(2,1)}$ & $S_{(2,2)}$ & $S_{(2,3)}$ \\
+  $S_{(3,0)}$ & $S_{(3,1)}$ & $S_{(3,2)}$ & $S_{(3,3)}$ \\
+ \end{tabular}
+ \right]
+\end{equation}
+This sets the block size of the $4\times4\times8=128$ bits, and later will be described that this representation gives many simplicity to use the bits on each cell as field of polynomials with binary coefficients, or the use the columns as a ring of polynomial where the coefficients are elements on the polynomial field, represented by the cells. Very smart, simplistic and versatile data representation.
+
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
 \begin{itemize}
- \item \texttt{TODO:} what is in the state matrix?
  \item Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}
  \begin{itemize}
   \item \texttt{TODO:} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
