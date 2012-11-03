@@ -101,6 +101,12 @@
  \item \texttt{TODO:} alternative symmetric cryptosystems. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size.
 \end{itemize}
 
+% TODO
+\begin{itemize}
+ \item \texttt{TODO:} key recovery attacks \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it), 
+\end{itemize}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
 % what is a PRP? 
@@ -119,7 +125,8 @@
  \end{enumerate}
 \end{definition}
 
-A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys}. Also Shannon have defined the concept of the \emph{perfect secrecy}
+A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in ...\footnote{\texttt{FIXME:} review to be sure if it was in \cite{shannon-MathTheoryComm} or \cite{shannon-comTheorySecSys}, or both then cite the oldest}. Also Shannon have defined the concept of the \emph{perfect secrecy}
+% FIXME: was in \cite{shannon-comTheorySecSys} or in \cite{shannon-MathTheoryComm} ??
 \begin{definition}\label{def:shannonPerfectSecrecy}
  A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and  $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
  \begin{center}
@@ -170,12 +177,15 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
 \begin{itemize}
  \item \texttt{TODO:} what is in the state matrix?
- \item \texttt{TODO:} Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-comTheorySecSys} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
+ \item Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}
+ \begin{itemize}
+  \item \texttt{TODO:} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
+ \end{itemize}
  \item \texttt{TODO:} Explain the round transformation as one (composed) operation to provide diffusion and guarantee non-linear distribution.
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Generalising the schema}\label{sec:generalising}
+%Shannon
+An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cypher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}) of confusion and diffusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
 \begin{figure}[h!]
@@ -185,7 +195,9 @@ From the 4 basic operations of the Rijndael this change is the one than can need
  \caption{rijndael diagram}
  \label{fig:RijndaelDiagram}
 \end{figure}
-% TODO: describe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Generalising the schema}\label{sec:generalising}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
@@ -753,7 +765,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
 The polynomial ring used in the Rijndael schema is denoted:
 $$\Fpnm{n}{x}\label{eq:polynomialRing}$$
-where $m(x)$ is a composited polynomial with the same degree than the $c$ columns parameter. This describes a polynomial ring. The coefficients of this polynomial ring are elements of a polynomial field $\Fpn{2}{n}$, where this notation is a shorter of
+where $m(x)$ is a composited polynomial\footnote{\texttt{FIXME:} composited polynomial is the same than say reducible? Because with an \emph{irreducible polynomial} we get a field, but if it factorized it's a ring} with the same degree than the $c$ columns parameter. This describes a polynomial ring. The coefficients of this polynomial ring are elements of a polynomial field $\Fpn{2}{n}$, where this notation is a shorter of
 $$\Fpn{2}{n}=\Fpnm{1}{z}\label{eq:polynomialField}$$
 and in here, the polynomial $m(z)$ is an irreductible with the same degree than the wordsize ($w$). 
 
