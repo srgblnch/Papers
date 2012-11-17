@@ -125,8 +125,7 @@
  \end{enumerate}
 \end{definition}
 
-A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in ...\footnote{\texttt{FIXME:} review to be sure if it was in \cite{shannon-MathTheoryComm} or \cite{shannon-comTheorySecSys}, or both then cite the oldest}. Also Shannon have defined the concept of the \emph{perfect secrecy}
-% FIXME: was in \cite{shannon-comTheorySecSys} or in \cite{shannon-MathTheoryComm} ??
+A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys} the perfect secrecy concept in \emph{part II, section 10}.
 \begin{definition}\label{def:shannonPerfectSecrecy}
  A \emph{cipher} has \emph{perfect secrecy} if $\forall m_1, m_2 \in \mathcal{M} \;s.t.\; \left| m_1 \right| = \left| m_2 \right| \wedge \forall c \in \mathcal{C}$ and  $k\in_R\mathcal{K}$ (random and uniform distributed), the probability to that $c$ comes from $m_1$ or $m_2$ are the same
  \begin{center}
@@ -198,7 +197,7 @@ Also for the key a similar representation is used having a matrix but, because t
 
 % TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
 \begin{itemize}
- \item Shannon: confusion \& diffusion $\Rightarrow$ substitution \& permutation \cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}
+ \item Shannon: diffusion \& confusion \cite{shannon-comTheorySecSys} (part III section 23)) $\Rightarrow$ substitution \& permutation
  \begin{itemize}
   \item \texttt{TODO:} (a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.
  \end{itemize}
@@ -206,7 +205,7 @@ Also for the key a similar representation is used having a matrix but, because t
 \end{itemize}
 
 %Shannon
-An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cypher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-MathTheoryComm} and \cite{shannon-comTheorySecSys}) of confusion and diffusion.
+An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cypher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-comTheorySecSys} part III section 23) of diffusion and confusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
 \begin{figure}[h!]
