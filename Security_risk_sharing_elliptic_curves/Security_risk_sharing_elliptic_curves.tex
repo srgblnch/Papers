@@ -1,5 +1,5 @@
 %\documentclass[a4paper,10pt]{article}
-\documentclass[a4paper,twoside]{llncs}
+\documentclass[10pt,a4paper,twoside]{llncs}
 %\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
@@ -12,7 +12,10 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\version}{Versi\'on 0.0.4}
+\usepackage{gitinfo}
+\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
+\newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
+\newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %opening
@@ -60,11 +63,11 @@
 \end{center}
 
 
-\begin{abstract}\footnote{Partially founded by the Spanish project MTM20\_\_-\_\_\_\_\_-\_\_\_-\_\_}
-%% FIXME: this probably is too long
-One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty in the length of this group. Using a different elliptic curve the cyclic subgroup is completely different and the cryptanalysis that someone can have done over one curve is useless over another curve over the same finite field. The complexity to port an attack from one curve to another is even bigger than restart the attack over the second one from scratch.
+\begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
+\fixme{this probably is too long}
+One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty in the length of this group. Using a different elliptic curve the cyclic subgroup is completely different and the cryptanalysis that someone can have done over one curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
 
-Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, that means almost all the users with the same domain parameters.
+Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, that means almost all the users with the same domain parameters.
 
 It is a request of this standard to find a way to add randomization between the used elliptic curves and in this paper two ways will be explored. Both likes to get an ``auditable'' algorithm to the final user to get its particular elliptic curve. The difference between this two ways is if the algorithm starts from scratch of from one cryptographically good curve.
 \\\\    
@@ -74,7 +77,7 @@ It is a request of this standard to find a way to add randomization between the 
 \section{Introduction \label{sec:intro}}
 %% Justify the need of the curve randomization
 
-The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption is close to be with the draft \cite{OpenECC}. But this draft is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
+The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released last year after a long process \cite{rfc6637}. But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
 
 This OID method can be an option for keys where the bandwidth is limited, but there must be the possibility to use any good curve, because is one of the best advantages of the elliptic curve cryptography.
 
@@ -115,7 +118,7 @@ Another important parameter of an elliptic curve is the cardinality, who can be 
 \begin{definition}\label{def:cardinality}
  The \emph{cardinality} of an elliptic curves $E$ over \Fq is defined as the number of \Fq-rational points. Where a \Fq-rational points is a pair $(x,y)\in \mathbb{F}_{q}^{2}$ such that follows the elliptic curve equation.
 \end{definition}
-%FIXME: this definition here is a bit forced, but where is this better?
+\fixme{this definition here is a bit forced, but where is this better?}
 
 %% Introduce the PaI
 A curve over a general finite field $\mathbb{F}$ is composed by the points of the curve with the notation $E\left(\mathbb{F}\right)$. The points of an elliptic curve over a prime finite field are all ones that resolves the equation \ref{eq:WRF} union the point at infinity (the neutral element of the group, denoted \PaI) who does not have representation over the affine plane and other coordinate representations are better like the projectives \Proy $\;$ or Jacobians \Jacob.
@@ -154,7 +157,8 @@ In the projective plane, three coordinates are used to represent a two-dimension
         Y^{2}Z = X^{3} + aXZ^{2} + bX^{3}
 \end{equation}
 
-%% FIXME: ??jacobian coordinates: Have they enough interest for the objective of this article?
+\fixme{??jacobian coordinates: Have they enough interest for the objective of this article?}
+
 Over a Jacobian plane, also three coordinate are used to represent the points, knowing $x=\frac{X}{Z^2}$ and $y=\frac{Y}{Z^3}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} is:
 \begin{equation}\label{eq:WRFJacobian}
         Y^{2}Z = X^{3} + aXZ^{4} + bX^{6}
@@ -162,7 +166,7 @@ Over a Jacobian plane, also three coordinate are used to represent the points, k
 
 As is described in \cite{EC&NT&crypt} the projective coordinates improves the operation of the point addition, but the jacobian coordinates gives an advantage over the doubling point operation.
 
-%% TODO: the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of of 0's an 1's are similar?
+\todo{the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of of 0's an 1's are similar?}
 
 An the joint of points of an elliptic curve over a prime finite field, described in projective coordinates is:
 \begin{equation}\label{eq:conjEK}
@@ -186,7 +190,7 @@ With the set of points of an elliptic curve defined in \ref{eq:conjEK} a bijecti
 This application, that will be called \emph{addition}, has an algebraic structure of an \emph{Abelian group} because satisfies some requirements: Closure in the group, associativity, identity element, inverse element, and commutativity.
 
 \begin{definition}\label{def:eccEscProd}
-Given tis addition operation applied to a point together with itself, this point is \emph{duplicated}; this addition with itself can be done many times and define it as the \emph{scalar product} where the scalar represents the number of times the point is added to itself:
+Given this addition operation applied to a point together with itself, this point is \emph{duplicated}; this addition with itself can be done many times and define it as the \emph{scalar product} where the scalar represents the number of times the point is added to itself:
 \begin{equation}\label{eq:eccEscProd}
         \begin{array}{cccc}
                 \emph{\text{*}}: & E\left(\mathbb{F}_{p}\right) & \rightarrow & E\left(\mathbb{F}_{p}\right) \\
@@ -274,12 +278,12 @@ Generate an elliptic curve is not a hard job, what is hard is to generate an cry
 
 This algorithm does not returns a generator who is also a cryptosystems parameter, because its algorithm to found it is not part of this article has been excluded in this algorithm. This algorithm also sets a restriction than cofactor must be $1$, $2$ or $4$, who comes from the P1363 rules (\cite{P1363}). The cofactor size affects on the group of points of the cyclic subgroup where the cryptography will be.
 
-%% TODO: with the SEA algorithm, the citation of the article is need
+\todo{with the SEA algorithm, the citation of the article is need}
 The steps of the algorithm \ref{alg:scratch} can be performed in many ways to try to reduce the execution time. The cardinal calculation can be using the \emph{SEA} algorithm  and the \emph{Hasse interval} (definition \ref{def:Hasse}) check can be optimized to avoid unnecessary operation, but in a final implementation all this code must be written aware of the side channel attacks. The factorization of the cardinal allows the possibility to only tries to find a little cofactor and check the primary on the $n$ candidate.
 
-%% TODO: This must have some computational results
+\todo{This must have some computational results}
 
-%% TODO: Approach to the number of good curves instead of the number of possible curves in a list. get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)
+\todo{Approach to the number of good curves instead of the number of possible curves in a list. get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
 
 \section{Find a good elliptic curve from another good one \label{sec:from_another}}
@@ -292,7 +296,8 @@ One proposed way to have this requirements are the elliptic curve isogenies. The
 
 \subsection{What is elliptic curve isogeny? \label{sec:isog}}
 
-%% define an (FIXME: ?isomorfism) isogeny
+\fixme{define an (?isomorfism) isogeny}
+
 \begin{definition}\label{def:isogeny}
  Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{iff} exist an isomorphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
 
@@ -306,7 +311,7 @@ One proposed way to have this requirements are the elliptic curve isogenies. The
 
 Where $X$ and $Y$ responds to $X=f_{1}(x)$ and $Y=f_{2}(x,y)$. As $f_{1}$ like $f_{2}$ are functions $\mathbb{K}$-rational.
 
-%% FIXME: how is this application? bijective? surjective like wikipedia says? Modular equation (symmetric polynomial of degree \ell+1)?
+\fixme{how is this application? bijective? surjective like wikipedia says? Modular equation (symmetric polynomial of degree $\ell+1$)?}
 
 \end{definition}
 
@@ -319,7 +324,8 @@ And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/
 
 
 
-%% FIXME: isogeny degree, composition of isogenies (prime degree)
+\fixme{isogeny degree, composition of isogenies (prime degree)}
+
 \begin{definition}\label{def:iso_degree}
  Given two isogenic elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, the degree of the isogeny between this two curves is the degree of the rational map between them.
 \end{definition}
@@ -327,16 +333,17 @@ And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/
 
 For all the isogenies with a degree greater than 1, they can be factored into a composition of isogenies of a prime degree over the base finite field \Fq.
 
-%% TODO: isogeny cases: Ascending, descending, horizontal
+\todo{isogeny cases: Ascending, descending, horizontal}
 
-%%TODO: Isogeny class
+\todo{Isogeny class}
 \begin{definition}\label{def_iso_class}
  Given an elliptic curve $E/\mathbb{K}$ an endomorphism class or isogeny class of degree $\ell$ is the set of elliptic curves... 
 \end{definition}
 
 \subsubsection{Volcano, volcanoes ranges and starts \label{sec:volcano}}
 
-%% FIXME: define a volcano: as a graph of isogenies of a particular degree.
+\fixme{define a volcano: as a graph of isogenies of a particular degree.}
+
 To describe the structure of the $\ell$ degree isogeny class it has been proposed a graph. Using the different cases of isogenies in the same isogeny class two main parts of the graph can be described. There is a part of the graph that is cyclic, and from each node an edge goes down with a balanced $\ell$-tree. All the nodes in the circumference have each tree with the same altitude. The number of edges of each node is $(\ell+1)$
 
 % volcano graph
@@ -445,47 +452,49 @@ To describe the structure of the $\ell$ degree isogeny class it has been propose
 \end{center}
 \end{figure}
 
-%% FIXME: Is true the number of edges per node?
+\fixme{Is true the number of edges per node?}
 
-%% FIXME: define ``serralada'' (volcanoes range or system): as the joint of graphs of isogenies with many primer degrees.
+\fixme{define ``serralada'' (volcanoes range or system): as the joint of graphs of isogenies with many primer degrees.}
 Different isogeny degrees recreates different volcanoes, and a set of volcanoes can be also represented in a graph like a mountain system. A composed isogeny degree describes this type of system of volcanoes of the factors of this composed degree.
 
-%% TODO: define isogeny stars: as a particular case of volcanoes with only crater
-%% FIXME: endomorphism ring
+\todo{define isogeny stars: as a particular case of volcanoes with only crater}
+\fixme{endomorphism ring}
 
 \subsection{How the isogenies can help to avoid curve sharing? \label{sec:alg_isog}}
 
-%% TODO: given an elliptic curve, generate an isogeny path, follow the path, forget it.
+\todo{given an elliptic curve, generate an isogeny path, follow the path, forget it.}
 The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirections} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
 
 The problem is alive, there are bibliography \cite{SubExpIso} to work in the direction of speed up the route walk in a volcanoes range (or in stars). 
 
-%% TODO: computational data about isogeny path evaluations
+\todo{computational data about isogeny path evaluations}
 
 \subsection{Front and side channel attacks to this schemas \label{sec:cryptanalysis}}
 
-%% TODO: cryptanalysis on this matter: Given two curves isogenies between them, find a path
+\todo{cryptanalysis on this matter: Given two curves isogenies between them, find a path}
 \cite{FastBetweenIso}
 
-%% TODO: possible side channel attacks
+\todo{possible side channel attacks (attacking the isogeny and to prevent attacks like trace zero points)}
 
-%% TODO: computational data about compute isogeny between to elliptic curves
+\todo{computational data about compute isogeny between to elliptic curves}
 
 \section{Conclusion \label{sec:conclusion}}
-%% TODO: what about the simulated times to generate curves in mathematical software? are they inside a usable range?
-%% TODO: cryptanalysis of this creations
+\todo{what about the simulated times to generate curves in mathematical software? are they inside a usable range?}
 
-%% TODO: close with a remember of the security risk cited in the X9-62
+\todo{cryptanalysis of this creations}
 
-%% TODO: remember the good skills of the elliptic curves over smart cards and the possibility of the reset of the cryptosystem setup
+\todo{close with a remember of the security risk cited in the X9-62}
+
+\todo{remember the good skills of the elliptic curves over smart cards and the possibility of the reset of the cryptosystem setup}
 
 %%%%%
 
-% FIXME: where must be said this? other usages of curve change
+\fixme{where must be said this? other usages of curve change}
 %\cite{Akishita03zero-valuepoint}
 
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
+
 
 %% Further work of this article:
 % smart cards
