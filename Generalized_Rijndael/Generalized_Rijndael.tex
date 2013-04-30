@@ -207,7 +207,7 @@ Also for the key a similar representation is used having a matrix but, because t
 \end{itemize}
 
 %Shannon
-An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cypher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-comTheorySecSys} part III section 23) of diffusion and confusion.
+An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cipher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-comTheorySecSys} part III section 23) of diffusion and confusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
 \begin{figure}[h!]
@@ -338,7 +338,7 @@ All those parameters are necessary to have in the output an expanded key large e
 \node [circle,draw] (xor) at (.1,-5) {};
  \draw [-] (xor.north) -- (xor.south);
  \draw [-] (xor.west) -- (xor.east);
-\node [rectangle,draw] (rcon) at (.1,-5.7) {Rcon[i]};
+\node [rectangle,draw] (rcon) at (.1,-5.7) {$1^i$ $\in$ \Fpnm{w}{z}};%{Rcon[i]};
 \node [] (eq0) at (-1,-2.8) {=0};
 \node [] (neq) at (.5,-3.6) {$\neq0$};
 \node [] (neq) at (k-1-2.north) {$i-c$};
