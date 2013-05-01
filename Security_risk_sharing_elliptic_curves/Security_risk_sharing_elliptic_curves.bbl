@@ -4,6 +4,10 @@
 ``Ansi x9.62, public key cryptography for the financial services industry: The
   elliptic curve digital signature algorithm (ecdsa).''
 
+\bibitem{rfc6637}
+A.~Jivsov, ``{Elliptic Curve Cryptography (ECC) in OpenPGP}.'' RFC 6637
+  (Proposed Standard), June 2012.
+
 \bibitem{rfc4880}
 J.~Callas, L.~Donnerhacke, H.~Finney, D.~Shaw, and R.~Thayer, ``{OpenPGP
   Message Format}.'' RFC 4880 (Proposed Standard), Nov. 2007.
@@ -17,10 +21,6 @@ P.~Gallagher, D.~D. Foreword, and C.~F. Director, ``Fips pub 186-3 federal
 \bibitem{rfc5832}
 V.~Dolmatov, ``{GOST R 34.10-2001: Digital Signature Algorithm}.'' RFC 5832
   (Informational), Mar. 2010.
-
-\bibitem{OpenECC}
-A.~Jivsov, ``Ecc in openpgp.''
-\newblock Internet Draft, OpenPGP working group at ieft.
 
 \bibitem{brainpool}
 ``Ecc brainpool standard curves and curve generation,'' October 2005.
