@@ -74,12 +74,15 @@ It is a request of this standard to find a way to add randomization between the 
 {\bf Keywords:} Cryptography, Elliptic Curves, Isogeny
 \end{abstract}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction \label{sec:intro}}
 %% Justify the need of the curve randomization
 
 The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released last year after a long process \cite{rfc6637}. But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
 
 This OID method can be an option for keys where the bandwidth is limited, but there must be the possibility to use any good curve, because is one of the best advantages of the elliptic curve cryptography.
+
+\todo{needs to tell shortly about how the next sections are structured}
 
 Apart from this issue of the curve limitation, the refereed standard for elliptic curve encryption have many other good aspects. This standard propose an schema that is similar to the ones proposed in \cite{BM06} with the collaboration of Mikael Mylnikov, developed independently to the standard proposed, but we arrive to the same conclusions. The schema of ElGamal cannot be translated from finite fields to elliptic curves without modification.
 
@@ -91,6 +94,7 @@ Next some general concepts about fields \K, or algebraic rings $(R,+,\cdot)$ or 
 
 In case of a small $p$, the extension is big like happens with the primes $2$ or $3$. This way vectorial spaces are defined like the finite fields of characteristic $2$ denoted as \Fm. In another case, when $p$ is big, the extension is small (usually $r=0$ and prime finite fields are defined denoted as \Fp.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What is an elliptic curve? \label{sec:ce}}
 
 %% elliptic curve formal definition and equations
@@ -174,6 +178,7 @@ E\left(\mathbb{F}_{p}\right) = \left\{ Y^{2}Z = X^{3} + aXZ^{2} + bZ^{3} \bigcup
 \end{equation}
 Simplifying the definition \ref{def:cardinality}, the cardinality of an elliptic curve defined over \Fq is the number of elements in the joint of points of this curve. The cardinality is denoted as $|$\EFq$|$
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operation between points of an elliptic curve \label{sec:ce_ops}}
 
 %% Bijective application
@@ -201,6 +206,7 @@ Given this addition operation applied to a point together with itself, this poin
 
 The common notation for this operation is $Q = [x ] P$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Characteristics cryptographically good elliptic curves \label{sec:good_ce}}
 
 As Koblitz proposes \cite{Koblitz87ecc} an elliptic curve defined over finite fields can be used in cryptology. But to be a cryptographically good elliptic curve when it is defined over a finite field like the ones described in \ref{def:ce}, but it needs a bit more to avoid curves susceptible of known attacks. There are some characteristics to be checked.
@@ -228,6 +234,7 @@ Following the notation of the \cite{P1363} a almost-prime cardinal of an ellipti
 \end{equation}
 Where the $h$ is called cofactor and is much more smaller than $n$ ($h \lll n$) and both are prime. Also can be said that the cardinal is \emph{almost} the primer $n$ ($|\EFq| \approx n$). In fact, in the refereed standard (\cite{P1363}) is not recomended to use other cofactors that $1$ or $2$ or, in the biggest case $4$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Cyclic subgroup to define a Discrete Logarithm Problem \label{sec:ecdlp}}
 
 %% What a cyclic subgroup is and means
@@ -250,6 +257,7 @@ This set of parameters is what describes de \emph{cryptosystem setup} and the op
         \end{array}
 \end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Get an elliptic curve from scratch \label{sec:scratch}}
 
 Generate an elliptic curve is not a hard job, what is hard is to generate an cryptographically good elliptic curve who satisfies the cryptosystem requirements. And also do this in a computationally reasonable time, for all the current possible lengths of the finite field. This procedure must be run in the execution time of the user key generation, and we must assume than this machines will be non very powerful, perhaps an embedded system or an smart card.
@@ -286,6 +294,7 @@ The steps of the algorithm \ref{alg:scratch} can be performed in many ways to tr
 \todo{Approach to the number of good curves instead of the number of possible curves in a list. get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Find a good elliptic curve from another good one \label{sec:from_another}}
 %% knowing one good curve, is there any way to transform it to another one who still have the good properties, without the issues of the first, and without a portable cryptanalysis?
 
@@ -294,9 +303,25 @@ Another method than get a curve from scratch of section \ref{sec:scratch} is to 
 %% can the isogeny stars (or volcanoes) be a way to do this?
 One proposed way to have this requirements are the elliptic curve isogenies. The isogenies have the good skill that they maintain the cardinal from one curve to another, as it will be describe next. And about the main objective to block any type of portability of the cryptanalysis from one curve to another seems to be ok, because this transformation is a hard problem on isogenies.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What is elliptic curve isogeny? \label{sec:isog}}
 
-\fixme{define an (?isomorfism) isogeny}
+The concept of \emph{isogeny} describes a particular case of an \emph{isomorphism}, the first thing to be formally defined is the isomorphism.
+
+\begin{definition}\label{def:isomorphism}
+ Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$ with an equations in the Weierstra\ss{} Normal Form described in \ref{eq:WNF}, an isomorphism over the field is when exist $u,r,s,t\in\mathbb{K}$ with $u\neq0$, such a variable change:
+\begin{equation}\label{eq:isomorphisminWNF}
+ (x,y) \rightarrow (u^2x+r,u^3y+u^2sx+t)
+\end{equation}
+In case that the curves have the equation in the Weierstra\ss{} Reduced Form describer in \ref{eq:WRF}, the variable change is simplified being:
+\begin{equation}\label{eq:isomorphisminWRF}
+ (x,y) \rightarrow (u^2x,u^3y)
+\end{equation}
+\end{definition}
+
+The relation of isomorphism is an equivalence relation in a set of the elliptic curves, defined over the same field, where all the curves in the class have the set of $\mathbb{K}$-rational points isomorphic also. Remember from the definition \ref{def:cardinality}, the $\mathbb{K}$-rational points defines the \emph{cardinality} of the elliptic curve, then when two curves are isomorphic, they have the same cardinality.
+
+As has been say at the beginning of this section, the isogenies are a particular case of isomorphisms.
 
 \begin{definition}\label{def:isogeny}
  Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{iff} exist an isomorphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
@@ -310,10 +335,11 @@ One proposed way to have this requirements are the elliptic curve isogenies. The
 \end{equation}
 
 Where $X$ and $Y$ responds to $X=f_{1}(x)$ and $Y=f_{2}(x,y)$. As $f_{1}$ like $f_{2}$ are functions $\mathbb{K}$-rational.
-
-\fixme{how is this application? bijective? surjective like wikipedia says? Modular equation (symmetric polynomial of degree $\ell+1$)?}
-
 \end{definition}
+
+An isogeny $\mathcal{I}$ is an exhaustive application. Except in the case that the isogeny is like $\mathcal{I}(E)=\{\mathcal{O}\}$, when is said as constant, then exist a unique isogeny: $\widehat{\mathcal{I}}:E' \rightarrow E$ called the \emph{dual isogeny}.
+
+\fixme{Modular equation (symmetric polynomial of degree $\ell+1$)?}
 
 From this definition \ref{def:isogeny} must be extracted that the cardinality of the elliptic curve is maintained, and they have the same value for both curves. Also is important to remark that the neutral element is constant in the transformation:
  \begin{equation}\label{eq:isoPaI}
@@ -324,7 +350,8 @@ And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/
 
 
 
-\fixme{isogeny degree, composition of isogenies (prime degree)}
+\fixme{isogeny degree,
+ composition of isogenies (prime degree)}
 
 \begin{definition}\label{def:iso_degree}
  Given two isogenic elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, the degree of the isogeny between this two curves is the degree of the rational map between them.
@@ -340,6 +367,7 @@ For all the isogenies with a degree greater than 1, they can be factored into a 
  Given an elliptic curve $E/\mathbb{K}$ an endomorphism class or isogeny class of degree $\ell$ is the set of elliptic curves... 
 \end{definition}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Volcano, volcanoes ranges and starts \label{sec:volcano}}
 
 \fixme{define a volcano: as a graph of isogenies of a particular degree.}
@@ -448,36 +476,45 @@ To describe the structure of the $\ell$ degree isogeny class it has been propose
 \pgfcircle[fill]{\pgfxy(10.5,2)}{0.05cm}
 \end{pgfpicture}
 \caption{A regular $\ell$-volcano, with $\ell=3$}
-\label{RegularVolcano}
+\label{fig:RegularVolcano}
 \end{center}
 \end{figure}
 
-\fixme{Is true the number of edges per node?}
+\fixme{Is true the number of edges per node in figure \ref{fig:RegularVolcano}?}
 
 \fixme{define ``serralada'' (volcanoes range or system): as the joint of graphs of isogenies with many primer degrees.}
+
 Different isogeny degrees recreates different volcanoes, and a set of volcanoes can be also represented in a graph like a mountain system. A composed isogeny degree describes this type of system of volcanoes of the factors of this composed degree.
 
 \todo{define isogeny stars: as a particular case of volcanoes with only crater}
+
 \fixme{endomorphism ring}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{How the isogenies can help to avoid curve sharing? \label{sec:alg_isog}}
 
 \todo{given an elliptic curve, generate an isogeny path, follow the path, forget it.}
+
 The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirections} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
 
 The problem is alive, there are bibliography \cite{SubExpIso} to work in the direction of speed up the route walk in a volcanoes range (or in stars). 
 
 \todo{computational data about isogeny path evaluations}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Front and side channel attacks to this schemas \label{sec:cryptanalysis}}
 
-\todo{cryptanalysis on this matter: Given two curves isogenies between them, find a path}
-\cite{FastBetweenIso}
+The most important thing in cryptology, specially when an schema is proposed, is to think on how an adversary can try to break it. The question is what of the known things of the schema gives any advantage to this adversary and measure statistically the impact of the hypothetical advantage. In this proposed example of use elliptic curve isogenies to allow the users of this cryptography to avoid sharing the same elliptic curve but saving the security of use a cryptographically good elliptic curve, the mathematical cryptanalysis is by try to take an advantage on the task to discover the walked path in the isogeny star.
 
-\todo{possible side channel attacks (attacking the isogeny and to prevent attacks like trace zero points)}
+\todo{cryptanalysis on this matter: Given two curves isogenies between them, find a path}\cite{FastBetweenIso}
+
+Also there are other possible ways to break a cryptosystem that, further than attack directly the mathematics below, it tries to get the advantage from take a creative point of view over the application of the schema and that is called the side channel attacks.
+
+\todo{possible side channel attacks (attacking the isogeny and to prevent attacks like `\emph{Zero-Value Points}' (ZVP))}
 
 \todo{computational data about compute isogeny between to elliptic curves}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion \label{sec:conclusion}}
 \todo{what about the simulated times to generate curves in mathematical software? are they inside a usable range?}
 
