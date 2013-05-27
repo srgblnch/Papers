@@ -346,12 +346,11 @@ From this definition \ref{def:isogeny} must be extracted that the cardinality of
         \mathcal{I}\left(\PaIe\right) = \mathcal{O}_{E'}
 \end{equation}
 
-And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/\mathbb{K}$. Where can be assumed for the generator $G \in E/\mathbb{K}$ exist a $G' \in E'/\mathbb{K}$ and for the public key $P=[d]G \in E/\mathbb{K}$ exist a $P'=[d]G' \in E'/\mathbb{K}$ with the same secret key, because of $\mathcal{I}\left(P+Q\right) = \mathcal{I}\left(P\right)+\mathcal{I}\left(Q\right)$.
+And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/\mathbb{K}$. Where can be assumed for the generator $G \in E/\mathbb{K}$ exist a $G' \in E'/\mathbb{K}$ and for the public key $P=[d]G \in E/\mathbb{K}$ exist a $P'=[d']G' \in E'/\mathbb{K}$ with the same secret key, because of $\mathcal{I}\left(P+Q\right) = \mathcal{I}\left(P\right)+\mathcal{I}\left(Q\right)$.
 
+\todo{Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, with an isogeny application $\mathcal{I}: E/\mathbb{K} \rightarrow E'/\mathbb{K}$, the cyclic subgroup generator $G \in E/\mathbb{K}$ can be \emph{translated} into $E'/\mathbb{K}$ as $G'=\mathcal{I}\left(G\right)$.\\ The same way the public key $P \in E/\mathbb{K}$ becomes $P'=\mathcal{I}\left(P\right)$. But what about the secret key $d$? If it's preserved as the same value, the transformation is simply an automorphism, isn't it?}
 
-
-\fixme{isogeny degree,
- composition of isogenies (prime degree)}
+\fixme{isogeny degree, composition of isogenies (prime degree)}
 
 \begin{definition}\label{def:iso_degree}
  Given two isogenic elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, the degree of the isogeny between this two curves is the degree of the rational map between them.
