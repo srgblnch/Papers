@@ -1,0 +1,171 @@
+%\documentclass[a4paper,10pt]{article}
+\documentclass[10pt,a4paper,twoside]{llncs}
+%\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}%\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{algorithmic,algorithm}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+
+\pagestyle{headings}%page numbers
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{gitinfo}
+\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
+\newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
+\newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tango}{\textsc{Tango} }
+
+%opening
+\title{Ensuring \tango Control System}
+\author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}}
+ \institute{
+ Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
+ \email{\tt sblanch@alumnes.udl.es}
+ \and 
+ Departament de Matem\`atica. Universitat de Lleida. Spain.\\
+ \email{\tt ramiro@matematica.udl.es}
+ }
+
+%%% Definiciones matem\'aticas especiales
+
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}%                       Enteros
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}%                       Racionales
+\newcommand{\A}{\ensuremath{\mathcal{A}_{2}}}%                   Plano Af\'{\i}n
+\newcommand{\Proy}{\ensuremath{\mathcal{P}_{2}}}%                Plano Proyectivo
+\newcommand{\Jacob}{\ensuremath{\mathcal{J}_{2}}}%               Plano Jacobiano
+\newcommand{\K}{\ensuremath{\mathbb{K}}}%                       Cuerpo en general
+\newcommand{\F}{\ensuremath{\mathbb{F}}}%                       Cuerpo finito en general
+\newcommand{\Fp}{\ensuremath{\mathbb{F}_p}}%                    Cuerpo finito de orden p (primo)
+\newcommand{\EFp}{\ensuremath{E(\mathbb{F}_p)}}%                Curva el\'\{i}ptica sobre un cuerpo finito de orden p (primo)
+\newcommand{\EFq}{\ensuremath{E(\mathbb{F}_q)}}%                Curva el\'\{i}ptica sobre un cuerpo finito
+\newcommand{\Fm}{\ensuremath{\mathbb{F}_{2^m}}}%                Cuerpo finito de caractar\'{\i}stica 2, grado m
+\newcommand{\EFm}{\ensuremath{E(\mathbb{F}_p)}}%                Curva el\'\{i}ptica sobre un cuerpo finito de caractar\'{\i}stica 2, grado m
+\newcommand{\Fq}{\ensuremath{\mathbb{F}_q}}%                    Idem id. q (q=p^m, p primo y m entero pos.)
+\newcommand{\Zn}[1]{\ensuremath{\mathbb{Z}/#1\mathbb{Z}}}%      Anillo de los enteros mod n
+\newcommand{\PaI}{\ensuremath{\mathcal{O}}}%                    Punto en el Infinito
+\newcommand{\PaIe}{\ensuremath{\mathcal{O}_{E}}}%               Punto en el Infinito de la curva
+
+%%% Algorithm customization:
+%\floatname{algorithm}{Procedure}%Rename the text ``Algorithm''
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%%% end algorithm
+
+\begin{document}
+
+\maketitle
+\begin{center}
+ \today\\
+ \version
+\end{center}
+
+
+\begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
+\todo{embedded cryptography}
+
+\todo{Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.}
+\\\\    
+{\bf Keywords:} Cryptography, Elliptic Curves, Distributed Systems, SCADA, Controls system, Synchrotron
+\end{abstract}
+
+%%%%%
+%
+\section{Introduction \label{sec:intro}}
+
+\todo{What is \tango?}
+
+\todo{Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not}
+
+\todo{Go further that the Locking/Access control}
+
+\todo{Why to secure it? Trust in a peripheral firewalls is not enough.}
+
+\todo{Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): very good candidate for elliptic curves, generalized Rijndael and stream cipher.}
+
+\todo{The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).}
+
+%%%%%
+%
+\section{Identifying scenarios \label{sec:scenarios}}
+
+\todo{In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}}
+
+\todo{Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2}
+
+%%%%%
+%
+\subsection{Access Control}
+
+\todo{Agent authentication in a distributed system}
+
+\todo{Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents}
+
+\todo{\tango database access control}
+
+\todo{Ensuring between instrumentation and the agents out of the scope of this paper}
+
+\todo{Trusted Computing and Hardware protections}
+%%%%%
+%
+\subsection{Secret sharing}
+
+\todo{multicast, events and the other features that must be secured}
+
+%%%%%
+%
+\subsection{Brainstorming attacks}
+
+%%%%%
+%
+\subsubsection{Passive attacks}
+
+\todo{Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.}
+
+\todo{Noise to block an alarm transmission}
+
+%%%%%
+%
+\subsubsection{Active attacks}
+
+\todo{Break the public face, web site or gui}
+
+\todo{Supplant agents.}
+
+%%%%%
+%
+\subsection{Intrusion Detection}
+
+%%%%%
+%
+\section{Zero-knowledge proof for authentication \label{sec:auth}}
+
+\todo{The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted}
+
+%%%%%
+%
+\section{Protocols}
+
+\todo{protocol layers \cite{Schneier:1995:ACP:572932}}
+
+%%%%%
+%
+\subsection{Communication hybrid schema \label{sec:intercom}}
+
+\todo{Pubkey to agreed a season key as the usual hybrid systems}
+
+\todo{Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers}
+
+\todo{\emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivation of the Rijndael or better other possible alternatives}
+
+%%%%%
+%
+\section{Conclusion \label{sec:conclusions}}
+
+\bibliographystyle{ieeetr}
+\bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
+
+\end{document}
