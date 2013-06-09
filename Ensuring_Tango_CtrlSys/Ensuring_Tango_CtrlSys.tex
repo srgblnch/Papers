@@ -81,7 +81,7 @@
 
 \begin{itemize}
  \item \todo{What is \tango?}
- \item \todo{\tango as a Supervisory Control and Data Acquisition (SCADA) and/or Industrial Control System (ICS)}
+ \item \todo{\tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS)}
  \item \todo{Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not}
  \item \todo{Go further that the Locking/Access control}
  \item \todo{Why to secure it? Trust in a peripheral firewalls is not enough.}
@@ -107,6 +107,7 @@
 \begin{itemize}
  \item \todo{Agent authentication in a distributed system}
  \item \todo{Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents}
+ \item \todo{Taurus user authentication using PAM system (or equivalent in non unix-like systems)}
  \item 
 \end{itemize}
 
@@ -116,7 +117,7 @@
 
 \begin{itemize}
  \item \todo{Trusted Computing and Hardware protections}
- \item \todo{multicast, events and the other features that must be secured. Perhaps secret sharing?}
+ \item \todo{multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?}
  \item 
 \end{itemize}
 
@@ -167,6 +168,7 @@
 \section{Zero-knowledge proof for authentication \label{sec:auth}}
 \begin{itemize}
  \item \todo{The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted}
+ \item 
 \end{itemize}
 
 %%%%%
@@ -175,6 +177,8 @@
 
 \begin{itemize}
  \item \todo{protocol layers \cite{Schneier:1995:ACP:572932}}
+ \item \todo{Trust ring vs. trust tree (institution CA until the leaves)}
+ \item 
 \end{itemize}
 
 %%%%%
@@ -185,6 +189,7 @@
  \item \todo{Pubkey to agreed a season key as the usual hybrid systems}
  \item \todo{Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers}
  \item \todo{\emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivation of the Rijndael or better other possible alternatives}
+ \item 
 \end{itemize}
 
 %%%%%
