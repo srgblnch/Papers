@@ -65,10 +65,13 @@
 
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
-\todo{embedded cryptography}
 
-\todo{Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.}
-\\\\    
+\begin{itemize}
+ \item \todo{embedded cryptography}
+ \item \todo{Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.}
+ \item 
+\end{itemize}
+   
 {\bf Keywords:} Cryptography, Elliptic Curves, Distributed Systems, SCADA, Controls system, Synchrotron
 \end{abstract}
 
@@ -76,46 +79,56 @@
 %
 \section{Introduction \label{sec:intro}}
 
-\todo{What is \tango?}
-
-\todo{\tango as a Supervisory Control and Data Acquisition (SCADA) and/or Industrial Control System (ICS)}
-
-\todo{Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not}
-
-\todo{Go further that the Locking/Access control}
-
-\todo{Why to secure it? Trust in a peripheral firewalls is not enough.}
-
-\todo{Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): very good candidate for elliptic curves, generalized Rijndael and stream cipher.}
-
-\todo{The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).}
+\begin{itemize}
+ \item \todo{What is \tango?}
+ \item \todo{\tango as a Supervisory Control and Data Acquisition (SCADA) and/or Industrial Control System (ICS)}
+ \item \todo{Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not}
+ \item \todo{Go further that the Locking/Access control}
+ \item \todo{Why to secure it? Trust in a peripheral firewalls is not enough.}
+ \item \todo{Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): very good candidate for elliptic curves, generalized Rijndael and stream cipher.}
+ \item \todo{The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).}
+ \item 
+\end{itemize}
 
 %%%%%
 %
 \section{Identifying scenarios \label{sec:scenarios}}
 
-\todo{In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}}
-
-\todo{Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2}
+\begin{itemize}
+ \item \todo{In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}}
+ \item \todo{Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2}
+ \item 
+\end{itemize}
 
 %%%%%
 %
-\subsection{Access Control}
+\subsection{Ensuring presentation layer}
 
-\todo{Agent authentication in a distributed system}
+\begin{itemize}
+ \item \todo{Agent authentication in a distributed system}
+ \item \todo{Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents}
+ \item 
+\end{itemize}
 
-\todo{Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents}
-
-\todo{\tango database access control}
-
-\todo{Ensuring between instrumentation and the agents out of the scope of this paper}
-
-\todo{Trusted Computing and Hardware protections}
 %%%%%
 %
-\subsection{Secret sharing}
+\subsection{Ensuring domain layer}
 
-\todo{multicast, events and the other features that must be secured}
+\begin{itemize}
+ \item \todo{Trusted Computing and Hardware protections}
+ \item \todo{multicast, events and the other features that must be secured. Perhaps secret sharing?}
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Ensuring data layer}
+
+\begin{itemize}
+ \item \todo{\tango database access control}
+ \item \todo{Ensuring between instrumentation and the agents out of the scope of this paper}
+ \item 
+\end{itemize}
 
 %%%%%
 %
@@ -125,47 +138,62 @@
 %
 \subsubsection{Passive attacks}
 
-\todo{Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.}
-
-\todo{Noise to block an alarm transmission}
+\begin{itemize}
+ \item \todo{Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.}
+ \item \todo{Noise to block an alarm transmission}
+ \item 
+\end{itemize}
 
 %%%%%
 %
 \subsubsection{Active attacks}
 
-\todo{Break the public face, web site or gui}
-
-\todo{Supplant agents.}
+\begin{itemize}
+ \item \todo{Break the public face, web site or gui}
+ \item \todo{Supplant agents.}
+ \item 
+\end{itemize}
 
 %%%%%
 %
 \subsection{Intrusion Detection}
 
+\begin{itemize}
+ \item 
+\end{itemize}
+
 %%%%%
 %
 \section{Zero-knowledge proof for authentication \label{sec:auth}}
-
-\todo{The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted}
+\begin{itemize}
+ \item \todo{The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted}
+\end{itemize}
 
 %%%%%
 %
 \section{Protocols}
 
-\todo{protocol layers \cite{Schneier:1995:ACP:572932}}
+\begin{itemize}
+ \item \todo{protocol layers \cite{Schneier:1995:ACP:572932}}
+\end{itemize}
 
 %%%%%
 %
 \subsection{Communication hybrid schema \label{sec:intercom}}
 
-\todo{Pubkey to agreed a season key as the usual hybrid systems}
-
-\todo{Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers}
-
-\todo{\emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivation of the Rijndael or better other possible alternatives}
+\begin{itemize}
+ \item \todo{Pubkey to agreed a season key as the usual hybrid systems}
+ \item \todo{Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers}
+ \item \todo{\emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivation of the Rijndael or better other possible alternatives}
+\end{itemize}
 
 %%%%%
 %
 \section{Conclusion \label{sec:conclusions}}
+
+\begin{itemize}
+ \item 
+\end{itemize}
 
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
