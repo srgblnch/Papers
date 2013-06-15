@@ -1,4 +1,4 @@
-%\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt,twoside]{article}
 \documentclass[10pt,a4paper,twoside]{llncs}
 %\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
@@ -18,6 +18,8 @@
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\tango}{\textsc{Tango} }
+\newcommand{\taurus}{\textsc{Taurus} }
+\newcommand{\atk}{\textsc{Atk} }
 
 %opening
 \title{Ensuring \tango Control System}
@@ -67,8 +69,9 @@
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
 \begin{itemize}
- \item \todo{embedded cryptography}
- \item \todo{Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.}
+ \item embedded cryptography
+ \item Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.
+ \item 
  \item 
 \end{itemize}
    
@@ -80,13 +83,16 @@
 \section{Introduction \label{sec:intro}}
 
 \begin{itemize}
- \item \todo{What is \tango?}
- \item \todo{\tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS)}
- \item \todo{Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not}
- \item \todo{Go further that the Locking/Access control}
- \item \todo{Why to secure it? Trust in a peripheral firewalls is not enough.}
- \item \todo{Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): very good candidate for elliptic curves, generalized Rijndael and stream cipher.}
- \item \todo{The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).}
+ \item What is \tango?
+ \item What is the meaning of a secure system? What is security in a distributed system?
+ \item Security threads, policies and mechanisms.
+ \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS)
+ \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not
+ \item Go further that the Locking/Access control
+ \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information.
+ \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves, generalized Rijndael and stream cipher}.
+ \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).
+ \item 
  \item 
 \end{itemize}
 
@@ -95,8 +101,12 @@
 \section{Identifying scenarios \label{sec:scenarios}}
 
 \begin{itemize}
- \item \todo{In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}}
- \item \todo{Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2}
+ \item Confidentiality (encryption and authentication): information must be disclosed only \empt{to} the authorized and only \emph{by} the authorized),
+ \item Integrity (authorization): only authorized can set information.
+ \item Auditory: trace who access where (extremely useful for a security breach analysis).
+ \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}
+ \item Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
+ \item 
  \item 
 \end{itemize}
 
@@ -105,9 +115,10 @@
 \subsection{Ensuring presentation layer}
 
 \begin{itemize}
- \item \todo{Agent authentication in a distributed system}
- \item \todo{Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents}
- \item \todo{Taurus user authentication using PAM system (or equivalent in non unix-like systems)}
+ \item Agent authentication in a distributed system
+ \item Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
+ \item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
+ \item 
  \item 
 \end{itemize}
 
@@ -116,8 +127,9 @@
 \subsection{Ensuring domain layer}
 
 \begin{itemize}
- \item \todo{Trusted Computing and Hardware protections}
- \item \todo{multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?}
+ \item Trusted Computing and Hardware protections
+ \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?
+ \item Ensure logging system
  \item 
 \end{itemize}
 
@@ -126,32 +138,59 @@
 \subsection{Ensuring data layer}
 
 \begin{itemize}
- \item \todo{\tango database access control}
- \item \todo{Ensuring between instrumentation and the agents out of the scope of this paper}
+ \item \tango database access control
+ \item Ensuring between instrumentation and the agents out of the scope of this paper
+ \item Homomorphic Encryption for Database access
+ \item  
  \item 
 \end{itemize}
 
 %%%%%
 %
-\subsection{Brainstorming attacks}
-
-%%%%%
-%
-\subsubsection{Passive attacks}
+\section{Brainstorming attacks}
 
 \begin{itemize}
- \item \todo{Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.}
- \item \todo{Noise to block an alarm transmission}
+ \item
  \item 
 \end{itemize}
 
 %%%%%
 %
-\subsubsection{Active attacks}
+\subsection{Passive attacks}
 
 \begin{itemize}
- \item \todo{Break the public face, web site or gui}
- \item \todo{Supplant agents.}
+ \item Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.
+ \item Noise to block an alarm transmission
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Active attacks}
+
+\begin{itemize}
+ \item Interruption: Break the public face, web site or gui. Kill a vital agent.
+ \item Modification/Fabrication: Supplant agents.
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Side channel attacks}
+
+\begin{itemize}
+ \item
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\section{Attacks countermeasures}
+
+\begin{itemize}
+ \item
  \item 
 \end{itemize}
 
@@ -160,6 +199,52 @@
 \subsection{Intrusion Detection}
 
 \begin{itemize}
+ \item Detection and recovery
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\section{Communication hybrid schema \label{sec:intercom}}
+
+\begin{itemize}
+ \item Pubkey to agreed a season key as the usual hybrid systems
+ \item Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers
+ \item \emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivationFunction (KDF) of the Rijndael or better other possible alternatives
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Elliptic curves for public key}
+
+\begin{itemize}
+ \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}.
+ \item Capability to reset a curve setup on any of those secrecy levels 
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Rijndael generalization for symmetric key}
+
+\begin{itemize}
+ \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
+ \item Current AES has advantage on 32bit processor implementation, what about 64bits
+ \item AESWrap \cite{rfc3394}
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Key Derivation Functions for stream ciphering}
+
+\begin{itemize}
+ \item 
  \item 
 \end{itemize}
 
@@ -167,7 +252,8 @@
 %
 \section{Zero-knowledge proof for authentication \label{sec:auth}}
 \begin{itemize}
- \item \todo{The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted}
+ \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+ \item 
  \item 
 \end{itemize}
 
@@ -176,27 +262,29 @@
 \section{Protocols}
 
 \begin{itemize}
- \item \todo{protocol layers \cite{Schneier:1995:ACP:572932}}
- \item \todo{Trust ring vs. trust tree (institution CA until the leaves)}
+ \item protocol layers \cite{Schneier:1995:ACP:572932}
+ \item Trust ring vs. trust tree (institution CA until the leaves)
+ \item 
  \item 
 \end{itemize}
 
 %%%%%
 %
-\subsection{Communication hybrid schema \label{sec:intercom}}
+\section{Environmental IT Security}
 
 \begin{itemize}
- \item \todo{Pubkey to agreed a season key as the usual hybrid systems}
- \item \todo{Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers}
- \item \todo{\emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivation of the Rijndael or better other possible alternatives}
+ \item The weakest brick: secure the transmission but store in a plain file system
+ \item Human behaviour and psychology.
+ \item 
  \item 
 \end{itemize}
 
 %%%%%
 %
-\section{Conclusion \label{sec:conclusions}}
+\section{Conclusions \label{sec:conclusions}}
 
 \begin{itemize}
+ \item 
  \item 
 \end{itemize}
 
