@@ -70,7 +70,7 @@
 
 \begin{itemize}
  \item embedded cryptography
- \item Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage.
+ \item Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage. But this doesn't mean that will be fast to have something like the navigation infrastructures for certificates, for example. In this example of the navigators, wasn't immediate to have this well made.
  \item 
  \item 
 \end{itemize}
@@ -101,11 +101,14 @@
 \section{Identifying scenarios \label{sec:scenarios}}
 
 \begin{itemize}
+ \item Non-implemented distributed system transparencies from \cite{TanenbaumDistr} necessary to ensure a quality service.
  \item Confidentiality (encryption and authentication): information must be disclosed only \emph{to} the authorized and only \emph{by} the authorized),
  \item Integrity (authorization): only authorized can set information.
  \item Auditory: trace who access where (extremely useful for a security breach analysis).
- \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Hospital, Bank, Military Base. Practical paranoia \cite{PractCryptoSchneier}
- \item Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
+ \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base}. Practical paranoia \cite{PractCryptoSchneier}
+ \item Cryptosystem configuration and security levels.
+ \item Cryptosystem setup reset.
+ \item Setup \& Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
  \item 
  \item 
 \end{itemize}
@@ -116,8 +119,13 @@
 
 \begin{itemize}
  \item Agent authentication in a distributed system
- \item Ensuring communication between agents and between those agents with the user interfaces. \emph{Command}, \emph{read} and \emph{write} operations; \emph{Properties} modifications and changes application. This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
+ \item Ensuring communication between agents and between those agents with the user interfaces.
+ \begin{itemize}
+  \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change.
+  \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
+ \end{itemize}
  \item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
+ \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?
  \item 
  \item 
 \end{itemize}
@@ -128,7 +136,6 @@
 
 \begin{itemize}
  \item Trusted Computing and Hardware protections
- \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?
  \item Ensure logging system
  \item 
 \end{itemize}
@@ -139,7 +146,7 @@
 
 \begin{itemize}
  \item \tango database access control
- \item Ensuring between instrumentation and the agents out of the scope of this paper
+ \item Ensuring between instrumentation and the agents out of the scope of this paper. This is a very dependant on the instrumentation manufacturers.
  \item Homomorphic Encryption for Database access
  \item  
  \item 
@@ -159,7 +166,7 @@
 \subsection{Passive attacks}
 
 \begin{itemize}
- \item Eavesdropping (Passive attacks) and Men-in-the-middle (active attacks) between agents.
+ \item Eavesdropping
  \item Noise to block an alarm transmission
  \item 
  \item 
@@ -170,6 +177,7 @@
 \subsection{Active attacks}
 
 \begin{itemize}
+ \item Men-in-the-middle (active attacks) between agents
  \item Interruption: Break the public face, web site or gui. Kill a vital agent.
  \item Modification/Fabrication: Supplant agents.
  \item 
