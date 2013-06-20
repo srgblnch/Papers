@@ -30,8 +30,10 @@ V.~Dolmatov, ``{GOST R 34.10-2001: Digital Signature Algorithm}.'' RFC 5832
   domain parameters.''
 
 \bibitem{BM06}
-S.~Blanch and R.~Moreno, ``An\'alisis del cifrado elgamal de un m\'odulo con
-  curvas el\'ipticas propuesto para el gnupg,'' 2006.
+S.~Blanch-Torn\'e and R.~Moreno, ``An\'alisis del cifrado elgamal de un
+  m\'odulo con curvas el\'ipticas propuesto para el gnupg,'' in {\em II
+  Simposio sobre Seguridad Inform\'atica}, (Zaragoza, Spain), pp.~35--41,
+  Congreso Espa\~nol De Inform\'atica, 2007.
 
 \bibitem{EC&NT&crypt}
 L.~C. Washington, {\em Elliptic Curves, Number Theory and Cryptography}.
