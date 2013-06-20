@@ -350,6 +350,8 @@ And, finally, remark that for all point $P \in E/\mathbb{K}$ exist a $P' \in E'/
 
 \todo{Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, with an isogeny application $\mathcal{I}: E/\mathbb{K} \rightarrow E'/\mathbb{K}$, the cyclic subgroup generator $G \in E/\mathbb{K}$ can be \emph{translated} into $E'/\mathbb{K}$ as $G'=\mathcal{I}\left(G\right)$.\\ The same way the public key $P \in E/\mathbb{K}$ becomes $P'=\mathcal{I}\left(P\right)$. But what about the secret key $d$? If it's preserved as the same value, the transformation is simply an automorphism, isn't it?}
 
+\todo{$P=[d]G \in E/\mathbb{K}$ and $\mathcal{I}: E/\mathbb{K} \rightarrow E'/\mathbb{K}$ and  $P'=\mathcal{I}\left(P\right)=\mathcal{I}\left([d]G\right)=[d']\mathcal{I}\left(G\right)=[d']G'$ then how to \emph{migrate} $d$ to $d'$ from one curve to another?}
+
 \fixme{isogeny degree, composition of isogenies (prime degree)}
 
 \begin{definition}\label{def:iso_degree}
@@ -485,14 +487,16 @@ To describe the structure of the $\ell$ degree isogeny class it has been propose
 
 Different isogeny degrees recreates different volcanoes, and a set of volcanoes can be also represented in a graph like a mountain system. A composed isogeny degree describes this type of system of volcanoes of the factors of this composed degree.
 
-\todo{define isogeny stars: as a particular case of volcanoes with only crater}
+\todo{define isogeny stars: as a particular case of volcanoes with only crater. But can we use a volcano as a star? (Perhaps if the crater is big enough?)}
 
 \fixme{endomorphism ring}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{How the isogenies can help to avoid curve sharing? \label{sec:alg_isog}}
 
-\todo{given an elliptic curve, generate an isogeny path, follow the path, forget it.}
+To avoid to share a curve between all the users of the standard of the \emph{rfc 6637} \cite{rfc6637} using elliptic curve isogenies, it is not necessary to build completely the volcano or the volcanoes system. With a definition of a path to \emph{walk} through the volcanoes system, and then \emph{forget} the path (to avoid a cryptoanalyst to mode any attack calculation), will be enough \emph{if and only if}, the path is large enough.
+
+\todo{given an elliptic curve, generate an isogeny path through the volcanoes system, follow the path, forget it.}
 
 The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirections} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
 
