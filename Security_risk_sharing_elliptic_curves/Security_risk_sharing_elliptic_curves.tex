@@ -78,13 +78,35 @@ It is a request of this standard to find a way to add randomization between the 
 \section{Introduction \label{sec:intro}}
 %% Justify the need of the curve randomization
 
-The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released last year after a long process \cite{rfc6637}. But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
+The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released in June 2012 after a long process \cite{rfc6637} and at least there is one implementation available in the \emph{GnuPG} since 2011.
+
+But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
 
 This OID method can be an option for keys where the bandwidth is limited, but there must be the possibility to use any good curve, because is one of the best advantages of the elliptic curve cryptography.
 
-\todo{needs to tell shortly about how the next sections are structured}
+In the abstract was mention the X9.62-1998\cite{X9.62-1998} , where in section 5.1 is mention that is a security thread to share the same curve between many users. In annex H, more specifically in H.2 (point 5) and H.1.3, is explained (but not proof, only mention the \emph{Pollard-$\lambda$} attack) that the time to break one key pair (when they have the same curve and the cyclic group generator, the case of the standard rfc6637 \cite{rfc6637}) is reduced by $\sqrt{k}$, where is the number of solving instances:
 
-Apart from this issue of the curve limitation, the refereed standard for elliptic curve encryption have many other good aspects. This standard propose an schema that is similar to the ones proposed in \cite{BM06} with the collaboration of Mikael Mylnikov, developed independently to the standard proposed, but we arrive to the same conclusions. The schema of ElGamal cannot be translated from finite fields to elliptic curves without modification.
+\begin{center}
+ \begin{tabular}{|c|c|}
+  \hline
+  \#Compromised keys & Time to break next \\
+  \hline
+  2 & $(\sqrt{2}-1)t\approx0.41t$ \\
+  \hline
+  3 & $(\sqrt{3}-\sqrt{2})t\approx0.32t$ \\
+  \hline
+  4 & $(\sqrt{4}-\sqrt{3})t\approx0.27t$ \\
+  \hline
+  \vdots & \vdots \\
+  \hline
+  k & $(\sqrt{k}-\sqrt{k-1})t$ \\
+  \hline
+ \end{tabular}
+\end{center}
+
+Back to the rfc6637 \cite{rfc6637} and apart from this issue of the curve limitation, the refereed standard for elliptic curve encryption have many other good aspects. This standard propose an schema that is similar to the ones proposed in \cite{BM06} with the collaboration of Mikael Mylnikov, developed independently to the standard proposed, but we arrive to the same conclusions. The schema of ElGamal cannot be translated from finite fields to elliptic curves without modification.
+
+\todo{needs to tell shortly about how the next sections are structured}
 
 Next some general concepts about fields \K, or algebraic rings $(R,+,\cdot)$ or \Zn[n], or more particularly finite fields \Fq will be used and needs to be introduced.
 
@@ -498,7 +520,7 @@ To avoid to share a curve between all the users of the standard of the \emph{rfc
 
 \todo{given an elliptic curve, generate an isogeny path through the volcanoes system, follow the path, forget it.}
 
-The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirections} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
+The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirectilons} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
 
 The problem is alive, there are bibliography \cite{SubExpIso} to work in the direction of speed up the route walk in a volcanoes range (or in stars). 
 
