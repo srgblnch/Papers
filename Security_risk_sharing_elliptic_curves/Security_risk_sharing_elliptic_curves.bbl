@@ -55,9 +55,6 @@ D.~Hankerson, A.~Menezes, and S.~Vanstone, {\em Guide to Elliptic Curve
 A.~Rostovtsev, E.~Rostovtsev, and A.~Stolbunov, ``Public-key cryptosystem based
   on isogenies,'' 2006.
 
-\bibitem{Diffie76newdirections}
-W.~Diffie and M.~E. Hellman, ``New directions in cryptography,'' 1976.
-
 \bibitem{ElGamal85pkdlp}
 T.~ElGamal, ``A public-key cryptosystem and a signature scheme based on
   discrete logarithms.''

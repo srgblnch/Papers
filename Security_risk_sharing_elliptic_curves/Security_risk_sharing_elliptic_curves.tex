@@ -106,9 +106,9 @@ In the abstract was mention the X9.62-1998\cite{X9.62-1998} , where in section 5
 
 Back to the rfc6637 \cite{rfc6637} and apart from this issue of the curve limitation, the refereed standard for elliptic curve encryption have many other good aspects. This standard propose an schema that is similar to the ones proposed in \cite{BM06} with the collaboration of Mikael Mylnikov, developed independently to the standard proposed, but we arrive to the same conclusions. The schema of ElGamal cannot be translated from finite fields to elliptic curves without modification.
 
-\todo{needs to tell shortly about how the next sections are structured}
+Before to enter in a detailed proposal of how to make cryptographically good elliptic curves (sections \ref{sec:scratch} and \ref{sec:from_another} of this paper) some concepts must be introduced. 
 
-Next some general concepts about fields \K, or algebraic rings $(R,+,\cdot)$ or \Zn[n], or more particularly finite fields \Fq will be used and needs to be introduced.
+First of all, and before to enter in elliptic curve concepts, there is a more general definitions about algebra that are presupposed to the reader about fields \K, or algebraic rings $(R,+,\cdot)$ or \Zn[n], or more particularly finite fields \Fq, that is the only one that will be specifically introduced:
 
 \begin{definition}\label{def:cf}
  A finite field of $q$ order, \Fq \;factorizes necessarily like $q=p^r$ where $p$ is a characteristic prime of the field and $r \in \mathbb{Z}_{>0}$ the extension degree.
@@ -122,22 +122,29 @@ In case of a small $p$, the extension is big like happens with the primes $2$ or
 %% elliptic curve formal definition and equations
 
 \begin{definition}\label{def:ce}
-An Elliptic curve is \emph{nonsingular} curve of genus $1$ over a field $\mathbb{K}$, with at least one $K$-rational point denoted $E/\mathbb{K}$, given by the Weierstra\ss{} normal form equation (in an Affine plane \A):
+An Elliptic curve is \emph{nonsingular} curve of genus $1$ over a field $\mathbb{K}$, with at least one $K$-rational point denoted $E/\mathbb{K}$, given by the Weierstra\ss{} Normal Form (WNF) equation (in an Affine plane \A):
 \begin{equation}\label{eq:WNF}
 E/\mathbb{K}:\; y^{2} + a_{1}xy + a_{3}y = x^{3} + a_{2}x^{2} + a_{4}x + a_{6},\; a_{i} \in \mathbb{K}
 \end{equation}
 \end{definition}
 
-An elliptic curve can be defined over any field, like real numbers $\mathbb{R}$ where representations over coordinate axis are more human-readable, but in cryptology usually are defined over finite fields.
-
-A singular point is when both partial derivatives vanish, in $\mathbb{R}$ representation means that the curve never has beaks neither nodes. Analytically can be differentiate by the \emph{discriminant} (represented with $\Delta$) that must \emph{not} be 0 in the \emph{nonsingular} curves.
-
-When the curve is defined over a prime finite field, the Weierstra\ss{} equation can be written in the normal reduced affine form:
+When it is defined over a prime finite field, it is call the Weierstra\ss{} Reduced Form (WRF) equation that can be written in affine notation as:
 \begin{equation}\label{eq:WRF}
 y^2=x^3+ax+b
 \end{equation}
 
-And the \emph{elliptic curve discriminant} over the prime finite field also can be described using the indexes $a$ and $b$ from the equation \ref{eq:WRF} as $\Delta = -16(4a^3+27b^2)\ne 0$.
+An elliptic curve can be defined over any field, like real numbers $\mathbb{R}$ where representations over coordinate axis are more human-readable, but in cryptology usually are defined over finite fields.
+
+\todo{Place a figure with the same curve represented over the reals and over a very small finite field}
+
+A singular point is when both partial derivatives vanish, in $\mathbb{R}$ representation means that the curve never has beaks neither nodes. Analytically can be differentiate by the \emph{discriminant} (represented with $\Delta$) that must \emph{not} be 0 in the \emph{nonsingular} curves. The singularities, under a geometrical representation of a curve over the real numbers $\mathbb{R}$, they are drawn as intersections, isolated points and cusp.
+
+\begin{definition}\label{def:discriminant}
+ The discriminant, denoted with $\Delta$, is a polynomial function of the coefficients of the equation which gives information about the nature of the equations roots.
+\end{definition}
+\fixme{Improve this dsiscriminant definition}
+
+About the \emph{discriminant} of an elliptic curve defined over the prime finite field, when this curve has the representation of the WRF \ref{eq:WRF}, the coefficients are $a$ and $b$ as $\Delta = -16(4a^3+27b^2)\ne 0$.
 
 %% define the cardinality of an elliptic curve, (the order and the cofactor def in the nonsupersingularity)
 Another important parameter of an elliptic curve is the cardinality, who can be defined as:
@@ -148,6 +155,11 @@ Another important parameter of an elliptic curve is the cardinality, who can be 
 
 %% Introduce the PaI
 A curve over a general finite field $\mathbb{F}$ is composed by the points of the curve with the notation $E\left(\mathbb{F}\right)$. The points of an elliptic curve over a prime finite field are all ones that resolves the equation \ref{eq:WRF} union the point at infinity (the neutral element of the group, denoted \PaI) who does not have representation over the affine plane and other coordinate representations are better like the projectives \Proy $\;$ or Jacobians \Jacob.
+
+\begin{equation}\label{eq:ECsetP}
+ E\left(\mathbb{F}\right) = \left\{ \left(x,y\right) \in \mathbb{F} \mid y^2=x^3+ax+b \right\} \bigcup \PaIe
+\end{equation}
+
 
 %% affine coordinates
 \begin{definition}\label{def:afinproy}
@@ -185,6 +197,8 @@ In the projective plane, three coordinates are used to represent a two-dimension
 
 \fixme{??jacobian coordinates: Have they enough interest for the objective of this article?}
 
+\fixme{??even jacobians, are the projective coordinates justified to be defined in this paper, when they are only used to show that can be a computer numerical representation for it?}
+
 Over a Jacobian plane, also three coordinate are used to represent the points, knowing $x=\frac{X}{Z^2}$ and $y=\frac{Y}{Z^3}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} is:
 \begin{equation}\label{eq:WRFJacobian}
         Y^{2}Z = X^{3} + aXZ^{4} + bX^{6}
@@ -194,18 +208,22 @@ As is described in \cite{EC&NT&crypt} the projective coordinates improves the op
 
 \todo{the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of of 0's an 1's are similar?}
 
-An the joint of points of an elliptic curve over a prime finite field, described in projective coordinates is:
-\begin{equation}\label{eq:conjEK}
+An the set of points of an elliptic curve over a prime finite field, like the equation \ref{eq:ECsetP} but described in projective coordinates is:
+\begin{equation}\label{eq:ECsetPProy}
 E\left(\mathbb{F}_{p}\right) = \left\{ Y^{2}Z = X^{3} + aXZ^{2} + bZ^{3} \bigcup \PaIe \right\} \\
 \end{equation}
-Simplifying the definition \ref{def:cardinality}, the cardinality of an elliptic curve defined over \Fq is the number of elements in the joint of points of this curve. The cardinality is denoted as $|$\EFq$|$
+Simplifying the definition \ref{def:cardinality}, the cardinality of an elliptic curve defined over \Fq is the number of elements in the set of points of this curve. The cardinality is denoted as $|$\EFq$|$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operation between points of an elliptic curve \label{sec:ce_ops}}
 
+%\fixme{Is also, like the different coordinate systems, this EC ops justified to be included in this paper?}
+
+Later will be used a operation to define the hard problem that allows us to use the elliptic curves in cryptography. Here there is only it's abstract mathematical definition as operation, that will be later on used.
+
 %% Bijective application
 
-With the set of points of an elliptic curve defined in \ref{eq:conjEK} a bijective application can be defined between two points and a third one, of the same set, even if they are points of the elliptic curve or the point at infinity \PaIe.
+With the set of points of an elliptic curve defined in \ref{eq:ECsetPProy} a bijective application can be defined between two points and a third one, of the same set, even if they are points of the elliptic curve or the point at infinity \PaIe.
 
 \begin{equation}\label{eq:eccAdd}
         \begin{array}{cccc}
@@ -214,7 +232,7 @@ With the set of points of an elliptic curve defined in \ref{eq:conjEK} a bijecti
         \end{array}
 \end{equation}
 
-This application, that will be called \emph{addition}, has an algebraic structure of an \emph{Abelian group} because satisfies some requirements: Closure in the group, associativity, identity element, inverse element, and commutativity.
+This application, that will be called \emph{addition}, has an algebraic structure of an \emph{Abelian group} because satisfies some requirements: Closure in the group, associativity, identity element, inverse element, and commutativity. In the elliptic curve cryptography, this operation is called \emph{Basic operation}.
 
 \begin{definition}\label{def:eccEscProd}
 Given this addition operation applied to a point together with itself, this point is \emph{duplicated}; this addition with itself can be done many times and define it as the \emph{scalar product} where the scalar represents the number of times the point is added to itself:
@@ -226,7 +244,7 @@ Given this addition operation applied to a point together with itself, this poin
 \end{equation}
 \end{definition}
 
-The common notation for this operation is $Q = [x ] P$.
+The common notation for this operation is $Q = [x ] P$ and it is called as the \emph{main operation} in the elliptic curve cryptography because over it is where the hard problem is defined.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Characteristics cryptographically good elliptic curves \label{sec:good_ce}}
@@ -244,23 +262,23 @@ As Koblitz proposes \cite{Koblitz87ecc} an elliptic curve defined over finite fi
 
 %% nonsupersingular elliptic curve
 
-In the elliptic curve definition \ref{def:ce} it requires that the curve does not have any singularity, but to use an elliptic curve in cryptography the curve not only has to be \emph{nonsingular}, the curve can not be \emph{supersingular}.
+In the elliptic curve definition \ref{def:ce} it requires that the curve does not have any singularity, but to use an elliptic curve in cryptography the curve not only has to be \emph{non-singular}, the curve can not be \emph{supersingular}.
 
 \begin{definition}\label{def:nonsupersing}
  An elliptic curve is \emph{not} supersingular when the cardinal is \emph{almost}-primer. And this almost-primarity is when, if the cardinality can be decomposed it must has a prime divisor sufficiently big.
 \end{definition}
 
-Following the notation of the \cite{P1363} a almost-prime cardinal of an elliptic curve have, at most, two factors:
+Following the notation of the IEEE P1363 \cite{P1363} a almost-prime cardinal of an elliptic curve have, at most, two factors:
 \begin{equation}\label{amostprime}
 | \EFq | = h \cdot n
 \end{equation}
-Where the $h$ is called cofactor and is much more smaller than $n$ ($h \lll n$) and both are prime. Also can be said that the cardinal is \emph{almost} the primer $n$ ($|\EFq| \approx n$). In fact, in the refereed standard (\cite{P1363}) is not recomended to use other cofactors that $1$ or $2$ or, in the biggest case $4$.
+Where the $h$ is called cofactor and is much more smaller than $n$ ($h \lll n$) and both are prime. Also can be said that the cardinal is \emph{almost} the primer $n$ ($|\EFq| \approx n$). In fact, in the refereed standard (\cite{P1363}) does not recommend to use other cofactors that $1$ or $2$ or, in the biggest case $4$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Cyclic subgroup to define a Discrete Logarithm Problem \label{sec:ecdlp}}
 
 %% What a cyclic subgroup is and means
-From the joint of points of a cryptographically good elliptic curve is necessary to distinguish a subset of points who are part of a cyclic group of an sufficiently big order. A generator point must be founded $G \in \EFp$, who is a point capable to produce:
+From the set of points of a cryptographically good elliptic curve is necessary to distinguish a subset of points who are part of a cyclic group of an sufficiently big order. A generator point must be founded $G \in \EFp$, who is a point capable to produce:
 \begin{equation}\label{eq:sgc}
 \left\langle G\right\rangle = \left\{ G,2G,3G,\dots,nG=\mathcal{O}\right\} \; \vert \; \text{ord}(G) = n
 \end{equation}
@@ -278,6 +296,8 @@ This set of parameters is what describes de \emph{cryptosystem setup} and the op
                 \;     & Q=[x]P                           & \mapsto     & x  \\
         \end{array}
 \end{equation}
+
+As mention at the beginning, the standard X9.62-1998 \cite{X9.62-1998}, recommends to avoid many different key pair coexisting in the use of the same cryptosystem setup. This setup is has is summarized with the tuple \ref{eq:setupla}. Because of that we have started to propose a way to introduce much more good elliptic curves to distribute and dissolve this risk in between the users of the general propose public key software.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Get an elliptic curve from scratch \label{sec:scratch}}
@@ -305,6 +325,8 @@ Generate an elliptic curve is not a hard job, what is hard is to generate an cry
 \STATE Return $\{p,a,b,n,h\}$;
 \end{algorithmic}
 \end{algorithm}%
+
+\fixme{Would be goo to explain why is not used the algorithm in the P1363, section A.12.4}
 
 This algorithm does not returns a generator who is also a cryptosystems parameter, because its algorithm to found it is not part of this article has been excluded in this algorithm. This algorithm also sets a restriction than cofactor must be $1$, $2$ or $4$, who comes from the P1363 rules (\cite{P1363}). The cofactor size affects on the group of points of the cyclic subgroup where the cryptography will be.
 
@@ -505,7 +527,7 @@ To describe the structure of the $\ell$ degree isogeny class it has been propose
 
 \fixme{Is true the number of edges per node in figure \ref{fig:RegularVolcano}?}
 
-\fixme{define ``serralada'' (volcanoes range or system): as the joint of graphs of isogenies with many primer degrees.}
+\fixme{define ``serralada'' (volcanoes range or system): as the set of graphs of isogenies with many primer degrees.}
 
 Different isogeny degrees recreates different volcanoes, and a set of volcanoes can be also represented in a graph like a mountain system. A composed isogeny degree describes this type of system of volcanoes of the factors of this composed degree.
 
