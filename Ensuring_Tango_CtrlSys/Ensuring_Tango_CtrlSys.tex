@@ -18,6 +18,7 @@
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\tango}{\textsc{Tango} }
+\newcommand{\sardana}{\textsc{Sardana} }
 \newcommand{\taurus}{\textsc{Taurus} }
 \newcommand{\atk}{\textsc{Atk} }
 
@@ -68,14 +69,14 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
-\begin{itemize}
- \item embedded cryptography
- \item Ensuring \tango must be like http\emph{s}. Transparent as possible from the current usage. But this doesn't mean that will be fast to have something like the navigation infrastructures for certificates, for example. In this example of the navigators, wasn't immediate to have this well made.
- \item 
- \item 
-\end{itemize}
+Current use of \tango is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. Why only extend to industry? Why not also extend it to commercial like can by home automation? Like in those to extensions, many of the issues faced by the developers (even electronic and computer scientist) are quite similar. Perhaps with differences on the time ranges or precisions but with equivalent abstractions.
+
+Spreading the possible uses we are not making more complicated the current \tango use. By today, \tango runs in 32 and 64 bit architectures and from very small embedded instruments, up to very big computers with a huge among of CPU and memory available. Then the objective of ensure this transport layer, must work in the small case and then will also work in the bigger one.
+
+The goal of ensure \tango must produce an outcome as similar as the http\emph{s} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. This migration process would be not as fast as we could want, specially by the introduction of the certificates infrastructure. Following the example of the web navigation, there was not immediate to have this infrastructure well spread.
    
-{\bf Keywords:} Cryptography, Elliptic Curves, Distributed Systems, SCADA, Controls system, Synchrotron
+{\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, \emph{stream cyphers}, \emph{secret sharing} and also \emph{Homomorphic encryption} for databases}, Distributed Systems, Secure engineering.
+
 \end{abstract}
 
 %%%%%
@@ -85,15 +86,22 @@
 \begin{itemize}
  \item What is \tango?
  \item What is the meaning of a secure system? What is security in a distributed system?
- \item Security threads, policies and mechanisms.
- \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS)
- \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not
- \item Go further that the Locking/Access control
- \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information.
- \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves, generalized Rijndael and stream cipher}.
- \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Security levels: Open, confidential, Secret, Top Secret. (remember the German standard on this levelling).
- \item 
- \item 
+ \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS). \tango, complemented by \atk, \sardana, and \taurus.
+  \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not
+  
+ \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
+  \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies.
+ 
+ \item Following the 3 layers structure of a distributed system \cite{TanenbaumDistr} to identify scenarios in section \ref{sec:scenarios} and solutions in sections \ref{sec:intercom}:
+ \begin{itemize}
+  \item Agent authentication in the presentation layer (section \ref{sec:presentationLayer}). Possible solutions as the zero-knowledge proof (section \ref{sec:auth}) and Secret Sharing (section \ref{sec:secretSharing}).
+  \item Domain layer communications protection in section \ref{sec:domainLayer}. Trusted computing with elliptic curves \ref{sec:ecpk}, data communication with symmetric encryption in section \ref{sec:gRijndael} and stream cyphering in section \ref{sec:kdfStreaming})
+  \item Ensure Data layer (section \ref{sec:dataLayer}) with homomorphic encryption (section \ref{sec:Homorph}) in the database.
+ \end{itemize}
+ \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Section \ref{sec:secLevel}
+ \item Alert on possible attacks to protect against what is already saw as a security thread, section \ref{sec:attacks}, distinguishing between passive (section \ref{sec:passiveAttacks}), active (section \ref{sec:activeAttacks}) and side channels (section \ref{sec:sideChannelAttacks})
+ \item Any already saw thread should have it countermeasure (section \ref{sec:countermeasures}) with special interest in intrusion detection (section \ref{sec:intrusionDetection})
+ \item final conclusions about ensuring protocols (section \ref{sec:protocols}) and IT environmental security (section \ref{sec:environment})
 \end{itemize}
 
 %%%%%
@@ -115,7 +123,7 @@
 
 %%%%%
 %
-\subsection{Ensuring presentation layer}
+\subsection{Ensuring presentation layer \label{sec:presentationLayer}}
 
 \begin{itemize}
  \item Agent authentication in a distributed system
@@ -125,14 +133,14 @@
   \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
  \end{itemize}
  \item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
- \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting?
+ \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting? section \ref{sec:secretSharing}
  \item 
  \item 
 \end{itemize}
 
 %%%%%
 %
-\subsection{Ensuring domain layer}
+\subsection{Ensuring domain layer \label{sec:domainLayer}}
 
 \begin{itemize}
  \item Trusted Computing and Hardware protections
@@ -142,7 +150,7 @@
 
 %%%%%
 %
-\subsection{Ensuring data layer}
+\subsection{Ensuring data layer \label{sec:dataLayer}}
 
 \begin{itemize}
  \item \tango database access control
@@ -154,69 +162,10 @@
 
 %%%%%
 %
-\section{Brainstorming attacks}
-
-\begin{itemize}
- \item
- \item 
-\end{itemize}
-
-%%%%%
-%
-\subsection{Passive attacks}
-
-\begin{itemize}
- \item Eavesdropping
- \item Noise to block an alarm transmission
- \item 
- \item 
-\end{itemize}
-
-%%%%%
-%
-\subsection{Active attacks}
-
-\begin{itemize}
- \item Men-in-the-middle (active attacks) between agents
- \item Interruption: Break the public face, web site or gui. Kill a vital agent.
- \item Modification/Fabrication: Supplant agents.
- \item 
- \item 
-\end{itemize}
-
-%%%%%
-%
-\subsection{Side channel attacks}
-
-\begin{itemize}
- \item
- \item 
-\end{itemize}
-
-%%%%%
-%
-\section{Attacks countermeasures}
-
-\begin{itemize}
- \item
- \item 
-\end{itemize}
-
-%%%%%
-%
-\subsection{Intrusion Detection}
-
-\begin{itemize}
- \item Detection and recovery
- \item 
- \item 
-\end{itemize}
-
-%%%%%
-%
 \section{Communication hybrid schema \label{sec:intercom}}
 
 \begin{itemize}
+ \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves (section \ref{sec:ecpk}), generalized Rijndael (section \ref{sec:gRijndael}) and stream cipher (section \ref{sec:kdfStreaming})}.
  \item Pubkey to agreed a season key as the usual hybrid systems
  \item Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers
  \item \emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivationFunction (KDF) of the Rijndael or better other possible alternatives
@@ -226,7 +175,25 @@
 
 %%%%%
 %
-\subsection{Elliptic curves for public key}
+\subsection{Zero-knowledge proof for authentication \label{sec:auth}}
+\begin{itemize}
+ \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Secret Sharing \label{sec:secretSharing}}
+\begin{itemize}
+ \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Elliptic curves for public key \label{sec:ecpk}}
 
 \begin{itemize}
  \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}.
@@ -237,7 +204,7 @@
 
 %%%%%
 %
-\subsection{Rijndael generalization for symmetric key}
+\subsection{Rijndael generalization for symmetric key \label{sec:gRijndael}}
 
 \begin{itemize}
  \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
@@ -249,7 +216,7 @@
 
 %%%%%
 %
-\subsection{Key Derivation Functions for stream ciphering}
+\subsection{Key Derivation Functions for stream ciphering \label{sec:kdfStreaming}}
 
 \begin{itemize}
  \item 
@@ -258,16 +225,95 @@
 
 %%%%%
 %
-\section{Zero-knowledge proof for authentication \label{sec:auth}}
+\subsection{Homomorphic Encryption \label{sec:Homorph}}
 \begin{itemize}
- \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+ \item 
+ \item 
+\end{itemize}
+
+
+
+%%%%%
+%
+\section{Security levels \label{sec:secLevel}}
+
+\begin{itemize}
+ \item Security levels: Open, confidential, Secret, Top Secret.
+ \item remember the German standard on this levelling
+\end{itemize}
+
+%%%%%
+%
+\section{Brainstorming attacks \label{sec:attacks}}
+
+\begin{itemize}
+ \item
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Passive attacks \label{sec:passiveAttacks}}
+
+\begin{itemize}
+ \item Eavesdropping
+ \item Noise to block an alarm transmission
  \item 
  \item 
 \end{itemize}
 
 %%%%%
 %
-\section{Protocols}
+\subsection{Active attacks \label{sec:activeAttacks}}
+
+\begin{itemize}
+ \item Men-in-the-middle (active attacks) between agents
+ \item Interruption: Break the public face, web site or gui. Kill a vital agent.
+ \item Modification/Fabrication: Supplant agents.
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Side channel attacks \label{sec:sideChannelAttacks}}
+
+\begin{itemize}
+ \item
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\section{Attacks countermeasures \label{sec:countermeasures}}
+
+\begin{itemize}
+ \item
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Intrusion Detection \label{sec:intrusionDetection}}
+
+\begin{itemize}
+ \item Detection and recovery
+ \item 
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\section{Conclusions \label{sec:conclusions}}
+
+\begin{itemize}
+ \item Al those fields mention on this paper requires a much further detailed paper each.
+ \item 
+\end{itemize}
+
+%%%%%
+%
+\subsection{Protocols \label{sec:protocols}}
 
 \begin{itemize}
  \item Protocol layers \cite{Schneier:1995:ACP:572932}
@@ -280,20 +326,11 @@
 
 %%%%%
 %
-\section{Environmental IT Security}
+\subsection{Environmental IT Security \label{sec:environment}}
 
 \begin{itemize}
  \item The weakest brick: secure the transmission but store in a plain file system
  \item Human behaviour and psychology.
- \item 
- \item 
-\end{itemize}
-
-%%%%%
-%
-\section{Conclusions \label{sec:conclusions}}
-
-\begin{itemize}
  \item 
  \item 
 \end{itemize}
