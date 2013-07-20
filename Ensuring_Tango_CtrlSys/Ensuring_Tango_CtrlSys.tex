@@ -71,9 +71,11 @@
 
 Current use of \tango is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. Why only extend to industry? Why not also extend it to commercial like can by home automation? Like in those to extensions, many of the issues faced by the developers (even electronic and computer scientist) are quite similar. Perhaps with differences on the time ranges or precisions but with equivalent abstractions.
 
-Spreading the possible uses we are not making more complicated the current \tango use. By today, \tango runs in 32 and 64 bit architectures and from very small embedded instruments, up to very big computers with a huge among of CPU and memory available. Then the objective of ensure this transport layer, must work in the small case and then will also work in the bigger one.
+Spreading the possible uses we are not making more complicated the current \tango use. By today, \tango runs in 32 and 64 bit architectures and from very small embedded instruments, up to very big computers with a huge among of CPU and memory available. Then the objective of ensure this \emph{transport layer}, must work in the small case and then will also work in the bigger one. \sardana, \taurus and \atk as \emph{presentation} and \emph{session layers} are in further work.
 
-The goal of ensure \tango must produce an outcome as similar as the http\emph{s} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. This migration process would be not as fast as we could want, specially by the introduction of the certificates infrastructure. Following the example of the web navigation, there was not immediate to have this infrastructure well spread.
+The goal of ensure \tango must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. This migration process would be not as fast as we could want, specially by the introduction of the certificates infrastructure. Following the example of the web navigation, there was not immediate to have this infrastructure well spread.
+
+It is very important goal to have the \tango implementation as Free Software, as this paper cryptography outcomes must be to have auditable algorithms and sources.
    
 {\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, \emph{stream cyphers}, \emph{secret sharing} and also \emph{Homomorphic encryption} for databases}, Distributed Systems, Secure engineering.
 
@@ -86,7 +88,7 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
 \begin{itemize}
  \item What is \tango?
  \item What is the meaning of a secure system? What is security in a distributed system?
- \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS). \tango, complemented by \atk, \sardana, and \taurus.
+ \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS). \tango, complemented by \atk, \sardana, and \taurus. As will be explained in \ref{sec:further}, ensure \sardana \taurus and \atk is out of the scope of this paper, except for those things that defines the interaction with \tango.
   \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not
   
  \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
@@ -114,9 +116,9 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
  \item Integrity (authorization): only authorized can set information.
  \item Auditory: trace who access where (extremely useful for a security breach analysis).
  \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base}. Practical paranoia \cite{PractCryptoSchneier}
- \item Cryptosystem configuration and security levels.
+ \item Cryptosystem configuration, security levels and information classification. \ref{sec:secLevel}
  \item Cryptosystem setup reset.
- \item Setup \& Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
+ \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
  \item 
  \item 
 \end{itemize}
@@ -132,7 +134,6 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
   \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change.
   \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
  \end{itemize}
- \item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
  \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting? section \ref{sec:secretSharing}
  \item 
  \item 
@@ -154,10 +155,19 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
 
 \begin{itemize}
  \item \tango database access control
- \item Ensuring between instrumentation and the agents out of the scope of this paper. This is a very dependant on the instrumentation manufacturers.
+ \item Ensuring between instrumentation and the agents out of the scope of this paper. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and above layers.
  \item Homomorphic Encryption for Database access
  \item  
  \item 
+\end{itemize}
+
+%%%%%
+%
+\section{Security levels \label{sec:secLevel}}
+
+\begin{itemize}
+ \item Security levels: Open or unclassified, confidential, Secret, Top Secret.
+ \item remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
 \end{itemize}
 
 %%%%%
@@ -166,7 +176,8 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
 
 \begin{itemize}
  \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves (section \ref{sec:ecpk}), generalized Rijndael (section \ref{sec:gRijndael}) and stream cipher (section \ref{sec:kdfStreaming})}.
- \item Pubkey to agreed a season key as the usual hybrid systems
+ \item Public-key to agreed a season key as the usual hybrid systems. This session keys shall be used for symmetric or stream cyphering.
+ \item Session keys refresh.
  \item Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers
  \item \emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivationFunction (KDF) of the Rijndael or better other possible alternatives
  \item 
@@ -184,9 +195,9 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
 
 %%%%%
 %
-\subsection{Secret Sharing \label{sec:secretSharing}}
+\subsection{Secret Sharing and secret splitting \label{sec:secretSharing}}
 \begin{itemize}
- \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+ \item Multicast and event system.
  \item 
  \item 
 \end{itemize}
@@ -197,7 +208,7 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
 
 \begin{itemize}
  \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}.
- \item Capability to reset a curve setup on any of those secrecy levels 
+ \item Capability to reset a curve setup on any of those secrecy levels (section \ref{sec:secLevel})
  \item 
  \item 
 \end{itemize}
@@ -210,7 +221,7 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
  \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
  \item Current AES has advantage on 32bit processor implementation, what about 64bits
  \item AESWrap \cite{rfc3394}
- \item 
+ \item Secrecy levels (section \ref{sec:secLevel})
  \item 
 \end{itemize}
 
@@ -230,18 +241,7 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
  \item 
  \item 
 \end{itemize}
-
-
-
-%%%%%
-%
-\section{Security levels \label{sec:secLevel}}
-
-\begin{itemize}
- \item Security levels: Open, confidential, Secret, Top Secret.
- \item remember the German standard on this levelling
-\end{itemize}
-
+<
 %%%%%
 %
 \section{Brainstorming attacks \label{sec:attacks}}
@@ -334,6 +334,16 @@ The goal of ensure \tango must produce an outcome as similar as the http\emph{s}
  \item 
  \item 
 \end{itemize}
+
+%%%%%
+%
+\subsection{Further work \label{sec:further}}
+
+\begin{itemize}
+\item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
+\item in all the algorithms on this paper this must be taken into account to minimize redesigns.
+\end{itemize}
+
 
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/books.bib,../bibtex/crypto.bib,../bibtex/rfc.bib}
