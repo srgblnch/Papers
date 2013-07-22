@@ -108,6 +108,42 @@
  \item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}).
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Polynomial binary rings and fields, the math below Rijndael}\label{sec:math}
+Before to enter in the design of the Rijndael schema is good to have some knowledge of the background used. This section can be avoided if the reader has already this skills, like can be recovered if some refresh can help. \fixme{Avoid to sound pedantic, or don't say that at all.}
+
+The mathematics used just above the \emph{xor} operation are polynomial fields defined with coefficients in a binary group, denoted as
+$$\Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}\label{eq:polynomialField}$$
+Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ and has correspondence with the \emph{Rijndael} schema of section \ref{sec:approach}.
+
+This polynomial set has one operation, we can call it \emph{addition} that describes an structure of an Abelian group $(G,+)$:
+\begin{enumerate}
+ \item Closure: $\forall a(z),b(z) \in \Fpn{2}{n}$ when those elements are operated $a(z)+b(z)=c(z)$, then $c(z) \in \Fpn{2}{n}$
+ \item Associativity: $\forall a(z),b(z),c(z) \in \Fpn{2}{n}$, then $[a(z)+b(z)]+c(z)=a(z)+[b(z)+c(z)]$
+ \item Identity: $\exists n(z) \in \Fpn{2}{n} \arrowvert \forall a(z), n(z)+a(z)=a(z)+n(z)=a(z)$
+ \item Inverse: $\forall a(z) \in \Fpn{2}{n}$ must $\exist a^{-1}(z) \arrowvert a(z)+a^{-1}(z) = n(z)$
+ \item Commutative: $\forall a(z),b(z) \in \Fpn{2}{n}, a(z)+b(z)=b(z)+a(z)$
+\end{enumerate}
+
+This polynomial set has a second operation, we call it \emph{product} that has also an Abelian group structure. For convenience the \emph{addition} operation has $0(z)$ as identity (where all the coefficients are $0$) and \emph{product} has the polynomial $1(z)$ (where all the coefficients are $1$).
+
+If one of those operations is an Abelian group, and the second one is non-commutative, if they satisfy the property:
+\begin{enumerate}
+ \item '*' Distributive: $\forall a(z),b(z),c(z) \in \Fpn{2}{n}, a(z)*(b(z)+c(z)=[a(z)+b(z)]*[a(z)+c(z)]$
+\end{enumerate}
+This is called a \emph{ring} $(R,+,*)$ and it's the field used in the operation of the \emph{subBytes} in section \ref{sec:subBytes}.
+
+In the case of when those involved operations are Abelian groups, the this becomes what is called a \emph{field} $(K,+,*)$.
+
+At this point is already clear the algebraic properties of the field described in \ref{eq:polynomialField}. But like this polynomial binary field used an underlying binary group, this field can be used as coefficients of a superpolynomial structure:
+$$\frac{\Fpn{2}{n}[x]}{m'(x)}\label{eq:polynomialRing}$$
+This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the \emph{mixColumn} operation.
+
+The fact that in this case the modular polynomial $m'(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in deed this we use \emph{c} to denote this degree because in the \emph{Rijndael} schema it depends on the number of columns).
+
+Remember that even if this distributive property is still valid, and because the polynomial modulo is composited, the second operation is non-commutative.
+
+\todo{What to say to link this (if everything is already said) to link with the next section}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
@@ -173,7 +209,7 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 % TODO format preserving encryption alternative?
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Design}\label{sec:design}
+\subsection{The Rijndael Design}\label{sec:design}
 
 % TODO what is the state matrix
 The design of the \emph{Rijndael} starts its elegance by the data structure of the \emph{State matrix}. This algorithm represents the data with in a matrix of a given number of rows and columns. On each cell of this matrix is allocated information in binary grouped in sets of the word size.
@@ -785,11 +821,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
-The polynomial ring used in the Rijndael schema is denoted:
-$$\frac{\Fpn{2}{n}[x]}{m'(x)}\label{eq:polynomialRing}$$
-where $m'(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with the same degree than the $c$ columns parameter. This describes a polynomial ring. The coefficients of this polynomial ring are elements of a polynomial field $\Fpn{2}{n}$, where this notation is a shorter of
-$$\Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}\label{eq:polynomialField}$$
-and in here, the polynomial $m(z)$ is an irreductible with the same degree than the wordsize ($w$). 
+\todo{Introduce this section using the base of the section \ref{sec:math}}
 
 An improvement of the modular operations in the polynomial ring, in the specification of the rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In \emph{mixColumns} operation is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
 
