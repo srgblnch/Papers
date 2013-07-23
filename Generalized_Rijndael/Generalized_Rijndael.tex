@@ -113,7 +113,9 @@
 Before to enter in the design of the Rijndael schema is good to have some knowledge of the background used. This section can be avoided if the reader has already this skills, like can be recovered if some refresh can help. \fixme{Avoid to sound pedantic, or don't say that at all.}
 
 The mathematics used just above the \emph{xor} operation are polynomial fields defined with coefficients in a binary group, denoted as
-$$\Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}\label{eq:polynomialField}$$
+\begin{equation}\label{eq:polynomialField} 
+\Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}
+\end{equation}
 Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ and has correspondence with the \emph{Rijndael} schema of section \ref{sec:approach}.
 
 This polynomial set has one operation, we can call it \emph{addition} that describes an structure of an Abelian group $(G,+)$:
@@ -121,29 +123,33 @@ This polynomial set has one operation, we can call it \emph{addition} that descr
  \item Closure: $\forall a(z),b(z) \in \Fpn{2}{n}$ when those elements are operated $a(z)+b(z)=c(z)$, then $c(z) \in \Fpn{2}{n}$
  \item Associativity: $\forall a(z),b(z),c(z) \in \Fpn{2}{n}$, then $[a(z)+b(z)]+c(z)=a(z)+[b(z)+c(z)]$
  \item Identity: $\exists n(z) \in \Fpn{2}{n} \arrowvert \forall a(z), n(z)+a(z)=a(z)+n(z)=a(z)$
- \item Inverse: $\forall a(z) \in \Fpn{2}{n}$ must $\exist a^{-1}(z) \arrowvert a(z)+a^{-1}(z) = n(z)$
+ \item Inverse: $\forall a(z) \in \Fpn{2}{n}$ must $\exists a^{-1}(z) \arrowvert a(z)+a^{-1}(z) = n(z)$
  \item Commutative: $\forall a(z),b(z) \in \Fpn{2}{n}, a(z)+b(z)=b(z)+a(z)$
 \end{enumerate}
 
-This polynomial set has a second operation, we call it \emph{product} that has also an Abelian group structure. For convenience the \emph{addition} operation has $0(z)$ as identity (where all the coefficients are $0$) and \emph{product} has the polynomial $1(z)$ (where all the coefficients are $1$).
+This polynomial set has a second operation, we call it \emph{product} that has also an Abelian group structure. For convenience the \emph{addition} operation has $0(z)$ as identity (and means the polynomial with all the coefficients at $0$) and \emph{product} has the polynomial $1(z)$ as identity (where all the coefficients are $1$).
 
-If one of those operations is an Abelian group, and the second one is non-commutative, if they satisfy the property:
+When one of those operations is an Abelian group, and the other is a non-commutative group, and together they satisfy the property:
 \begin{enumerate}
  \item '*' Distributive: $\forall a(z),b(z),c(z) \in \Fpn{2}{n}, a(z)*(b(z)+c(z)=[a(z)+b(z)]*[a(z)+c(z)]$
 \end{enumerate}
-This is called a \emph{ring} $(R,+,*)$ and it's the field used in the operation of the \emph{subBytes} in section \ref{sec:subBytes}.
+This is called a \emph{ring} $(R,+,*)$ as it is the basis for the operation of the \emph{subBytes} in section \ref{sec:subBytes}.
 
-In the case of when those involved operations are Abelian groups, the this becomes what is called a \emph{field} $(K,+,*)$.
+In the case of when those involved operations are Abelian groups, and it is also satisfied the property that the second operation is distributive respect the first, then this structure becomes what is called a \emph{field} $(K,+,*)$.
 
-At this point is already clear the algebraic properties of the field described in \ref{eq:polynomialField}. But like this polynomial binary field used an underlying binary group, this field can be used as coefficients of a superpolynomial structure:
-$$\frac{\Fpn{2}{n}[x]}{m'(x)}\label{eq:polynomialRing}$$
+At this point is already clear the algebraic properties of the field described in equation \ref{eq:polynomialField}. But like this polynomial binary field used an underlying binary group, this field can be used as coefficients of a superpolynomial structure:
+\begin{equation}\label{eq:polynomialRing}
+\frac{\Fpn{2}{n}[x]}{m'(x)}
+\end{equation}
 This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the \emph{mixColumn} operation.
 
 The fact that in this case the modular polynomial $m'(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in deed this we use \emph{c} to denote this degree because in the \emph{Rijndael} schema it depends on the number of columns).
 
 Remember that even if this distributive property is still valid, and because the polynomial modulo is composited, the second operation is non-commutative.
 
-\todo{What to say to link this (if everything is already said) to link with the next section}
+The only remaining mathematical background to explain is what means modular. That is to reduce any polynomial we got by divide by the one that defined the structure ($m(z)$ in the polynomial field and $m'(x)$ in the polynomial ring) and take the division rest as the representation in the equivalence class.
+
+Those basic mathematical bricks of the \emph{Rijndael} algorithm is what gives to it a genuine strongness. All the operations can be reduced to \emph{xor}s ans bit shifts, and how they behave is regulated by mathematical elegance. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
@@ -194,10 +200,9 @@ In other words, a \emph{PRP} is secure if the permutation given by it is indisti
 % and why is Rijndael a secure PRP? FIXME: is this enough? Can explain deep from where the 2^64 comes from?
 In the case of the Rijndael, the most efficient attacks on this symmetric cryptosystem, like the best key recovery attack it is \emph{only} $4$ times better than the exhaustive search using the biclique cryptoanalysis \cite{biclique-fullaes}. But this $4$ times means that we must think in aes-128 to be like an aes-126 and this is still far, far away to an efficient break because it must be down to an attack in the order of $2^{64}$. It means that this algorithm can be trusted as \emph{still secure}.
 
-In the case of the key sizes $192$ and $256$ of the aes, and due to a weakness on the design of the key expansion, but this will be explained in section \ref{sec:keyExpansion}.
-
 % TODO rijndael good characteristics
 \begin{itemize}
+ \item \todo{In the case of the key sizes $192$ and $256$ of the aes, and due to a weakness on the design of the key expansion, but this will be explained in section \ref{sec:keyExpansion}.}
  \item \todo{What gives to Rijndael the good characteristics that it has?}
 \end{itemize}
 
@@ -225,7 +230,11 @@ From the standardised \emph{Rijndael}, $4$ rows per $4$ columns with words of $8
  \end{tabular}
  \right]
 \end{equation}
-This sets the block size of the $4\times4\times8=128$ bits, and later will be described that this representation gives many simplicity to use the bits on each cell as field of polynomials with binary coefficients, or the use the columns as a ring of polynomial where the coefficients are elements on the polynomial field, represented by the cells. Very smart, simplistic and versatile data representation.
+This sets the block size of the $4\times4\times8=128$ bits, and each cell represents an element of the polynomial field described in section \ref{sec:math}. This representation gives a big simplicity, also because the order of the modulo (the irreducible polynomial $m(z)$ in equation \ref{eq:polynomialField}) corresponds with $8$ bits, the \emph{word size}, a Byte: basic brick of the current computation resources.
+
+Also the columns are used as one element representation of the polynomial ring also described in section \ref{sec:math}, the polynomial ring where the coeficients are elements of the mentioned polynomial field. Also the simplicity of this makes easy the operability because the chosen number of columns, $4$ (the degree of the reducible polynomial $m'(x)$ in equation \ref{eq:polynomialRing}) that corresponds the 4 Bytes, 32 bits, the most extended architecture size at the time of the \emph{AES contest}.
+
+Very smart, simple and versatile data representation.
 
 With this matrix, the input plain text is transformed by the algorithm to the cipher text and the state matrix is the snapshot of each modification made with this transformation. Also with the decipher algorithm this state matrix contains the conversions to recover, from a cypher text the original plain text.
 
@@ -285,7 +294,7 @@ As an example, a non negligible $\epsilon$ usually is mention as a value $\geqsl
 
 The definition \ref{def:unpredictability} says that for any efficient algorithm, given to this algorithm the $i$ first bits, the probability that this algorithm predicts the next element of the stream is negligible.
 
-The unpredictability of a \emph{PRG} is what gives to the the quality to be \emph{undistinguishable} from a \emph{pure random generator}. Even when the seed space $\mathcal{K}$ of the PRG is much smaller than the space of the output $\{0,1\}^n$.
+The unpredictability of a \emph{PRG} is what gives to it the quality to be \emph{undistinguishable} from a \emph{pure random generator}. Even when the seed space $\mathcal{K}$ of the PRG is much smaller than the space of the output $\{0,1\}^n$.
 
 Like in the PRP, consider an scenario where the adversary has access to a random oracle where the output of this oracle can be the output of the PRG or a truly random stream. The advantage of the adversary to distinguish from where it comes any output it has take can be described as:
 \begin{equation}\label{eq:prgAdv}
@@ -296,9 +305,11 @@ Like in the PRP, consider an scenario where the adversary has access to a random
 \end{equation}
 That means if the probability gets close to 1, the adversary can distinguish $G$ from random; and if it is close to 0 cannot.
 
-\begin{definition}
- Given $G: k \rightarrow \{0,1\}^n$, is a \emph{secure PRG} if $\forall$ efficient statistical test ${Adv}_{prg}[A,G]$ is negligible.
+\begin{definition}\label{def:advantage}
+ Given $G: k \rightarrow \{0,1\}^n$, is a \emph{secure PRG} iff $\forall$ ``efficient statistical test'' the advantage ${Adv}_{prg}[A,G]$ is negligible.
 \end{definition}
+
+\todo{We shall proof this definition \ref{def:advantage}}
 
 Following definition \ref{def:unpredictability} about the unpredictability, the $\epsilon$ is $\leqslant\frac{1}{2^{80}}$ to be considered as negligible.
 
@@ -327,7 +338,7 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
  \end{algorithmic}
 \end{algorithm}
 
-Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. But is different than the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. Different but equivalent than the algorithm give in the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
 %TODO: check how it was the keyExpansion in the first proposal \cite{Daemen98aesproposal:}
 
 All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
@@ -406,6 +417,7 @@ Each step finish with 3 \emph{xor} operations to catch together all the partials
 
 \begin{itemize}
  \item \todo{subBytes()} is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
+ \item \todo{rotWord()} should be explained here because is not used before and cannot be postponed because is not used later.
  \item \todo{What means to have different number of columns in the message than in the key matrix representation.}
  \item \todo{Explain what is the proposal of the Rcon matrix (or as a recursive function).}
 \end{itemize}
@@ -501,7 +513,7 @@ This transformation is a non-linear substitution of each word in the \emph{state
 \label{tab:inv-sbox8}
 \end{figure}
 
-From the programmatic point of view the use of those boxes is so simple. Because the wordsize is 8 bits, by splitting the data to transform in two parts of 4 bits you can get the row and the column, taking the value in the cell as the value of the substitution. In the decipher operation, is used the inverse of the box, and with the same procedure of split the word and find the coordinates, but now with the inverse S-Box, the value you get back is the original data.
+From the programmatic point of view the use of those boxes makes it so simple. Because the wordsize is 8 bits, by splitting the data to transform in two parts of 4 bits (1 hexadecimal digit) you can get the row and the column, taking the value in the cell as the value of the substitution. In the decipher operation, is used the inverse of the box, and with the same procedure of split the word and find the coordinates, but now with the inverse S-Box, the value you get back is the original data.
 
 As an example, to transform the data \texttt{0x39} localise the cell in: row \texttt{0x3}, column \texttt{0x9}; and change the state matrix value with \texttt{0x12}. In the decipher procedure the transformation will be from the value \texttt{0x12}, reading: the row \texttt{0x1}, column \texttt{0x2}; the cell have the value \texttt{0x39}, the original of this example. Check any other example using figures \ref{tab:sbox8} and \ref{tab:inv-sbox8} to do it and undo.
 
@@ -516,6 +528,9 @@ The first transformation (called $g$) is to compute the multiplicative inverse i
 \begin{equation}\label{eq:multInvPolyField}
  g:a\rightarrow b = a^{-1} \in \Fpnm{w}{z} 
 \end{equation}
+
+Note that the inverse operation $g^{-1}$of the function $g$ is itself.
+
 Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreductible $m(z)$, in the original \emph{Rijndael}: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
 
 The second transformation (called $f$) is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is (where $w=8$):
@@ -524,7 +539,12 @@ The second transformation (called $f$) is an affine transformation over the poly
           b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
 \end{equation}
 Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation:
-\todo{from where the matrix comes from?}
+
+\begin{enumerate}
+ \item \todo{from where the matrix comes from?}
+ \item \todo{is it a MDS? and/or a circulant matrix?}
+ \item \todo{From where $b$ and $c$ comes from? How they have been selected? Which properties they have and give is crucial to determine the for the word size and to analyse if they are good enough}
+\end{enumerate}
 
 \begin{equation}\label{eq:subBytes:matrix}
  f:
@@ -554,7 +574,19 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
  \right]
 \end{equation}
 
-Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:subBytes:matrix}:
+Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:invSubBytes:affine} and also expressed as matrix operation in \ref{eq:subBytes:matrix}:
+
+\begin{equation}\label{eq:invSubBytes:affine}
+ b'^{-1}_{i} = b^{-1}_{(i+1)mod8} \oplus b^{-1}_{(i+3)mod8} \oplus 
+          b^{-1}_{(i+6)mod8} \oplus c^{-1}_{i}
+\end{equation}
+
+For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are... $b^{-1}=$\texttt{0b01010010=0x52} and $c^{-1}=$\texttt{0b00000101=0x05}
+
+\begin{itemize}
+ \item todo{What's the relation between $b$ and $b$ $b^{-1}$, and between $c$ and $c^{-1}$?}
+\end{itemize}
+
 
 \begin{equation}\label{eq:invSubBytes:matrix}
  f^{-1}:
@@ -662,7 +694,7 @@ The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}
 \subsubsection{How to build different SBoxes}\label{sec:sbox}
 
 % and how to build a new one with different parameters
-Using the same \emph{wordsize} there are two different things that can be changed: the \texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpnm{4}{z}, over $16$ the field will be \Fpnm{{16}}{z}, and the subparameters of the affine transformation must also be set up.
+Using the same \emph{wordsize} there are two different things that can be changed: $b$ and $c$. The $c=$\texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpnm{4}{z}, over $16$ the field will be \Fpnm{{16}}{z}, and the subparameters of the affine transformation must also be set up.
 
 \begin{itemize}
  \item \todo{how to build new $S$ and $S^{-1}$ for $w\neq 8$.}
@@ -670,7 +702,7 @@ Using the same \emph{wordsize} there are two different things that can be change
   \item build $g(z)$ in \Fpnm{w}{z}
   \item build $f(z)$ and $f^{-1}(z)$ in \Fpnm{w}{z}
   \begin{itemize}
-   \item How to chose the circulant matrix of the equation \ref{eq:subBytes:matrix} and the $c$ (and also for the inverse)?
+   \item How to chose the circulant matrix from $b$ of equation \ref{eq:subBytes:affine} used in equation \ref{eq:subBytes:matrix} and the $c$ (and also for the inverse)?
   \end{itemize}
  \end{itemize}
  \item \todo{summarize the $S$ and $S^{-1}$ using $w=4$ and $w=2$ in their \emph{S-Box}es and their inverse Boxes.}
