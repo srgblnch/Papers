@@ -65,11 +65,11 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 \fixme{this probably is too long}
-One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty in the length of this group. Using a different elliptic curve the cyclic subgroup is completely different and the cryptanalysis that someone can have done over one curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
+One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty in the length of this group. Using a different elliptic curve, the cyclic subgroup is completely different and the cryptanalysis that someone can have in progress, over this curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
 
 Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, that means almost all the users with the same domain parameters.
 
-It is a request of this standard to find a way to add randomization between the used elliptic curves and in this paper two ways will be explored. Both likes to get an ``auditable'' algorithm to the final user to get its particular elliptic curve. The difference between this two ways is if the algorithm starts from scratch of from one cryptographically good curve.
+It is a request for this standard to find a way to add variability between the used elliptic curves, and in this paper two ways are be explored. Both ways likes to get an \emph{auditable} algorithm to the final user to get its particular elliptic curve. The difference between this two ways is if the algorithm starts from scratch or starts from one cryptographically good curve.
 \\\\    
 {\bf Keywords:} Cryptography, Elliptic Curves, Isogeny
 \end{abstract}
@@ -80,7 +80,7 @@ It is a request of this standard to find a way to add randomization between the 
 
 The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released in June 2012 after a long process \cite{rfc6637} and at least there is one implementation available in the \emph{GnuPG} since 2011.
 
-But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the \cite{brainpool} standardized or the \cite{sec2}. Even if the list can be very extended with this OIDs, there are more than hundredths thousands good elliptic curves excluded with this method.
+But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the german ecc-brainpool standardized \cite{brainpool} or the certicom's ones \cite{sec2}. Even if the list can be very extended with this OIDs, there are over hundreds of thousands good elliptic curves excluded with this method.
 
 This OID method can be an option for keys where the bandwidth is limited, but there must be the possibility to use any good curve, because is one of the best advantages of the elliptic curve cryptography.
 
@@ -311,29 +311,93 @@ Generate an elliptic curve is not a hard job, what is hard is to generate an cry
 % 4. factoritzar-lo per saber l'ordre i el cofactor
 
 \begin{algorithm}
-\caption{Generate a cryptographically good elliptic curve}\label{alg:scratch}
-\begin{algorithmic}[1]
-\REQUIRE Prime $p$ how defines \Fp.
-\ENSURE Struct with cryptosystem parameters (see \ref{eq:setupla})
-\REPEAT
-\STATE Generate $a$ and $b$ $\in_{R}$\Fp
-\STATE Check non zero discriminant $\Delta$
-\STATE Calculate the cardinal $\left| E\left(\mathbb{F}_{p}\right)\right|$ %?usign SEA
-\STATE Check the cardinal is in between the Hasse interval
-\STATE Get the cardinal factors $n,h$ or go to step 1
-\UNTIL{$h \in \left[1,2,4\right]$}
-\STATE Return $\{p,a,b,n,h\}$;
-\end{algorithmic}
+  \caption{Generate a cryptographically good elliptic curve}\label{alg:scratch}
+  \begin{algorithmic}[1]
+    \REQUIRE Prime $p$ how defines \Fp.
+    \ENSURE Struct with cryptosystem parameters (see \ref{eq:setupla})
+    \REPEAT
+      \STATE Generate $a$ and $b$ $\in_{R}$\Fp
+      \STATE Check non zero discriminant $\Delta$
+      \STATE Calculate the cardinal $\left| E\left(\mathbb{F}_{p}\right)\right|$ %?usign SEA
+      \STATE Check the cardinal is in between the Hasse interval
+      \STATE Get the cardinal factors $n,h$ or go to step 1
+    \UNTIL{$h \in \left[1,2,4\right]$}
+    \REPEAT
+      \REPEAT
+        \STATE Generate $x \in_{R}$\Fp
+      \UNTIL{$\exists y \in $\Fp $\;$ s.t. $y=\sqrt{x^3 + a*x + b}$}
+      \STATE Select randomly $y$ or $-y$
+    \UNTIL{$[n]G=$\PaIe}
+    \STATE Return $\{p,a,b,G,n,h\}$;
+  \end{algorithmic}
 \end{algorithm}%
 
-\fixme{Would be goo to explain why is not used the algorithm in the P1363, section A.12.4}
+First approach is the algorithm \ref{alg:scratch}, that consist simply by generate random parameters and check if once has found a good one. Notice that his algorithm output have all the parameters mention in the \ref{eq:setupla}, in fact this algorithm \ref{alg:scratch} is a \emph{many in one} because the other examples you can get from \cite{P1363}, section A.12.4 (transcribed in algorithm \ref{alg:verifiablyP1363}) or from X9.62-1998 \cite{X9.62-1998}, section A.3.3.2 (transcribed in algorithm \ref{alg:verifiablyX9.62}). Previously to describe those algorithms we have to mention that this algorithm \ref{alg:scratch} also sets a restriction than cofactor must be $1$, $2$ or $4$, that comes from the P1363 rules (\cite{P1363}). The cofactor size affects on the group of points of the cyclic subgroup where the cryptography will be.
 
-This algorithm does not returns a generator who is also a cryptosystems parameter, because its algorithm to found it is not part of this article has been excluded in this algorithm. This algorithm also sets a restriction than cofactor must be $1$, $2$ or $4$, who comes from the P1363 rules (\cite{P1363}). The cofactor size affects on the group of points of the cyclic subgroup where the cryptography will be.
+\todo{from where in the P1363 is this cofactor restriction}
 
-\todo{with the SEA algorithm, the citation of the article is need}
+\begin{algorithm}
+  \caption{Constructing a verifiably pseudo-random elliptic curve, P1363 section A.12.4}\label{alg:verifiablyP1363}
+  \begin{algorithmic}[1]
+    \REQUIRE Prime $p$, bounds pair $(r_{min},r_{max})$ for $r$, $l{max}$, division bound ($l_{max}<r_{min}$)
+    \ENSURE A bit string X, struct with cryptosystem parameters (see \ref{eq:setupla})
+    \STATE Choose an arbitrary bit string $X$ of bit length $L$
+    \STATE Compute $h=H(X)$
+    \STATE Let $W_0$ be the bit string obtained by taking the $w$ rightmost bits of $h$
+    \STATE Convert the length-L bit string $X$ to an integer $z$ (via BS2IP)
+    \FOR{$i=1$\TO $s$}
+      \STATE Convert the integer $(z+i)\;(mod\;2^L)$ to a length-L bit string $X_i$ (via I2BSP)
+      \STATE Compute $W_i=H(X_i)$
+    \ENDFOR
+    \STATE $W=W_0\|W_1\|\ldots\|W_s$, bit string obtained by concatenation
+    \STATE Convert length-$(v-1)$ bit string $W$ to an integer $c$ (via BS2IP)
+    \IF{$c=0$ \OR $4c+27\equiv0\;(mod\;p)$}
+      \STATE Go to 1
+    \ENDIF
+    \STATE Choose $a,b\in$\Fp s.t. $cb^2\equiv a^3\;(mod\;p)$
+    \STATE Compute order $u$ of \EFp
+    \STATE Test $u$ for \emph{near-primality} (via A.15.5)
+    \IF{$u$ not nearly prime}
+      \STATE Go to 1
+    \ELSE
+      \STATE calculate $k$,$r$ (the output of A.15.5)
+    \ENDIF
+    \STATE Generate point $G$ on \EFp
+    \STATE Return $X$ \AND $\{p,a,b,G,n,h\}$;
+  \end{algorithmic}
+\end{algorithm}
+
+\todo{Explain the procedure of the algorithm \ref{alg:verifiablyP1363} and its pros and cons}
+
+\begin{algorithm}
+  \caption{Constructing a verifiably pseudo-random elliptic curve, X9.62 section A.3.3.2}\label{alg:verifiablyX9.62}
+  \begin{algorithmic}[1]
+    \REQUIRE Prime $p$ how defines \Fp.
+    \ENSURE A bit string $SEED$ and field elements $a,b\in$\Fp
+
+    \COMMENT{Let $t=\lfloor log_2 p\rfloor$, $s=\lfloor \frac{t-1}{160} \rfloor$, $h=t-160*s$}
+    \STATE Choose arbitrary bit string $SEED$ of length 160 or more. $g=length(SEED)$
+    \STATE Compute $H=SHA-1(SEED)$, and let $c_0$ denote the bit string of length $h$ bits obtained by taking the $h$ rightmost bits of $H$
+    \STATE Let $W_0$ denote the bit string of length $h$ bits obtained by setting the leftmost bits of $c_0$ to $0$ (This ensures that $r<p$)
+    \FOR{i=1 \TO s}
+      \STATE Compute $W_i=SHA-1((SEED+i)\;mod(2^g)$
+    \ENDFOR
+    \STATE $W=W_0\|W_1\|\ldots\|W_s$, bit string obtained by concatenation
+    \STATE Let $w_1,w_2,\ldots,w_t$ be the bits of $W$ from leftmost to rightmost. Let r be the integer $r=\displaystyle\sum\limits_{i=1}^t w_i 2^{t-1} $
+    \STATE Choose $a,b\in$\Fp s.t. $rb^2\equiv a^3\;(mod\;p)$
+    \IF{$4a^3+27b^2\equiv 0\;(mod\;p)$}
+      \STATE Go to 1
+    \ENDIF
+    \STATE Return $(SEED,a,b)$
+  \end{algorithmic}
+\end{algorithm}
+
+\todo{This algorithm \ref{alg:verifiablyX9.62} has many similarities with the \ref{alg:verifiablyP1363}, but excludes the calculation of $n$,$h$ and $G$. Explain the procedure and its pros and cons}
+
 The steps of the algorithm \ref{alg:scratch} can be performed in many ways to try to reduce the execution time. The cardinal calculation can be using the \emph{SEA} algorithm  and the \emph{Hasse interval} (definition \ref{def:Hasse}) check can be optimized to avoid unnecessary operation, but in a final implementation all this code must be written aware of the side channel attacks. The factorization of the cardinal allows the possibility to only tries to find a little cofactor and check the primary on the $n$ candidate.
+\fixme{with the SEA algorithm, the citation of the article is need}
 
-\todo{This must have some computational results}
+\todo{Compare those three algorithms’s cost, in time and memory.}
 
 \todo{Approach to the number of good curves instead of the number of possible curves in a list. get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
