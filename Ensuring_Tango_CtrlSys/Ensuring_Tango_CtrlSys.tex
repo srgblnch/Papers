@@ -17,10 +17,12 @@
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\tango}{\textsc{Tango} }
-\newcommand{\sardana}{\textsc{Sardana} }
-\newcommand{\taurus}{\textsc{Taurus} }
-\newcommand{\atk}{\textsc{Atk} }
+\newcommand{\tango}{\textsc{Tango}}
+\newcommand{\sardana}{\textsc{Sardana}}
+\newcommand{\taurus}{\textsc{Taurus}}
+\newcommand{\atk}{\textsc{Atk}}
+\newcommand{\zmq}{\textsc{$\varnothing$mq}}
+\newcommand{\corba}{\textsc{Corba}}
 
 %opening
 \title{Ensuring \tango Control System}
@@ -69,13 +71,13 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
-Current use of \tango is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. Why only extend to industry? Why not also extend it to commercial like can by home automation? Like in those to extensions, many of the issues faced by the developers (even electronic and computer scientist) are quite similar. Perhaps with differences on the time ranges or precisions but with equivalent abstractions.
+Current use of \tango\, is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. Why only extend to industry? Why not also extend it to commercial like can by home automation? Like in those to extensions, many of the issues faced by the developers (even electronic and computer scientist) are quite similar. Perhaps with differences on the time ranges or precisions but with equivalent abstractions.
 
-Spreading the possible uses we are not making more complicated the current \tango use. By today, \tango runs in 32 and 64 bit architectures and from very small embedded instruments, up to very big computers with a huge among of CPU and memory available. Then the objective of ensure this \emph{transport layer}, must work in the small case and then will also work in the bigger one. \sardana, \taurus and \atk as \emph{presentation} and \emph{session layers} are in further work.
+Spreading the possible uses we are not making more complicated the current \tango\, use. By today, \tango\, runs in 32 and 64 bit architectures and from very small embedded instruments, up to very big computers with a huge among of CPU and memory available. Then the objective of ensure this \emph{transport layer}, must work in the small case and then will also work in the bigger one. 
 
-The goal of ensure \tango must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. This migration process would be not as fast as we could want, specially by the introduction of the certificates infrastructure. Following the example of the web navigation, there was not immediate to have this infrastructure well spread.
+The goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. Perhaps the migration process would be not as fast as we could want, specially due to the introduction of the certificates infrastructure, but as the \tango\, installations are contained in the institutions, and upgrade in this way would be like any other upgrade.
 
-It is very important goal to have the \tango implementation as Free Software, as this paper cryptography outcomes must be to have auditable algorithms and sources.
+It is very important goal to have the \tango\, implementation as Free Software, as this paper cryptography outcomes must be to have public access and auditable algorithms and sources.
    
 {\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, \emph{stream cyphers}, \emph{secret sharing} and also \emph{Homomorphic encryption} for databases}, Distributed Systems, Secure engineering.
 
@@ -86,19 +88,21 @@ It is very important goal to have the \tango implementation as Free Software, as
 \section{Introduction \label{sec:intro}}
 
 \begin{itemize}
- \item What is \tango?
+ \item What is \tango? It's a \corba\, based distributed system used for scientific installation control. 
+ \item Event system \zmq (\emph{Zero Message Queue}).
+ \item \sardana, \taurus\, and \atk\, as \emph{presentation} and \emph{session layers} are in further work.
  \item What is the meaning of a secure system? What is security in a distributed system?
- \item \tango as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS). \tango, complemented by \atk, \sardana, and \taurus. As will be explained in \ref{sec:further}, ensure \sardana \taurus and \atk is out of the scope of this paper, except for those things that defines the interaction with \tango.
-  \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango complains, and which are not
-  
+ \item \tango\, as a Supervisory Control And Data Acquisition (SCADA) and/or Industrial Control System (ICS). \tango, complemented by \atk, \sardana, and \taurus. As will be explained in \ref{sec:further}, ensure \sardana, \taurus\, and \atk\, is out of the scope of this paper, except for those things that defines the interaction with \tango.
+ \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango\, complains, and which are not
+  \\
  \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
-  \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies.
- 
+ \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies.
+  \\
  \item Following the 3 layers structure of a distributed system \cite{TanenbaumDistr} to identify scenarios in section \ref{sec:scenarios} and solutions in sections \ref{sec:intercom}:
  \begin{itemize}
-  \item Agent authentication in the presentation layer (section \ref{sec:presentationLayer}). Possible solutions as the zero-knowledge proof (section \ref{sec:auth}) and Secret Sharing (section \ref{sec:secretSharing}).
-  \item Domain layer communications protection in section \ref{sec:domainLayer}. Trusted computing with elliptic curves \ref{sec:ecpk}, data communication with symmetric encryption in section \ref{sec:gRijndael} and stream cyphering in section \ref{sec:kdfStreaming})
-  \item Ensure Data layer (section \ref{sec:dataLayer}) with homomorphic encryption (section \ref{sec:Homorph}) in the database.
+ \item Agent authentication in the presentation layer (section \ref{sec:presentationLayer}). Possible solutions as the zero-knowledge proof (section \ref{sec:auth}) and Secret Sharing (section \ref{sec:secretSharing}).
+ \item Domain layer communications protection in section \ref{sec:domainLayer}. Trusted computing with elliptic curves \ref{sec:ecpk}, data communication with symmetric encryption in section \ref{sec:gRijndael} and stream cyphering in section \ref{sec:kdfStreaming})
+ \item Ensure Data layer (section \ref{sec:dataLayer}) with homomorphic encryption (section \ref{sec:Homorph}) in the database.
  \end{itemize}
  \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Section \ref{sec:secLevel}
  \item Alert on possible attacks to protect against what is already saw as a security thread, section \ref{sec:attacks}, distinguishing between passive (section \ref{sec:passiveAttacks}), active (section \ref{sec:activeAttacks}) and side channels (section \ref{sec:sideChannelAttacks})
@@ -119,7 +123,7 @@ It is very important goal to have the \tango implementation as Free Software, as
  \item Cryptosystem configuration, security levels and information classification. \ref{sec:secLevel}
  \item Cryptosystem setup reset.
  \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
- \item 
+ \item Secret Shared schemas for (k,n)-to decrypt or (k,n)-signants \ref{sec:secretSharing}
  \item 
 \end{itemize}
 
@@ -134,7 +138,7 @@ It is very important goal to have the \tango implementation as Free Software, as
   \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change.
   \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
  \end{itemize}
- \item multicast, events and the other features that must be secured. Perhaps secret sharing? Secret splitting? section \ref{sec:secretSharing}
+ \item multicast, events (\zmq) and the other features that must be secured. Perhaps secret sharing? Secret splitting? section \ref{sec:secretSharing}
  \item 
  \item 
 \end{itemize}
@@ -154,7 +158,7 @@ It is very important goal to have the \tango implementation as Free Software, as
 \subsection{Ensuring data layer \label{sec:dataLayer}}
 
 \begin{itemize}
- \item \tango database access control
+ \item \tango\, database access control
  \item Ensuring between instrumentation and the agents out of the scope of this paper. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and above layers.
  \item Homomorphic Encryption for Database access
  \item  
@@ -198,8 +202,8 @@ It is very important goal to have the \tango implementation as Free Software, as
 \subsection{Secret Sharing and secret splitting \label{sec:secretSharing}}
 \begin{itemize}
  \item Multicast and event system.
- \item 
- \item 
+ \item To allow some one access to some specific data, perhaps it can require the ``grant'' from more than one agent of the distributed system. That is, to give it the key may (k,n) must act to.
+ \item Authorization units may be bigger than one agent. A (k,n)-signature to have only one to verify for all.
 \end{itemize}
 
 %%%%%
@@ -340,7 +344,7 @@ It is very important goal to have the \tango implementation as Free Software, as
 \subsection{Further work \label{sec:further}}
 
 \begin{itemize}
-\item \atk/ \taurus user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
+\item \atk/ \taurus\, user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
 \item in all the algorithms on this paper this must be taken into account to minimize redesigns.
 \end{itemize}
 
