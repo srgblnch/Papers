@@ -110,13 +110,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Polynomial binary rings and fields, the math below Rijndael}\label{sec:math}
-Before to enter in the design of the Rijndael schema is good to have some knowledge of the background used. This section can be avoided if the reader has already this skills, like can be recovered if some refresh can help. \fixme{Avoid to sound pedantic, or don't say that at all.}
-
-The mathematics used just above the \emph{xor} operation are polynomial fields defined with coefficients in a binary group, denoted as
+Before to enter in the design of the Rijndael schema is good to have a review over the background used. The mathematics used just above the \emph{xor} operation in a binary group are polynomial fields defined with coefficients in this group, denoted as
 \begin{equation}\label{eq:polynomialField} 
 \Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}
 \end{equation}
-Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ and has correspondence with the \emph{Rijndael} schema of section \ref{sec:approach}.
+Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ -known as \emph{word size}- and has correspondence with the \emph{Rijndael} schema of section \ref{sec:approach}.
 
 This polynomial set has one operation, we can call it \emph{addition} that describes an structure of an Abelian group $(G,+)$:
 \begin{enumerate}
@@ -137,19 +135,32 @@ This is called a \emph{ring} $(R,+,*)$ as it is the basis for the operation of t
 
 In the case of when those involved operations are Abelian groups, and it is also satisfied the property that the second operation is distributive respect the first, then this structure becomes what is called a \emph{field} $(K,+,*)$.
 
-At this point is already clear the algebraic properties of the field described in equation \ref{eq:polynomialField}. But like this polynomial binary field used an underlying binary group, this field can be used as coefficients of a superpolynomial structure:
+At this point is already clear the algebraic properties of the field described in equation \ref{eq:polynomialField}. But like this polynomial binary field uses an below a binary group, this field can be used as coefficients for an even above superstructure: a polynomial ring, where the coeficients are elements of the polynomial field.
 \begin{equation}\label{eq:polynomialRing}
 \frac{\Fpn{2}{n}[x]}{m'(x)}
 \end{equation}
 This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the \emph{mixColumn} operation.
 
-The fact that in this case the modular polynomial $m'(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in deed this we use \emph{c} to denote this degree because in the \emph{Rijndael} schema it depends on the number of columns).
+The fact that in this case the modular polynomial $m'(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in fact for this we use \emph{c} -known as \emph{number of columns}- to denote this degree. This has correspondence with the \emph{Rijndael} schema of section \ref{sec:mixColumns}.
 
 Remember that even if this distributive property is still valid, and because the polynomial modulo is composited, the second operation is non-commutative.
 
-The only remaining mathematical background to explain is what means modular. That is to reduce any polynomial we got by divide by the one that defined the structure ($m(z)$ in the polynomial field and $m'(x)$ in the polynomial ring) and take the division rest as the representation in the equivalence class.
+The only remaining mathematical background to explain is what means modular. That is to reduce any polynomial we got by divide by the one that defined the structure ($m(z)$ in the polynomial field and $m'(x)$ in the polynomial ring) and take the division rest as the representation in the equivalence class. \fixme{Having the fields and rings explained with such detail, say here ``equivalence class'' without explaining is inconsistent}
 
 Those basic mathematical bricks of the \emph{Rijndael} algorithm is what gives to it a genuine strongness. All the operations can be reduced to \emph{xor}s ans bit shifts, and how they behave is regulated by mathematical elegance. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Operation example over the polynomial field}\label{sec:polynomialField}
+
+\begin{itemize}
+ \item \todo{Pick two random elements of the polynomial field of degree $8$, using the $m(z)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
+\begin{itemize}
+\item \todo{Pick two random elements of the polynomial ring of degree $4$, using the $m'(x)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
@@ -168,6 +179,8 @@ Those basic mathematical bricks of the \emph{Rijndael} algorithm is what gives t
   \item $\exists$ ``efficient'' inversion algorithm such that $m=D(k,c)$
  \end{enumerate}
 \end{definition}
+
+where $E$ is a function to encrypt and $D$ is its inverse function to decrypt.
 
 A pseudo-random permutation is used as a symmetric cryptosystem like Shannon have defined in \cite{shannon-comTheorySecSys} the perfect secrecy concept in \emph{part II, section 10}.
 \begin{definition}\label{def:shannonPerfectSecrecy}
@@ -669,7 +682,7 @@ The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}
 \draw [dotted](-.1,4)rectangle(0,2);
 \draw [dotted](.1,4)rectangle(.2,2);
 \draw [dotted](.3,4)rectangle(.4,2);
-\draw [dotted](.5,4)rectangle(.6,2);
+\draw [dotted](.5,4)rectangle(.6,2);fact
 \draw [dotted](.7,4)rectangle(.8,2);
 \draw [dotted](.9,4)rectangle(1,2);
 %cell
@@ -802,7 +815,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 %   (this is, imho, one of the most important points of rijndael)
 \begin{itemize}
  \item \todo{What this means mathematically?} And what implies the changes on the parameters \#rows, \#columns, wordsize
- \item \todo{polynomial ring}, where the coeficients are elements from a binary polynomial field \Fpnm{x}{z}, $deg(m)=\#rows$
+ \item \todo{polynomial ring} introduced in section \ref{sec:math}, where the coeficients are elements from a binary polynomial field \Fpnm{n}{x}, $deg(m)=\#rows$
 \end{itemize}
 
 % FIXME (review) draw schematic of this step
@@ -852,10 +865,10 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
-\todo{Introduce this section using the base of the section \ref{sec:math}}
+\subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
+In section \ref{sec:polynomialRing} the operation between elements of this kind of polynomial ring that has coefficients in a binary polynomial field, has been explained. But there is an specific improvement of the \emph{product} operation that gives a valuable advantage to speed up this step of the process. 
 
-An improvement of the modular operations in the polynomial ring, in the specification of the rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In \emph{mixColumns} operation is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
+In the specification of the rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the \emph{mixColumns} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
 
 Then the fix polynomial element in the ring have set in the standard:
 $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$
@@ -882,7 +895,6 @@ The matrix multiplication of this polynomial ring operation can be written as:
  \item \todo{What's a MaxDistanceSeparable Matrix?}
  \item \todo{Does this circulant matrix works with $c\neq 4$?}
 \end{itemize}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{addRoundKey}\label{sec:addRoundKey}
