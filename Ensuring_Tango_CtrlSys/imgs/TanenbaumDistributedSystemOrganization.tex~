@@ -1,0 +1,156 @@
+% PSTricks TeX macro
+% Title: /home/serguei/src/Papers/Ensuring_Tango_CtrlSys/imgs/TanenbaumDistributedSystemOrganization.dia
+% Creator: Dia v0.97.2
+% CreationDate: Sun Aug 11 19:16:03 2013
+% For: serguei
+% \usepackage{pstricks}
+% The following commands are not supported in PSTricks at present
+% We define them conditionally, so when they are implemented,
+% this pstricks file will use them.
+\ifx\setlinejoinmode\undefined
+  \newcommand{\setlinejoinmode}[1]{}
+\fi
+\ifx\setlinecaps\undefined
+  \newcommand{\setlinecaps}[1]{}
+\fi
+% This way define your own fonts mapping (for example with ifthen)
+\ifx\setfont\undefined
+  \newcommand{\setfont}[2]{}
+\fi
+\pspicture(3.900000,-19.100000)(24.100000,-5.386312)
+\psscalebox{1.000000 -1.000000}{
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\newrgbcolor{diafillcolor}{1.000000 1.000000 1.000000}%
+\psset{fillcolor=diafillcolor}
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(4.000000,7.000000)(4.000000,17.000000)(9.690000,17.000000)(9.690000,7.000000)
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(11.000000,7.000000)(11.000000,17.000000)(16.690000,17.000000)(16.690000,7.000000)
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(18.000000,7.000000)(18.000000,17.000000)(23.690000,17.000000)(23.690000,7.000000)
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{1.000000 1.000000 1.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon*(5.000000,11.000000)(5.000000,13.000000)(23.000000,13.000000)(23.000000,11.000000)
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(5.000000,11.000000)(5.000000,13.000000)(23.000000,13.000000)(23.000000,11.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(14.000000,12.000000){\psscalebox{1 -1}{Tango Middleware}}
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{1.000000 1.000000 1.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon*(5.000000,8.000000)(5.000000,10.000000)(23.000000,10.000000)(23.000000,8.000000)
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(5.000000,8.000000)(5.000000,10.000000)(23.000000,10.000000)(23.000000,8.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(14.000000,9.000000){\psscalebox{1 -1}{Distributed application}}
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(5.000000,14.000000)(5.000000,16.000000)(9.000000,16.000000)(9.000000,14.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(7.000000,15.000000){\psscalebox{1 -1}{Local OS}}
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(12.000000,14.000000)(12.000000,16.000000)(16.000000,16.000000)(16.000000,14.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(14.000000,15.000000){\psscalebox{1 -1}{Local OS}}
+\psset{linewidth=0.100000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinejoinmode{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\pspolygon(19.000000,14.000000)(19.000000,16.000000)(23.000000,16.000000)(23.000000,14.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(21.000000,15.000000){\psscalebox{1 -1}{Local OS}}
+\psset{linewidth=0.200000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinecaps{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\psline(4.000000,19.000000)(24.000000,19.000000)
+\psset{linewidth=0.200000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinecaps{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\psline(7.000000,17.000000)(7.000000,19.000000)
+\psset{linewidth=0.200000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinecaps{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\psline(14.000000,17.000000)(14.000000,19.000000)
+\psset{linewidth=0.200000cm}
+\psset{linestyle=solid}
+\psset{linestyle=solid}
+\setlinecaps{0}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\psline(21.000000,17.000000)(21.000000,19.000000)
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput[l](5.000000,4.000000){\psscalebox{1 -1}{}}
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(7.000000,6.000000){\psscalebox{1 -1}{Machine A}}
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(7.000000,6.800000){\psscalebox{1 -1}{}}
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(14.000000,6.000000){\psscalebox{1 -1}{Machine B}}
+\setfont{Helvetica}{0.800000}
+\newrgbcolor{dialinecolor}{0.000000 0.000000 0.000000}%
+\psset{linecolor=dialinecolor}
+\rput(21.000000,6.000000){\psscalebox{1 -1}{Machine C}}
+\endpspicture

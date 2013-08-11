@@ -1,13 +1,16 @@
 %\documentclass[a4paper,10pt,twoside]{article}
 \documentclass[10pt,a4paper,twoside]{llncs}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 %\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}%\usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{graphicx}
+\usepackage{pstricks}    %for embedding pspicture.
+\usepackage{epsfig}
 \usepackage{algorithmic,algorithm}
-\usepackage{tikz}
-\usetikzlibrary{matrix}
+%\usepackage{tikz}
+%\usetikzlibrary{matrix}
 
 \pagestyle{headings}%page numbers
 
@@ -73,7 +76,7 @@
 
 Current use of \tango\, is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. This request has been made with concern on security. Not a concern in IT environmental, that is user choose, it was about the use of cryptology to mathematically protect the system.
 
-The goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-like with non secured access, but with a tendency to a complete transparent ensuring. Perhaps the migration process would be not as fast as we could want, specially due to the introduction of the certificates infrastructure, but as the \tango\, installations are contained in the institutions, and upgrade in this way would be like any other upgrade.
+The goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-live with non secured access, but with a tendency to a complete transparent ensuring. Perhaps the migration process would be not as fast as we could want, specially due to the introduction of the certificates infrastructure, but as the \tango\, installations are contained in the institutions, and upgrade in this way would be like any other upgrade.
 
 Also as web navigation did, \tango\, is used with instances running over different architectures and operating systems, from small embedded devices, up to very big computers. Then the objective in this ensuring process is that must work just as for the larger than for the tiny.
 
@@ -88,13 +91,40 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Introduction \label{sec:intro}}
 
 \begin{itemize}
- \item What is \tango? It's a \corba\, based distributed system used for scientific installation control. 
+ \item What is \tango? It's a \corba\, based middleware of distributed system used for scientific installation control.
  \item Event system \zmq (\emph{Zero Message Queue}).
  \item \sardana, \taurus\, and \atk\, as \emph{presentation} and \emph{session layers} are in further work. But some aspects are related and are important.
  \item What is the meaning of a secure system? What is security in a distributed system?
  \item \tango\, as an Industrial Control System (ICS), that with some extra pieces becomes a Supervisory Control And Data Acquisition (SCADA) (like \atk\, and also what \sardana\, and \taurus\, does, goes further). As will be explained in \ref{sec:further}, ensure \sardana, \taurus\, and \atk\, is out of the scope of this paper, except for those things that defines the interaction with \tango.
  \item Distributed systems transparencies \cite{TanenbaumDistr} that \tango\, complains, and which are not
-  \\
+\end{itemize}
+  \begin{definition}
+   from \cite{TanenbaumDistr}, A distributed system is a collection of independent computers that appears to its users as a single coherent system
+  \end{definition}
+
+  \begin{figure}[h]
+  \centering{
+  %\resizebox{0.5\textwidth}{!}{\input{imgs/TanenbaumDistributedSystemOrganization.tex}}
+  \includegraphics[width=0.5\textwidth]{imgs/TanenbaumDistributedSystemOrganization.png}
+  \caption{From \cite{TanenbaumDistr}, A distributed system organized as middleware} \label{fig:TanenbaumDistributedSystemOrganization}}
+  \end{figure}
+
+  \begin{table}
+  \centering{
+   \begin{tabular}{|l|l|}
+    \hline
+    Access & Hide differences in data representation and how a resource is accessed \\ \hline
+    Location & Hide where a resource is located \\ \hline
+    Migration & Hide that a resource may move to another location \\ \hline
+    Relocation & Hide that a resource may be moved to another location while in use \\ \hline
+    Replication & Hide that a resource is replicated \\ \hline
+    Concurrency & Hide that a resource may be shared by several competitive users \\ \hline
+    Failure & Hide a faulure and recovery of a resource \\ \hline
+    Persistence & Hide whether a (software) resource is in memory or on disk \\ \hline
+   \end{tabular}
+   \caption{Distributed systems transparencies \label{tab:transparencies}}}
+  \end{table}
+\begin{itemize}
  \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
  \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies.\\ The example of the Beamlines (read) access to (a few but crucial) accelerator information is a great example of what means a security thread.\\The industrial example of ``do it fast'' or ``finish it now'' more often than thought hides an insecure system or even worst a ``bugged'' system. 
   \\
