@@ -42,6 +42,10 @@ L.~C. Washington, {\em Elliptic Curves, Number Theory and Cryptography}.
 \bibitem{Koblitz87ecc}
 N.~Koblitz, ``Elliptic curve cryptosystems,'' 1987.
 
+\bibitem{sec1}
+``Sec 1. standards for efficient cryptography group: Elliptic curve
+  cryptography.''
+
 \bibitem{P1363}
 ``Ieee p1363 standard specifications for public key cryptography,'' January
   2000.
@@ -54,6 +58,14 @@ D.~Hankerson, A.~Menezes, and S.~Vanstone, {\em Guide to Elliptic Curve
 \bibitem{Rostovtsev06public}
 A.~Rostovtsev, E.~Rostovtsev, and A.~Stolbunov, ``Public-key cryptosystem based
   on isogenies,'' 2006.
+
+\bibitem{isoTFC}
+R.~Arias and J.~Miret, ``Implementaci\'on de un criptosistema de clave
+  p\'ublica basado en estrellas de isogenias,'' Septembre 2007.
+\newblock TFC Ingenier\'{\i}a Inform\'atica UdL.
+
+\bibitem{Diffie76newdirections}
+W.~Diffie and M.~E. Hellman, ``New directions in cryptography,'' 1976.
 
 \bibitem{ElGamal85pkdlp}
 T.~ElGamal, ``A public-key cryptosystem and a signature scheme based on
