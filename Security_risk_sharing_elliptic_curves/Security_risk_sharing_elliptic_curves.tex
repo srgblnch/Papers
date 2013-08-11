@@ -65,11 +65,11 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 \fixme{this probably is too long}
-One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty in the length of this group. Using a different elliptic curve, the cyclic subgroup is completely different and the cryptanalysis that someone can have in progress, over this curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
+One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty by increase the length of this group. Using a different elliptic curve, the cyclic subgroup is completely different and the cryptanalysis that someone can have in progress, over this curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
 
-Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, that means almost all the users with the same domain parameters.
+Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, almost all the users will share the same domain parameters.
 
-It is a request for this standard to find a way to add variability between the used elliptic curves, and in this paper two ways are be explored. Both ways likes to get an \emph{auditable} algorithm to the final user to get its particular elliptic curve. The difference between this two ways is if the algorithm starts from scratch or starts from one cryptographically good curve.
+It is a request for this standard to find a way to add variability between the used elliptic curves, and in this paper two ways are be explored. Both ways likes to get an \emph{auditable} algorithm to the final user to get its particular elliptic curve. The difference between this two approaches is if the algorithm starts from scratch or starts from one cryptographically good curve.
 \\\\    
 {\bf Keywords:} Cryptography, Elliptic Curves, Isogeny
 \end{abstract}
@@ -78,13 +78,13 @@ It is a request for this standard to find a way to add variability between the u
 \section{Introduction \label{sec:intro}}
 %% Justify the need of the curve randomization
 
-The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released in June 2012 after a long process \cite{rfc6637} and at least there is one implementation available in the \emph{GnuPG} since 2011.
+The introduction of the elliptic curves in the standards are following its path, and it is having a good health. Even that the \cite{rfc4880} does not include yet the elliptic curve cryptosystem in the same level than the finite fields, the ECDSA is already standardized (\cite{NIST186-3} and \cite{rfc5832}) and many implementations are available, the encryption has been released in June 2012 after a long process \cite{rfc6637} and at least there is one implementation available in the \emph{GnuPG} since 2011.
 
-But this standard is restricting the number of curves to three (NIST curves from the \cite{NIST186-3} P-256, P-384, P-521). In the best case this future standard allows the usage of curves with an assigned OID from the IANA, for example the german ecc-brainpool standardized \cite{brainpool} or the certicom's ones \cite{sec2}. Even if the list can be very extended with this OIDs, there are over hundreds of thousands good elliptic curves excluded with this method.
+But this standard is restricting the number of curves to three (NIST curves from \cite{NIST186-3}: P-256, P-384, P-521). In the best case, this standard allows the usage of curves with an assigned OID from the IANA, for example the german ecc-brainpool standardized \cite{brainpool} or the certicom's ones \cite{sec2}. Even if the list can be very extended with this OIDs, there are over hundreds of thousands good elliptic curves excluded with this method.
 
 This OID method can be an option for keys where the bandwidth is limited, but there must be the possibility to use any good curve, because is one of the best advantages of the elliptic curve cryptography.
 
-In the abstract was mention the X9.62-1998\cite{X9.62-1998} , where in section 5.1 is mention that is a security thread to share the same curve between many users. In annex H, more specifically in H.2 (point 5) and H.1.3, is explained (but not proof, only mention the \emph{Pollard-$\lambda$} attack) that the time to break one key pair (when they have the same curve and the cyclic group generator, the case of the standard rfc6637 \cite{rfc6637}) is reduced by $\sqrt{k}$, where is the number of solving instances:
+In the abstract was mention the X9.62-1998\cite{X9.62-1998} , where in section 5.1 is mention that is a security thread to share the same curve between many users. In annex H, more specifically in H.2 (point 5) and H.1.3, is explained (but not proof or reference a proof, only mention the \emph{Pollard-$\lambda$} attack) that the time to break one key pair (when they have the same curve and the cyclic group generator, the case of the standard rfc6637 \cite{rfc6637}) is reduced by $\sqrt{k}$, where is the number of solving instances:
 
 \begin{center}
  \begin{tabular}{|c|c|}
@@ -114,7 +114,7 @@ First of all, and before to enter in elliptic curve concepts, there is a more ge
  A finite field of $q$ order, \Fq \;factorizes necessarily like $q=p^r$ where $p$ is a characteristic prime of the field and $r \in \mathbb{Z}_{>0}$ the extension degree.
 \end{definition}
 
-In case of a small $p$, the extension is big like happens with the primes $2$ or $3$. This way vectorial spaces are defined like the finite fields of characteristic $2$ denoted as \Fm. In another case, when $p$ is big, the extension is small (usually $r=0$ and prime finite fields are defined denoted as \Fp.
+In case of a small $p$, the extension is big like happens with the primes $2$ or $3$. This way vectorial spaces are defined like the finite fields of characteristic $2$ denoted as \Fm. In another case, when $p$ is big, the extension is small (usually $r=1$ and prime finite fields are defined denoted as \Fp.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What is an elliptic curve? \label{sec:ce}}
@@ -142,7 +142,7 @@ A singular point is when both partial derivatives vanish, in $\mathbb{R}$ repres
 \begin{definition}\label{def:discriminant}
  The discriminant, denoted with $\Delta$, is a polynomial function of the coefficients of the equation which gives information about the nature of the equations roots.
 \end{definition}
-\fixme{Improve this dsiscriminant definition}
+\fixme{Improve this discriminant definition}
 
 About the \emph{discriminant} of an elliptic curve defined over the prime finite field, when this curve has the representation of the WRF \ref{eq:WRF}, the coefficients are $a$ and $b$ as $\Delta = -16(4a^3+27b^2)\ne 0$.
 
@@ -192,21 +192,17 @@ There exist a equivalence relation between points in the projective plane follow
 %% Projective coordinates
 In the projective plane, three coordinates are used to represent a two-dimensional point, knowing $x=\frac{X}{Z}$ and $y=\frac{Y}{Z}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} will be $\frac{Y^{2}}{Z^{2}} = \frac{X^{3}}{Z^{3}} + a\frac{X}{Z} + b$, simplified:
 \begin{equation}\label{eq:WRFProy}
-        Y^{2}Z = X^{3} + aXZ^{2} + bX^{3}
+        Y^{2}Z = X^{3} + aXZ^{2} + bZ^{3}
 \end{equation}
-
-\fixme{??jacobian coordinates: Have they enough interest for the objective of this article?}
-
-\fixme{??even jacobians, are the projective coordinates justified to be defined in this paper, when they are only used to show that can be a computer numerical representation for it?}
 
 Over a Jacobian plane, also three coordinate are used to represent the points, knowing $x=\frac{X}{Z^2}$ and $y=\frac{Y}{Z^3}$ the Weierstra\ss{} reduced normal form \ref{eq:WRF} is:
 \begin{equation}\label{eq:WRFJacobian}
-        Y^{2}Z = X^{3} + aXZ^{4} + bX^{6}
+        Y^{2}Z = X^{3} + aXZ^{4} + bZ^{6}
 \end{equation}
 
 As is described in \cite{EC&NT&crypt} the projective coordinates improves the operation of the point addition, but the jacobian coordinates gives an advantage over the doubling point operation.
 
-\todo{the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of of 0's an 1's are similar?}
+\todo{the lost transforming from one representation to the other is worst than use only one? Are they equally good or bad because the distribution of 0's and 1's are similar?}
 
 An the set of points of an elliptic curve over a prime finite field, like the equation \ref{eq:ECsetP} but described in projective coordinates is:
 \begin{equation}\label{eq:ECsetPProy}
@@ -234,6 +230,8 @@ With the set of points of an elliptic curve defined in \ref{eq:ECsetPProy} a bij
 
 This application, that will be called \emph{addition}, has an algebraic structure of an \emph{Abelian group} because satisfies some requirements: Closure in the group, associativity, identity element, inverse element, and commutativity. In the elliptic curve cryptography, this operation is called \emph{Basic operation}.
 
+\todo{As mention before, the projective coordinates have the best algorithm to do this addition operation.}
+
 \begin{definition}\label{def:eccEscProd}
 Given this addition operation applied to a point together with itself, this point is \emph{duplicated}; this addition with itself can be done many times and define it as the \emph{scalar product} where the scalar represents the number of times the point is added to itself:
 \begin{equation}\label{eq:eccEscProd}
@@ -245,6 +243,10 @@ Given this addition operation applied to a point together with itself, this poin
 \end{definition}
 
 The common notation for this operation is $Q = [x ] P$ and it is called as the \emph{main operation} in the elliptic curve cryptography because over it is where the hard problem is defined.
+
+\todo{Describe the algorithm that loops over the binary representation of the scalar (doing something is it's $0$ or something else if it's $1$, that speeds up this operation.}
+
+\todo{This algorithm introduces de \emph{point doubling}, where the projective coordinates are the ones that have the best algorithm (like was projective coordinates for point addition).}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Characteristics cryptographically good elliptic curves \label{sec:good_ce}}
@@ -268,11 +270,11 @@ In the elliptic curve definition \ref{def:ce} it requires that the curve does no
  An elliptic curve is \emph{not} supersingular when the cardinal is \emph{almost}-primer. And this almost-primarity is when, if the cardinality can be decomposed it must has a prime divisor sufficiently big.
 \end{definition}
 
-Following the notation of the IEEE P1363 \cite{P1363} a almost-prime cardinal of an elliptic curve have, at most, two factors:
+Following the notation of the Certicom's SEC1 \cite{sec1} a almost-prime cardinal of an elliptic curve have, at most, two factors:
 \begin{equation}\label{amostprime}
 | \EFq | = h \cdot n
 \end{equation}
-Where the $h$ is called cofactor and is much more smaller than $n$ ($h \lll n$) and both are prime. Also can be said that the cardinal is \emph{almost} the primer $n$ ($|\EFq| \approx n$). In fact, in the refereed standard (\cite{P1363}) does not recommend to use other cofactors that $1$ or $2$ or, in the biggest case $4$.
+Where the $h$ is called cofactor and is much more smaller than $n$ ($h \lll n$) and both are prime. Also can be said that the cardinal is \emph{almost} the primer $n$ ($|\EFq| \approx n$). Is in IEEE P1363 \cite{P1363} where is recommended to not use other cofactors that $1$ or $2$ or, in the biggest case, $4$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Cyclic subgroup to define a Discrete Logarithm Problem \label{sec:ecdlp}}
@@ -336,14 +338,15 @@ First approach is the algorithm \ref{alg:scratch}, that consist simply by genera
 
 \todo{from where in the P1363 is this cofactor restriction}
 
+%P1363 uses the notation $r$ and $k$ for the cardinal factors $n$ and $h$, respectively.
 \begin{algorithm}
   \caption{Constructing a verifiably pseudo-random elliptic curve, P1363 section A.12.4}\label{alg:verifiablyP1363}
   \begin{algorithmic}[1]
-    \REQUIRE Prime $p$, bounds pair $(r_{min},r_{max})$ for $r$, $l{max}$, division bound ($l_{max}<r_{min}$)
+    \REQUIRE Prime $p$, bounds pair $(n_{min},n_{max})$ for $n$, $l{max}$, division bound ($l_{max}<r_{min}$)
     \ENSURE A bit string X, struct with cryptosystem parameters (see \ref{eq:setupla})
     \STATE Choose an arbitrary bit string $X$ of bit length $L$
-    \STATE Compute $h=H(X)$
-    \STATE Let $W_0$ be the bit string obtained by taking the $w$ rightmost bits of $h$
+    \STATE Compute $\hslash=H(X)$
+    \STATE Let $W_0$ be the bit string obtained by taking the $w$ rightmost bits of $\hslash$
     \STATE Convert the length-L bit string $X$ to an integer $z$ (via BS2IP)
     \FOR{$i=1$\TO $s$}
       \STATE Convert the integer $(z+i)\;(mod\;2^L)$ to a length-L bit string $X_i$ (via I2BSP)
@@ -354,13 +357,13 @@ First approach is the algorithm \ref{alg:scratch}, that consist simply by genera
     \IF{$c=0$ \OR $4c+27\equiv0\;(mod\;p)$}
       \STATE Go to 1
     \ENDIF
-    \STATE Choose $a,b\in$\Fp s.t. $cb^2\equiv a^3\;(mod\;p)$
+    \STATE Choose $a,b\in$\Fp \;s.t. $cb^2\equiv a^3\;(mod\;p)$
     \STATE Compute order $u$ of \EFp
     \STATE Test $u$ for \emph{near-primality} (via A.15.5)
     \IF{$u$ not nearly prime}
       \STATE Go to 1
     \ELSE
-      \STATE calculate $k$,$r$ (the output of A.15.5)
+      \STATE calculate $n$,$h$ (the output of A.15.5)
     \ENDIF
     \STATE Generate point $G$ on \EFp
     \STATE Return $X$ \AND $\{p,a,b,G,n,h\}$;
@@ -375,9 +378,9 @@ First approach is the algorithm \ref{alg:scratch}, that consist simply by genera
     \REQUIRE Prime $p$ how defines \Fp.
     \ENSURE A bit string $SEED$ and field elements $a,b\in$\Fp
 
-    \COMMENT{Let $t=\lfloor log_2 p\rfloor$, $s=\lfloor \frac{t-1}{160} \rfloor$, $h=t-160*s$}
+    \COMMENT{Let $t=\lfloor log_2 p\rfloor$, $s=\lfloor \frac{t-1}{160} \rfloor$, $\hslash=t-160*s$}
     \STATE Choose arbitrary bit string $SEED$ of length 160 or more. $g=length(SEED)$
-    \STATE Compute $H=SHA-1(SEED)$, and let $c_0$ denote the bit string of length $h$ bits obtained by taking the $h$ rightmost bits of $H$
+    \STATE Compute $H=SHA-1(SEED)$, and let $c_0$ denote the bit string of length $\hslash$ bits obtained by taking the $\hslash$ rightmost bits of $H$
     \STATE Let $W_0$ denote the bit string of length $h$ bits obtained by setting the leftmost bits of $c_0$ to $0$ (This ensures that $r<p$)
     \FOR{i=1 \TO s}
       \STATE Compute $W_i=SHA-1((SEED+i)\;mod(2^g)$
@@ -397,9 +400,9 @@ First approach is the algorithm \ref{alg:scratch}, that consist simply by genera
 The steps of the algorithm \ref{alg:scratch} can be performed in many ways to try to reduce the execution time. The cardinal calculation can be using the \emph{SEA} algorithm  and the \emph{Hasse interval} (definition \ref{def:Hasse}) check can be optimized to avoid unnecessary operation, but in a final implementation all this code must be written aware of the side channel attacks. The factorization of the cardinal allows the possibility to only tries to find a little cofactor and check the primary on the $n$ candidate.
 \fixme{with the SEA algorithm, the citation of the article is need}
 
-\todo{Compare those three algorithms’s cost, in time and memory.}
+\todo{Compare the costs of those three algorithms, in time and memory. To do that make them equivalents, by adding to algorithm \ref{alg:verifiablyX9.62} the calculation of $n$ and $G$. Use the same than algorithm \ref{alg:verifiablyP1363}, because they look very similar}
 
-\todo{Approach to the number of good curves instead of the number of possible curves in a list. get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
+\todo{Approach to the number of good curves instead of the number of possible curves in a list. Get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -407,6 +410,8 @@ The steps of the algorithm \ref{alg:scratch} can be performed in many ways to tr
 %% knowing one good curve, is there any way to transform it to another one who still have the good properties, without the issues of the first, and without a portable cryptanalysis?
 
 Another method than get a curve from scratch of section \ref{sec:scratch} is to find a cryptographically good curve based on another curve using a procedure who maintains the good skills and protect the new one from the bad ones as much as possible. The main objective is to avoid the portability of the cryptanalysis from the first curve to the new one, without create any other weakness in the procedure or the new one it self.
+
+\todo{cite \cite{Rostovtsev06public} and \cite{isoTFC} about a cryptosystem using isogenies}
 
 %% can the isogeny stars (or volcanoes) be a way to do this?
 One proposed way to have this requirements are the elliptic curve isogenies. The isogenies have the good skill that they maintain the cardinal from one curve to another, as it will be describe next. And about the main objective to block any type of portability of the cryptanalysis from one curve to another seems to be ok, because this transformation is a hard problem on isogenies.
@@ -432,7 +437,7 @@ The relation of isomorphism is an equivalence relation in a set of the elliptic 
 As has been say at the beginning of this section, the isogenies are a particular case of isomorphisms.
 
 \begin{definition}\label{def:isogeny}
- Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{iff} exist an isomorphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
+ Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an isomorphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
 
 \begin{equation}\label{eq:isogenia}
         \begin{array}{cccc}
@@ -606,7 +611,7 @@ To avoid to share a curve between all the users of the standard of the \emph{rfc
 
 \todo{given an elliptic curve, generate an isogeny path through the volcanoes system, follow the path, forget it.}
 
-The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirectilons} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
+The isogenies has been already proposed to solve a problem in cryptology, in \cite{Rostovtsev06public} a new cryptosystem is proposed who uses the isogenies for Diffie-Hellman key agreement \cite{Diffie76newdirections} and ElGamal public key \cite{ElGamal85pkdlp}. In this paper, the proposal of the authors is to use a route in an isogenies star as a secret key, and the public key is the destination of this route from a public well known elliptic curve. The fundamental of this cryptosystem is the strength of the problem to find a path between two curves, but is easy to go from one to another if you know the path.
 
 The problem is alive, there are bibliography \cite{SubExpIso} to work in the direction of speed up the route walk in a volcanoes range (or in stars). 
 
@@ -622,6 +627,8 @@ The most important thing in cryptology, specially when an schema is proposed, is
 Also there are other possible ways to break a cryptosystem that, further than attack directly the mathematics below, it tries to get the advantage from take a creative point of view over the application of the schema and that is called the side channel attacks.
 
 \todo{possible side channel attacks (attacking the isogeny and to prevent attacks like `\emph{Zero-Value Points}' (ZVP))}
+
+\todo{Another prevention to side channel attacks is the use of projective and jacobian coordinates. Say also about protections over the possible attacks to the scalar product from section \ref{sec:ce_ops}.}
 
 \todo{computational data about compute isogeny between to elliptic curves}
 
