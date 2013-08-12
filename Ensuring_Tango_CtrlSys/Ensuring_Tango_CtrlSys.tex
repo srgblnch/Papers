@@ -74,13 +74,13 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
-Current use of \tango\, is mostly in Synchrotron and a bit further in neutron a neutron source, but the community like to extend this by an explicit request of the industry. This request has been made with concern on security. Not a concern in IT environmental, that is user choose, it was about the use of cryptology to mathematically protect the system.
+Current use of \tango\, is mostly in Synchrotron and recently extending it into a neutron source, but industry has expressed a desire to participate in the community. This industry desire has been made with concern on security. Not a concern in IT environmental, that is institution/user choose, it was about the use of cryptology to mathematically protect the system.
 
 The goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation. Must be possible to co-live with non secured access, but with a tendency to a complete transparent ensuring. Perhaps the migration process would be not as fast as we could want, specially due to the introduction of the certificates infrastructure, but as the \tango\, installations are contained in the institutions, and upgrade in this way would be like any other upgrade.
 
 Also as web navigation did, \tango\, is used with instances running over different architectures and operating systems, from small embedded devices, up to very big computers. Then the objective in this ensuring process is that must work just as for the larger than for the tiny.
 
-It is very important goal to have the \tango\, implementation as Free Software, as this paper cryptography outcomes must be to have public access and auditable algorithms and sources.
+It is very important goal to have the \tango\, implementation as Free Software, as this paper cryptography outcomes must be to have public access with auditable algorithms and sources.
    
 {\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, \emph{stream cyphers}, \emph{secret sharing} and also \emph{Homomorphic encryption} for databases}, Distributed Systems, Secure engineering.
 
@@ -91,7 +91,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Introduction \label{sec:intro}}
 
 \begin{itemize}
- \item What is \tango? It's a \corba\, based middleware of distributed system used for scientific installation control.
+ \item What is \tango? It's a \corba\, based middleware of distributed system used for scientific installation control. \tango\, data base as a centralized ``phone guide''.
  \item Event system \zmq (\emph{Zero Message Queue}).
  \item \sardana, \taurus\, and \atk\, as \emph{presentation} and \emph{session layers} are in further work. But some aspects are related and are important.
  \item What is the meaning of a secure system? What is security in a distributed system?
@@ -101,14 +101,36 @@ It is very important goal to have the \tango\, implementation as Free Software, 
   \begin{definition}
    from \cite{TanenbaumDistr}, A distributed system is a collection of independent computers that appears to its users as a single coherent system
   \end{definition}
-
   \begin{figure}[h]
   \centering{
   %\resizebox{0.5\textwidth}{!}{\input{imgs/TanenbaumDistributedSystemOrganization.tex}}
   \includegraphics[width=0.5\textwidth]{imgs/TanenbaumDistributedSystemOrganization.png}
   \caption{From \cite{TanenbaumDistr}, A distributed system organized as middleware} \label{fig:TanenbaumDistributedSystemOrganization}}
   \end{figure}
+\begin{itemize}
+ \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
+ \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies (section \ref{sec:scenarios}).\\ The example of the Beamlines (read) access to (a few but crucial) accelerator information is a great example of what means a security thread.\\The industrial example of ``do it fast'' or ``finish it now'' more often than thought hides an insecure system or even worst a ``bugged'' system. 
+  \\
+ \item Following the 3 layers structure of a distributed system \cite{TanenbaumDistr} to identify scenarios in section \ref{sec:scenarios} and solutions in sections \ref{sec:intercom}:
+ \begin{itemize}
+ \item Agent authentication in the presentation layer (section \ref{sec:presentationLayer}). Possible solutions as the zero-knowledge proof (section \ref{sec:auth}) and Secret Sharing (section \ref{sec:secretSharing}).
+ \item Domain layer communications protection in section \ref{sec:domainLayer}. Trusted computing with elliptic curves \ref{sec:ecpk}, data communication with symmetric encryption in section \ref{sec:gRijndael} and stream cyphering in section \ref{sec:kdfStreaming})
+ \item Ensure Data layer (section \ref{sec:dataLayer}) with homomorphic encryption (section \ref{sec:Homorph}) in the database.
+ \end{itemize}
+ \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Section \ref{sec:secLevel}
+ \item Alert on possible attacks to protect against what is already saw as a security thread, section \ref{sec:attacks}, distinguishing between passive (section \ref{sec:passiveAttacks}), active (section \ref{sec:activeAttacks}) and side channels (section \ref{sec:sideChannelAttacks})
+ \item Any already saw thread should have it countermeasure (section \ref{sec:countermeasures}) with special interest in intrusion detection (section \ref{sec:intrusionDetection})
+ \item Final conclusions about ensuring protocols (section \ref{sec:protocols}) and IT environmental security (section \ref{sec:environment})
+ \item
+ \item
+\end{itemize}
 
+%%%%%
+%
+\section{Identifying scenarios \label{sec:scenarios}}
+
+\begin{itemize}
+ \item From the view from \cite{TanenbaumDistr} over the distributed system transparencies, what is implemented in \tango\, and what is not? Is any of the ``nots'' necessary to ensure a quality service.
   \begin{table}
   \centering{
    \begin{tabular}{|l|l|}
@@ -124,37 +146,21 @@ It is very important goal to have the \tango\, implementation as Free Software, 
    \end{tabular}
    \caption{Distributed systems transparencies \label{tab:transparencies}}}
   \end{table}
-\begin{itemize}
- \item Security threads, policies and mechanisms. Section \ref{sec:scenarios}. Go further that the Locking/Access control
- \item Why to secure it? Trust in a peripheral firewalls is not enough. Often communications between tango installations (different tango-db) requires firewall rules to allow it, but this doesn't allow to filter by agent or by who is allowed to access the information. In practice, what is filtered is an specific computer traffic, but this breaks many of the distributed system transparencies.\\ The example of the Beamlines (read) access to (a few but crucial) accelerator information is a great example of what means a security thread.\\The industrial example of ``do it fast'' or ``finish it now'' more often than thought hides an insecure system or even worst a ``bugged'' system. 
-  \\
- \item Following the 3 layers structure of a distributed system \cite{TanenbaumDistr} to identify scenarios in section \ref{sec:scenarios} and solutions in sections \ref{sec:intercom}:
+ \item Basics:
  \begin{itemize}
- \item Agent authentication in the presentation layer (section \ref{sec:presentationLayer}). Possible solutions as the zero-knowledge proof (section \ref{sec:auth}) and Secret Sharing (section \ref{sec:secretSharing}).
- \item Domain layer communications protection in section \ref{sec:domainLayer}. Trusted computing with elliptic curves \ref{sec:ecpk}, data communication with symmetric encryption in section \ref{sec:gRijndael} and stream cyphering in section \ref{sec:kdfStreaming})
- \item Ensure Data layer (section \ref{sec:dataLayer}) with homomorphic encryption (section \ref{sec:Homorph}) in the database.
+  \item Confidentiality (encryption): to ensure privacy, the information must not be accessible to unauthorized parties. Information must be disclosed only \emph{to} the authorized (and only \emph{by} the authorized, but this is in another step),
+  \item Authenticity: to ensure trustiness, the information origin must be the authorized to emit it
+  \item Integrity (authorization): only authorized can set in the system. That is, only who is authorized can change an attribute, send a command or store a property.
+  \item Availability:
+  \item Non-repudiation: When a information in procured, there must be no way to cover saying ``it wasn't me''.
+  \item Auditory: trace who access where (extremely useful for a security breach analysis).
  \end{itemize}
- \item The price of the information and the balance between the cost to ensure and the value of the ensured goods. Section \ref{sec:secLevel}
- \item Alert on possible attacks to protect against what is already saw as a security thread, section \ref{sec:attacks}, distinguishing between passive (section \ref{sec:passiveAttacks}), active (section \ref{sec:activeAttacks}) and side channels (section \ref{sec:sideChannelAttacks})
- \item Any already saw thread should have it countermeasure (section \ref{sec:countermeasures}) with special interest in intrusion detection (section \ref{sec:intrusionDetection})
- \item Final conclusions about ensuring protocols (section \ref{sec:protocols}) and IT environmental security (section \ref{sec:environment})
-\end{itemize}
-
-%%%%%
-%
-\section{Identifying scenarios \label{sec:scenarios}}
-
-\begin{itemize}
- \item From the view from \cite{TanenbaumDistr} over the distributed system transparencies, what is implemented in \tango\, and what is not? Is any of the ``nots'' necessary to ensure a quality service.
- \item Confidentiality (encryption and authentication): information must be disclosed only \emph{to} the authorized and only \emph{by} the authorized),
- \item Integrity (authorization): only authorized can set in the system. That is, only who is authorized can change an attribute, send a command or store a property.
- \item Auditory: trace who access where (extremely useful for a security breach analysis).
  \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from). Practical paranoia \cite{PractCryptoSchneier}
  \item Cryptosystem configuration, security levels and information classification. Section \ref{sec:secLevel}. Can be saw as the nowadays number of rotors from the times of the electro-mechanical machines of last century.
- \item Cryptosystem setup reset.
  \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
+ \item Cryptosystem setup reset.
  \item Secret Shared schemas for (k,n)-to decrypt or (k,n)-signants. Section \ref{sec:secretSharing}.
- \item multicast and events (\zmq) can be scenarios of secret splitting. Section \ref{sec:secretSharing}.
+ \item multicast and events (\zmq) can be scenarios of secret splitting. Section \ref{sec:secretSplitting}.
  \item 
  \item 
 \end{itemize}
@@ -165,7 +171,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
  \item Agent authentication in a distributed system
- \item Ensuring communication between agents and between those agents with the user interfaces.
+ \item Ensuring communication between agents and between those agents with the user interfaces (\atk\, and \taurus).
  \begin{itemize}
   \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change, with levels to grant access levelling.
   \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
@@ -180,9 +186,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Ensuring domain layer \label{sec:domainLayer}}
 
 \begin{itemize}
- \item Trusted Computing and Hardware protections
+ \item Trusted Computing and Hardware protections: is an agent allowed to run on this specific machine? (what about transparencies)
  \item Ensure logging system
  \item 
+ \item
 \end{itemize}
 
 %%%%%
@@ -191,7 +198,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
  \item \tango\, database access control
- \item Ensuring between instrumentation and the agents out of the scope of this paper. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and above layers.
+ \item Ensuring between instrumentation and the agents out of the scope of this paper, often is also out of the device server developer hands. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and \emph{session} layers.
  \item Homomorphic Encryption for Database access
  \item  
  \item 
@@ -203,7 +210,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
  \item Security levels: Open or unclassified, confidential, Secret, Top Secret.
- \item remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
+ \item Remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
+ \item
+ \item
 \end{itemize}
 
 %%%%%
@@ -231,11 +240,19 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 %%%%%
 %
-\subsection{Secret Sharing and secret splitting \label{sec:secretSharing}}
+\subsection{Secret Sharing \label{sec:secretSharing}}
 \begin{itemize}
- \item Multicast and event system. When a event is emitted, many would be subscribed, but encryption must be only made once.
  \item To allow some one access to some specific data, perhaps it can require the ``grant'' from more than one agent of the distributed system. That is, to give it the key may (k,n) must act to.
  \item Authorization units may be bigger than one agent. A (k,n)-signature to have only one to verify for all.
+ \item
+ \item
+\end{itemize}
+
+\subsection{Secret Splitting \label{sec:secretSplitting}}
+\begin{itemize}
+ \item Multicast and event system. When a event is emitted, many would be subscribed, but encryption must be only made once.
+ \item
+ \item
 \end{itemize}
 
 %%%%%
@@ -277,14 +294,15 @@ It is very important goal to have the \tango\, implementation as Free Software, 
  \item 
  \item 
 \end{itemize}
-<
+
 %%%%%
 %
 \section{Brainstorming attacks \label{sec:attacks}}
 
 \begin{itemize}
- \item
+ \item This has relation with the scenarios identified in section \ref{sec:scenarios}. Specially what concerns the security thread types \cite{SecEngRossAnderson}.
  \item 
+ \item
 \end{itemize}
 
 %%%%%
@@ -343,8 +361,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Conclusions \label{sec:conclusions}}
 
 \begin{itemize}
- \item Al those fields mention on this paper requires a much further detailed paper each.
+ \item All those fields mention on this paper requires a much further detailed paper each.
  \item 
+ \item
 \end{itemize}
 
 %%%%%
@@ -367,8 +386,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \begin{itemize}
  \item The weakest brick: secure the transmission but store in a plain file system
  \item Human behaviour and psychology.
+ \item ISO/IEC 27000-series
  \item 
- \item 
+ \item
 \end{itemize}
 
 %%%%%
@@ -377,7 +397,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
 \item \atk/ \taurus\, user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
-\item in all the algorithms on this paper this must be taken into account to minimize redesigns.
+\item In all the algorithms on this paper this must be taken into account to minimize redesigns.
+\item
+\item
 \end{itemize}
 
 
