@@ -1,5 +1,6 @@
 \documentclass[10pt,a4paper,twoside]{llncs}
 \usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\setcounter{secnumdepth}{3}%to set numbering over subsubsections
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{amsmath,amsfonts,amssymb}
@@ -81,14 +82,15 @@
 \begin{itemize}
  \item \todo{Short view on the symmetric algorithms history}
  \begin{itemize}
-  \item Previous to AES was the \emph{Data Encryption Standard}, 56 bit key length and 64 bit block size, as the standard but together with other block ciphers in 64 bit block and key length.
+  \item Previous to AES was the \emph{Data Encryption Standard}, 56 bit key length and 64 bit block size.%, as the standard but together with other block ciphers in 64 bit block and key length.
+  \item Triple DES, increase the key size (to 128 bits) with the same block size (64 bits). The DES key sizes were a problem.
  \end{itemize}
  \item \todo{Review on the AES contest}
  \begin{itemize}
-  \item 1997 NIST announce that is seeking a replacement for the DES.
-  \item 15 ``opponents'' (plus 10 rejected due to security or efficiency reasons) 
-  \item From the proposal on 1998 \cite{Daemen98aesproposal:}, \cite{Daemen:1998:BCR:646692.759487} and the revision \cite{Daemen01aes-ammended}, passing by the decision in 2000 of Rijndael chosen \cite{AES-FIPS}.
-  \item and the \cite{Daemen:2002:DR:560131} book
+  \item January 1997: NIST announce that is seeking a replacement for the DES. 15 ``opponents'' (plus other 10 rejected due to security or efficiency reasons). \cite{Daemen98aesproposal:} and \cite{Daemen:1998:BCR:646692.759487} in 1998 for AES candidate.
+  \item August 1999: five finalists. Rjindael revised \cite{Daemen01aes-ammended}.
+  \item Rijndael chosen as AES in October 2000 \cite{AES-FIPS}.
+  \item and the \cite{Daemen:2002:DR:560131} book publish in 2002.
  \end{itemize}
 \end{itemize}
 
