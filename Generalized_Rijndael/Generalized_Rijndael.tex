@@ -598,7 +598,13 @@ Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is
           b^{-1}_{(i+6)mod8} \oplus c^{-1}_{i}
 \end{equation}
 
-For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are... $b^{-1}=$\texttt{0b01010010=0x52} and $c^{-1}=$\texttt{0b00000101=0x05}
+For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
+\begin{equation}
+ \begin{tabular}{c}
+  b^{-1} = \texttt{0b01010010}=\texttt{0x52}\\
+  c^{-1} = \texttt{0b00000101}=\texttt{0x05}
+ \end{tabular}
+\end{equation}
 
 \begin{itemize}
  \item todo{What's the relation between $b$ and $b$ $b^{-1}$, and between $c$ and $c^{-1}$?}
