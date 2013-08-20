@@ -601,8 +601,8 @@ Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is
 For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
 \begin{equation}
  \begin{tabular}{c}
-  b^{-1} = \texttt{0b01010010}=\texttt{0x52}\\
-  c^{-1} = \texttt{0b00000101}=\texttt{0x05}
+  $b^{-1}$ = \texttt{0b01010010}=\texttt{0x52}\\
+  $c^{-1}$ = \texttt{0b00000101}=\texttt{0x05}
  \end{tabular}
 \end{equation}
 
@@ -722,13 +722,35 @@ Using the same \emph{wordsize} there are two different things that can be change
 \begin{itemize}
  \item \todo{how to build new $S$ and $S^{-1}$ for $w\neq 8$.}
  \begin{itemize}
+  \item Why was chosen for $w=8 \Rightarrow m(z) = z^8+z^4+z^3+z+1$?
+  \begin{itemize}
+   \item Would be that \texttt{0b100011011} is the first (bigger than $z^8$) that has a Hamming weight of the half (by excess) of the length.
+   \item \todo{If it's the case, define the Hamming weight}
+  \end{itemize}
+  \item Irreducible polynomial with \emph{wordsize} degree:
+  \begin{itemize}
+   \item $w=2 \rightarrow m(z) = z^2+z+1$: Non other below but bigger than $z^2$ is irreducible.
+   \item $w=3 \rightarrow m(z) = z^3+z+1$: Hamming weight of \texttt{0b1011} is 3 (above 2).
+   \item $w=4 \rightarrow m(z) = z^4+z+1$: Hamming weight of \texttt{0b10011} is 3 (above 3).
+   %\item $w=4 \rightarrow m(z) = z^4+z^3+z^2+z+1$: Hamming weight of \texttt{0b11111} is 5 (above 3).
+   \item $w=5 \rightarrow m(z) = z^5+z^2+1$: Hamming weight of \texttt{0b100101} is 3 (above 3).
+   %\item $w=6 \rightarrow m(z) = z^6+z+1$: Hamming weight of \texttt{0b1000011} is 3 (below 4).
+   %\item $w=6 \rightarrow m(z) = z^6+z^3+1$: Hamming weight of \texttt{0b1001001} is 3 (below 4).
+   \item $w=6 \rightarrow m(z) = z^6+z^4+z^2+z+1$: Hamming weight of \texttt{0b1010111} is 5 (above 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z+1$: Hamming weight of \texttt{0b10000011} is 3 (below 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z^3+1$: Hamming weight of \texttt{0b10001001} is 3 (below 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z^4+1$: Hamming weight of \texttt{0b10010001} is 3 (below 4).
+   \item $w=7 \rightarrow m(z) = z^7+z^4+z^3+z^2+1$: Hamming weight of \texttt{0b10011101} is 5 (above 4).
+%   \item $w= \rightarrow m(z) = z^7$: Hamming weight of \texttt{0b1} is .
+   \item Rule to chose the others, specially odds wordsizes but also bigger than $8$.
+  \end{itemize}
   \item build $g(z)$ in \Fpnm{w}{z}
   \item build $f(z)$ and $f^{-1}(z)$ in \Fpnm{w}{z}
   \begin{itemize}
    \item How to chose the circulant matrix from $b$ of equation \ref{eq:subBytes:affine} used in equation \ref{eq:subBytes:matrix} and the $c$ (and also for the inverse)?
   \end{itemize}
  \end{itemize}
- \item \todo{summarize the $S$ and $S^{-1}$ using $w=4$ and $w=2$ in their \emph{S-Box}es and their inverse Boxes.}
+ \item \todo{summarize the $S$ and $S^{-1}$ using $w=2$, $w=4$ and $w=16$ in their \emph{S-Box}es and their inverse Boxes.}
 \end{itemize}
 
 
