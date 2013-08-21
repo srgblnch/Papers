@@ -1,5 +1,6 @@
 \documentclass[10pt,a4paper,twoside]{llncs}
 \usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\setcounter{secnumdepth}{3}%to set numbering over subsubsections
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{amsmath,amsfonts,amssymb}
@@ -81,14 +82,15 @@
 \begin{itemize}
  \item \todo{Short view on the symmetric algorithms history}
  \begin{itemize}
-  \item Previous to AES was the \emph{Data Encryption Standard}, 56 bit key length and 64 bit block size, as the standard but together with other block ciphers in 64 bit block and key length.
+  \item Previous to AES was the \emph{Data Encryption Standard}, 56 bit key length and 64 bit block size.%, as the standard but together with other block ciphers in 64 bit block and key length.
+  \item Triple DES, increase the key size (to 128 bits) with the same block size (64 bits). The DES key sizes were a problem.
  \end{itemize}
  \item \todo{Review on the AES contest}
  \begin{itemize}
-  \item 1997 NIST announce that is seeking a replacement for the DES.
-  \item 15 ``opponents'' (plus 10 rejected due to security or efficiency reasons) 
-  \item From the proposal on 1998 \cite{Daemen98aesproposal:}, \cite{Daemen:1998:BCR:646692.759487} and the revision \cite{Daemen01aes-ammended}, passing by the decision in 2000 of Rijndael chosen \cite{AES-FIPS}.
-  \item and the \cite{Daemen:2002:DR:560131} book
+  \item January 1997: NIST announce that is seeking a replacement for the DES. 15 ``opponents'' (plus other 10 rejected due to security or efficiency reasons). \cite{Daemen98aesproposal:} and \cite{Daemen:1998:BCR:646692.759487} in 1998 for AES candidate.
+  \item August 1999: five finalists. Rjindael revised \cite{Daemen01aes-ammended}.
+  \item Rijndael chosen as AES in October 2000 \cite{AES-FIPS}.
+  \item and the \cite{Daemen:2002:DR:560131} book publish in 2002.
  \end{itemize}
 \end{itemize}
 
@@ -472,7 +474,8 @@ This function means that the number of rounds is the biggest number of columns b
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
-This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
+
+Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emph{addRoundKey} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the first operation in a \emph{Rijndael} round. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
 \begin{figure}[h!]{\tiny
 \begin{center}
@@ -535,7 +538,7 @@ A schematic of how this step can be visualized if in the figure \ref{fig:subByte
 
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 
-But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation. There can be implementations that have more memory limitations than cpu, and can make this transformation analytically better than maintain those tables (the \emph{S-Box} and its inverse), but for the generalization of the \emph{Rijndael} for new word sizes, at least, we must be capable to build those boxes for those new sizes.
+But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation (the big thing is pre-computed). There can be implementations that have more memory limitations than cpu, and can make this transformation analytically better than maintain those tables (the \emph{S-Box} and its inverse), but for the generalization of the \emph{Rijndael} for new word sizes, at least, we must be capable to build those boxes for those new sizes.
 
 % operations in the polynomial field F_{2^w} w: wordsize
 The first transformation (called $g$) is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original \emph{Rijndael} that has become \emph{AES}).
@@ -595,7 +598,13 @@ Because all the \emph{Rijndael} operations must be invertible, and the $g(a)$ is
           b^{-1}_{(i+6)mod8} \oplus c^{-1}_{i}
 \end{equation}
 
-For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are... $b^{-1}=$\texttt{0b01010010=0x52} and $c^{-1}=$\texttt{0b00000101=0x05}
+For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
+\begin{equation}
+ \begin{tabular}{c}
+  $b^{-1}$ = \texttt{0b01010010}=\texttt{0x52}\\
+  $c^{-1}$ = \texttt{0b00000101}=\texttt{0x05}
+ \end{tabular}
+\end{equation}
 
 \begin{itemize}
  \item todo{What's the relation between $b$ and $b$ $b^{-1}$, and between $c$ and $c^{-1}$?}
@@ -713,24 +722,46 @@ Using the same \emph{wordsize} there are two different things that can be change
 \begin{itemize}
  \item \todo{how to build new $S$ and $S^{-1}$ for $w\neq 8$.}
  \begin{itemize}
+  \item Why was chosen for $w=8 \Rightarrow m(z) = z^8+z^4+z^3+z+1$?
+  \begin{itemize}
+   \item Would be that \texttt{0b100011011} is the first (bigger than $z^8$) that has a Hamming weight of the half (by excess) of the length.
+   \item \todo{If it's the case, define the Hamming weight}
+  \end{itemize}
+  \item Irreducible polynomial with \emph{wordsize} degree:
+  \begin{itemize}
+   \item $w=2 \rightarrow m(z) = z^2+z+1$: Non other below but bigger than $z^2$ is irreducible.
+   \item $w=3 \rightarrow m(z) = z^3+z+1$: Hamming weight of \texttt{0b1011} is 3 (above 2).
+   \item $w=4 \rightarrow m(z) = z^4+z+1$: Hamming weight of \texttt{0b10011} is 3 (above 3).
+   %\item $w=4 \rightarrow m(z) = z^4+z^3+z^2+z+1$: Hamming weight of \texttt{0b11111} is 5 (above 3).
+   \item $w=5 \rightarrow m(z) = z^5+z^2+1$: Hamming weight of \texttt{0b100101} is 3 (above 3).
+   %\item $w=6 \rightarrow m(z) = z^6+z+1$: Hamming weight of \texttt{0b1000011} is 3 (below 4).
+   %\item $w=6 \rightarrow m(z) = z^6+z^3+1$: Hamming weight of \texttt{0b1001001} is 3 (below 4).
+   \item $w=6 \rightarrow m(z) = z^6+z^4+z^2+z+1$: Hamming weight of \texttt{0b1010111} is 5 (above 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z+1$: Hamming weight of \texttt{0b10000011} is 3 (below 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z^3+1$: Hamming weight of \texttt{0b10001001} is 3 (below 4).
+   %\item $w=7 \rightarrow m(z) = z^7+z^4+1$: Hamming weight of \texttt{0b10010001} is 3 (below 4).
+   \item $w=7 \rightarrow m(z) = z^7+z^4+z^3+z^2+1$: Hamming weight of \texttt{0b10011101} is 5 (above 4).
+%   \item $w= \rightarrow m(z) = z^7$: Hamming weight of \texttt{0b1} is .
+   \item Rule to chose the others, specially odds wordsizes but also bigger than $8$.
+  \end{itemize}
   \item build $g(z)$ in \Fpnm{w}{z}
   \item build $f(z)$ and $f^{-1}(z)$ in \Fpnm{w}{z}
   \begin{itemize}
    \item How to chose the circulant matrix from $b$ of equation \ref{eq:subBytes:affine} used in equation \ref{eq:subBytes:matrix} and the $c$ (and also for the inverse)?
   \end{itemize}
  \end{itemize}
- \item \todo{summarize the $S$ and $S^{-1}$ using $w=4$ and $w=2$ in their \emph{S-Box}es and their inverse Boxes.}
+ \item \todo{summarize the $S$ and $S^{-1}$ using $w=2$, $w=4$ and $w=16$ in their \emph{S-Box}es and their inverse Boxes.}
 \end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{shiftColumns}\label{sec:shiftColumns}
+\subsection{shiftRows}\label{sec:shiftRows}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
-\begin{itemize}
- \item \todo{What this means mathematically, independently to the parameters \#rows, \#columns, wordsize}
-\end{itemize}
+Now we are over the second operation of a \emph{Rijndael} round --remember figure \ref{fig:RijndaelDiagram}--. This operation is a transposition, and again, in Shannon's terms this provides \emph{diffusion} to the schema. This operation takes the state matrix in rows to do a cyclic shift to the left over its cells, each row as many times as its index. Row $n$ cyclically shifted its cells $n$ times as the figure \ref{fig:shiftRows} represents for 4 rows --as the classic \emph{Rijndael} is--. As mention in \cite{Daemen:2002:DR:560131} (section 3.4.2) the assignment of number of offsets per rows is arbitrary, and they are done in this order for simplicity.
 
-
+%\begin{itemize}
+% \item \todo{What this means mathematically, independently to the parameters \#rows, \#columns, wordsize}
+%\end{itemize}
 
 % draw schematic of this step
 \begin{figure}[h!]
@@ -802,22 +833,29 @@ Using the same \emph{wordsize} there are two different things that can be change
 
 
 \end{tikzpicture}
-\caption{Schematic diagram of the shiftColumns() transformation \fixme{This diagram must be improved}}
-\label{fig:shiftColumns}
+\caption{Schematic diagram of the shiftRows() transformation \fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
+\label{fig:shiftRows}
 \end{center}
 \end{figure}
 
+Its inverse operation is quite simple as the operation itself is, only that this time the cyclic shift is to the right the same number of times that was before to the left.
+
+About the generalization of the \emph{Rijndael} schema, this operation does not show special hassles. There is only one restriction that makes a constrain in the generalization: there must not be two different rows that does the same number of shifts. And to complain that the number of rows must be equally or greater than the number or columns.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{mixColumns}\label{sec:mixColumns}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
+This is the third operation of the \emph{Rijndael} round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than \emph{subBytes} from section \ref{sec:subBytes}-- this transformation is lineal.
+
+This is the most complicated step in the \emph{Rijndael} under mathematical terms. This operation takes the columns of the states matrix and interprets it as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{m'(x)}$ (with degree the number of rows: $deg(m')=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $deg(m)=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
+
 % polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, deg(m)=#rows
 %   (this is, imho, one of the most important points of rijndael)
-\begin{itemize}
- \item \todo{What this means mathematically?} And what implies the changes on the parameters \#rows, \#columns, wordsize
- \item \todo{polynomial ring} introduced in section \ref{sec:math}, where the coeficients are elements from a binary polynomial field \Fpnm{n}{x}, $deg(m)=\#rows$
-\end{itemize}
+% \begin{itemize}
+%  \item \todo{What this means mathematically?} And what implies the changes on the parameters \#rows, \#columns, wordsize
+%  \item \todo{polynomial ring} introduced in section \ref{sec:math}, where the coeficients are elements from a binary polynomial field \Fpnm{n}{x}, $deg(m)=\#rows$
+% \end{itemize}
 
 % FIXME (review) draw schematic of this step
 
@@ -865,6 +903,8 @@ Using the same \emph{wordsize} there are two different things that can be change
 \end{center}
 \end{figure}
 
+The inverse of this operation requires to inverse the polynomial $c(x)$ to do the same operation in the polynomial ring to reverse the column on the state matrix.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
 In section \ref{sec:polynomialRing} the operation between elements of this kind of polynomial ring that has coefficients in a binary polynomial field, has been explained. But there is an specific improvement of the \emph{product} operation that gives a valuable advantage to speed up this step of the process. 
@@ -898,10 +938,23 @@ The matrix multiplication of this polynomial ring operation can be written as:
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{addRoundKey}\label{sec:addRoundKey}
+\subsubsection{mixColumns with different number of rows}
+
 \begin{itemize}
- \item \todo{this is the operation where the key is used (from the 4 rijndael operations)}
- \item \todo{simply a xor operation (addition in \Fq{2})}
+ \item \todo{Different number of rows means different degree on the polynomial ring than a column means}
+ \item \todo{How to find a composited polynomial of the wanted degree? How to rule this to have it standardised and no need to deal with it to advice on the decryption}
+ \item \todo{How to find an invertible element $c(x)$? How to standardised to avoid extra information requirement to the decipher?}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{addRoundKey}\label{sec:addRoundKey}
+
+Even this is the first operation in in the \emph{Rijndael} schema (review figure \ref{fig:RijndaelDiagram}), it is considered the last of the four of one round. This operation is a substitution of the elements in the cells of the state matrix, and because of that, on the Shannon's view this provides \emph{confusion} to the schema. This is the only operation in the \emph{Rijndael} that interacts with the expanded key, and the operation is a \emph{bitwise xor}, the addition of the very basic bricks below \emph{Rijndael} maths, the binary field $\mathbb{F}_{2}$.
+
+\begin{itemize}
+ %\item \todo{this is the operation where the key is used (from the 4 rijndael operations)}
+ %\item \todo{simply a xor operation (addition in \Fq{2})}
+ \item \todo{Explain why the state matrix is taken by columns if the \emph{xor} is for bit elements? It's nothing more than simplicity with the common 32 bit architecture}
 \end{itemize}
 
 \begin{figure}[h!]
@@ -961,6 +1014,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 %how, with different parameters, can have the same block sizes, and what's different between them
 \begin{itemize}
  \item \todo{different parameter combinations} can produce the same block (and key) sizes. What can help on the option chose?
+ \item Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.
 \end{itemize}
 
 
