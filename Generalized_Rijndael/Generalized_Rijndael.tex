@@ -95,20 +95,21 @@
 \end{itemize}
 
 % TODO problem approach (rijndael scalability)
+Approach:
 \begin{itemize}
+ \item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size. 
  \item \todo{There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with parameters, being (the standard) widely used.}
  \item \todo{rijndael scalability}. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
 \end{itemize}
 
-% TODO alternative cryptosystems
+Paper structure:
 \begin{itemize}
- \item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size.
-\end{itemize}
-
-% TODO
-\begin{itemize}
- \item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it).
- \item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}).
+ \item \todo{First of all introduce the maths behind the \emph{Rijndael} in section \ref{sec:math}.}
+ \item \todo{Design explanation in section \ref{sec:design} to explain the basic bricks and how they can be generalized in section \ref{sec:generalising}.}
+ \item \todo{With the generalization there are equivalent sizes with different parameter combinations, explained in section \ref{sec:parameterCombinations}.}
+ \item \todo{There is a new bunch of sizes with this to take advantage in section \ref{sec:newSizes}.}
+ \item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it). Section \ref{sec:attacks}.
+ \item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}). Section \ref{sec:aeswrap}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,13 +158,31 @@ Those basic mathematical bricks of the \emph{Rijndael} algorithm is what gives t
 
 \begin{itemize}
  \item \todo{Pick two random elements of the polynomial field of degree $8$, using the $m(z)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+ \item \todo{Explain that in the lower level the addition operation can be set as a bitwise \emph{xor} of the binary representation of the polynomial.}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
 \begin{itemize}
 \item \todo{Pick two random elements of the polynomial ring of degree $4$, using the $m'(x)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+ \item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear Codes}\label{sec:LinearCodes}
+
+\begin{enumerate}
+ \item \todo{Define Hamming weight}
+ \item \todo{Define Hamming distance}
+\end{enumerate}
+
+\begin{definition}\label{def:hammingWeight}
+ Hamming weight
+\end{definition}
+
+\begin{definition}\label{def:hammingDistance}
+ Hamming distance
+\end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
@@ -439,7 +458,7 @@ Each step finish with 3 \emph{xor} operations to catch together all the partials
 \end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
-An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
+An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
 %FIXME:it may would be developed or rewritten better
 %FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
 
@@ -725,7 +744,7 @@ Using the same \emph{wordsize} there are two different things that can be change
   \item Why was chosen for $w=8 \Rightarrow m(z) = z^8+z^4+z^3+z+1$?
   \begin{itemize}
    \item Would be that \texttt{0b100011011} is the first (bigger than $z^8$) that has a Hamming weight of the half (by excess) of the length.
-   \item \todo{If it's the case, define the Hamming weight}
+   \item \todo{If it's the case, reference to the Hamming weight definition \ref{def:hammingWeight}}
   \end{itemize}
   \item Irreducible polynomial with \emph{wordsize} degree:
   \begin{itemize}
@@ -1014,7 +1033,8 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 %how, with different parameters, can have the same block sizes, and what's different between them
 \begin{itemize}
  \item \todo{different parameter combinations} can produce the same block (and key) sizes. What can help on the option chose?
- \item Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.
+ \item \todo{Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.}
+ \item \todo{Can the wordsize be smaller than \#rows? It looks that no restriction in this. There is no relation between the degree of the elements in of the polynomial ring $\frac{\Fpn{2}{w}[x]}{m'(x)}$, with the degree of the coefficients that are elements on a polynomial field $\frac{\Fpn{2}[z]}{m(z)}$}
 \end{itemize}
 
 
@@ -1027,21 +1047,21 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % what else would be in this paper?
-\section{Attacking the schema}
+\section{Attacking the schema}\label{sec:attacks}
 
 \todo{Who the current attacks affects this variations on the possible sizing?}
 
-\subsection{Side channel attacks}
+\subsection{Side channel attacks}\label{sec:sideChannel}
 \begin{itemize}
 \item \todo{differences between precalculated sbox and rcon or better to compute on the fly?}\\
 \item \todo{constant time operation intervals and equivalent memory use}\\
 \item \todo{key expansion calculated during the encrypt/decrypt process}
 \end{itemize}
 
-\section{New sizes with in the AESWrap \cite{rfc3394}}
+\section{New sizes with in the AESWrap \cite{rfc3394}}\label{sec:aeswrap}
 \todo{}
 
-\section{Conclusions}
+\section{Conclusions}\label{sec:conclusion}
 \todo{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
