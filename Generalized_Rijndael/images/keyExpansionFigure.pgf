@@ -1,0 +1,58 @@
+\begin{tikzpicture}[>=latex]
+\matrix (k) [matrix of math nodes,nodes = {node style ge},%
+              %left delimiter  = (,right delimiter = ),
+              column sep=-0.1cm,row sep=-0.5cm,
+             ] at (0,0)
+        {
+          k_{0_{(0,0)}} & k_{0_{(0,1)}} & \cdots & k_{0_{(0,c)}} &
+          k_{1_{(0,0)}} & k_{1_{(0,1)}} & \cdots & k_{1_{(0,c)}} &
+          \cdots \\%&
+          %k_{n_{(0,0)}} & k_{n_{(0,1)}} & \cdots & k_{n_{(0,c)}} \\
+          k_{0_{(1,0)}} & k_{0_{(1,1)}} & \cdots & k_{0_{(1,c)}} &
+          k_{1_{(1,0)}} & k_{1_{(1,1)}} & \cdots & k_{1_{(1,c)}} &
+          \cdots \\%&
+          %k_{n_{(1,0)}} & k_{n_{(1,1)}} & \cdots & k_{n_{(1,c)}} \\
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \vdots        & \vdots        & \ddots & \vdots        &
+          \cdots        \\%&
+          %\vdots        & \vdots        & \ddots & \vdots        \\
+          k_{0_{(r,0)}} & k_{0_{(r,1)}} & \cdots & k_{0_{(r,c)}} &
+          k_{1_{(r,0)}} & k_{1_{(r,1)}} & \cdots & k_{1_{(r,c)}} &
+          \cdots \\%&
+          %k_{n_{(r,0)}} & k_{n_{(r,1)}} & \cdots & k_{n_{(r,c)}}\\
+        };
+\draw [] (k-1-1.north west) rectangle (k-4-9.south east);
+\draw [dashed] (k-1-1.north west) rectangle (k-4-4.south east);
+\draw [dashed] (k-1-5.north west) rectangle (k-4-8.south east);
+%\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
+
+%boxes to get the necessary columns
+\draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
+\draw [blue,thick] (k-1-5.north west) rectangle (k-4-5.south east);
+\draw [red,thick] (k-1-6.north west) rectangle (k-4-6.south east);
+% 
+\node [diamond,draw,aspect=2] (imodc) at (.1,-3) {i mod c};
+\node [rectangle,draw] (rotWord) at (-1.7,-3.5) {rotWord()};
+\node [rectangle,draw] (subBytes) at (-1.7,-4.4) {subBytes()};
+\node [circle,draw] (xor) at (.1,-5) {};
+ \draw [-] (xor.north) -- (xor.south);
+ \draw [-] (xor.west) -- (xor.east);
+\node [rectangle,draw] (rcon) at (.1,-5.7) {$1^i$ $\in$ \Fpnm{w}{z}};%{Rcon[i]};
+\node [] (eq0) at (-1,-2.8) {=0};
+\node [] (neq) at (.5,-3.6) {$\neq0$};
+\node [] (neq) at (k-1-2.north) {$i-c$};
+\node [] (neq) at (k-1-5.north) {$i-1$};
+\node [] (neq) at (k-1-6.north) {$i$};
+% 
+% %arrows to set into the algorithm
+\draw [|->] (k-4-2.south) -- (-3,-5) -- (xor.west);
+%\draw [|->] (k-4-5.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
+\draw [|->] (k-4-5.south) -- (imodc);
+\draw [->] (imodc.west) -- (-1.7,-3) -- (rotWord.north);
+\draw [->] (rotWord.south) -- (subBytes.north);
+\draw [->] (imodc.south) -- (xor.north);
+\draw [->] (subBytes.south) -- (-1.7,-4.8) -- (xor.north);
+\draw [->] (xor.east) -- (1.2,-5) -- (k-4-6.south);
+\draw [->] (rcon.north)--(xor.south);
+
+\end{tikzpicture}
