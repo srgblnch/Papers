@@ -95,20 +95,21 @@
 \end{itemize}
 
 % TODO problem approach (rijndael scalability)
+Approach:
 \begin{itemize}
+ \item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size. 
  \item \todo{There are many other options of symmetric ciphers with different block sizes. AES is very static, but rijndael allows to play with parameters, being (the standard) widely used.}
  \item \todo{rijndael scalability}. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
 \end{itemize}
 
-% TODO alternative cryptosystems
+Paper structure:
 \begin{itemize}
- \item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size.
-\end{itemize}
-
-% TODO
-\begin{itemize}
- \item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it).
- \item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}).
+ \item \todo{First of all introduce the maths behind the \emph{Rijndael} in section \ref{sec:math}.}
+ \item \todo{Design explanation in section \ref{sec:design} to explain the basic bricks and how they can be generalized in section \ref{sec:generalising}.}
+ \item \todo{With the generalization there are equivalent sizes with different parameter combinations, explained in section \ref{sec:parameterCombinations}.}
+ \item \todo{There is a new bunch of sizes with this to take advantage in section \ref{sec:newSizes}.}
+ \item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \emph{Rijndael} \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it). Section \ref{sec:attacks}.
+ \item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \emph{Rijndael} has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}). Section \ref{sec:aeswrap}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,13 +158,31 @@ Those basic mathematical bricks of the \emph{Rijndael} algorithm is what gives t
 
 \begin{itemize}
  \item \todo{Pick two random elements of the polynomial field of degree $8$, using the $m(z)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+ \item \todo{Explain that in the lower level the addition operation can be set as a bitwise \emph{xor} of the binary representation of the polynomial.}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
 \begin{itemize}
 \item \todo{Pick two random elements of the polynomial ring of degree $4$, using the $m'(x)$ of the original \emph{Rijndael}, and show their possible representations and operations like sum and product. (specially with the modular reduction)}
+ \item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear Codes}\label{sec:LinearCodes}
+
+\begin{enumerate}
+ \item \todo{Define Hamming weight}
+ \item \todo{Define Hamming distance}
+\end{enumerate}
+
+\begin{definition}\label{def:hammingWeight}
+ Hamming weight
+\end{definition}
+
+\begin{definition}\label{def:hammingDistance}
+ Hamming distance
+\end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Approach to the Rijndael Schema}\label{sec:approach}
@@ -274,6 +293,7 @@ An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref
 \begin{figure}[h!]
  \centering
  \includegraphics[scale=0.3,keepaspectratio=true]{./images/rijndaelDiagram.png}
+ %\input{images/rijndaelDiagram.pgf}
  % rijndaelDiagram.png: 521x887 pixel, 72dpi, 18.38x31.29 cm, bb=0 0 521 887
  \caption{rijndael diagram}
  \label{fig:RijndaelDiagram}
@@ -362,64 +382,7 @@ All those parameters are necessary to have in the output an expanded key large e
 % draw the algorithm as a diagram
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}[>=latex]
-\matrix (k) [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (0,0)
-        {
-          k_{0_{(0,0)}} & k_{0_{(0,1)}} & \cdots & k_{0_{(0,c)}} &
-          k_{1_{(0,0)}} & k_{1_{(0,1)}} & \cdots & k_{1_{(0,c)}} &
-          \cdots \\%&
-          %k_{n_{(0,0)}} & k_{n_{(0,1)}} & \cdots & k_{n_{(0,c)}} \\
-          k_{0_{(1,0)}} & k_{0_{(1,1)}} & \cdots & k_{0_{(1,c)}} &
-          k_{1_{(1,0)}} & k_{1_{(1,1)}} & \cdots & k_{1_{(1,c)}} &
-          \cdots \\%&
-          %k_{n_{(1,0)}} & k_{n_{(1,1)}} & \cdots & k_{n_{(1,c)}} \\
-          \vdots        & \vdots        & \ddots & \vdots        &
-          \vdots        & \vdots        & \ddots & \vdots        &
-          \cdots        \\%&
-          %\vdots        & \vdots        & \ddots & \vdots        \\
-          k_{0_{(r,0)}} & k_{0_{(r,1)}} & \cdots & k_{0_{(r,c)}} &
-          k_{1_{(r,0)}} & k_{1_{(r,1)}} & \cdots & k_{1_{(r,c)}} &
-          \cdots \\%&
-          %k_{n_{(r,0)}} & k_{n_{(r,1)}} & \cdots & k_{n_{(r,c)}}\\
-        };
-\draw [] (k-1-1.north west) rectangle (k-4-9.south east);
-\draw [dashed] (k-1-1.north west) rectangle (k-4-4.south east);
-\draw [dashed] (k-1-5.north west) rectangle (k-4-8.south east);
-%\draw [dashed] (k-1-10.north west) rectangle (k-4-13.south east);
-
-%boxes to get the necessary columns
-\draw [blue,thick] (k-1-2.north west) rectangle (k-4-2.south east);
-\draw [blue,thick] (k-1-5.north west) rectangle (k-4-5.south east);
-\draw [red,thick] (k-1-6.north west) rectangle (k-4-6.south east);
-% 
-\node [diamond,draw,aspect=2] (imodc) at (.1,-3) {i mod c};
-\node [rectangle,draw] (rotWord) at (-1.7,-3.5) {rotWord()};
-\node [rectangle,draw] (subBytes) at (-1.7,-4.4) {subBytes()};
-\node [circle,draw] (xor) at (.1,-5) {};
- \draw [-] (xor.north) -- (xor.south);
- \draw [-] (xor.west) -- (xor.east);
-\node [rectangle,draw] (rcon) at (.1,-5.7) {$1^i$ $\in$ \Fpnm{w}{z}};%{Rcon[i]};
-\node [] (eq0) at (-1,-2.8) {=0};
-\node [] (neq) at (.5,-3.6) {$\neq0$};
-\node [] (neq) at (k-1-2.north) {$i-c$};
-\node [] (neq) at (k-1-5.north) {$i-1$};
-\node [] (neq) at (k-1-6.north) {$i$};
-% 
-% %arrows to set into the algorithm
-\draw [|->] (k-4-2.south) -- (-3,-5) -- (xor.west);
-%\draw [|->] (k-4-5.south) -- (-.94,-2) -- (-1.5,-2) -- (imodc);
-\draw [|->] (k-4-5.south) -- (imodc);
-\draw [->] (imodc.west) -- (-1.7,-3) -- (rotWord.north);
-\draw [->] (rotWord.south) -- (subBytes.north);
-\draw [->] (imodc.south) -- (xor.north);
-\draw [->] (subBytes.south) -- (-1.7,-4.8) -- (xor.north);
-\draw [->] (xor.east) -- (1.2,-5) -- (k-4-6.south);
-\draw [->] (rcon.north)--(xor.south);
-
-\end{tikzpicture}
+\input{images/keyExpansionFigure.pgf}
 \caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
 \label{fig:keyExpansionDiagram}
 \end{center}
@@ -439,7 +402,7 @@ Each step finish with 3 \emph{xor} operations to catch together all the partials
 \end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
-An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
+An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
 %FIXME:it may would be developed or rewritten better
 %FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
 
@@ -644,70 +607,7 @@ The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}
 % draw schematic of this step
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}[>=latex]
-
- \matrix (s) [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (-3,0)
-        {
-          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
-          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
-        };
-
-\draw (-3.9,0.5)rectangle(-3,0);
-
- \matrix (s') [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (3,0)
-        {
-          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
-          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
-        };
-\draw (2.1,0.5)rectangle(3,0);
-
-%sbox
-\draw (-1,4)rectangle(1,2);
-%x
-\draw [dotted](-1,2.0)rectangle(1,2.1);
-\draw [dotted](-1,2.2)rectangle(1,2.3);
-\draw [dotted](-1,2.4)rectangle(1,2.5);
-\draw [dotted](-1,2.6)rectangle(1,2.7);
-\draw [dotted](-1,2.8)rectangle(1,2.9);
-\draw (-1,3)rectangle(1,3.1);
-\draw [dotted](-1,3.2)rectangle(1,3.3);
-\draw [dotted](-1,3.4)rectangle(1,3.5);
-\draw [dotted](-1,3.6)rectangle(1,3.7);
-\draw [dotted](-1,3.8)rectangle(1,3.9);
-%y
-\draw [dotted](-.9,4)rectangle(-.8,2);
-\draw [dotted](-.7,4)rectangle(-.6,2);
-\draw (-.5,4)rectangle(-.4,2);
-\draw [dotted](-.3,4)rectangle(-.2,2);
-\draw [dotted](-.1,4)rectangle(0,2);
-\draw [dotted](.1,4)rectangle(.2,2);
-\draw [dotted](.3,4)rectangle(.4,2);
-\draw [dotted](.5,4)rectangle(.6,2);fact
-\draw [dotted](.7,4)rectangle(.8,2);
-\draw [dotted](.9,4)rectangle(1,2);
-%cell
-\draw [fill=white] (-.55,2.95)rectangle(-.35,3.15);
-%arrows
-\draw [->] (-3.6,0.5)--(-1,3);%x
-\draw [->] (-3.3,0.5)--(-.4,2);%y
-\draw [->] (-.45,3.05)--(2.1,0.5);
-
-%text
-\node [rectangle] (sbox) at (0,4.3) {S-Box};
-\node [rectangle] (msb) at (-2.6,2.3) {$MSB(\frac{w}{2})$};
-\node [rectangle] (lsb) at (-1,1.2) {$LSB(\frac{w}{2})$};
-
-\end{tikzpicture}
+\input{images/subBytesFigure.pgf}
 \caption{Schematic diagram of the subBytes() transformation}
 \label{fig:subBytes}
 \end{center}
@@ -725,9 +625,9 @@ Using the same \emph{wordsize} there are two different things that can be change
   \item Why was chosen for $w=8 \Rightarrow m(z) = z^8+z^4+z^3+z+1$?
   \begin{itemize}
    \item Would be that \texttt{0b100011011} is the first (bigger than $z^8$) that has a Hamming weight of the half (by excess) of the length.
-   \item \todo{If it's the case, define the Hamming weight}
+   \item \todo{If it's the case, reference to the Hamming weight definition \ref{def:hammingWeight}}
   \end{itemize}
-  \item Irreducible polynomial with \emph{wordsize} degree:
+  \item Irreducible polynomial with \emph{wordsize} degree, the firsts bigger than $x^w$ with a Hamming weight above the half of the length:
   \begin{itemize}
    \item $w=2 \rightarrow m(z) = z^2+z+1$: Non other below but bigger than $z^2$ is irreducible.
    \item $w=3 \rightarrow m(z) = z^3+z+1$: Hamming weight of \texttt{0b1011} is 3 (above 2).
@@ -742,7 +642,7 @@ Using the same \emph{wordsize} there are two different things that can be change
    %\item $w=7 \rightarrow m(z) = z^7+z^4+1$: Hamming weight of \texttt{0b10010001} is 3 (below 4).
    \item $w=7 \rightarrow m(z) = z^7+z^4+z^3+z^2+1$: Hamming weight of \texttt{0b10011101} is 5 (above 4).
 %   \item $w= \rightarrow m(z) = z^7$: Hamming weight of \texttt{0b1} is .
-   \item Rule to chose the others, specially odds wordsizes but also bigger than $8$.
+   \item \todo{Rule to chose the others, specially odds wordsizes but also bigger than $8$}.
   \end{itemize}
   \item build $g(z)$ in \Fpnm{w}{z}
   \item build $f(z)$ and $f^{-1}(z)$ in \Fpnm{w}{z}
@@ -766,73 +666,7 @@ Now we are over the second operation of a \emph{Rijndael} round --remember figur
 % draw schematic of this step
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}[>=latex]
-%input state matrix
-\draw (-1.0,0.0) rectangle (1.0,0.5);%row 1
-\draw (-1.0,0.5) rectangle (1.0,1.0);%row 2
-\draw (-1.0,1.0) rectangle (1.0,1.5);%row ...
-\draw (-1.0,1.5) rectangle (1.0,2.0);%row r
-\draw (-0.5,0.0) rectangle (0.0,2.0);%c
-\draw (0.5,0.0) rectangle (1.0,2.0);%c
-\draw [dotted] (-0.75,0.50) -- (-0.75,1.0);
-\draw [dotted] (-0.25,0.50) -- (-0.25,1.0);
-\draw [dotted] (0.00,1.00) -- (0.50,0.50);
-\draw [dotted] (0.00,1.25) -- (0.50,1.25);
-\draw [dotted] (0.00,1.75) -- (0.50,1.75);
-
-%first row
-\draw [fill=red] (2.50,1.5) rectangle (2.75,1.75);
-\draw (2.75,1.5) rectangle (3.00,1.75);
-\draw (3.00,1.5) rectangle (3.25,1.75);
-\draw (3.25,1.5) rectangle (3.50,1.75);
-\draw [->] (2.500,1.625)--(2.325,1.625)--(2.325,1.40)--(3.775,1.40)--(3.775,1.625)--(3.50,1.625);
-\draw [dotted] (3.0,1.625) rectangle (3.25,1.625);
-%from to:
-\draw [->](1.125,1.75)--(2.25,1.675);
-\draw [->](3.875,1.675)--(4.85,1.75);
-
-%second row
-\draw [fill=red] (2.50,1.0) rectangle (2.75,1.25);
-\draw [fill=red] (2.75,1.0) rectangle (3.00,1.25);
-\draw (3.00,1.0) rectangle (3.25,1.25);
-\draw (3.25,1.0) rectangle (3.50,1.25);
-\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.90)--(3.775,0.90)--(3.775,1.125)--(3.50,1.125);
-\draw [dotted] (3.0,1.125) rectangle (3.25,1.125);
-%from to:
-\draw [->](1.125,1.225)--(2.25,1.125);
-\draw [->](3.875,1.125)--(4.85,1.225);
-
-%third row
-\draw [fill=red] (2.50,0.5) rectangle (2.75,0.75);
-\draw [fill=red] (2.75,0.5) rectangle (3.00,0.75);
-\draw [fill=red] (3.00,0.5) rectangle (3.25,0.75);
-\draw (3.25,0.5) rectangle (3.50,0.75);
-\draw [->] (2.500,0.625)--(2.325,0.625)--(2.325,0.40)--(3.775,0.40)--(3.775,0.625)--(3.50,0.625);
-\draw [dotted] (3.00,0.625) rectangle (3.25,0.625);
-%from to:
-\draw [->](1.125,0.75)--(2.25,0.675);
-\draw [->](3.875,0.675)--(4.85,0.75);
-
-%vdots
-\draw [dotted] (3.00,0.3) -- (3.00,0.0);
-\draw [dotted] (1.75,0.5) -- (1.75,0.2);
-\draw [dotted] (4.25,0.5) -- (4.25,0.2);
-
-%output state matrix
-\draw (5.0,0.0) rectangle (7.0,0.5);
-\draw (5.0,0.5) rectangle (7.0,1.0);
-\draw (5.0,1.0) rectangle (7.0,1.5);
-\draw (5.0,1.5) rectangle (7.0,2.0);
-\draw (5.5,0.0) rectangle (6.0,2.0);
-\draw (6.5,0.0) rectangle (7.0,2.0);
-\draw [dotted] (5.25,0.50) -- (5.25,1.0);
-\draw [dotted] (5.75,0.50) -- (5.75,1.0);
-\draw [dotted] (6.00,1.00) -- (6.50,0.50);
-\draw [dotted] (6.00,1.25) -- (6.50,1.25);
-\draw [dotted] (6.00,1.75) -- (6.50,1.75);
-
-
-\end{tikzpicture}
+\input{images/shiftRowsFigure.pgf}
 \caption{Schematic diagram of the shiftRows() transformation \fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
 \label{fig:shiftRows}
 \end{center}
@@ -861,43 +695,7 @@ This is the most complicated step in the \emph{Rijndael} under mathematical term
 
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}[>=latex]
- 
- \matrix (s) [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (-4,0)
-        {
-          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
-          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
-        };
-
-\draw (-4.9,1.25)rectangle(-4,-1.25);
-
- \matrix (s') [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (4,0)
-        {
-          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
-          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
-        };
-\draw (3.1,1.25)rectangle(4,-1.25);
-
-\node [rectangle,draw] (mixColumns) at (0,2) {mixColumns()};
- \draw [->] (-4.5,1.25)--(mixColumns.west);
- \draw [->] (mixColumns.east)--(3.5,1.25);
-
-\node [rectangle] (poli) at (0,1.0) {$s'(x)=c(x)\otimes s(x)$};
-\node [rectangle] (sx) at (0,-2) {$s(x)=s_{(0,1)}x^{c-1}+s_{(1,1)}x^{c-2}+\cdots+s_{(r,1)}x^{c-c+1}$};
-\node [rectangle] (fpnm) at (0,-2.5) {$ s(x),c(x),s'(x) \in \frac{\Fpn{2}{w}[x]}{m'(x)}$ with $m'(x)$ reductible and degree $c$};
-\node [rectangle] (fpn) at (0,-3) {$s_{(i,j)} \in \frac{\mathbb{F}_{2}[z]}{m(z)}$ with $m(z)$ irreductible and degree $w$};
-
-\end{tikzpicture}
+\input{images/mixColumnsFigure.pgf}
 \caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field. Invert the mixColumns() is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
 \label{fig:mixColumns}
 \end{center}
@@ -959,50 +757,7 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}[>=latex]
- 
-\matrix (s) [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (-5,0)
-        {
-          s_{(0,0)} & s_{(0,1)} & \cdots & s_{(0,c)} \\
-          s_{(1,0)} & s_{(1,1)} & \cdots & s_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s_{(r,0)} & s_{(r,1)} & \cdots & s_{(r,c)} \\
-        };
-
-\draw (-5.9,1.25)rectangle(-5,-1.25);
-
- \matrix (s') [matrix of math nodes,nodes = {node style ge},%
-              %left delimiter  = (,right delimiter = ),
-              column sep=-0.1cm,row sep=-0.5cm,
-             ] at (4,0)
-        {
-          s'_{(0,0)} & s'_{(0,1)} & \cdots & s'_{(0,c)} \\
-          s'_{(1,0)} & s'_{(1,1)} & \cdots & s'_{(1,c)} \\
-          \vdots    & \vdots    & \ddots & \vdots    \\
-          s'_{(r,0)} & s'_{(r,1)} & \cdots & s'_{(r,c)} \\
-        };
-\draw (3.1,1.25)rectangle(4,-1.25);
-%the central boxes of the key table
-\draw        (-1.875,1.5)rectangle(-1.125,-1.5);\node [] (wl) at (-1.5,0) {$w_{l}$};
-\draw        (-0.375,1.5)rectangle( 0.375,-1.5);\node [] (wld) at (0,0) {$\cdots$};
-\draw        ( 0.375,1.5)rectangle( 1.125,-1.5);\node [] (wlc) at (.75,0) {$w_{l+c}$};
-%the bigger column
-\draw [fill=white] (-1.225,1.6)rectangle(-0.275,-1.6);\node [] (wl1) at (-.75,0) {$w_{l+1}$};
-%the xor sign
-\node [circle,draw] (xor) at (-.75,-2) {};
- \draw [-] (xor.north) -- (xor.south);
- \draw [-] (xor.west) -- (xor.east);
-%algorithm lines
-\draw [->] (-5.45,-1.25)--(-5.45,-2)--(xor.west);
-\draw [->] (-.75,-1.6)--(xor.north);
-\draw [->] (xor.east)--(3.55,-2)--(3.55,-1.25);
-
-\node [] (l) at (0.75,1.7) {$l=round\cdot c$};
-
-\end{tikzpicture}
+\input{images/addRoundKeyFigure.pgf}
 \caption{Diagram of the addRoundKey()}
 \label{fig:addRoundKey}
 \end{center}
@@ -1014,7 +769,8 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 %how, with different parameters, can have the same block sizes, and what's different between them
 \begin{itemize}
  \item \todo{different parameter combinations} can produce the same block (and key) sizes. What can help on the option chose?
- \item Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.
+ \item \todo{Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.}
+ \item \todo{Can the wordsize be smaller than \#rows? It looks that no restriction in this. There is no relation between the degree of the elements in of the polynomial ring $\frac{\Fpn{2}{w}[x]}{m'(x)}$, with the degree of the coefficients that are elements on a polynomial field $\frac{\Fpn{2}[z]}{m(z)}$}
 \end{itemize}
 
 
@@ -1027,21 +783,21 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % what else would be in this paper?
-\section{Attacking the schema}
+\section{Attacking the schema}\label{sec:attacks}
 
 \todo{Who the current attacks affects this variations on the possible sizing?}
 
-\subsection{Side channel attacks}
+\subsection{Side channel attacks}\label{sec:sideChannel}
 \begin{itemize}
 \item \todo{differences between precalculated sbox and rcon or better to compute on the fly?}\\
 \item \todo{constant time operation intervals and equivalent memory use}\\
 \item \todo{key expansion calculated during the encrypt/decrypt process}
 \end{itemize}
 
-\section{New sizes with in the AESWrap \cite{rfc3394}}
+\section{New sizes with in the AESWrap \cite{rfc3394}}\label{sec:aeswrap}
 \todo{}
 
-\section{Conclusions}
+\section{Conclusions}\label{sec:conclusion}
 \todo{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

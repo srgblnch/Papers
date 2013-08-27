@@ -1,0 +1,67 @@
+\begin{tikzpicture}[>=latex]
+%input state matrix
+\draw (-1.0,0.0) rectangle (1.0,0.5);%row 1
+\draw (-1.0,0.5) rectangle (1.0,1.0);%row 2
+\draw (-1.0,1.0) rectangle (1.0,1.5);%row ...
+\draw (-1.0,1.5) rectangle (1.0,2.0);%row r
+\draw (-0.5,0.0) rectangle (0.0,2.0);%c
+\draw (0.5,0.0) rectangle (1.0,2.0);%c
+\draw [dotted] (-0.75,0.50) -- (-0.75,1.0);
+\draw [dotted] (-0.25,0.50) -- (-0.25,1.0);
+\draw [dotted] (0.00,1.00) -- (0.50,0.50);
+\draw [dotted] (0.00,1.25) -- (0.50,1.25);
+\draw [dotted] (0.00,1.75) -- (0.50,1.75);
+
+%first row
+\draw (2.50,1.5) rectangle (2.75,1.75);
+\draw (2.75,1.5) rectangle (3.00,1.75);
+\draw (3.00,1.5) rectangle (3.25,1.75);
+\draw (3.25,1.5) rectangle (3.50,1.75);
+\draw [->] (2.500,1.625)--(2.325,1.625)--(2.325,1.40)--(3.775,1.40)--(3.775,1.625)--(3.50,1.625);
+\draw [dotted] (3.0,1.625) rectangle (3.25,1.625);
+%from to:
+\draw [->](1.125,1.75)--(2.25,1.675);
+\draw [->](3.875,1.675)--(4.85,1.75);
+
+%second row
+\draw [fill=red] (2.50,1.0) rectangle (2.75,1.25);
+\draw (2.75,1.0) rectangle (3.00,1.25);
+\draw (3.00,1.0) rectangle (3.25,1.25);
+\draw (3.25,1.0) rectangle (3.50,1.25);
+\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.90)--(3.775,0.90)--(3.775,1.125)--(3.50,1.125);
+\draw [dotted] (3.0,1.125) rectangle (3.25,1.125);
+%from to:
+\draw [->](1.125,1.225)--(2.25,1.125);
+\draw [->](3.875,1.125)--(4.85,1.225);
+
+%third row
+\draw [fill=red] (2.50,0.5) rectangle (2.75,0.75);
+\draw [fill=red] (2.75,0.5) rectangle (3.00,0.75);
+\draw (3.00,0.5) rectangle (3.25,0.75);
+\draw (3.25,0.5) rectangle (3.50,0.75);
+\draw [->] (2.500,0.625)--(2.325,0.625)--(2.325,0.40)--(3.775,0.40)--(3.775,0.625)--(3.50,0.625);
+\draw [dotted] (3.00,0.625) rectangle (3.25,0.625);
+%from to:
+\draw [->](1.125,0.75)--(2.25,0.675);
+\draw [->](3.875,0.675)--(4.85,0.75);
+
+%vdots
+\draw [dotted] (3.00,0.3) -- (3.00,0.0);
+\draw [dotted] (1.75,0.5) -- (1.75,0.2);
+\draw [dotted] (4.25,0.5) -- (4.25,0.2);
+
+%output state matrix
+\draw (5.0,0.0) rectangle (7.0,0.5);
+\draw (5.0,0.5) rectangle (7.0,1.0);
+\draw (5.0,1.0) rectangle (7.0,1.5);
+\draw (5.0,1.5) rectangle (7.0,2.0);
+\draw (5.5,0.0) rectangle (6.0,2.0);
+\draw (6.5,0.0) rectangle (7.0,2.0);
+\draw [dotted] (5.25,0.50) -- (5.25,1.0);
+\draw [dotted] (5.75,0.50) -- (5.75,1.0);
+\draw [dotted] (6.00,1.00) -- (6.50,0.50);
+\draw [dotted] (6.00,1.25) -- (6.50,1.25);
+\draw [dotted] (6.00,1.75) -- (6.50,1.75);
+
+
+\end{tikzpicture}
