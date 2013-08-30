@@ -1,3 +1,6 @@
+\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{decorations.markings}
+
 \def\origin{-3}
 \def\dest{3}
 \def\height{5}
@@ -5,15 +8,25 @@
 
 \tikzstyle{statecell}=[rectangle,
                                     thick,
-                                    minimum size=1cm,
+                                    minimum size=\dist cm,
                                     draw=gray!80,
                                     fill=gray!20]
 
 \tikzstyle{shiftedcell}=[rectangle,
                                     thick,
-                                    minimum size=1cm,
+                                    minimum size=\dist cm,
                                     draw=gray!80,
                                     fill=red!20]
+
+\tikzset{
+    oneloop/.style={decorate, 
+        decoration={coil,amplitude=9pt, segment length=19pt}},
+    twoloop/.style={decorate, 
+        decoration={coil,amplitude=9pt, segment length=14.5pt}},
+    threeloop/.style={decorate, 
+        decoration={coil,amplitude=7pt, segment length=11pt}} 
+}
+
 
 \begin{tikzpicture}[>=latex]
 
@@ -61,8 +74,9 @@
 \node (s32_) at (\dest+3*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{32}}$};
 
 %arrows
-\draw (s03) -- (s00_);
-\draw[->] (s13) -- (s11_);
-\draw[->>] (s23) -- (s22_);
-\draw[->>] (s33) -- (s33_);
+%\draw[->] (s03) -- (s00_);
+\path[->,thin] (s03) edge[out=0,in=180] (s00_);
+\path[->,thin] (s13) edge[oneloop,out=0,in=180] (s11_);
+\path[->,thin] (s23) edge[twoloop,out=0,in=180] (s22_);
+\path[->,thin] (s33) edge[threeloop,out=0,in=180] (s33_);
 \end{tikzpicture}
