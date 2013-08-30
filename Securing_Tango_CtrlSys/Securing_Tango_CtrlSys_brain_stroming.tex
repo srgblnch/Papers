@@ -15,8 +15,8 @@
 \pagestyle{headings}%page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{gitinfo}
-\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
+%\usepackage{gitinfo}
+\newcommand{\version}{}%{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) } %!!fixme!!
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +28,7 @@
 \newcommand{\corba}{\textsc{Corba}}
 
 %opening
-\title{Ensuring \tango\, Control System: A brain storming}
+\title{Securing \tango\, Control System: A brain storming}
 \author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}}
  \institute{
  Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
@@ -155,7 +155,11 @@ It is very important goal to have the \tango\, implementation as Free Software, 
   \item Non-repudiation: When a information in procured, there must be no way to cover saying ``it wasn't me''.
   \item Auditory: trace who access where (extremely useful for a security breach analysis).
  \end{itemize}
- \item In terms of security threads, which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from). Practical paranoia \cite{PractCryptoSchneier}
+ \item In terms of security threads, what it's call ``\emph{thread modeling}'' which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from). Practical paranoia \cite{PractCryptoSchneier}:
+ \begin{itemize}
+  \item Identify threads
+  \item Capability attack scenario
+ \end{itemize}
  \item Cryptosystem configuration, security levels and information classification. Section \ref{sec:secLevel}. Can be saw as the nowadays number of rotors from the times of the electro-mechanical machines of last century.
  \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
  \item Cryptosystem setup reset.
@@ -301,6 +305,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
  \item This has relation with the scenarios identified in section \ref{sec:scenarios}. Specially what concerns the security thread types \cite{SecEngRossAnderson}.
+ \item How mush work it takes to break the system? What's the value of the protected system?
  \item 
  \item
 \end{itemize}
