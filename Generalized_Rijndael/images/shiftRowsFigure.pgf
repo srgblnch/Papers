@@ -1,67 +1,68 @@
+\def\origin{-3}
+\def\dest{3}
+\def\height{5}
+\def\dist{1}
+
+\tikzstyle{statecell}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+\tikzstyle{shiftedcell}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=red!20]
+
 \begin{tikzpicture}[>=latex]
+
+
 %input state matrix
-\draw (-1.0,0.0) rectangle (1.0,0.5);%row 1
-\draw (-1.0,0.5) rectangle (1.0,1.0);%row 2
-\draw (-1.0,1.0) rectangle (1.0,1.5);%row ...
-\draw (-1.0,1.5) rectangle (1.0,2.0);%row r
-\draw (-0.5,0.0) rectangle (0.0,2.0);%c
-\draw (0.5,0.0) rectangle (1.0,2.0);%c
-\draw [dotted] (-0.75,0.50) -- (-0.75,1.0);
-\draw [dotted] (-0.25,0.50) -- (-0.25,1.0);
-\draw [dotted] (0.00,1.00) -- (0.50,0.50);
-\draw [dotted] (0.00,1.25) -- (0.50,1.25);
-\draw [dotted] (0.00,1.75) -- (0.50,1.75);
+\node (s00) at (\origin,\height) [statecell] {$\mathbf{s_{00}}$};
+\node (s01) at (\origin+1*\dist,\height) [statecell] {$\mathbf{s_{01}}$};
+\node (s02) at (\origin+2*\dist,\height) [statecell] {$\mathbf{s_{02}}$};
+\node (s03) at (\origin+3*\dist,\height) [statecell] {$\mathbf{s_{03}}$};
 
-%first row
-\draw (2.50,1.5) rectangle (2.75,1.75);
-\draw (2.75,1.5) rectangle (3.00,1.75);
-\draw (3.00,1.5) rectangle (3.25,1.75);
-\draw (3.25,1.5) rectangle (3.50,1.75);
-\draw [->] (2.500,1.625)--(2.325,1.625)--(2.325,1.40)--(3.775,1.40)--(3.775,1.625)--(3.50,1.625);
-\draw [dotted] (3.0,1.625) rectangle (3.25,1.625);
-%from to:
-\draw [->](1.125,1.75)--(2.25,1.675);
-\draw [->](3.875,1.675)--(4.85,1.75);
+\node (s10) at (\origin,\height-1*\dist) [statecell] {$\mathbf{s_{10}}$};
+\node (s11) at (\origin+1*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{11}}$};
+\node (s12) at (\origin+2*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{12}}$};
+\node (s13) at (\origin+3*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{13}}$};
 
-%second row
-\draw [fill=red] (2.50,1.0) rectangle (2.75,1.25);
-\draw (2.75,1.0) rectangle (3.00,1.25);
-\draw (3.00,1.0) rectangle (3.25,1.25);
-\draw (3.25,1.0) rectangle (3.50,1.25);
-\draw [->] (2.500,1.125)--(2.325,1.125)--(2.325,0.90)--(3.775,0.90)--(3.775,1.125)--(3.50,1.125);
-\draw [dotted] (3.0,1.125) rectangle (3.25,1.125);
-%from to:
-\draw [->](1.125,1.225)--(2.25,1.125);
-\draw [->](3.875,1.125)--(4.85,1.225);
+\node (s20) at (\origin,\height-2*\dist) [statecell] {$\mathbf{s_{20}}$};
+\node (s21) at (\origin+1*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{21}}$};
+\node (s22) at (\origin+2*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{22}}$};
+\node (s23) at (\origin+3*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{23}}$};
 
-%third row
-\draw [fill=red] (2.50,0.5) rectangle (2.75,0.75);
-\draw [fill=red] (2.75,0.5) rectangle (3.00,0.75);
-\draw (3.00,0.5) rectangle (3.25,0.75);
-\draw (3.25,0.5) rectangle (3.50,0.75);
-\draw [->] (2.500,0.625)--(2.325,0.625)--(2.325,0.40)--(3.775,0.40)--(3.775,0.625)--(3.50,0.625);
-\draw [dotted] (3.00,0.625) rectangle (3.25,0.625);
-%from to:
-\draw [->](1.125,0.75)--(2.25,0.675);
-\draw [->](3.875,0.675)--(4.85,0.75);
-
-%vdots
-\draw [dotted] (3.00,0.3) -- (3.00,0.0);
-\draw [dotted] (1.75,0.5) -- (1.75,0.2);
-\draw [dotted] (4.25,0.5) -- (4.25,0.2);
+\node (s30) at (\origin,\height-3*\dist) [statecell] {$\mathbf{s_{30}}$};
+\node (s31) at (\origin+1*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{31}}$};
+\node (s32) at (\origin+2*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{32}}$};
+\node (s33) at (\origin+3*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{33}}$};
 
 %output state matrix
-\draw (5.0,0.0) rectangle (7.0,0.5);
-\draw (5.0,0.5) rectangle (7.0,1.0);
-\draw (5.0,1.0) rectangle (7.0,1.5);
-\draw (5.0,1.5) rectangle (7.0,2.0);
-\draw (5.5,0.0) rectangle (6.0,2.0);
-\draw (6.5,0.0) rectangle (7.0,2.0);
-\draw [dotted] (5.25,0.50) -- (5.25,1.0);
-\draw [dotted] (5.75,0.50) -- (5.75,1.0);
-\draw [dotted] (6.00,1.00) -- (6.50,0.50);
-\draw [dotted] (6.00,1.25) -- (6.50,1.25);
-\draw [dotted] (6.00,1.75) -- (6.50,1.75);
+\node (s00_) at (\dest,\height) [statecell] {$\mathbf{s_{00}}$};
+\node (s01_) at (\dest+1*\dist,\height) [statecell] {$\mathbf{s_{01}}$};
+\node (s02_) at (\dest+2*\dist,\height) [statecell] {$\mathbf{s_{02}}$};
+\node (s03_) at (\dest+3*\dist,\height) [statecell] {$\mathbf{s_{03}}$};
 
+\node (s11_) at (\dest,\height-1*\dist) [statecell] {$\mathbf{s_{11}}$};
+\node (s12_) at (\dest+1*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{12}}$};
+\node (s13_) at (\dest+2*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{13}}$};
+\node (s10_) at (\dest+3*\dist,\height-1*\dist) [shiftedcell] {$\mathbf{s_{10}}$};
 
+\node (s22_) at (\dest,\height-2*\dist) [statecell] {$\mathbf{s_{22}}$};
+\node (s23_) at (\dest+1*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{23}}$};
+\node (s20_) at (\dest+2*\dist,\height-2*\dist) [shiftedcell] {$\mathbf{s_{20}}$};
+\node (s21_) at (\dest+3*\dist,\height-2*\dist) [shiftedcell] {$\mathbf{s_{21}}$};
+
+\node (s33_) at (\dest,\height-3*\dist) [statecell] {$\mathbf{s_{33}}$};
+\node (s30_) at (\dest+1*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{30}}$};
+\node (s31_) at (\dest+2*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{31}}$};
+\node (s32_) at (\dest+3*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{32}}$};
+
+%arrows
+\draw (s03) -- (s00_);
+\draw[->] (s13) -- (s11_);
+\draw[->>] (s23) -- (s22_);
+\draw[->>] (s33) -- (s33_);
 \end{tikzpicture}
