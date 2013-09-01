@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{gitinfo}
 %\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) } %!!fixme!!
-\newcommand{\version}{github.Papers: 2013-08-31\;(revision a0f85e19) } %git log -n 1 --pretty=format:"%H"
+\newcommand{\version}{github.Papers: 2013-09-01\;(revision 940c1cff) } %git log -n 1 --pretty=format:"%H"
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -190,7 +190,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
         \item Non-repudiation: When a information in procured, there must be no way to cover saying ``it wasn't me''.
         \item Auditory: trace who access where (extremely useful for a security breach analysis).
     \end{itemize}
-    \item In terms of security threads, what it's call ``\emph{thread modeling}'' which is more representative from \cite{SecEngRossAnderson} for the current use case?
+    \item In terms of security threads, what it's call ``\emph{thread modeling}'' which is more representative from \cite{SecEngRossAnderson} for the current use case? Gather information also from \cite{cryptoEngineering}
     \begin{itemize}
         \item Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from).
         \item Practical paranoia \cite{PractCryptoSchneier}:
@@ -211,7 +211,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Ensuring presentation layer \label{sec:presentationLayer}}
 
 \begin{itemize}
-    \item Agent authentication in a distributed system
+    \item Agent authentication in a distributed system.
+    \begin{itemize}
+     \item Not very different than RFID systems, it has similarities and there is a German standard \cite{BSI_TR-03110} for travel documents (passports).
+    \end{itemize}
     \item Ensuring communication between agents and between those agents with the user interfaces (\atk\, and \taurus).
     \begin{itemize}
         \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change, with levels to grant access levelling.
@@ -251,7 +254,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
     \item Security levels: Open or unclassified, confidential, Secret, Top Secret.
-    \item Remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
+    \item Remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' \cite{fiche17EU}(``Exchange of EU classified information'')
     \item
     \item
 \end{itemize}
@@ -273,6 +276,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 %%%%%
 %
 \subsection{Zero-knowledge proof for authentication \label{sec:auth}}
+
 \begin{itemize}
     \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
     \item 
@@ -282,6 +286,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 %%%%%
 %
 \subsection{Secret Sharing \label{sec:secretSharing}}
+
 \begin{itemize}
     \item To allow some one access to some specific data, perhaps it can require the ``grant'' from more than one agent of the distributed system. That is, to give it the key may (k,n) must act to.
     \item Authorization units may be bigger than one agent. A (k,n)-signature to have only one to verify for all.
@@ -289,7 +294,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
     \item
 \end{itemize}
 
+%%%%
+%
 \subsection{Secret Splitting \label{sec:secretSplitting}}
+
 \begin{itemize}
     \item Multicast and event system. When a event is emitted, many would be subscribed, but encryption must be only made once.
     \item
@@ -303,6 +311,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \begin{itemize}
     \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}. Together with the contribution work of \cite{JValera11}, \cite{Ramiro05}, \cite{Rosana11}.
     \item Capability to reset a curve setup on any of those secrecy levels (section \ref{sec:secLevel})
+    \item Standards about elliptic curves; International \cite{OpenECC}, \cite{_rfc4492}, \cite{sec1}, \cite{sec2}, USA: \cite{P1363}, \cite{X9.62-1998}, German: \cite{brainpool},\cite{BSI_TR-03111}, Russian: \cite{GOSTR341001}
     \item 
     \item 
 \end{itemize}
@@ -312,6 +321,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Rijndael generalization for symmetric key \label{sec:gRijndael}}
 
 \begin{itemize}
+    \item AES contest \cite{AES-FIPS} and the book \cite{Daemen:2002:DR:560131}
     \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
     \item Current AES has advantage on 32bit processor implementation, what about 64bits
     \item AESWrap \cite{rfc3394}
