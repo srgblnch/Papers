@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{gitinfo}
 %\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) } %!!fixme!!
-\newcommand{\version}{github.Papers: 2013-08-30\;(revision 62e7f1be) } %git log -n 1 --pretty=format:"%H"
+\newcommand{\version}{github.Papers: 2013-08-31\;(revision a0f85e19) } %git log -n 1 --pretty=format:"%H"
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,44 +160,50 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Identifying scenarios \label{sec:scenarios}}
 
 \begin{itemize}
- \item Securing communications between RFID cards and an authorized reader \cite{Santi11} would be not too different than communication between two agents in a distributed system or between and agent and the element in the presentation layer.
- \item From the view from \cite{TanenbaumDistr} over the distributed system transparencies, what is implemented in \tango\, and what is not? Is any of the ``nots'' necessary to ensure a quality service.
-  \begin{table}
-  \centering{
-   \begin{tabular}{|l|l|}
-    \hline
-    Access & Hide differences in data representation and how a resource is accessed \\ \hline
-    Location & Hide where a resource is located \\ \hline
-    Migration & Hide that a resource may move to another location \\ \hline
-    Relocation & Hide that a resource may be moved to another location while in use \\ \hline
-    Replication & Hide that a resource is replicated \\ \hline
-    Concurrency & Hide that a resource may be shared by several competitive users \\ \hline
-    Failure & Hide a faulure and recovery of a resource \\ \hline
-    Persistence & Hide whether a (software) resource is in memory or on disk \\ \hline
-   \end{tabular}
-   \caption{Distributed systems transparencies \label{tab:transparencies}}}
-  \end{table}
- \item Basics:
- \begin{itemize}
-  \item Confidentiality (encryption): to ensure privacy, the information must not be accessible to unauthorized parties. Information must be disclosed only \emph{to} the authorized (and only \emph{by} the authorized, but this is in another step),
-  \item Authenticity: to ensure trustiness, the information origin must be the authorized to emit it
-  \item Integrity (authorization): only authorized can set in the system. That is, only who is authorized can change an attribute, send a command or store a property.
-  \item Availability:
-  \item Non-repudiation: When a information in procured, there must be no way to cover saying ``it wasn't me''.
-  \item Auditory: trace who access where (extremely useful for a security breach analysis).
- \end{itemize}
- \item In terms of security threads, what it's call ``\emph{thread modeling}'' which is more representative from \cite{SecEngRossAnderson} for the current use case? Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from). Practical paranoia \cite{PractCryptoSchneier}:
- \begin{itemize}
-  \item Identify threads
-  \item Capability attack scenario
- \end{itemize}
- \item Cryptosystem configuration, security levels and information classification. Section \ref{sec:secLevel}. Can be saw as the nowadays number of rotors from the times of the electro-mechanical machines of last century.
- \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
- \item Cryptosystem setup reset.
- \item Secret Shared schemas for (k,n)-to decrypt or (k,n)-signants. Section \ref{sec:secretSharing}.
- \item multicast and events (\zmq) can be scenarios of secret splitting. Section \ref{sec:secretSplitting}.
- \item 
- \item 
+    \item Securing communications between RFID cards and an authorized reader \cite{Santi11} would be not too different than communication between two agents in a distributed system or between and agent and the element in the presentation layer.
+    \item From the view from \cite{TanenbaumDistr} over the distributed system transparencies:
+    \begin{itemize}
+        \item What is implemented in \tango\, and what is not? And why?
+        \item Is any of the ``nots'' necessary to ensure a quality service.
+    \end{itemize}
+    \begin{table}
+        \centering{
+        \begin{tabular}{|l|l|}
+            \hline
+            Access & Hide differences in data representation and how a resource is accessed \\ \hline
+            Location & Hide where a resource is located \\ \hline
+            Migration & Hide that a resource may move to another location \\ \hline
+            Relocation & Hide that a resource may be moved to another location while in use \\ \hline
+            Replication & Hide that a resource is replicated \\ \hline
+            Concurrency & Hide that a resource may be shared by several competitive users \\ \hline
+            Failure & Hide a faulure and recovery of a resource \\ \hline
+            Persistence & Hide whether a (software) resource is in memory or on disk \\ \hline
+        \end{tabular}
+        \caption{Distributed systems transparencies from \cite{TanenbaumDistr} \label{tab:transparencies}}}
+    \end{table}
+    \item Basics:
+    \begin{itemize}
+        \item Confidentiality (encryption): to ensure privacy, the information must not be accessible to unauthorized parties. Information must be disclosed only \emph{to} the authorized (and only \emph{by} the authorized, but this is in another step),
+        \item Authenticity: to ensure trustiness, the information origin must be the authorized to emit it
+        \item Integrity (authorization): only authorized can set in the system. That is, only who is authorized can change an attribute, send a command or store a property.
+        \item Availability: \todo{}
+        \item Non-repudiation: When a information in procured, there must be no way to cover saying ``it wasn't me''.
+        \item Auditory: trace who access where (extremely useful for a security breach analysis).
+    \end{itemize}
+    \item In terms of security threads, what it's call ``\emph{thread modeling}'' which is more representative from \cite{SecEngRossAnderson} for the current use case?
+    \begin{itemize}
+        \item Three may types: \emph{Hospital}, \emph{Bank}, \emph{Military Base} (from where the security threads usually comes from).
+        \item Practical paranoia \cite{PractCryptoSchneier}:
+        \item Identify threads
+        \item Capability attack scenario
+    \end{itemize}
+    \item Cryptosystem configuration, security levels and information classification. Section \ref{sec:secLevel}. Can be saw as the nowadays number of rotors from the times of the electro-mechanical machines of last century.
+    \item Setup \& Public-Key distribution protocols \cite{SecEngRossAnderson} sec.3.7.2
+    \item Cryptosystem setup reset.
+    \item Secret Shared schemas for (k,n)-to decrypt or (k,n)-signants. Section \ref{sec:secretSharing}.
+    \item multicast and events (\zmq) can be scenarios of secret splitting. Section \ref{sec:secretSplitting}.
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -205,15 +211,14 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Ensuring presentation layer \label{sec:presentationLayer}}
 
 \begin{itemize}
- \item Agent authentication in a distributed system
- \item Ensuring communication between agents and between those agents with the user interfaces (\atk\, and \taurus).
- \begin{itemize}
-  \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change, with levels to grant access levelling.
-  \item This can be compared with \emph{RFID} communication between card and readers, but adding communication in between the agents
- \end{itemize}
- \item Deal with multicast can event subscription and emission.
- \item 
- \item 
+    \item Agent authentication in a distributed system
+    \item Ensuring communication between agents and between those agents with the user interfaces (\atk\, and \taurus).
+    \begin{itemize}
+        \item \emph{Command}, \emph{Attribute}, \emph{Properties}: Authenticate who can do the \emph{read} and \emph{write} operations. Encrypted logging who did any change, with levels to grant access levelling.
+    \end{itemize}
+    \item Deal with multicast can event subscription and emission.
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -221,10 +226,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Ensuring domain layer \label{sec:domainLayer}}
 
 \begin{itemize}
- \item Trusted Computing and Hardware protections: is an agent allowed to run on this specific machine? (what about transparencies)
- \item Ensure logging system
- \item 
- \item
+    \item Trusted Computing and Hardware protections: is an agent allowed to run on this specific machine? (what about transparencies)
+    \item Ensure logging system
+    \item 
+    \item
 \end{itemize}
 
 %%%%%
@@ -232,12 +237,12 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Ensuring data layer \label{sec:dataLayer}}
 
 \begin{itemize}
- \item \tango\, data base as a centralized ``phone guide''.
- \item \tango\, database access control
- \item Ensuring between instrumentation and the agents out of the scope of this paper, often is also out of the device server developer hands. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and \emph{session} layers.
- \item Homomorphic Encryption for Database access
- \item  
- \item 
+    \item \tango\, data base as a centralized ``phone guide''.
+    \item \tango\, database access control
+    \item Ensuring between instrumentation and the agents out of the scope of this paper, often is also out of the device server developer hands. This is a very dependant on the instrumentation manufacturers. From the iso layer level view, even if the access to the hardware is not networked, the agent communication to the instrumentation is \emph{data link layer} and this paper is focus in \emph{transport} and \emph{session} layers.
+    \item Homomorphic Encryption for Database access
+    \item  
+    \item 
 \end{itemize}
 
 %%%%%
@@ -245,10 +250,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Security levels \label{sec:secLevel}}
 
 \begin{itemize}
- \item Security levels: Open or unclassified, confidential, Secret, Top Secret.
- \item Remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
- \item
- \item
+    \item Security levels: Open or unclassified, confidential, Secret, Top Secret.
+    \item Remember the German standard on this levelling and the European commission ``\emph{fiche 17}'' (``Exchange of EU classified information'')
+    \item
+    \item
 \end{itemize}
 
 %%%%%
@@ -256,39 +261,39 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Communication hybrid schema \label{sec:intercom}}
 
 \begin{itemize}
- \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves (section \ref{sec:ecpk}), generalized Rijndael (section \ref{sec:gRijndael}) and stream cipher (section \ref{sec:kdfStreaming})}.
- \item Public-key to agreed a season key as the usual hybrid systems. This session keys shall be used for symmetric or stream cyphering.
- \item Session keys refresh.
- \item Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers
- \item \emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivationFunction (KDF) of the Rijndael or better other possible alternatives
- \item 
- \item 
+    \item Embedded in instrumentation, limited calculation capacity (it must behave indistinguishable if it's a huge server or an embedded board), limited bandwidth (Don't increase the current needs significantly): \emph{very good candidate for elliptic curves (section \ref{sec:ecpk}), generalized Rijndael (section \ref{sec:gRijndael}) and stream cipher (section \ref{sec:kdfStreaming})}.
+    \item Public-key to agreed a season key as the usual hybrid systems. This session keys shall be used for symmetric or stream cyphering.
+    \item Session keys refresh.
+    \item Use the Symmetric key to seed a shared PseudoRandomGenerator as a key for a stream cipher of transmitted data and listened data between talkers
+    \item \emph{PseudoRandomGenerator} (PRG), can be use the KeyDerivationFunction (KDF) of the Rijndael or better other possible alternatives
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
 %
 \subsection{Zero-knowledge proof for authentication \label{sec:auth}}
 \begin{itemize}
- \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
- \item 
- \item 
+    \item The agents in the distributed system must be authenticated to be sure that they hasn't been supplanted
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
 %
 \subsection{Secret Sharing \label{sec:secretSharing}}
 \begin{itemize}
- \item To allow some one access to some specific data, perhaps it can require the ``grant'' from more than one agent of the distributed system. That is, to give it the key may (k,n) must act to.
- \item Authorization units may be bigger than one agent. A (k,n)-signature to have only one to verify for all.
- \item
- \item
+    \item To allow some one access to some specific data, perhaps it can require the ``grant'' from more than one agent of the distributed system. That is, to give it the key may (k,n) must act to.
+    \item Authorization units may be bigger than one agent. A (k,n)-signature to have only one to verify for all.
+    \item
+    \item
 \end{itemize}
 
 \subsection{Secret Splitting \label{sec:secretSplitting}}
 \begin{itemize}
- \item Multicast and event system. When a event is emitted, many would be subscribed, but encryption must be only made once.
- \item
- \item
+    \item Multicast and event system. When a event is emitted, many would be subscribed, but encryption must be only made once.
+    \item
+    \item
 \end{itemize}
 
 %%%%%
@@ -296,10 +301,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Elliptic curves for public key \label{sec:ecpk}}
 
 \begin{itemize}
- \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}. Together with the contribution work of \cite{JValera11}, \cite{Ramiro05}, \cite{Rosana11}.
- \item Capability to reset a curve setup on any of those secrecy levels (section \ref{sec:secLevel})
- \item 
- \item 
+    \item Set institution set of curves with different sizes for different level of secrecy (or even different curves for a separable sets in the same secrecy level). Isogeny volcanoes \cite{secRickShareECs}. Together with the contribution work of \cite{JValera11}, \cite{Ramiro05}, \cite{Rosana11}.
+    \item Capability to reset a curve setup on any of those secrecy levels (section \ref{sec:secLevel})
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -307,11 +312,11 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Rijndael generalization for symmetric key \label{sec:gRijndael}}
 
 \begin{itemize}
- \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
- \item Current AES has advantage on 32bit processor implementation, what about 64bits
- \item AESWrap \cite{rfc3394}
- \item Secrecy levels (section \ref{sec:secLevel})
- \item 
+    \item How to decide the good parameters of Rijndael? (\#rounds,\#rows,\#columns,wordsize of the block and the key) \cite{gRijndael}
+    \item Current AES has advantage on 32bit processor implementation, what about 64bits
+    \item AESWrap \cite{rfc3394}
+    \item Secrecy levels (section \ref{sec:secLevel})
+    \item 
 \end{itemize}
 
 %%%%%
@@ -319,17 +324,18 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Key Derivation Functions for stream ciphering \label{sec:kdfStreaming}}
 
 \begin{itemize}
- \item 
- \item 
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
 %
 \subsection{Homomorphic Encryption \label{sec:Homorph}}
+
 \begin{itemize}
- \item Introduce the meaning of the private database query system \cite{iacr422}
- \item 
- \item 
+    \item Introduce the meaning of the private database query system \cite{iacr422}
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -337,10 +343,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Brainstorming attacks \label{sec:attacks}}
 
 \begin{itemize}
- \item This has relation with the scenarios identified in section \ref{sec:scenarios}. Specially what concerns the security thread types \cite{SecEngRossAnderson}.
- \item How mush work it takes to break the system? What's the value of the protected system?
- \item 
- \item
+    \item This has relation with the scenarios identified in section \ref{sec:scenarios}. Specially what concerns the security thread types \cite{SecEngRossAnderson}.
+    \item How mush work it takes to break the system? What's the value of the protected system?
+    \item 
+    \item
 \end{itemize}
 
 %%%%%
@@ -348,10 +354,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Passive attacks \label{sec:passiveAttacks}}
 
 \begin{itemize}
- \item Eavesdropping
- \item Noise to block an alarm transmission
- \item 
- \item 
+    \item Eavesdropping
+    \item Noise to block an alarm transmission
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -359,11 +365,11 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Active attacks \label{sec:activeAttacks}}
 
 \begin{itemize}
- \item Men-in-the-middle (active attacks) between agents
- \item Interruption: Break the public face, web site or gui. Kill a vital agent.
- \item Modification/Fabrication: Supplant agents.
- \item 
- \item 
+    \item Men-in-the-middle (active attacks) between agents
+    \item Interruption: Break the public face, web site or gui. Kill a vital agent.
+    \item Modification/Fabrication: Supplant agents.
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -371,8 +377,8 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Side channel attacks \label{sec:sideChannelAttacks}}
 
 \begin{itemize}
- \item
- \item 
+    \item
+    \item 
 \end{itemize}
 
 %%%%%
@@ -380,8 +386,8 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Attacks countermeasures \label{sec:countermeasures}}
 
 \begin{itemize}
- \item
- \item 
+    \item
+    \item 
 \end{itemize}
 
 %%%%%
@@ -389,9 +395,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Intrusion Detection \label{sec:intrusionDetection}}
 
 \begin{itemize}
- \item Detection and recovery
- \item 
- \item 
+    \item Detection and recovery
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -399,9 +405,9 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Conclusions \label{sec:conclusions}}
 
 \begin{itemize}
- \item All those fields mention on this paper requires a much further detailed paper each.
- \item 
- \item
+    \item All those fields mention on this paper requires a much further detailed paper each.
+    \item 
+    \item
 \end{itemize}
 
 %%%%%
@@ -409,12 +415,12 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Protocols \label{sec:protocols}}
 
 \begin{itemize}
- \item Protocol layers \cite{Schneier:1995:ACP:572932}
- \item Security architecture patterns
- \item Trust ring vs. trust tree (institution CA until the leaves)
- \item Streaming protection systems (specially for DevEncoded transmission of big images when fast acquisitions)
- \item 
- \item 
+    \item Protocol layers \cite{Schneier:1995:ACP:572932}
+    \item Security architecture patterns
+    \item Trust ring vs. trust tree (institution CA until the leaves)
+    \item Streaming protection systems (specially for DevEncoded transmission of big images when fast acquisitions)
+    \item 
+    \item 
 \end{itemize}
 
 %%%%%
@@ -422,11 +428,11 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Environmental IT Security \label{sec:environment}}
 
 \begin{itemize}
- \item The weakest brick: secure the transmission but store in a plain file system
- \item Human behaviour and psychology.
- \item ISO/IEC 27000-series
- \item 
- \item
+    \item The weakest brick: secure the transmission but store in a plain file system
+    \item Human behaviour and psychology.
+    \item ISO/IEC 27000-series
+    \item 
+    \item
 \end{itemize}
 
 %%%%%
@@ -434,10 +440,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \subsection{Further work \label{sec:further}}
 
 \begin{itemize}
-\item \atk/ \taurus\, user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
-\item In all the algorithms on this paper this must be taken into account to minimize redesigns.
-\item
-\item
+    \item \atk/ \taurus\, user authentication using PAM system (or equivalent in non unix-like systems). Any other user interface that can access tango.
+    \item In all the algorithms on this paper this must be taken into account to minimize redesigns.
+    \item
+    \item
 \end{itemize}
 
 
