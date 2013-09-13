@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{gitinfo}
 %\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) } %!!fixme!!
-\newcommand{\version}{github.Papers: 2013-09-01\;(revision 900a569b) } %git log -n 1 --pretty=format:"%H"
+\newcommand{\version}{github.Papers: 2013-09-13\;(revision 2472c950) } %git log -n 1 --pretty=format:"%H"
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,6 +28,7 @@
 \newcommand{\atk}{\textsc{Atk}}
 \newcommand{\zmq}{\textsc{$\varnothing$mq}}
 \newcommand{\corba}{\textsc{Corba}}
+\newcommand{\mambo}{\textsc{Mambo}}
 
 %opening
 \title{Securing \tango\, Control System: A brain storming}
@@ -39,6 +40,8 @@
  Departament de Matem\`atica. Universitat de Lleida. Spain.\\
  \email{\tt \{miret,ramiro,fsebe\}@matematica.udl.es}
  }
+%% TODO; Fernando Cores can help a lot in this project
+
 
 %%% Definiciones matem\'aticas especiales
 
@@ -93,9 +96,10 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Introduction \label{sec:introduction}}
 
 \begin{itemize}
+    \item \tango\, as an \emph{Industrial Control System} (ICS), that with some extra pieces becomes a \emph{Supervisory Control And Data Acquisition} (SCADA) (like \atk\, and also what \sardana\, and \taurus\, does, goes further). As will be explained in \ref{sec:further}, ensure \sardana, \taurus\, and \atk\, is out of the scope of this paper, except for those things that defines the interaction with \tango. Don't forget to mention the \mambo (the archiver).
     \item \tango\, is a distributed control system with a middlewares: \corba\, (\emph{omniORB}) for the synchronous and asynchronous, and \zmq\, for the event based communication.
     \item It is \emph{free software} developed by a consortium of 9 research institutes. The core is licensed as \emph{LGPLv3} and their developed agents in the distributed system are released with \emph{GPLv3}.
-    \item \tango\, is basically the \emph{transportation} layer in the OSI schema. There is also \atk, \taurus\, and \sardana that adds the skills of the \emph{session} and \emph{presentation} layers. They are keystone in the development of a functional system, but perhaps some aspects of their securing left out the scope of this paper.
+    \item \tango\, is basically the \emph{transportation} layer in the OSI schema. There is also \atk, \taurus\, and \sardana\, that adds the skills of the \emph{session} and \emph{presentation} layers. They are keystone in the development of a functional system, but perhaps some aspects of their securing left out the scope of this paper.
     \item Nowadays tango is has an active support for development in 9 scientific research institutions, as well as other projects uses it. The industry has made a first approach in the $27^{th}$ tango-meeting held in the Alba Synchrotron. This request has come from Onera (French aerospace lab), but not only aerospace industry can use tango when it reaches the milestone of security. There is a broad spectrum of potential stakeholders with a huge request on security, in terms of cryptography, like energy generation and delivery, home automation, car manufacturers, and many more.
 \end{itemize}
 
@@ -120,7 +124,17 @@ It is very important goal to have the \tango\, implementation as Free Software, 
     \end{figure}
     \begin{itemize}% resume the itemize
     \item What is the meaning of a secure system? What is security in a distributed system?
-    \item \tango\, as an Industrial Control System (ICS), that with some extra pieces becomes a Supervisory Control And Data Acquisition (SCADA) (like \atk\, and also what \sardana\, and \taurus\, does, goes further). As will be explained in \ref{sec:further}, ensure \sardana, \taurus\, and \atk\, is out of the scope of this paper, except for those things that defines the interaction with \tango.
+    
+\end{itemize}
+
+%%%%
+%
+\subsection{Use examples \label{sec:useExamples}}
+
+\begin{itemize}
+    \item The example of a laboratory use: Optics Lab \emph{Long Term Profile} (LTP) for mirrors surface characterization in the angstr\"oms (1\AA{} = $1\times10^{-10}m$) range.
+    \item The example of a beamline use.
+    \item The example of an accelerator use with all the subsystems working together.
 \end{itemize}
 
 %%%%
@@ -345,6 +359,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 
 \begin{itemize}
     \item Introduce the meaning of the private database query system \cite{iacr422}
+    \item \todo{Search for references from \emph{Josep Domingo Ferrer} (from the Rovira i Virgili, PhD director of F.Seb\'e}
     \item 
     \item 
 \end{itemize}
