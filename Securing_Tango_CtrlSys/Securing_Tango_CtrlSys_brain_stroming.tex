@@ -30,13 +30,13 @@
 
 %opening
 \title{Securing \tango\, Control System: A brain storming}
-\author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}}
+\author{Sergi Blanch-Torn\'e\inst{1}, Josep Maria Miret Biosca\inst{2}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}}
  \institute{
  Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
  \email{\tt sblanch@alumnes.udl.es}
  \and 
  Departament de Matem\`atica. Universitat de Lleida. Spain.\\
- \email{\tt ramiro@matematica.udl.es}
+ \email{\tt {miret,ramiro,fsebe}@matematica.udl.es}
  }
 
 %%% Definiciones matem\'aticas especiales
@@ -92,7 +92,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 \section{Introduction \label{sec:introduction}}
 
 \begin{itemize}
-    \item \tango\, is a distributed control system with a middlewares: \corba\, (\emph{omniORB}) for the synchronous and asynchronous, and \zmq for the event based communication.
+    \item \tango\, is a distributed control system with a middlewares: \corba\, (\emph{omniORB}) for the synchronous and asynchronous, and \zmq\, for the event based communication.
     \item It is \emph{free software} developed by a consortium of 9 research institutes. The core is licensed as \emph{LGPLv3} and their developed agents in the distributed system are released with \emph{GPLv3}.
     \item \tango\, is basically the \emph{transportation} layer in the OSI schema. There is also \atk, \taurus\, and \sardana that adds the skills of the \emph{session} and \emph{presentation} layers. They are keystone in the development of a functional system, but perhaps some aspects of their securing left out the scope of this paper.
     \item Nowadays tango is has an active support for development in 9 scientific research institutions, as well as other projects uses it. The industry has made a first approach in the $27^{th}$ tango-meeting held in the Alba Synchrotron. This request has come from Onera (French aerospace lab), but not only aerospace industry can use tango when it reaches the milestone of security. There is a broad spectrum of potential stakeholders with a huge request on security, in terms of cryptography, like energy generation and delivery, home automation, car manufacturers, and many more.
