@@ -1,6 +1,7 @@
 %\documentclass[a4paper,10pt]{article}
 \documentclass[10pt,a4paper,twoside]{llncs}
 \usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\setcounter{secnumdepth}{3}%to set numbering over subsubsections
 %\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
@@ -21,10 +22,10 @@
 
 %opening
 \title{Security risk associated with multiple users sharing the same elliptic curve}
-\author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}}
+\author{Sergi Blanch-Torn\'e\inst{1}, Ramiro Moreno Chiral\inst{2}, Francesc Seb\'e Feixa\inst{2}, Javier Varela Martin\inst{1}}
  \institute{
  Escola Polit\`ecnica Superior, Universitat de Lleida. Spain.\\
- \email{\tt sblanch@alumnes.udl.es}
+ \email{\tt \{sblanch,jvarela\}@alumnes.udl.es}
  \and 
  Departament de Matem\`atica. Universitat de Lleida. Spain.\\
  \email{\tt \{ramiro,fsebe\}@matematica.udl.es}
@@ -65,7 +66,6 @@
 
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
-\fixme{this probably is too long}
 One of the main good features of the elliptic curves is the possibility to change the group where the cryptography is based, without a penalty by increase the length of this group. Using a different elliptic curve, the cyclic subgroup is completely different and the cryptanalysis that someone can have in progress, over this curve is useless over another curve over the same finite field size. The complexity to port an attack from one curve to another can be even bigger than restart the attack over the second one from scratch.
 
 Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, almost all the users will share the same domain parameters.
@@ -407,6 +407,11 @@ The steps of the algorithm \ref{alg:scratch} can be performed in many ways to tr
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{From a fixed cardinality and Finite Field}
+
+\todo{Complex multiplication from P1363 (p.147)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Find a good elliptic curve from another good one \label{sec:from_another}}
 %% knowing one good curve, is there any way to transform it to another one who still have the good properties, without the issues of the first, and without a portable cryptanalysis?
 
@@ -420,7 +425,7 @@ One proposed way to have this requirements are the elliptic curve isogenies. The
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What is elliptic curve isogeny? \label{sec:isog}}
 
-The concept of \emph{isogeny} describes a particular case of an \emph{isomorphism}, the first thing to be formally defined is the isomorphism.
+The concept of \emph{isogeny} describes a particular case of an \emph{morphism}, the first thing to be formally defined is the isomorphism.
 
 \begin{definition}\label{def:isomorphism}
  Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$ with an equations in the Weierstra\ss{} Normal Form described in \ref{eq:WNF}, an isomorphism over the field is when exist $u,r,s,t\in\mathbb{K}$ with $u\neq0$, such a variable change:
@@ -435,10 +440,10 @@ In case that the curves have the equation in the Weierstra\ss{} Reduced Form des
 
 The relation of isomorphism is an equivalence relation in a set of the elliptic curves, defined over the same field, where all the curves in the class have the set of $\mathbb{K}$-rational points isomorphic also. Remember from the definition \ref{def:cardinality}, the $\mathbb{K}$-rational points defines the \emph{cardinality} of the elliptic curve, then when two curves are isomorphic, they have the same cardinality.
 
-As has been say at the beginning of this section, the isogenies are a particular case of isomorphisms.
+As has been say at the beginning of this section, the isogenies are a particular case of morphisms.
 
 \begin{definition}\label{def:isogeny}
- Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an isomorphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
+ Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an morphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
 
 \begin{equation}\label{eq:isogenia}
         \begin{array}{cccc}
