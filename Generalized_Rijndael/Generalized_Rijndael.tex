@@ -72,7 +72,13 @@
 \end{center}
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
- \todo{this article comes from a real request, for small block cipher, but the tuneable parameters in rijndael creates the idea to, further than an small version, it can be generalized}
+\begin{itemize}
+ \item \todo{Why to generalize?}
+ \item \todo{Encrypt data much smaller than current block sizes}
+ \item \todo{Why not other lightweight cyphers?}
+ \item \todo{Can current 64 bit architectures take advantage with different \emph{Rijndael} configurations?}
+ \item \todo{Can the generalization increase the like of the algorithm?}
+\end{itemize}
 \\\\    
 {\bf Keywords:} Cryptography, Symmetric, Rijndael
 \end{abstract}
@@ -90,6 +96,9 @@
   \item January 1997: NIST announce that is seeking a replacement for the DES. 15 ``opponents'' (plus other 10 rejected due to security or efficiency reasons). \cite{Daemen98aesproposal:} and \cite{Daemen:1998:BCR:646692.759487} in 1998 for AES candidate.
   \item August 1999: five finalists. Rjindael revised \cite{Daemen01aes-ammended}.
   \item Rijndael chosen as AES in October 2000 \cite{AES-FIPS}.
+  \begin{itemize}
+   \item What checks gives the victory to the \emph{Rijndael}.
+  \end{itemize}
   \item and the \cite{Daemen:2002:DR:560131} book publish in 2002.
  \end{itemize}
 \end{itemize}
@@ -779,6 +788,8 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
 % because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
 \begin{itemize}
  \item \todo{With the newer architectures (64bits) which parameter changes can improve the cost of the rijndael?} \cite{Daemen:1999:EBC:1267115.1267119}
+ \item Small sizes of \emph{Rijndael} vs. lightweight alternatives (like \emph{Present}: $64b$ block with keys between $80b$ and $128b$.
+ \item Check the AES contest tests with those new sizes
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
