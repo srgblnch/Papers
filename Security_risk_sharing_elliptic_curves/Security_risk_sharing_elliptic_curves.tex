@@ -70,6 +70,8 @@ One of the main good features of the elliptic curves is the possibility to chang
 
 Also as is said in section 5.1 of \cite{X9.62-1998}, the security in elliptic curves doesn't rely on the secrecy of the domain parameters, the risk is when multiple users shares the same elliptic curve parameters. The current standardization \cite{rfc6637} flow goes in the way to have one curve per length and three possible lengths. That means more than multiple users with the same domain parameters, almost all the users will share the same domain parameters.
 
+\todo{Currently there have been concerns about weaknesses in the curves of the NSA to NIST issued (those used in \cite{rfc6637}). Highlights questions about the computational efficiency by using curves with $a\equiv-3\;(mod\,p)$. Cite the references from D.J. Bernstein and Tanja Lange}
+
 It is a request for this standard to find a way to add variability between the used elliptic curves, and in this paper two ways are be explored. Both ways likes to get an \emph{auditable} algorithm to the final user to get its particular elliptic curve. The difference between this two approaches is if the algorithm starts from scratch or starts from one cryptographically good curve.
 \\\\    
 {\bf Keywords:} Cryptography, Elliptic Curves, Isogeny
@@ -399,20 +401,23 @@ First approach is the algorithm \ref{alg:scratch}, that consist simply by genera
 \todo{This algorithm \ref{alg:verifiablyX9.62} has many similarities with the \ref{alg:verifiablyP1363}, but excludes the calculation of $n$,$h$ and $G$. Explain the procedure and its pros and cons}
 
 The steps of the algorithm \ref{alg:scratch} can be performed in many ways to try to reduce the execution time. The cardinal calculation can be using the \emph{SEA} algorithm  and the \emph{Hasse interval} (definition \ref{def:Hasse}) check can be optimized to avoid unnecessary operation, but in a final implementation all this code must be written aware of the side channel attacks. The factorization of the cardinal allows the possibility to only tries to find a little cofactor and check the primary on the $n$ candidate.
+
 \fixme{with the SEA algorithm, the citation of the article is need}
 
-\todo{Compare the costs of those three algorithms, in time and memory. To do that make them equivalents, by adding to algorithm \ref{alg:verifiablyX9.62} the calculation of $n$ and $G$. Use the same than algorithm \ref{alg:verifiablyP1363}, because they look very similar}
+\todo{Compare the costs of those three algorithms (serial version), in time and memory. To do that make them equivalents, by adding to algorithm \ref{alg:verifiablyX9.62} the calculation of $n$ and $G$. Use the same than algorithm \ref{alg:verifiablyP1363}, because they look very similar}
+
+\todo{What can be parallelize? Even that a key generation must be thought for the slowest case (an smardcard or an embedded system) it can be good to compare which is the advantage of parallelization.}
 
 \todo{Approach to the number of good curves instead of the number of possible curves in a list. Get it form a huge list (can be OIDs) excludes too much curves, and I cannot be sure from where they come from (extreme paranoia, try to dress this)}
 \cite{DAS_guide}% sec 4.7: how many elliptic curves
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{From a fixed cardinality and Finite Field}
+\section{Get an elliptic curve from a fixed cardinality and Finite Field}
 
 \todo{Complex multiplication from P1363 (p.147)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Find a good elliptic curve from another good one \label{sec:from_another}}
+\section{Get an elliptic curve from another good one \label{sec:from_another}}
 %% knowing one good curve, is there any way to transform it to another one who still have the good properties, without the issues of the first, and without a portable cryptanalysis?
 
 Another method than get a curve from scratch of section \ref{sec:scratch} is to find a cryptographically good curve based on another curve using a procedure who maintains the good skills and protect the new one from the bad ones as much as possible. The main objective is to avoid the portability of the cryptanalysis from the first curve to the new one, without create any other weakness in the procedure or the new one it self.
@@ -425,43 +430,47 @@ One proposed way to have this requirements are the elliptic curve isogenies. The
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What is elliptic curve isogeny? \label{sec:isog}}
 
-The concept of \emph{isogeny} describes a particular case of an \emph{morphism}, the first thing to be formally defined is the isomorphism.
+%The concept of \emph{isogeny} describes a particular case of an \emph{morphism}, the first thing to be formally defined is the isomorphism.
 
-\begin{definition}\label{def:isomorphism}
- Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$ with an equations in the Weierstra\ss{} Normal Form described in \ref{eq:WNF}, an isomorphism over the field is when exist $u,r,s,t\in\mathbb{K}$ with $u\neq0$, such a variable change:
-\begin{equation}\label{eq:isomorphisminWNF}
- (x,y) \rightarrow (u^2x+r,u^3y+u^2sx+t)
-\end{equation}
-In case that the curves have the equation in the Weierstra\ss{} Reduced Form describer in \ref{eq:WRF}, the variable change is simplified being:
-\begin{equation}\label{eq:isomorphisminWRF}
- (x,y) \rightarrow (u^2x,u^3y)
-\end{equation}
-\end{definition}
+%\begin{definition}\label{def:isomorphism}
+% Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$ with an equations in the Weierstra\ss{} Normal Form described in \ref{eq:WNF}, an isomorphism over the field is when exist $u,r,s,t\in\mathbb{K}$ with $u\neq0$, such a variable change:
+%\begin{equation}\label{eq:isomorphisminWNF}
+% (x,y) \rightarrow (u^2x+r,u^3y+u^2sx+t)
+%\end{equation}
+%In case that the curves have the equation in the Weierstra\ss{} Reduced Form describer in \ref{eq:WRF}, the variable change is simplified being:
+%\begin{equation}\label{eq:isomorphisminWRF}
+% (x,y) \rightarrow (u^2x,u^3y)
+%\end{equation}
+%\end{definition}
 
-The relation of isomorphism is an equivalence relation in a set of the elliptic curves, defined over the same field, where all the curves in the class have the set of $\mathbb{K}$-rational points isomorphic also. Remember from the definition \ref{def:cardinality}, the $\mathbb{K}$-rational points defines the \emph{cardinality} of the elliptic curve, then when two curves are isomorphic, they have the same cardinality.
+%The relation of isomorphism is an equivalence relation in a set of the elliptic curves, defined over the same field, where all the curves in the class have the set of $\mathbb{K}$-rational points isomorphic also. Remember from the definition \ref{def:cardinality}, the $\mathbb{K}$-rational points defines the \emph{cardinality} of the elliptic curve, then when two curves are isomorphic, they have the same cardinality.
 
-As has been say at the beginning of this section, the isogenies are a particular case of morphisms.
+%As has been say at the beginning of this section, the isogenies are a particular case of morphisms.
+
+\todo{Introduce the definition with a friendly text}
 
 \begin{definition}\label{def:isogeny}
- Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an morphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
+ %Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an morphism with coefficients in the field $\mathbb{K}$ (exist a map between all the points of the initial elliptic curve $E$ to the final elliptic curve $E'$) where the neutral element of the elliptic curve $E/\mathbb{K}$ is mapped to the neutral element of the elliptic curve $E'/\mathbb{K}$.
+ Given two elliptic curves $E/\mathbb{K}$ and $E'/\mathbb{K}$, they are \emph{isogenies over $\mathbb{K}$} \emph{if and only if} exist an application between them that is a morphism between their corresponding sets of points over those curves.
 
 \begin{equation}\label{eq:isogenia}
         \begin{array}{cccc}
                 \mathcal{I}: & E/\mathbb{K} & \rightarrow & E'/\mathbb{K} \\
-                \;           & (x,y)        & \mapsto     & (X,Y) \\
+                \;           & (x,y)        & \mapsto     & (x',y') \\
                 \;           & \mathcal{O}_{E} & \mapsto  & \mathcal{O}_{E'} \\
         \end{array}
 \end{equation}
 
-Where $X$ and $Y$ responds to $X=f_{1}(x)$ and $Y=f_{2}(x,y)$. As $f_{1}$ like $f_{2}$ are functions $\mathbb{K}$-rational.
+Where $x'$ and $y'$ responds to $x'=f_{1}(x)$ and $y'=f_{2}(x,y)$. As $f_{1}$ like $f_{2}$ are functions $\mathbb{K}$-rational.
 \end{definition}
+\fixme{Would be better to define what is an isogeny when the elliptic curve is over finite fields, because is much simpler and the more general definition over a field $\mathbb{K}$ is not providing any benefit. Review with the definition used in Ramiro's thesis (\cite{ramiro05} page 23) where is used the definition from [Hus04] Th12 (8.4)}
 
 An isogeny $\mathcal{I}$ is an exhaustive application. Except in the case that the isogeny is like $\mathcal{I}(E)=\{\mathcal{O}\}$, when is said as constant, then exist a unique isogeny: $\widehat{\mathcal{I}}:E' \rightarrow E$ called the \emph{dual isogeny}.
 
 \fixme{Modular equation (symmetric polynomial of degree $\ell+1$)?}
 
 From this definition \ref{def:isogeny} must be extracted that the cardinality of the elliptic curve is maintained, and they have the same value for both curves. Also is important to remark that the neutral element is constant in the transformation:
- \begin{equation}\label{eq:isoPaI}
+\begin{equation}\label{eq:isoPaI}
         \mathcal{I}\left(\PaIe\right) = \mathcal{O}_{E'}
 \end{equation}
 
