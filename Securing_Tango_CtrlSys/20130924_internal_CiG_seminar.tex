@@ -1,5 +1,6 @@
 \documentclass{beamer}
 %\documentclass[handout]{beamer}
+\usetheme{Darmstadt}
 
 \usepackage[utf8]{inputenc}
 \usepackage{default}
@@ -41,9 +42,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
+\subsection{Definitions}
+
 %------------------------------------ Frame 1.1 ------------------------------%
 \begin{frame}
-\frametitle{What is an ICS?}
+\frametitle{What is an Industrial Control System? (ICS)}
     \begin{block}{\href{http://en.wikipedia.org/wiki/Industrial_Control_System}{Wikipedia's definition (en)}}
         ``It is a general term that encompasses several types of control systems used in industrial production, including \emph{supervisory control and data acquisition} (SCADA) systems, \emph{distributed control systems} (DCS), and other smaller control system configurations such as \emph{programmable logic controllers} (PLC) often found in the industrial sectors and critical infrastructures.''
     \end{block}
@@ -100,7 +103,7 @@
 
 %------------------------------------ Frame 1.6 ------------------------------%
 \begin{frame}
-\frametitle{What is a \tango? (III)}
+\frametitle{What is a \tango? (iIII)}
     \begin{block}{\tango\, parts}
         \begin{itemize}
             \item \tango\, core $\Rightarrow$ the Middleware
@@ -111,6 +114,10 @@
         \todo{Draw a nice picture about what those three things are...}
     \end{exampleblock}
     \begin{block}{What has an Agent (a device)}
+        \begin{itemize}
+            \item Data types: Boolean, [U]Short, [U]Long[64], Double, String
+            \item Data dimensions: Scalar, Spectrum, Image
+        \end{itemize}
         \todo{commands,attributes and properties}
     \end{block}
 % communications:
@@ -128,22 +135,21 @@
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Use cases of \tango}
 
-%------------------------------------ Frame 2.1 ------------------------------%
+%------------------------------------ Frame 1.7 ------------------------------%
 \begin{frame}
 \frametitle{Optics Lab: Long Term Profiler}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 2.2 ------------------------------%
+%------------------------------------ Frame 1.8 ------------------------------%
 \begin{frame}
 \frametitle{A beamline}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 2.3 ------------------------------%
+%------------------------------------ Frame 1.9 ------------------------------%
 \begin{frame}
 \frametitle{Control a synchrotron accelerator}
 \end{frame}
@@ -152,26 +158,77 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Identify Scenarios}
 
-%Distributed system scenarios
+\subsection{In distributed system}
 
-%------------------------------------ Frame 3.1 ------------------------------%
+%------------------------------------ Frame 2.1 ------------------------------%
 \begin{frame}
 \frametitle{Against the transparencies}
+    \begin{tabular}{|l|l|}
+        \hline
+        Access & Hide differences in data representation and how a resource is accessed \\ \hline
+        Location & Hide where a resource is located \\ \hline
+        Migration & Hide that a resource may move to another location \\ \hline
+        Relocation & Hide that a resource may be moved to another location while in use \\ \hline
+        Replication & Hide that a resource is replicated \\ \hline
+        Concurrency & Hide that a resource may be shared by several competitive users \\ \hline
+        Failure & Hide a faulure and recovery of a resource \\ \hline
+        Persistence & Hide whether a (software) resource is in memory or on disk \\ \hline
+    \end{tabular}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 3.2 ------------------------------%
+%------------------------------------ Frame 2.2 ------------------------------%
 \begin{frame}
 \frametitle{Against the layers}
+    \begin{figure}[h]
+        \centering{
+        %\resizebox{0.5\textwidth}{!}{\input{imgs/TanenbaumDistributedSystemOrganization.tex}}
+        \includegraphics[width=0.5\textwidth]{imgs/TanenbaumDistributedSystemOrganization.png}
+        \caption{From \cite{TanenbaumDistr}, A distributed system organized as middleware} \label{fig:TanenbaumDistributedSystemOrganization}}
+    \end{figure}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+\subsection{In security Engineering}
+
+%------------------------------------ Frame 2.3 ------------------------------%
+\begin{frame}
+\frametitle{Basics}
+    \begin{itemize}
+        \item Confidentiality
+        \item Authenticity
+        \item Integrity
+        \item Availability
+        \item Non-repudiation
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Security levels}
 
-%------------------------------------ Frame 4.1 ------------------------------%
+\subsection{Security threads}
+
+%------------------------------------ Frame 3.1 ------------------------------%
 \begin{frame}
 \frametitle{Security levels}
+    
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+\subsection{Labelling}
+
+%------------------------------------ Frame 3.2 ------------------------------%
+\begin{frame}
+\frametitle{Security levels}
+    European commission \emph{fiche 17} \\``Exchange of EU classified information'' \cite{fiche17EU}
+    \begin{itemize}
+        \item Open or Unclassified
+        \item Confidential
+        \item Secret
+        \item Top-Secret
+    \end{itemize}
+
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -184,19 +241,25 @@
 % - solutions for events
 % secure the tango-db access: query and write
 
-%------------------------------------ Frame 5.1 ------------------------------%
+\subsection{Authentication}
+
+%------------------------------------ Frame 4.1 ------------------------------%
 \begin{frame}
 \frametitle{Authentication}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 5.2 ------------------------------%
+\subsection{Encryption}
+
+%------------------------------------ Frame 4.2 ------------------------------%
 \begin{frame}
 \frametitle{Encryption}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 5.3 ------------------------------%
+\subsection{Database}
+
+%------------------------------------ Frame 4.3 ------------------------------%
 \begin{frame}
 \frametitle{Database access}
 \end{frame}
@@ -210,7 +273,7 @@
 %scholar
 %dblp
 
-%------------------------------------ Frame 6.1 ------------------------------%
+%------------------------------------ Frame 5.1 ------------------------------%
 \begin{frame}
 \frametitle{Reference Papers}
 \end{frame}
@@ -219,7 +282,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reference journals and conferences}
 
-%------------------------------------ Frame 7.1 ------------------------------%
+%------------------------------------ Frame 6.1 ------------------------------%
 \begin{frame}
 \frametitle{Reference journals and conferences}
 \end{frame}
@@ -230,7 +293,7 @@
         \frametitle{References}
         %\bibliographystyle{amsalpha}
         \bibliographystyle{ieeetr}
-        \bibliography{../bibtex/books.bib}
+        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,}
 \end{frame}
 
 
