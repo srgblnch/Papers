@@ -1,0 +1,176 @@
+\documentclass{beamer}
+%\documentclass[handout]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+
+\newcommand{\tango}{\textsc{Tango}}
+\newcommand{\corba}{\textsc{Corba}}
+\newcommand{\onmiORB}{\textsc{omniORB}}
+\newcommand{\zmq}{\textsc{$\varnothing$mq}}
+\newcommand{\mysql}{\textsc{MySQL}}
+\newcommand{\sardana}{\textsc{Sardana}}
+\newcommand{\mambo}{\textsc{Mambo}}
+\newcommand{\atk}{\textsc{Atk}}
+\newcommand{\taurus}{\textsc{Taurus}}
+
+\title[Securing \tango\, Control System]{Securing \tango\, Control System:\\ A brain storming}
+\author[Sergi Blanch-Torn\'e]{Sergi Blanch i Torn\'e}
+\institute[Universidad de Lleida]{Criptograf\'{\i}a y Grafos\\ Departamento de Matem\'aticas\\ Universidad de Lleida}
+\date{September 24th, 2013}
+
+\begin{document}
+
+%------------------------------------ Frame 0.1 ------------------------------%
+%\frame{\titlepage}
+\begin{frame}
+  \titlepage
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 0.2 ------------------------------%
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents[hideallsubsections]
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+%------------------------------------ Frame 1.1 ------------------------------%
+\begin{frame}
+\frametitle{What is an ICS?}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.2 ------------------------------%
+\begin{frame}
+\frametitle{What is an SCADA?}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.3 ------------------------------%
+\begin{frame}
+\frametitle{What is a \tango?}
+%% ! picture of the ``sea of hardware''
+% - It's an ICS with a distributed control using \corba as a Middleware
+%What means middleware?
+% Tango parts:
+% - \tango core
+% - \tango device servers
+% communications:
+% - synchronous/asynchronous => \onmiORB
+% - events => \zmq
+% persistent data and phone book of the distributed system
+% - tango-db => \mysql
+% Framework:
+% - \sardana
+% Archiving:
+% - Mambo
+% User access:
+% - \atk
+% - \taurus
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Use cases of \tango}
+
+%------------------------------------ Frame 2.1 ------------------------------%
+\begin{frame}
+\frametitle{Optics Lab: Long Term Profiler}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 2.2 ------------------------------%
+\begin{frame}
+\frametitle{A beamline}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 2.3 ------------------------------%
+\begin{frame}
+\frametitle{Control a synchrotron accelerator}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Identify Scenarios}
+
+%Distributed system scenarios
+
+%------------------------------------ Frame 3.1 ------------------------------%
+\begin{frame}
+\frametitle{Against the transparencies}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 3.2 ------------------------------%
+\begin{frame}
+\frametitle{Against the layers}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Security levels}
+
+%------------------------------------ Frame 4.1 ------------------------------%
+\begin{frame}
+\frametitle{Security levels}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proposed solutions}
+
+% authentication of agents and users
+% encryption of data transmitted:
+% - solutions for synchronous/asynchronous
+% - solutions for events
+% secure the tango-db access: query and write
+
+%------------------------------------ Frame 5.1 ------------------------------%
+\begin{frame}
+\frametitle{Authentication}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 5.2 ------------------------------%
+\begin{frame}
+\frametitle{Encryption}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 5.3 ------------------------------%
+\begin{frame}
+\frametitle{Database access}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reference Papers}
+
+%iacr
+%arxiv
+%scholar
+%dblp
+
+%------------------------------------ Frame 6.1 ------------------------------%
+\begin{frame}
+\frametitle{Reference Papers}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reference journals and conferences}
+
+%------------------------------------ Frame 7.1 ------------------------------%
+\begin{frame}
+\frametitle{Reference journals and conferences}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+\end{document}
+
+
