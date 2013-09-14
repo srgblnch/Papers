@@ -3,6 +3,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{default}
+\usepackage{hyperref}
 
 \newcommand{\tango}{\textsc{Tango}}
 \newcommand{\corba}{\textsc{Corba}}
@@ -14,9 +15,11 @@
 \newcommand{\atk}{\textsc{Atk}}
 \newcommand{\taurus}{\textsc{Taurus}}
 
+\newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
+
 \title[Securing \tango\, Control System]{Securing \tango\, Control System:\\ A brain storming}
 \author[Sergi Blanch-Torn\'e]{Sergi Blanch i Torn\'e}
-\institute[Universidad de Lleida]{Criptograf\'{\i}a y Grafos\\ Departamento de Matem\'aticas\\ Universidad de Lleida}
+\institute[Universidad de Lleida]{Cryptography \& Graphs\\Math Department\\ Universitat de Lleida}
 \date{September 24th, 2013}
 
 \begin{document}
@@ -41,24 +44,75 @@
 %------------------------------------ Frame 1.1 ------------------------------%
 \begin{frame}
 \frametitle{What is an ICS?}
+    \begin{block}{\href{http://en.wikipedia.org/wiki/Industrial_Control_System}{Wikipedia's definition (en)}}
+        ``It is a general term that encompasses several types of control systems used in industrial production, including \emph{supervisory control and data acquisition} (SCADA) systems, \emph{distributed control systems} (DCS), and other smaller control system configurations such as \emph{programmable logic controllers} (PLC) often found in the industrial sectors and critical infrastructures.''
+    \end{block}
+    \begin{exampleblock}{Examples of an Industrial Control System}
+        \todo{Add sample pictures here...}
+    \end{exampleblock}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %------------------------------------ Frame 1.2 ------------------------------%
 \begin{frame}
 \frametitle{What is an SCADA?}
+    \begin{block}{\href{http://es.wikipedia.org/wiki/SCADA}{Wikipedia's definition (es)}}
+        ``\emph{Supervisory Control And Data Acquisition} it is a computer software to control and supervise industrial process remotely.''
+    \end{block}
+    \begin{exampleblock}{Examples of an SCADAs}
+        \todo{Add sample pictures here...}
+    \end{exampleblock}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %------------------------------------ Frame 1.3 ------------------------------%
 \begin{frame}
-\frametitle{What is a \tango?}
-%% ! picture of the ``sea of hardware''
-% - It's an ICS with a distributed control using \corba as a Middleware
-%What means middleware?
-% Tango parts:
-% - \tango core
-% - \tango device servers
+\frametitle{What is an DCS?}
+    \begin{block}{\href{http://en.wikipedia.org/wiki/Distributed_control_system}{Wikipedia's definition (en)}}
+        a \emph{Distributed Control System} is the computer software for a manufacturing system, process or any kind of dynamic system, in which the controller elements are not central in location (like the brain) but are distributed throughout the system with each component sub-system controlled by one or more controllers.
+    \end{block}
+    \begin{block}{What is a distributed system?}
+        Tanenbaum say \cite{TanenbaumDistr}: \emph{A distributed system is a collection of independent computers that appears to its users as a single coherent system.}
+    \end{block}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.4 ------------------------------%
+\begin{frame}
+\frametitle{What is a \tango? (I)}
+    \begin{block}{The sea of Hardware}
+        \todo{Add the nice picture of the shark...}
+    \end{block}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.5 ------------------------------%
+\begin{frame}
+\frametitle{What is a \tango? (II)}
+    \begin{block}{It's an Distributed Control System}
+          using \corba\, as a Middleware
+    \end{block}
+    \begin{block}{What means middleware?}
+        Tanenbaum say \cite{TanenbaumDistr}: \emph{It is what supports heterogeneous computers and networks while offering a single system view.}
+    \end{block}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.6 ------------------------------%
+\begin{frame}
+\frametitle{What is a \tango? (III)}
+    \begin{block}{\tango\, parts}
+        \begin{itemize}
+            \item \tango\, core $\Rightarrow$ the Middleware
+            \item \tango\, Device Servers $\Rightarrow$ the agents in the DCS
+        \end{itemize}
+    \end{block}
+    \begin{exampleblock}{Device servers, device classes, and devices}
+        \todo{Draw a nice picture about what those three things are...}
+    \end{exampleblock}
+    \begin{block}{What has an Agent (a device)}
+        \todo{commands,attributes and properties}
+    \end{block}
 % communications:
 % - synchronous/asynchronous => \onmiORB
 % - events => \zmq
@@ -170,6 +224,15 @@
 \frametitle{Reference journals and conferences}
 \end{frame}
 %-----------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+        \frametitle{References}
+        %\bibliographystyle{amsalpha}
+        \bibliographystyle{ieeetr}
+        \bibliography{../bibtex/books.bib}
+\end{frame}
+
 
 \end{document}
 
