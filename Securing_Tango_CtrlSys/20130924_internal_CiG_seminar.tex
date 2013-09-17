@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 \usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 \usepackage{tikz}
 
 \newcommand{\tango}{\textsc{Tango}}
@@ -60,7 +61,7 @@
         \begin{figure}[h]
             \centering{
             \includegraphics[width=0.5\textwidth]{imgs/ltb_20080527_09-42_006_cut.jpg}
-            \caption{Labview as SCADA example} \label{fig:linacsPLCs}}
+            \caption{Part of a PLC controlled system} \label{fig:linacsPLCs}}
         \end{figure}
     \end{exampleblock}
 \end{frame}
@@ -97,6 +98,7 @@
 %------------------------------------ Frame 1.5 ------------------------------%
 \begin{frame}
 \frametitle{What is a \tango? (I)}
+    Tango is an object oriented \emph{Distributed Control System}\\with active collaborative development from:
     \begin{figure}[h]
         \centering{
         \includegraphics[width=0.7\textwidth]{imgs/tango/00_logos_tango_consortium_members.jpg}
@@ -188,7 +190,7 @@
          \begin{tikzpicture}
              \node (bl11) at (0,0) {\includegraphics[width=0.75\textwidth]{imgs/2009_bl11_ncd.png}};
              \pause
-             \node (ctbl09) at (bl11.north west) {\includegraphics[width=0.75\textwidth]{imgs/20130917_ctbl09.png}};
+             \node (ctbl09) at (bl11.south east) {\includegraphics[width=0.75\textwidth]{imgs/20130917_ctbl09.png}};
          \end{tikzpicture}
     \end{center}
 \end{frame}
@@ -427,6 +429,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reference Papers}
 
+%\frame{\tableofcontents[currentsection,hideothersubsections]}
+\frame{\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]}
+
 %------------------------------------ Frame 5.1 ------------------------------%
 \begin{frame}
 \frametitle{(free) Paper sources}
@@ -446,36 +451,64 @@
 %------------------------------------ Frame 5.2 ------------------------------%
 \begin{frame}
 \frametitle{Zero-knowledge proof for authentication}
+    \begin{itemize}
+        \item S.Mart\'{\i}nez, ``\emph{Protocolos de seguridad para sistemas de identificaci\'on por radiofrecuencia}''. PhD Thesis UdL, march 2011. Directed by: Concepci\'o Roig and Magda Valls.\cite{Santi11}
+        \item BSI TR-03110:``\emph{Advanced security mechanisms for machine readable travel documents.}''.\cite{BSI_TR-03110}
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-\subsection{Secret broadcasting}
+\subsection{Session key exchange}
 
 %------------------------------------ Frame 5.3 ------------------------------%
 \begin{frame}
-\frametitle{Secret broadcasting}
+\frametitle{key exchange}
+    \begin{itemize}
+        \item R. Tom\`as, ``\emph{Volcans d'isogenies de corbes el$\cdot$l\'{\i}ptiques: Aplicacions criptogr\`afiques en targetes intel$\cdot$ligents}''. PhD Thesis UdL, march 2011. Directed by: Josep M. Miret and Daniel Sadornil.\cite{Rosana11}
+        \item BSI TR-03111:``\emph{Elliptic curve cryptography, version 2.0}''.\cite{BSI_TR-03111}
+        \item S. Blake-Wilson, N. Bolyard, V. Gupta, C. Hawk, and B. Moeller, ``\emph{Elliptic curve cryptography (ecc) cipher suites for transport layer security (tls)}'' May 2006. RFC4492
+
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
+
+% \subsection{Secret broadcasting}
+% 
+% %------------------------------------ Frame 5.4 ------------------------------%
+% \begin{frame}
+% \frametitle{Secret broadcasting}
+% \end{frame}
+% %-----------------------------------------------------------------------------%
 
 \subsection{Symmetric and stream cyphers}
 
-%------------------------------------ Frame 5.4 ------------------------------%
+%------------------------------------ Frame 5.5 ------------------------------%
 \begin{frame}
 \frametitle{Symmetric cyphers}
+    \begin{itemize}
+        \item ``\emph{Specification for the advanced encryption standard (aes).}'' Federal Information Processing Standards Publication 197, 2001.\cite{AES-FIPS}
+        \item J. Daemen and V. Rijmen, ``\emph{The Design of Rijndael}''. Secaucus, NJ, USA: Springer-Verlag New York, Inc., 2002. \cite{Daemen:2002:DR:560131}
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
-%------------------------------------ Frame 5.5 ------------------------------%
+%------------------------------------ Frame 5.6 ------------------------------%
 \begin{frame}
 \frametitle{Stream cyphers}
+    \begin{itemize}
+        \item \todo{More information required!}
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 \subsection{Homomorphic encryption}
 
-%------------------------------------ Frame 5.6 ------------------------------%
+%------------------------------------ Frame 5.7 ------------------------------%
 \begin{frame}
 \frametitle{Private database query system}
+    \begin{itemize}
+        \item D. B. nad Craig Bentry, S. Halevi, F. Wang, and D. J. Wu, ``\emph{Private database queries using somewhat homomorphic encryption,}'' International Association for Cryptologic Research, June 2013.
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -487,6 +520,9 @@
 %------------------------------------ Frame 6.1 ------------------------------%
 \begin{frame}
 \frametitle{Reference journals}
+    \begin{itemize}
+        \item \todo{More information required!}
+    \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -496,9 +532,9 @@
 \begin{frame}
 \frametitle{Reference conferences \& workshops}
 \begin{itemize}
-    \item \href{http://www.icalepcs.org/}Icalepcs
-    \item \href{http://www.nobugsconference.org/} No-bugs
-    \item \href{http://www.chesworkshop.org/} CHES
+    \item \href{http://www.icalepcs.org/}{Icalepcs}
+    \item \href{http://www.nobugsconference.org/}{No-bugs}
+    \item \href{http://www.chesworkshop.org/}{CHES}
 \end{itemize}
 
 \end{frame}
@@ -509,7 +545,7 @@
         \frametitle{References}
         %\bibliographystyle{amsalpha}
         \bibliographystyle{ieeetr}
-        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,}
+        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/rijndael.bib}
 \end{frame}
 
 
