@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\hypersetup{colorlinks=true,linkcolor=orange,urlcolor=orange}
 \usepackage{tikz}
 
 \newcommand{\tango}{\textsc{Tango}}
@@ -23,9 +23,7 @@
 \title[Securing \tango\, Control System]{Securing \tango\, Control System:\\ A brain storming}
 \author[Sergi Blanch-Torn\'e]{Sergi Blanch i Torn\'e}
 \institute[Universidad de Lleida]{Cryptography \& Graphs\\Math Department\\ Universitat de Lleida}
-\date{September 24th, 2013}
-
-\begin{document}
+\date{September 24th, 2013}Se\begin{document}
 
 %------------------------------------ Frame 0.1 ------------------------------%
 %\frame{\titlepage}
@@ -300,6 +298,35 @@
         Those first 5 are the basics of the \href{http://en.wikipedia.org/wiki/Information_security}{Information Security}
     \end{block}
 \end{frame}
+
+% %-----------------------------------------------------------------------------%
+
+\subsection{Vulnerable attacks}
+
+%------------------------------------ Frame 2.4 ------------------------------%
+\begin{frame}
+    \begin{block}{Passive}
+        \begin{itemize}
+            \item Eavesdropping
+        \end{itemize}
+    \end{block}
+    \begin{block}{Active}
+        \begin{itemize}
+            \item Men-in-the-middle
+            \item Spoofing
+            \item Noise-Interruption-poisoning: Block transmissions
+            \begin{itemize}
+                \item Includes [D]DoS
+            \end{itemize}
+            \item Modification/Fabrication: agent impersonate
+        \end{itemize}
+    \end{block}
+    \begin{block}{counter-measures}
+        \begin{itemize}
+            \item Intrusion detection and recovery
+        \end{itemize}
+    \end{block}
+\end{frame}
 %-----------------------------------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -328,6 +355,9 @@
             \end{itemize}
         }
     \end{itemize}
+    \begin{alertblock}{}<5->
+        Do not left all your security in ISO/IEC 27000-series!
+    \end{alertblock}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -366,16 +396,21 @@
     \begin{block}{}
         \begin{itemize}
             \item Agent authentication
-            \item User authentication
+            \item User authentication (PAM in Unix)
         \end{itemize}
     \end{block}
-    \begin{block}{Rights}<2->
+    \begin{exampleblock}{}<2->
+        In TLS what is authenticated is the server, almost never the client.
+    \end{exampleblock}
+    \begin{block}{Rights}<3->
          Who have rights to do any read/write action\\
-         \emph{Access Control Levels (ACL): would be similar than linux permissions}
+         \emph{Access Control Levels: would be similar than linux permissions}\\
+         But multilevel and both directions.
     \end{block}
-    \begin{alertblock}{Tools}<3->
+    \begin{alertblock}{Tools}<4->
         \begin{itemize}
-            \item Elliptic curve cryptosystem
+            \item Elliptic curve cryptosystem for TLS (RFC4492 \cite{rfc4492})
+            \item This one allow any curve (prime\&char2) in WRF,\\unlike RFC6637 \cite{rfc6637}
         \end{itemize}
     \end{alertblock}
 \end{frame}
@@ -391,7 +426,13 @@
         \item Encrypt what has been answered by an agent
         \item Encrypt events emitted
     \end{itemize}
-    \begin{alertblock}{Tools}<2->
+    \begin{exampleblock}{}<2->
+        \begin{itemize}
+            \item There are transmissions of single booleans to arrays of tenths of thousands of 64bit elements.
+            \item Neither forget the frequency that they can be transmitted.
+        \end{itemize}
+    \end{exampleblock}
+    \begin{alertblock}{Tools}<3->
         \begin{itemize}
             \item Elliptic curves cryptosystem for \emph{key exchange}
             \item (generalized) Rijndael and/or Stream cyphers\\for data transmission and event broadcasting
@@ -466,7 +507,7 @@
     \begin{itemize}
         \item R. Tom\`as, ``\emph{Volcans d'isogenies de corbes el$\cdot$l\'{\i}ptiques: Aplicacions criptogr\`afiques en targetes intel$\cdot$ligents}''. PhD Thesis UdL, march 2011. Directed by: Josep M. Miret and Daniel Sadornil.\cite{Rosana11}
         \item BSI TR-03111:``\emph{Elliptic curve cryptography, version 2.0}''.\cite{BSI_TR-03111}
-        \item S. Blake-Wilson, N. Bolyard, V. Gupta, C. Hawk, and B. Moeller, ``\emph{Elliptic curve cryptography (ecc) cipher suites for transport layer security (tls)}'' May 2006. RFC4492
+        \item S. Blake-Wilson, N. Bolyard, V. Gupta, C. Hawk, and B. Moeller, ``\emph{Elliptic curve cryptography (ecc) cipher suites for transport layer security (tls)}'' May 2006. RFC4492. \cite{rfc4492}
 
     \end{itemize}
 \end{frame}
@@ -488,6 +529,10 @@
     \begin{itemize}
         \item ``\emph{Specification for the advanced encryption standard (aes).}'' Federal Information Processing Standards Publication 197, 2001.\cite{AES-FIPS}
         \item J. Daemen and V. Rijmen, ``\emph{The Design of Rijndael}''. Secaucus, NJ, USA: Springer-Verlag New York, Inc., 2002. \cite{Daemen:2002:DR:560131}
+        \item<1-|alert@1> Smaller block size requested
+        \item<1-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
+        \item J. Schaad and R. Housley, ``\emph{Advanced Encryption Standard (AES) Key Wrap Algorithm.}'' Sept. 2002. RFC3394 \cite{rfc3394}
+
     \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
@@ -532,9 +577,11 @@
 \begin{frame}
 \frametitle{Reference conferences \& workshops}
 \begin{itemize}
-    \item \href{http://www.icalepcs.org/}{Icalepcs}
-    \item \href{http://www.nobugsconference.org/}{No-bugs}
-    \item \href{http://www.chesworkshop.org/}{CHES}
+    \item \href{http://www.icalepcs.org/}{Icalepcs}: International Conference on Accelerator and Large Experimental Physics Control Systems
+    \item \href{http://www.nobugsconference.org/}{No-bugs}: New Opportunities for Better User Group Software
+    \item \href{http://www.chesworkshop.org/}{CHES}: Cryptographic Hardware and Embedded Systems
+    \item \href{http://www.sacconference.org/}{SAC}: Selected Areas in Cryptography
+    \item Tango Meeting
 \end{itemize}
 
 \end{frame}
@@ -545,7 +592,7 @@
         \frametitle{References}
         %\bibliographystyle{amsalpha}
         \bibliographystyle{ieeetr}
-        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,../bibtex/ecc.bib,../bibtex/rijndael.bib}
+        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/ecc.bib,../bibtex/rijndael.bib}
 \end{frame}
 
 
