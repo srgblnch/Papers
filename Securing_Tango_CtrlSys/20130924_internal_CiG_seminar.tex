@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=orange,urlcolor=orange}
+\hypersetup{colorlinks=true,urlcolor=orange}
 \usepackage{tikz}
 
 \newcommand{\tango}{\textsc{Tango}}
@@ -57,11 +57,20 @@
 
 %------------------------------------ Frame 1.2 ------------------------------%
 \begin{frame}
-    \begin{exampleblock}{What is a Programmable Logic Controllers}
-        \begin{figure}[h]
+    \begin{exampleblock}{What is a Programmable Logic Controllers?}
+        \begin{figure}
             \centering{
-            \includegraphics[width=0.5\textwidth]{imgs/ltb_20080527_09-42_006_cut.jpg}
-            \caption{Part of a PLC controlled system} \label{fig:linacsPLCs}}
+                \begin{subfigure}
+                    \caption{Outside\label{fig:outsideLinac}}
+                    \includegraphics[width=0.95\textwidth]{imgs/20130812_101456_015.jpg}
+                \end{subfigure}
+                \\
+                \begin{subfigure}
+                    \caption{Inside}\label{fig:insideLinac}
+                    \includegraphics[width=0.95\textwidth]{imgs/20130812_101743_023.jpg}
+                \end{subfigure}
+                \caption{Example of a PLC controlled system}\label{fig:linacPLCs}
+            }
         \end{figure}
     \end{exampleblock}
 \end{frame}
@@ -98,12 +107,14 @@
 %------------------------------------ Frame 1.5 ------------------------------%
 \begin{frame}
 \frametitle{What is a \tango? (I)}
-    Tango is an object oriented \emph{Distributed Control System}\\with active collaborative development from:
+    \tango is an object oriented \emph{Distributed Control System}\\with active collaborative development from:
     \begin{figure}[h]
         \centering{
-        \includegraphics[width=0.7\textwidth]{imgs/tango/00_logos_tango_consortium_members.jpg}
+        \includegraphics[width=0.45\textwidth]{imgs/tango/00_logos_tango_consortium_members.jpg}
         \caption{Logos of the Tango Consortium Members} \label{fig:tangoConsortium}}
     \end{figure}
+    Together with tools like \sardana, \taurus, \atk and \mambo there is a big \emph{Industrial Control System}\\
+    Them can act as an SCADA and/or DCS flexibly to the needs.
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -129,15 +140,21 @@
         \end{itemize}
     \end{block}
     \begin{exampleblock}{Device servers, device classes, and devices}
-        \todo{Draw a nice picture about what those three things are...}
+        %\todo{Draw a nice picture about what those three things are...}
+        \begin{figure}[h]
+            \centering{
+                \includegraphics[width=0.45\textwidth]{imgs/tango/tango_DeviceServer_DeviceClass_Device.png}
+                \caption{Tango Server Schematic} \label{fig:tangoServer}
+            }
+        \end{figure}
     \end{exampleblock}
-    \begin{block}{What has an Agent (a device)}
+    %\begin{block}{What has an Agent (a device)}
         %\begin{itemize}
         %    \item Data types: Boolean, [U]Short, [U]Long[64], Double, String
         %    \item Data dimensions: Scalar, Spectrum, Image
         %\end{itemize}
-        \todo{commands,attributes and properties}
-    \end{block}
+    %    \todo{commands,attributes and properties}
+    %\end{block}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -177,9 +194,10 @@
 \frametitle{Optics Lab: Long Term Profiler}
     \begin{figure}[h]
         \centering{
-        \includegraphics[width=0.65\textwidth]{imgs/laop_ltp_isometric_view.png}
+        \includegraphics[width=0.45\textwidth]{imgs/laop_ltp_isometric_view.png}
         \caption{drawing of the optics lab LTP} \label{fig:laopLTP}}
     \end{figure}
+    \todo{Say something about how measurements are done and data about involved \tango\, servers}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -193,6 +211,7 @@
              \node (ctbl09) at (bl11.south east) {\includegraphics[width=0.75\textwidth]{imgs/20130917_ctbl09.png}};
          \end{tikzpicture}
     \end{center}
+    \todo{More images will be illustrative and data about \tango\, servers will be useful}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -208,9 +227,11 @@
               \item Power supplies (491 agents)
               \item Radio frequency (124 agents)
               \item Diagnostics (744 agents)
+              \item \todo{EPS and PSS devices}
               \item<1-|alert@1> +2500 agents
          \end{itemize}
          \item \todo{Astor}
+         \item \todo{Data about iPCs, cPCIs and other involved Hw}
      \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
