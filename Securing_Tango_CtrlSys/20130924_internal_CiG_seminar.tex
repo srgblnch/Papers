@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,urlcolor=orange}
 \usepackage{tikz}
+\usepackage{lipsum} % <= to insert dummy text
+\usepackage[absolute,overlay]{textpos}
 
 \newcommand{\tango}{\textsc{Tango}}
 \newcommand{\corba}{\textsc{Corba}}
@@ -17,6 +19,7 @@
 \newcommand{\mambo}{\textsc{Mambo}}
 \newcommand{\atk}{\textsc{Atk}}
 \newcommand{\taurus}{\textsc{Taurus}}
+\newcommand{\spock}{\textsc{Spock}}
 
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 
@@ -60,15 +63,19 @@
     \begin{exampleblock}{What is a Programmable Logic Controllers?}
         \begin{figure}
             \centering{
-                \begin{subfigure}
-                    \caption{Outside\label{fig:outsideLinac}}
-                    \includegraphics[width=0.95\textwidth]{imgs/20130812_101456_015.jpg}
-                \end{subfigure}
-                \\
-                \begin{subfigure}
-                    \caption{Inside}\label{fig:insideLinac}
-                    \includegraphics[width=0.95\textwidth]{imgs/20130812_101743_023.jpg}
-                \end{subfigure}
+                %\begin{subfigure}
+                    \includegraphics[width=0.9\textwidth]{imgs/20130812_101456_015.jpg}
+                %    \caption{Outside}\label{fig:outsideLinac}
+                %\end{subfigure}
+            }
+        \end{figure}
+                %\\
+        \begin{figure}
+            \centering{
+                %\begin{subfigure}
+                    \includegraphics[width=0.9\textwidth]{imgs/20130812_101743_023.jpg}
+                %    \caption{Inside}\label{fig:insideLinac}
+                %\end{subfigure}
                 \caption{Example of a PLC controlled system}\label{fig:linacPLCs}
             }
         \end{figure}
@@ -140,47 +147,61 @@
         \end{itemize}
     \end{block}
     \begin{exampleblock}{Device servers, device classes, and devices}
-        %\todo{Draw a nice picture about what those three things are...}
         \begin{figure}[h]
             \centering{
-                \includegraphics[width=0.45\textwidth]{imgs/tango/tango_DeviceServer_DeviceClass_Device.png}
-                \caption{Tango Server Schematic} \label{fig:tangoServer}
+                \includegraphics[width=0.7\textwidth]{imgs/tango/tango_DeviceServer_DeviceClass_Device.png}
             }
         \end{figure}
     \end{exampleblock}
-    %\begin{block}{What has an Agent (a device)}
-        %\begin{itemize}
-        %    \item Data types: Boolean, [U]Short, [U]Long[64], Double, String
-        %    \item Data dimensions: Scalar, Spectrum, Image
-        %\end{itemize}
-    %    \todo{commands,attributes and properties}
-    %\end{block}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %------------------------------------ Frame 1.8 ------------------------------%
 \begin{frame}
-%     \begin{block}{The sea of Hardware}
-%         \todo{Add the nice picture of the sharks in the sea... With agents representation with interactions (communications, phone book, framework, archiving, user access,...}
-        \begin{figure}[h]
-            \centering{
-                \includegraphics[width=0.75\textwidth]{imgs/tango/tango_layout.png}
-                \caption{Tango schematic layout} \label{fig:tangoLayout}
-            }
-        \end{figure}
-%     \end{block}
-% communications:
-% - synchronous/asynchronous => \onmiORB
-% - events => \zmq
-% persistent data and phone book of the distributed system
-% - tango-db => \mysql
-% Framework:
-% - \sardana
-% Archiving:
-% - Mambo
-% User access:
-% - \atk
-% - \taurus
+    \begin{figure}[h]
+        \centering{
+            \includegraphics[width=0.75\textwidth]{imgs/tango/tango_layout.png}
+            \caption{Tango schematic layout} \label{fig:tangoLayout}
+        }
+    \end{figure}
+    \begin{textblock*}{60mm}(0.05\textwidth,0.85\textheight)
+        \begin{exampleblock}{Communication}<2->
+            \begin{itemize}
+                \item {[a]}synchronous $\Rightarrow$ \onmiORB
+                \item events $\Rightarrow$ \zmq
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.7\textwidth,0.85\textheight)
+        \begin{exampleblock}{Persistent config data}<3->
+            \begin{itemize}
+                \item tango-ds $\Rightarrow$ \mysql
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.75\textwidth,0.05\textheight)
+        \begin{exampleblock}{Archiving}<4->
+            \begin{itemize}
+                \item \mambo $\Rightarrow$ \mysql
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{25mm}(0.05\textwidth,0.3\textheight)
+        \begin{exampleblock}{Framework}<5->
+            \begin{itemize}
+                \item \sardana
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{25mm}(0.9\textwidth,0.25\textheight)
+        \begin{exampleblock}{User access}<6->
+            \begin{itemize}
+                \item \taurus
+                \item \atk
+                \item \spock
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -192,47 +213,159 @@
 %------------------------------------ Frame 1.9 ------------------------------%
 \begin{frame}
 \frametitle{Optics Lab: Long Term Profiler}
-    \begin{figure}[h]
-        \centering{
-        \includegraphics[width=0.45\textwidth]{imgs/laop_ltp_isometric_view.png}
-        \caption{drawing of the optics lab LTP} \label{fig:laopLTP}}
-    \end{figure}
-    \todo{Say something about how measurements are done and data about involved \tango\, servers}
+    \begin{textblock*}{50mm}(0.05\textwidth,0.2\textheight)
+        \begin{block}{Drawing of the optics lab LTP}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/laop_ltp_isometric_view.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{50mm}(0.65\textwidth,0.2\textheight)
+        \begin{block}{From the clean room}<2->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/01_LTP_a_sala_blanca.jpg}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.675\textwidth,0.5\textheight)
+        \begin{block}{Ambient temperature}<3->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/02_laop-temperatures.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.55\textwidth,0.2\textheight)
+        \begin{exampleblock}{Mirror position}<4->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/03_detall_LTP_normal_configuration.jpg}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.55\textwidth,0.6\textheight)
+        \begin{exampleblock}{Inverted configuration}<5->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/04_detall_LTP_inverted_configuration.jpg}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.075\textwidth,0.3\textheight)
+        \begin{block}{Matlab GUI}<6->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/05_ltp_matlabgui.jpg}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.1\textwidth,0.7\textheight)
+        \begin{exampleblock}{Surface example}<7->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/06_mirror_surface_example.png}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.6\textwidth,0.7\textheight)
+        \begin{exampleblock}{Surface example}<8->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/07_mirror_surface_example2.png}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{35mm}(0.8\textwidth,0.25\textheight)
+        \begin{exampleblock}{\tango information}<9->
+            \begin{itemize}
+                \item 3 Hosts
+                \item 28 Devices
+                \item 12 DServers
+                \item 12 DClasses
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %------------------------------------ Frame 1.10 -----------------------------%
 \begin{frame}
 \frametitle{A beamline}
-    \begin{center}
-         \begin{tikzpicture}
-             \node (bl11) at (0,0) {\includegraphics[width=0.75\textwidth]{imgs/2009_bl11_ncd.png}};
-             \pause
-             \node (ctbl09) at (bl11.south east) {\includegraphics[width=0.75\textwidth]{imgs/20130917_ctbl09.png}};
-         \end{tikzpicture}
-    \end{center}
-    \todo{More images will be illustrative and data about \tango\, servers will be useful}
+    \begin{textblock*}{100mm}(0.05\textwidth,0.2\textheight)
+        \begin{block}{layout of BL11}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/2009_bl11_ncd.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{100mm}(0.2\textwidth,0.3\textheight)
+        \begin{block}{\sardana's gui in BL09}<2->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/20130917_ctbl09.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{35mm}(0.8\textwidth,0.25\textheight)
+        \begin{exampleblock}{\tango information (bl13)}<3->
+            \begin{itemize}
+                \item 7 Hosts
+                \item 615 Devices
+                \item 34 DServers
+                \item 82 DClasses
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
 %------------------------------------ Frame 1.11 -----------------------------%
 \begin{frame}
 \frametitle{Control a synchrotron accelerator}
-     \begin{itemize}
-         \item \todo{Draws of the synchrotron layout and data from the ccdb about the service area numbers}
-         \item \todo{List subsystems in the accelerator}
-         \begin{itemize}
-              \item Timming (132 agents)
-              \item Vaccum (1085 agents)
-              \item Power supplies (491 agents)
-              \item Radio frequency (124 agents)
-              \item Diagnostics (744 agents)
-              \item \todo{EPS and PSS devices}
-              \item<1-|alert@1> +2500 agents
-         \end{itemize}
-         \item \todo{Astor}
-         \item \todo{Data about iPCs, cPCIs and other involved Hw}
-     \end{itemize}
+    \begin{textblock*}{50mm}(0.05\textwidth,0.35\textheight)
+        \begin{block}{Alba's overview}<1->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/Alba_overview.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{50mm}(0.65\textwidth,0.45\textheight)
+        \begin{block}{Alba's main network}<2->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/Alba_MainNetwork.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{50mm}(0.35\textwidth,0.2\textheight)
+        \begin{block}{Alba's network layout}<3->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/Alba_NetworkLayout.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{100mm}(0.15\textwidth,0.65\textheight)
+        \begin{block}{Alba's Cabling Database}<4->
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/alba/20130916_ccdb.png}
+            \end{figure}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{35mm}(0.1\textwidth,0.25\textheight)
+        \begin{block}{Alba's subsystems}<5->
+            \begin{itemize}
+                \item Timming %(132 agents)
+                \item Vaccum %(1085 agents)
+                \item Power supplies %(491 agents)
+                \item Radio frequency %(124 agents)
+                \item Diagnostics %(744 agents)
+                \item EPS and PSS
+                \item Fronted and IDs
+            \end{itemize}
+        \end{block}
+    \end{textblock*}
+    \begin{textblock*}{35mm}(0.8\textwidth,0.25\textheight)
+        \begin{exampleblock}{\tango information (bl13)}<6->
+            \begin{itemize}
+                \item 139 Hosts
+                \item 4259 Devices
+                \item 85 DServers
+                \item 1551 DClasses
+            \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -333,7 +466,7 @@
             \item Eavesdropping
         \end{itemize}
     \end{block}
-    \begin{block}{Active}
+    \begin{block}{Active}<2->
         \begin{itemize}
             \item Men-in-the-middle
             \item Spoofing
@@ -344,7 +477,7 @@
             \item Modification/Fabrication: agent impersonate
         \end{itemize}
     \end{block}
-    \begin{block}{counter-measures}
+    \begin{block}{Counter-measures}<3->
         \begin{itemize}
             \item Intrusion detection and recovery
         \end{itemize}
@@ -360,25 +493,28 @@
 %------------------------------------ Frame 3.1 ------------------------------%
 \begin{frame}
 \frametitle{Security threads, policies and mechanisms}
+    \begin{block}{}
+        \tango\, needs the `\alert{s}', like http\alert{s}, stmp\alert{s}, imap\alert{s}, telnet (\alert{ssh}),...
+    \end{block}
     \begin{itemize}
-        \item Thread model:\\From ``Security engineering''\cite{SecEngRossAnderson},\\based on where the thread usually comes from
-         \uncover<2->{
+        \item<2-> Thread model:\\From ``Security engineering''\cite{SecEngRossAnderson},\\based on where the thread usually comes from
+         \uncover<3->{
             \begin{itemize}
                 \item Hospital
                 \item Bank
                 \item Military base
             \end{itemize}
         }
-        \item<3-> References also in ``Cryptography Engineering''\cite{cryptoEngineering}.
-        \item<4-> `Practical paranoia' from ``Practical cryptography''\cite{PractCryptoSchneier}:
-        \uncover<4->{
+        \item<4-> References also in ``Cryptography Engineering''\cite{cryptoEngineering}.
+        \item<5-> `Practical paranoia' from ``Practical cryptography''\cite{PractCryptoSchneier}:
+        \uncover<6->{
             \begin{itemize}
                 \item Identify threads
                 \item Evaluate attack capabilities
             \end{itemize}
         }
     \end{itemize}
-    \begin{alertblock}{}<5->
+    \begin{alertblock}{}<7->
         Do not left all your security in ISO/IEC 27000-series!
     \end{alertblock}
 \end{frame}
@@ -421,19 +557,17 @@
             \item Agent authentication
             \item User authentication (PAM in Unix)
         \end{itemize}
-    \end{block}
-    \begin{exampleblock}{}<2->
         In TLS what is authenticated is the server, almost never the client.
-    \end{exampleblock}
-    \begin{block}{Rights}<3->
+    \end{block}
+    \begin{block}{Rights}<2->
          Who have rights to do any read/write action\\
          \emph{Access Control Levels: would be similar than linux permissions}\\
          But multilevel and both directions.
     \end{block}
-    \begin{alertblock}{Tools}<4->
+    \begin{alertblock}{Tools}<3->
         \begin{itemize}
             \item Elliptic curve cryptosystem for TLS (RFC4492 \cite{rfc4492})
-            \item This one allow any curve (prime\&char2) in WRF,\\unlike RFC6637 \cite{rfc6637}
+            \item This one allow any curve (prime\&char2) in WRF\footnote{Weierstrass Reduced Form},\\unlike RFC6637 \cite{rfc6637}
         \end{itemize}
     \end{alertblock}
 \end{frame}
@@ -459,6 +593,10 @@
         \begin{itemize}
             \item Elliptic curves cryptosystem for \emph{key exchange}
             \item (generalized) Rijndael and/or Stream cyphers\\for data transmission and event broadcasting
+            \begin{itemize}
+                \item<1-|alert@1> Smaller block size requested
+                \item<1-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
+            \end{itemize}
         \end{itemize}
     \end{alertblock}
 \end{frame}
@@ -493,7 +631,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reference Papers}
 
-%\frame{\tableofcontents[currentsection,hideothersubsections]}
 \frame{\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]}
 
 %------------------------------------ Frame 5.1 ------------------------------%
@@ -552,10 +689,7 @@
     \begin{itemize}
         \item ``\emph{Specification for the advanced encryption standard (aes).}'' Federal Information Processing Standards Publication 197, 2001.\cite{AES-FIPS}
         \item J. Daemen and V. Rijmen, ``\emph{The Design of Rijndael}''. Secaucus, NJ, USA: Springer-Verlag New York, Inc., 2002. \cite{Daemen:2002:DR:560131}
-        \item<1-|alert@1> Smaller block size requested
-        \item<1-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
         \item J. Schaad and R. Housley, ``\emph{Advanced Encryption Standard (AES) Key Wrap Algorithm.}'' Sept. 2002. RFC3394 \cite{rfc3394}
-
     \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
@@ -604,6 +738,9 @@
     \item \href{http://www.nobugsconference.org/}{No-bugs}: New Opportunities for Better User Group Software
     \item \href{http://www.chesworkshop.org/}{CHES}: Cryptographic Hardware and Embedded Systems
     \item \href{http://www.sacconference.org/}{SAC}: Selected Areas in Cryptography
+    \item Crypto, \href{http://www.iacr.org/meetings/eurocrypt/}{Eurocrypt}, \& Asiacrypt
+          % Submission Deadline: Oct 17, 2013
+          % dates for the conference: 11 – 15 May 2014 (Copenhagen, Denmark)
     \item Tango Meeting
 \end{itemize}
 
