@@ -120,7 +120,7 @@
         \includegraphics[width=0.45\textwidth]{imgs/tango/00_logos_tango_consortium_members.jpg}
         \caption{Logos of the Tango Consortium Members} \label{fig:tangoConsortium}}
     \end{figure}
-    Together with tools like \sardana, \taurus, \atk and \mambo there is a big \emph{Industrial Control System}\\
+    Together with tools like \sardana, \taurus, \atk\, and \mambo\, there is a big \emph{Industrial Control System}\\
     Them can act as an SCADA and/or DCS flexibly to the needs.
 \end{frame}
 %-----------------------------------------------------------------------------%
@@ -275,7 +275,7 @@
                 \item 3 Hosts
                 \item 28 Devices
                 \item 12 DServers
-                \item 12 DClasses
+                \item 19 DClasses
             \end{itemize}
         \end{exampleblock}
     \end{textblock*}
@@ -469,7 +469,7 @@
     \begin{block}{Active}<2->
         \begin{itemize}
             \item Men-in-the-middle
-            \item Spoofing
+            \item Spoofing: mask and falsify data
             \item Noise-Interruption-poisoning: Block transmissions
             \begin{itemize}
                 \item Includes [D]DoS
@@ -579,24 +579,24 @@
 \begin{frame}
 \frametitle{Encryption}
     \begin{itemize}
-        \item Encrypt what has send to an agent
-        \item Encrypt what has been answered by an agent
-        \item Encrypt events emitted
+        \item Encrypt \emph{what has send} to an agent and its \emph{answer}
+        \item Encrypt \emph{events} emitted
     \end{itemize}
     \begin{exampleblock}{}<2->
         \begin{itemize}
-            \item There are transmissions of single booleans to arrays of tenths of thousands of 64bit elements.
+            \item Transmissions from \emph{single booleans} to \emph{arrays of tenths of thousands of 64bit} elements.
             \item Neither forget the frequency that they can be transmitted.
         \end{itemize}
     \end{exampleblock}
     \begin{alertblock}{Tools}<3->
         \begin{itemize}
             \item Elliptic curves cryptosystem for \emph{key exchange}
-            \item (generalized) Rijndael and/or Stream cyphers\\for data transmission and event broadcasting
+            \item<4-> (generalized) Rijndael (data transmission \& event broadcasting)
             \begin{itemize}
-                \item<1-|alert@1> Smaller block size requested
-                \item<1-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
+                \item<5-|alert@1> Smaller block size requested
+                \item<5-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
             \end{itemize}
+            \item<6-> Stream ciphers
         \end{itemize}
     \end{alertblock}
 \end{frame}
@@ -681,11 +681,11 @@
 % \end{frame}
 % %-----------------------------------------------------------------------------%
 
-\subsection{Symmetric and stream cyphers}
+\subsection{Symmetric and stream ciphers}
 
 %------------------------------------ Frame 5.5 ------------------------------%
 \begin{frame}
-\frametitle{Symmetric cyphers}
+\frametitle{Symmetric ciphers}
     \begin{itemize}
         \item ``\emph{Specification for the advanced encryption standard (aes).}'' Federal Information Processing Standards Publication 197, 2001.\cite{AES-FIPS}
         \item J. Daemen and V. Rijmen, ``\emph{The Design of Rijndael}''. Secaucus, NJ, USA: Springer-Verlag New York, Inc., 2002. \cite{Daemen:2002:DR:560131}
@@ -696,10 +696,17 @@
 
 %------------------------------------ Frame 5.6 ------------------------------%
 \begin{frame}
-\frametitle{Stream cyphers}
+\frametitle{Stream ciphers}
     \begin{itemize}
         \item \todo{More information required!}
-    \end{itemize}
+        \item Key Derivation Functions
+        \item \href{http://en.wikipedia.org/wiki/Stream_cipher\#Comparison_Of_Stream_Ciphers}{Wikipedia (en)}
+        \begin{itemize}
+            \item \href{http://en.wikipedia.org/wiki/Rabbit_(cipher)}{Rabbit} (\href{http://tools.ietf.org/html/rfc4503}{RFC4503})
+            \item \href{http://en.wikipedia.org/wiki/VEST}{VEST}
+        \end{itemize}
+        \item \href{http://godoc.org/github.com/codahale/chacha20}{Chacha20}
+     \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -738,6 +745,7 @@
     \item \href{http://www.nobugsconference.org/}{No-bugs}: New Opportunities for Better User Group Software
     \item \href{http://www.chesworkshop.org/}{CHES}: Cryptographic Hardware and Embedded Systems
     \item \href{http://www.sacconference.org/}{SAC}: Selected Areas in Cryptography
+          % Montreal, Canada
     \item Crypto, \href{http://www.iacr.org/meetings/eurocrypt/}{Eurocrypt}, \& Asiacrypt
           % Submission Deadline: Oct 17, 2013
           % dates for the conference: 11 – 15 May 2014 (Copenhagen, Denmark)
