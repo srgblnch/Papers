@@ -23,7 +23,9 @@
 
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 
-\title[Securing \tango\, Control System]{Securing \tango\, Control System:\\ A brain storming}
+\newcommand{\Fp}{\ensuremath{\mathbb{F}_p}}%                    Cuerpo finito de orden p (primo)
+
+\title[Securing \tango\, Control System]{Securing \tango\, Control System:\\ A brainstorming}
 \author[Sergi Blanch-Torn\'e]{Sergi Blanch i Torn\'e}
 \institute[Universidad de Lleida]{Cryptography \& Graphs\\Math Department\\ Universitat de Lleida}
 \date{September 24th, 2013}
@@ -53,7 +55,7 @@
 \begin{frame}
 \frametitle{What is an Industrial Control System? (ICS)}
     \begin{block}{\href{http://en.wikipedia.org/wiki/Industrial_Control_System}{Wikipedia's definition (en)}}
-        ``It is a general term that encompasses several types of control systems used in industrial production, including \emph{supervisory control and data acquisition} (\alert<2->{SCADA}) systems, \emph{distributed control systems} (\alert<4->{DCS}), and other smaller control system configurations such as \emph{programmable logic controllers} (\alert<3->{PLC}) often found in the industrial sectors and critical infrastructures.''
+        ``It is a general term that encompasses several types of control systems used in industrial production, including \emph{supervisory control and data acquisition} (\alert<3->{SCADA}) systems, \emph{distributed control systems} (\alert<4->{DCS}), and other smaller control system configurations such as \emph{programmable logic controllers} (\alert<2->{PLC}) often found in the industrial sectors and critical infrastructures.''
     \end{block}
 \end{frame}
 %-----------------------------------------------------------------------------%
@@ -64,7 +66,7 @@
         \begin{figure}
             \centering{
                 %\begin{subfigure}
-                    \includegraphics[width=0.9\textwidth]{imgs/20130812_101456_015.jpg}
+                    \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101456_015.jpg}
                 %    \caption{Outside}\label{fig:outsideLinac}
                 %\end{subfigure}
             }
@@ -73,7 +75,7 @@
         \begin{figure}
             \centering{
                 %\begin{subfigure}
-                    \includegraphics[width=0.9\textwidth]{imgs/20130812_101743_023.jpg}
+                    \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101743_023.jpg}
                 %    \caption{Inside}\label{fig:insideLinac}
                 %\end{subfigure}
                 \caption{Example of a PLC controlled system}\label{fig:linacPLCs}
@@ -92,7 +94,7 @@
     \begin{exampleblock}{Examples of an SCADAs}
         \begin{figure}[h]
             \centering{
-            \includegraphics[width=0.4\textwidth]{imgs/labview_tab3_mainScreen.png}
+            \includegraphics[width=0.4\textwidth]{imgs/alba/labview_tab3_mainScreen.png}
             \caption{Labview as SCADA example} \label{fig:labviewScada}}
         \end{figure}
     \end{exampleblock}
@@ -139,7 +141,7 @@
 
 %------------------------------------ Frame 1.7 ------------------------------%
 \begin{frame}
-\frametitle{What is a \tango? (iIII)}
+\frametitle{What is a \tango? (\&III)}
     \begin{block}{\tango\, parts}
         \begin{itemize}
             \item \tango\, core $\Rightarrow$ the Middleware
@@ -212,11 +214,11 @@
 
 %------------------------------------ Frame 1.9 ------------------------------%
 \begin{frame}
-\frametitle{Optics Lab: Long Term Profiler}
+\frametitle{Optics Lab: Nanometer Optical Measuring}
     \begin{textblock*}{50mm}(0.05\textwidth,0.2\textheight)
-        \begin{block}{Drawing of the optics lab LTP}
+        \begin{block}{Drawing of the optics lab NOM-Long Term Profiler}
             \begin{figure}
-                \includegraphics[width=\textwidth]{imgs/laop_ltp_isometric_view.png}
+                \includegraphics[width=\textwidth]{imgs/alba/laop/laop_ltp_isometric_view.png}
             \end{figure}
         \end{block}
     \end{textblock*}
@@ -288,14 +290,14 @@
     \begin{textblock*}{100mm}(0.05\textwidth,0.2\textheight)
         \begin{block}{layout of BL11}
             \begin{figure}
-                \includegraphics[width=\textwidth]{imgs/2009_bl11_ncd.png}
+                \includegraphics[width=\textwidth]{imgs/alba/2009_bl11_ncd.png}
             \end{figure}
         \end{block}
     \end{textblock*}
     \begin{textblock*}{100mm}(0.2\textwidth,0.3\textheight)
         \begin{block}{\sardana's gui in BL09}<2->
             \begin{figure}
-                \includegraphics[width=\textwidth]{imgs/20130917_ctbl09.png}
+                \includegraphics[width=\textwidth]{imgs/alba/20130917_ctbl09.png}
             \end{figure}
         \end{block}
     \end{textblock*}
@@ -551,7 +553,7 @@
 
 %------------------------------------ Frame 4.1 ------------------------------%
 \begin{frame}
-\frametitle{Authentication}
+\frametitle{Authentication (I)}
     \begin{block}{}
         \begin{itemize}
             \item Agent authentication
@@ -593,8 +595,8 @@
             \item Elliptic curves cryptosystem for \emph{key exchange}
             \item<4-> (generalized) Rijndael (data transmission \& event broadcasting)
             \begin{itemize}
-                \item<5-|alert@1> Smaller block size requested
-                \item<5-|alert@1> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
+                \item<5-> Smaller block size requested
+                \item<5-> Bigger block size would be better than block cipher modes (CBC, CFB, CTR)
             \end{itemize}
             \item<6-> Stream ciphers
         \end{itemize}
@@ -602,25 +604,53 @@
 \end{frame}
 %-----------------------------------------------------------------------------%
 
+%------------------------------------ Frame 4.3 ------------------------------%
+\begin{frame}
+\frametitle{ECC authentication \& encryption}
+    \begin{block}{Using different curves}<2->
+        \begin{itemize}
+            \item<2-> Each security level requires its curve size (\Fp)
+            \item<3-> Different \emph{subsystems} must use different curves.\\(even if they have same level)
+        \end{itemize}
+    \end{block}
+    \begin{textblock*}{40mm}(0.75\textwidth,0.225\textheight)
+        \begin{exampleblock}{Certicom's curves \cite{sec2}}<4->
+            They are not enough.\\\small{(Superset NIST curves).}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{alertblock}{Tools}<5->
+        Auditable EC generation algorithm.
+    \end{alertblock}
+    \begin{textblock*}{45mm}(0.7\textwidth,0.525\textheight)
+        \begin{exampleblock}{Cryptosetup}<6->
+            Institution (re)set
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{exampleblock}{Collateral help}<7->
+        This would help to avoid to share same curve between too many.\\Thread that the X9.62 \cite{X9.62-1998} advice.
+    \end{exampleblock}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
 \subsection{Database}
 
-%------------------------------------ Frame 4.3 ------------------------------%
+%------------------------------------ Frame 4.4 ------------------------------%
 \begin{frame}
 \frametitle{Database access}
     \begin{itemize}
         \item \tango-db is the ``phone guide'' of the system\\also stores persistent data, like the properties
-        \item It is necessary to record over the properties:
+        \item<2-> It is necessary to record over the properties:
         \begin{itemize}
-            \item Who and when modifies
-            \item Who and when reads (read should be also protectable)
+            \item<2-> Who and when modifies
+            \item<2-> Who and when reads (read should be also protectable)
         \end{itemize}
-        \item Should be possible to restrict areas of the ``phone book''
+        \item<3-> Should be possible to restrict areas of the ``phone book''
         \begin{itemize}
-            \item It doesn't have much sense to say where an agent runs if you don't have right to talk with it
-            \item this must not replace agent request for authentication of the requester.
+            \item<3-> It doesn't have much sense to say where an agent runs if you don't have right to talk with it
+            \item<3-> this must not replace agent request for authentication of the requester.
         \end{itemize}
     \end{itemize}
-    \begin{alertblock}{Tools}<2->
+    \begin{alertblock}{Tools}<4->
         \begin{itemize}
             \item Homomorphic encryption/Ordered cryptography
         \end{itemize}
