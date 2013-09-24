@@ -65,23 +65,21 @@
     \begin{exampleblock}{What is a Programmable Logic Controllers?}
         \begin{figure}
             \centering{
-                %\begin{subfigure}
-                    \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101456_015.jpg}
-                %    \caption{Outside}\label{fig:outsideLinac}
-                %\end{subfigure}
+                \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101456_015.jpg}
             }
         \end{figure}
-                %\\
         \begin{figure}
             \centering{
-                %\begin{subfigure}
-                    \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101743_023.jpg}
-                %    \caption{Inside}\label{fig:insideLinac}
-                %\end{subfigure}
+                \includegraphics[width=0.9\textwidth]{imgs/alba/20130812_101743_023.jpg}
                 \caption{Example of a PLC controlled system}\label{fig:linacPLCs}
             }
         \end{figure}
     \end{exampleblock}
+    \begin{textblock*}{60mm}(0.25\textwidth,0.5\textheight)
+        \begin{exampleblock}{}<2->
+            This a production line like example!
+        \end{exampleblock}
+    \end{textblock*}
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -91,7 +89,7 @@
     \begin{block}{\href{http://es.wikipedia.org/wiki/SCADA}{Wikipedia's definition (es)}}
         ``\emph{Supervisory Control And Data Acquisition} it is a computer software to control and supervise industrial process remotely.''
     \end{block}
-    \begin{exampleblock}{Examples of an SCADAs}
+    \begin{exampleblock}{Examples of an SCADAs}<2->
         \begin{figure}[h]
             \centering{
             \includegraphics[width=0.4\textwidth]{imgs/alba/labview_tab3_mainScreen.png}
@@ -250,7 +248,7 @@
             \end{figure}
         \end{exampleblock}
     \end{textblock*}
-    \begin{textblock*}{45mm}(0.075\textwidth,0.3\textheight)
+    \begin{textblock*}{45mm}(0.075\textwidth,0.35\textheight)
         \begin{block}{Matlab GUI}<6->
             \begin{figure}
                 \includegraphics[width=\textwidth]{imgs/alba/laop/05_ltp_matlabgui.jpg}
@@ -366,6 +364,56 @@
                 \item 85 DServers
                 \item 1551 DClasses
             \end{itemize}
+        \end{exampleblock}
+    \end{textblock*}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 1.12 -----------------------------%
+\begin{frame}
+\frametitle{Other possibilities}
+    \begin{itemize}
+        \item<2-> Factory production lines
+        \item<3-> Critical factories
+        \item<4-|alert@4-7> Electronic traffic lights and tools
+        \item<8-|alert@8> Energy industry
+    \end{itemize}
+    %Production lines
+    \begin{textblock*}{50mm}(0.6\textwidth,0.25\textheight)
+        \begin{exampleblock}{Production lines}<2>
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/aux/Production-Line-Factory.jpg}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    %More critical factories
+    \begin{textblock*}{50mm}(0.6\textwidth,0.35\textheight)
+        \begin{exampleblock}{Production lines}<3>
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/aux/THX_1138_DC.png}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    %distributed exposed
+    \begin{textblock*}{50mm}(0.6\textwidth,0.25\textheight)
+        \begin{exampleblock}{Electronic road panels}<5-7>
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/aux/plate_hack_sql.jpg}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{50mm}(0.6\textwidth,0.35\textheight)
+        \begin{exampleblock}{}<6-7>
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/aux/youll_late_hack.jpg}
+            \end{figure}
+        \end{exampleblock}
+    \end{textblock*}
+    \begin{textblock*}{50mm}(0.6\textwidth,0.45\textheight)
+        \begin{exampleblock}{}<7>
+            \begin{figure}
+                \includegraphics[width=\textwidth]{imgs/aux/zombies-ahead_hack.jpg}
+            \end{figure}
         \end{exampleblock}
     \end{textblock*}
 \end{frame}
@@ -698,8 +746,23 @@
         \item R. Tom\`as, ``\emph{Volcans d'isogenies de corbes el$\cdot$l\'{\i}ptiques: Aplicacions criptogr\`afiques en targetes intel$\cdot$ligents}''. PhD Thesis UdL, march 2011. Directed by: Josep M. Miret and Daniel Sadornil.\cite{Rosana11}
         \item BSI TR-03111:``\emph{Elliptic curve cryptography, version 2.0}''.\cite{BSI_TR-03111}
         \item S. Blake-Wilson, N. Bolyard, V. Gupta, C. Hawk, and B. Moeller, ``\emph{Elliptic curve cryptography (ecc) cipher suites for transport layer security (tls)}'' May 2006. RFC4492. \cite{rfc4492}
-
     \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------%
+
+%------------------------------------ Frame 5.3 ------------------------------%
+\begin{frame}
+\frametitle{Elliptic curves}
+    \begin{itemize}
+        \item J. Valera, “Volcales de $\ell$-isogenias de curvas elípticas,” Sistemas Informáticos. Escola Politècnica Superior. Universidad de Lleida, Sept 2011. Directed by: Josep M. Miret. \cite{JValera11}
+        \item A. Rostovtsev and E. Rostovtsev and A. Stolbunov ``Public-Key Cryptosystem Based On''. 2006 \cite{Rostovtsev06public}
+        \item R. Moreno, Subgrupos de Sylow de las curva ellíıpticas definidas sobre cuerpos finitos. PhD thesis, Universitat Politècnica de Catalunya, 2005. Directed by: Anna Rio and Josep M. Miret. \cite{ramiro05}
+    \end{itemize}
+    Ongoing:
+    \begin{itemize}
+        \item S. Blanch-Torn\'e and R. Moreno and F. Seb\'e and J. Varela ``Security risk associated with multiple users sharing the same elliptic curve''. Draft \cite{secRickShareECs}
+    \end{itemize}
+
 \end{frame}
 %-----------------------------------------------------------------------------%
 
@@ -720,6 +783,10 @@
         \item ``\emph{Specification for the advanced encryption standard (aes).}'' Federal Information Processing Standards Publication 197, 2001.\cite{AES-FIPS}
         \item J. Daemen and V. Rijmen, ``\emph{The Design of Rijndael}''. Secaucus, NJ, USA: Springer-Verlag New York, Inc., 2002. \cite{Daemen:2002:DR:560131}
         \item J. Schaad and R. Housley, ``\emph{Advanced Encryption Standard (AES) Key Wrap Algorithm.}'' Sept. 2002. RFC3394 \cite{rfc3394}
+    \end{itemize}
+    Ongoing:
+    \begin{itemize}
+        \item S. Blanch-Torn\'e and R. Moreno and F. Seb\'e and M. Valls ``Generalised Rijndael''. Draft \cite{gRijndael}
     \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------%
@@ -786,13 +853,68 @@
 %-----------------------------------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Extra slides}
+
+%------------------------------------ Frame 7.1 ------------------------------%
 \begin{frame}[allowframebreaks]
         \frametitle{References}
         %\bibliographystyle{amsalpha}
         \bibliographystyle{ieeetr}
-        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/ecc.bib,../bibtex/rijndael.bib}
+        \bibliography{../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/ecc.bib,../bibtex/rijndael.bib,../bibtex/isogeny.bib,../bibtex/sblanch.bib}
 \end{frame}
+%-----------------------------------------------------------------------------%
 
+%------------------------------------ Frame 7.2 ------------------------------%
+\begin{frame}
+\frametitle{Alba's \href{https://www.cells.es/Members/sblanch}{duties}}
+    \begin{textblock*}{40mm}(0.0\textwidth,0.2\textheight)
+        \begin{itemize}
+            \item Diagnostics
+            \begin{itemize}
+                \item<alert@1> CCDs
+                \item Instrumentation
+                \item Tune excitation
+                \item Filling Pattern FCT
+            \end{itemize}
+            \item<alert@1> Linac
+            \item Power Supplies
+            \begin{itemize}
+                \item Magnet cycling
+                \item StateCode interpreter
+                \item<alert@1> Fast orbit feedback
+            \end{itemize}
+        \end{itemize}
+    \end{textblock*}
+    \begin{textblock*}{45mm}(0.325\textwidth,0.2\textheight)
+        \begin{itemize}
+            \item Radio Frequency
+            \begin{itemize}
+                \item Digital Low Level RF
+                \item<alert@1> Fast Data Logger
+                \item Facade
+            \end{itemize}
+            \item Optics lab
+            \begin{itemize}
+                \item Autocollimator
+            \end{itemize}
+            \item Sardana controllers
+            \begin{itemize}
+                \item IBACtrl
+                \item ElComatCtrl
+                \item AttenIOR (group)
+                \item MirrorPM \& MonoPM
+            \end{itemize}
+        \end{itemize}
+    \end{textblock*}
+    \begin{textblock*}{55mm}(0.7\textwidth,0.2\textheight)
+        \begin{itemize}
+            \item Tango naming convention (and DNS)
+            \item ``Interfaces to the Alba Control System''
+            \item<alert@1> ``Controls coding standard and packaging convention''
+        \end{itemize}
+    \end{textblock*}
+\end{frame}
+%-----------------------------------------------------------------------------%
 
 \end{document}
 
