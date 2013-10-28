@@ -282,7 +282,7 @@ The \emph{Device}s are the agents of this distributed system and they follow an 
 
 Lets start with what is called \emph{Properties}. They can be sawn as the parameters in the constructor of this object, and also they are the tool to store permanent data with in the system. Any object has \emph{attributes} and \emph{methods} in the object oriented design and in \tango\, they also exist.
 
-Even if the \emph{attributes}, in \emph{OO} are often private and non accessible as interface to the object, in \tango\, they are public and are the key to see how the things are going. These \tango\,\emph{Attributes} can be read-only or read-write (and other modes rarely used like write-only) and all of them have and specific type and dimension. those characteristics are immutable, and once it is build it cannot change in execution time. As can be read in figure \ref{fig:tangoDeviceStructure}, in the box of ``\emph{data types}'', the list of possibilities is not too long, and as will be explained later they are independent to the architecture where you run. Attributes can be from the simplest boolean to many sizes of integers (8,16,32 and 64 bits), the case of floating point is mapped the basic \corba\, types with a \emph{DevFloat} of 32 bits and a \emph{DevDouble} with 64. And finally there are two more data types: the string (or list of characters) and the encoded. Explain the \emph{DevEncoded} is out of 
+Even if the \emph{attributes}, in \emph{OO} are often private and non accessible as interface to the object, in \tango\, they are public and are the key to see how the things are going. These \tango\,\emph{Attributes} can be read-only or read-write (and other modes rarely used like write-only) and all of them have and specific type and dimension. Those characteristics are immutable, and once it is build it cannot change in execution time. As can be read in figure \ref{fig:tangoDeviceStructure}, in the box of ``\emph{data types}'', the list of possibilities is not too long, and as will be explained later they are independent to the architecture where you run. Attributes can be from the simplest boolean to many sizes of integers (8,16,32 and 64 bits), the case of floating point is mapped the basic \corba\, types with a \emph{DevFloat} of 32 bits and a \emph{DevDouble} with 64. And finally there are two more data types: the string (or list of characters) and the encoded. Explain the \emph{DevEncoded} is out of 
 the scope of this document, but simply mention that has a header that explains how are the data stored on its body.
 
 The methods of this object are the \emph{Commands} that represents actions to be take. This methods can be parametrised with input arguments, and the responses as output arguments. A restriction here is that there can only be one input argument and one output argument, but they can be lists or matrices. Yes, again as can be read in figure \ref{fig:tangoDeviceStructure}, the dimensions that one argument can have (and it is the same for \emph{Properties} and \emph{Attributes}) is a single value, called ``\emph{scalar}'' a vector of value, called ``\emph{spectrum}'' and a two dimensional array, called ``\emph{image}''.
@@ -292,39 +292,53 @@ There are more advanced data type dimensions that allows to mix doubles with str
 In a distributed system, issues like the concurrency and the fault tolerance (together with recovery), one of the most important things is the \emph{naming}. In the communication with the agents, and the communication between the agents, they have to know the name of each other to have the possibility to \emph{talk} between them.
 
 All the agents in \tango\, have a unique name structured as a string similar to the web services. The more generic name for a \emph{url} is a \emph{Uniform Resource Identifier} (or URI). A \emph{Uniform Resource Locator} is what enables in a system to locate a resource. In the common use of the web, a \emph{url} identifies an specific resource on the referenced website. A \tango\, \emph{uri} can identify a \emph{Device} with:
-\begin{center}
- {\tt [tango://facility:10000/]domain/class/member-NN[-sufix]}
-\end{center}
-The protocol can be assumed and the same with the database server denoted as \emph{facility} with the port access to the database, that can be set up bu environment variables. With a device name is possible to access an attribute continuing the tree naming: {\tt domain/class/member-NN[-sufix]/attr}. Any property, and because devices and also attributes can have them, can be accesses using notation like {\tt domain/class/member-NN[-sufix][/attr]->Property}
+\begin{equation}
+    {\tt [tango://facility:10000/]domain/class/member-NN[-sufix]}\label{eq:tangoDeviceFullName}
+\end{equation}
+The protocol can be assumed and the same with the database server denoted as \emph{facility} with the port access to the database, that can be set up bu environment variables. The reduced way to name a \emph{device} is by {\tt domain/class/member} and is giving the possibility to stablish a hierarchy of three levels in the naming.
 
-\todo{But the access to the commands?}
+The basic access brick is the \emph{device} and as it has been mention, it is the agent in the distributed system. Based on design patterns on of the objects you can request to middleware is a \emph{DeviceProxy} and to build this proxy you need the \emph{device name}. But there is a secondary element of this device that the middleware provide a proxy, it is the attribute. Each of the attributes can be accessed as an encapsulated object called an \emph{AttributeProxy}, and the naming for it is to append another element in the naming tree:
+\begin{equation}
+    {\tt domain/class/member-NN[-sufix]/attr}\label{eq:tangoAttrName}
+\end{equation}
 
-%With this name is possible to access any public content of the agent. An attribute name is known in the system, in the short name, as {\tt domain/class/member/attr}.% and information about it, like the unit is known as {\tt domain/class/member/attr?configure=unit}
+The other important element in the normal use of a device are the commands, but they are not encapsulated apart of the proxy, and they do not need a naming in the URI tree. It was not mention before to avoid confusion but both, device and its attributes have properties. They are permanently stored using the database, and is the middleware the one in charge to access to read or change each of them. They neither are included directly in the URI naming tree but in this case, the \tango\, manual \cite{tango81} have setup a way to call them:
+\begin{equation}
+    {\tt domain/class/member-NN[-sufix][/attr]->Property}\label{eq:tangoProperty}
+\end{equation}
+In this case, the protocol and database server name has been avoided for simplicity, and notice that the attribute part is optional to remark that the naming for a property has the same structure even if it is refereed to a device or to an attribute.
 
-But how the user can contact a \emph{device} (or between agents), \tango\, solves this by a \emph{phone-book} in a \mysql\, database. But this solution leads to another problem: this data base is not integrated with in the \emph{middleware} resulting a centralized element.
+\taurus\,, that uses much more the naming to setup models in Qt, has extended the naming to support other elements that needs references. What this is about is the attribute configurations that are not attribute properties but characteristics like can be the unit, the label, the format, and so on.
+\begin{equation}
+    {\tt domain/class/member/attr?configure=unit}\label{eq:taurusAttrConf}
+\end{equation}
+
+Once a name is known, the way to contact the destination is based on the \tango's \emph{phone-book}, what is located in a \mysql\, database in a machine that has been labelled in the previous example \ref{eq:tangoDeviceFullName} as {\tt facility}. Even if it is a human user from the presentation layer or another agent from inside the domain layer, all has to request to the middleware access to the \tango-db to locate where is running what is named and to which port will have to address the contact. This \tango-db is a centralized element on the system.
 
 In this database there is another valuable information stored. The database is the permanent storage of this distributed system. As has been mention before the \emph{Properties} are the unique element stored outside the \emph{devices} and they are used to configure these \emph{devices} on the \emph{DeviceServer} start up.
 
-\begin{itemize}
-    \item \ok{\tango-core as middleware}
-    \item \ok{\tango-ds as the agents in the distributed system (figure \ref{fig:tangoDeviceStructure})}
-    \begin{itemize}
-        \item \ok{\tango\,Device Servers}
-        \item \ok{\tango\,Device Class}
-        \item \ok{\tango\,Device}
-        \begin{itemize}
-            \item \ok{Properties}
-            \item \ok{Attributes}
-            \item \ok{Commands}
-        \end{itemize}
-    \end{itemize}
-    \item \tango-database
-    \begin{itemize}
-        \item \ok{as agent \emph{phone-book}}
-        \item \ok{as permanent storing system}
-        \item \todo{as logging service}
-    \end{itemize}
-\end{itemize}
+% \begin{itemize}
+%     \item \ok{\tango-core as middleware}
+%     \item \ok{\tango-ds as the agents in the distributed system (figure \ref{fig:tangoDeviceStructure})}
+%     \begin{itemize}
+%         \item \ok{\tango\,Device Servers}
+%         \item \ok{\tango\,Device Class}
+%         \item \ok{\tango\,Device}
+%         \begin{itemize}
+%             \item \ok{Properties}
+%             \item \ok{Attributes}
+%             \item \ok{Commands}
+%         \end{itemize}
+%     \end{itemize}
+%     \item \tango-database
+%     \begin{itemize}
+%         \item \ok{as agent \emph{phone-book}}
+%         \item \ok{as permanent storing system}
+%         \item \todo{as logging service}
+%     \end{itemize}
+% \end{itemize}
+
+\todo{The \tango\, logging service}
 
 \begin{figure}[h]
     \centering{
