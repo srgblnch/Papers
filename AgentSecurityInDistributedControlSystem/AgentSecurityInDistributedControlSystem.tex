@@ -289,33 +289,37 @@ The methods of this object are the \emph{Commands} that represents actions to be
 
 There are more advanced data type dimensions that allows to mix doubles with strings and longs with also strings. But the abstraction of this is like list of numbers (integers of floating points) where each number is associated with an string. 
 
+\subsection{\tango\, naming}
+
 In a distributed system, issues like the concurrency and the fault tolerance (together with recovery), one of the most important things is the \emph{naming}. In the communication with the agents, and the communication between the agents, they have to know the name of each other to have the possibility to \emph{talk} between them.
 
 All the agents in \tango\, have a unique name structured as a string similar to the web services. The more generic name for a \emph{url} is a \emph{Uniform Resource Identifier} (or URI). A \emph{Uniform Resource Locator} is what enables in a system to locate a resource. In the common use of the web, a \emph{url} identifies an specific resource on the referenced website. A \tango\, \emph{uri} can identify a \emph{Device} with:
 \begin{equation}
-    {\tt [tango://facility:10000/]domain/class/member-NN[-sufix]}\label{eq:tangoDeviceFullName}
+    {\tt [tango://facility:10000/]domain/class/member[\textendash NN[\textendash sufix]]}\label{eq:tangoDeviceFullName}
 \end{equation}
 The protocol can be assumed and the same with the database server denoted as \emph{facility} with the port access to the database, that can be set up bu environment variables. The reduced way to name a \emph{device} is by {\tt domain/class/member} and is giving the possibility to stablish a hierarchy of three levels in the naming.
 
 The basic access brick is the \emph{device} and as it has been mention, it is the agent in the distributed system. Based on design patterns on of the objects you can request to middleware is a \emph{DeviceProxy} and to build this proxy you need the \emph{device name}. But there is a secondary element of this device that the middleware provide a proxy, it is the attribute. Each of the attributes can be accessed as an encapsulated object called an \emph{AttributeProxy}, and the naming for it is to append another element in the naming tree:
 \begin{equation}
-    {\tt domain/class/member-NN[-sufix]/attr}\label{eq:tangoAttrName}
+    {\tt domain/class/member[\textendash NN[\textendash sufix]]/attr}\label{eq:tangoAttrName}
 \end{equation}
 
 The other important element in the normal use of a device are the commands, but they are not encapsulated apart of the proxy, and they do not need a naming in the URI tree. It was not mention before to avoid confusion but both, device and its attributes have properties. They are permanently stored using the database, and is the middleware the one in charge to access to read or change each of them. They neither are included directly in the URI naming tree but in this case, the \tango\, manual \cite{tango81} have setup a way to call them:
 \begin{equation}
-    {\tt domain/class/member-NN[-sufix][/attr]->Property}\label{eq:tangoProperty}
+    {\tt domain/class/member[\textendash NN[\textendash sufix]][/attr]\textendash >Property}\label{eq:tangoProperty}
 \end{equation}
 In this case, the protocol and database server name has been avoided for simplicity, and notice that the attribute part is optional to remark that the naming for a property has the same structure even if it is refereed to a device or to an attribute.
 
 \taurus\,, that uses much more the naming to setup models in Qt, has extended the naming to support other elements that needs references. What this is about is the attribute configurations that are not attribute properties but characteristics like can be the unit, the label, the format, and so on.
 \begin{equation}
-    {\tt domain/class/member/attr?configure=unit}\label{eq:taurusAttrConf}
+    {\tt domain/class/member[\textendash NN[\textendash sufix]]/attr?configure=unit}\label{eq:taurusAttrConf}
 \end{equation}
 
 Once a name is known, the way to contact the destination is based on the \tango's \emph{phone-book}, what is located in a \mysql\, database in a machine that has been labelled in the previous example \ref{eq:tangoDeviceFullName} as {\tt facility}. Even if it is a human user from the presentation layer or another agent from inside the domain layer, all has to request to the middleware access to the \tango-db to locate where is running what is named and to which port will have to address the contact. This \tango-db is a centralized element on the system.
 
 In this database there is another valuable information stored. The database is the permanent storage of this distributed system. As has been mention before the \emph{Properties} are the unique element stored outside the \emph{devices} and they are used to configure these \emph{devices} on the \emph{DeviceServer} start up.
+
+Last of the details to mention from \tango\, is the logging system. It is very simple and consists of a series of files stored locally by the agents in the machine where each agent runs. As the machines where the system runs are inside a trust enviroment the access to this log files is guaranted but anyone with access to the machine can read those files. The content on this files depends on the agent developer and the use of the streams with different logging levels available and when a \emph{device} process (the DeviceServer) is launched, in the command line the log level can be set up.
 
 % \begin{itemize}
 %     \item \ok{\tango-core as middleware}
@@ -338,14 +342,14 @@ In this database there is another valuable information stored. The database is t
 %     \end{itemize}
 % \end{itemize}
 
-\todo{The \tango\, logging service}
-
 \begin{figure}[h]
     \centering{
          \includegraphics[width=0.7\textwidth]{imgs/tango_DeviceServer_DeviceClass_Device.png}
          \caption{\tango\, agents process structure \fixme{To be improved}} \label{fig:tangoDeviceStructure}
     }
 \end{figure}
+
+\subsection{\tango\, transparencies}
 
 Now, with this knowledge is time to move back to the table \ref{tab:transparencies} about distributed system transparencies. As \tango\, is a software built above \corba, it is using it to deal with the degree of support of those transparencies.
 
@@ -427,6 +431,17 @@ As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{C
 
 
 \subsection{Lightweight symmetric and/or stream ciphers}
+
+Once a device is authenticated and there is a secure channel using asymmetric encryption, this can be used to exchange session key when an attribute likes to be accessed. This paper proposes two main ways: symmetric algorithms and/or stream ciphers. Both have \emph{pros and cons} and a hybrid system would support both and use the best of them depending on the situation. The key agreement should also agreed how the later communication will be.
+
+The constrains to select one way or the other must be the flux of data. The needs are very different when the transmission means a boolean subscribed that changes every few milliseconds, or if the transmission is a detector image of 6 mega-pixels, where each pixel is a \emph{DevLong}, generated in the order of the hundreds of milliseconds.
+
+\paragraph{Symmetric algorithms:} The first of the solutions proposed for the information transmission is the use of lightweight symmetric algorithms. An important feature for this is the possibility to adapt the sizes of the blocks to be used, together with the encryption modes.
+
+One of the most used algorithms for symmetric encryption is the \emph{Rijndael}. This was the winner of the \emph{Advanced Encryption Standard} (short of AES) \cite{AES-FIPS} that replaces the \emph{DES} algorithm. There is a book \cite{Daemen:2002:DR:560131} from the algorithm authors that explains very well the mathematics behind this algorithm. The original algorithm supports a block size of 128 bits and 5 key sizes (128, 160, 192, 224 and 256 bits) but when it was standardised, there where only used 3 of them (128, 192 and 256). But based on the mathematics behind it is possible to fine tune both sizes, the block and the key. There is a work in progress on this field \cite{gRijndael} that is trying to adapt the \emph{Rijndael} to be used as lightweight symmetric and also with sizes above the originals.
+
+In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size
+
     \begin{itemize}
         \item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
         \begin{itemize}
