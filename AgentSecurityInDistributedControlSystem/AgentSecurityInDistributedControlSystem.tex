@@ -429,6 +429,8 @@ As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{C
 %         %\item \todo{\tango-db as the base for PKI (\emph{Public Key Infrastructure} and CA (\emph{Certificate Authority)}}
 %     \end{itemize}
 
+\todo{Figure about how an agent can be identified, authenticated and authorized.}
+
 
 \subsection{Lightweight symmetric and/or stream ciphers}
 
@@ -440,7 +442,7 @@ The constrains to select one way or the other must be the flux of data. The need
 
 One of the most used algorithms for symmetric encryption is the \emph{Rijndael}. This was the winner of the \emph{Advanced Encryption Standard} (short of AES) \cite{AES-FIPS} that replaces the \emph{DES} algorithm. There is a book \cite{Daemen:2002:DR:560131} from the algorithm authors that explains very well the mathematics behind this algorithm. The original algorithm supports a block size of 128 bits and 5 key sizes (128, 160, 192, 224 and 256 bits) but when it was standardised, there where only used 3 of them (128, 192 and 256). But based on the mathematics behind it is possible to fine tune both sizes, the block and the key. There is a work in progress on this field \cite{gRijndael} that is trying to adapt the \emph{Rijndael} to be used as lightweight symmetric and also with sizes above the originals.
 
-In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size
+In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size and using directly the AES will at least duplicate the information to transfer for each value. 
 
     \begin{itemize}
         \item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
@@ -457,9 +459,11 @@ In the context of this paper, it is important to have smaller block sizes becaus
         \end{itemize}
     \end{itemize}
 
+\todo{Figure about how an agent can send (after request or by events) attribute data.}
     
 \subsection{Cryptography for the database}
     \begin{itemize}
+        \item Permanent storage in a database, where there is no authentication of who is doing an operation.
         \item Homomorphic encryption:
         \begin{itemize}
             \item ``Fully homomorphic encryption using ideal lattices'' \cite{Gentry:2009:FHE:1536414.1536440}
