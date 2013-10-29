@@ -442,25 +442,35 @@ The constrains to select one way or the other must be the flux of data. The need
 
 One of the most used algorithms for symmetric encryption is the \emph{Rijndael}. This was the winner of the \emph{Advanced Encryption Standard} (short of AES) \cite{AES-FIPS} that replaces the \emph{DES} algorithm. There is a book \cite{Daemen:2002:DR:560131} from the algorithm authors that explains very well the mathematics behind this algorithm. The original algorithm supports a block size of 128 bits and 5 key sizes (128, 160, 192, 224 and 256 bits) but when it was standardised, there where only used 3 of them (128, 192 and 256). But based on the mathematics behind it is possible to fine tune both sizes, the block and the key. There is a work in progress on this field \cite{gRijndael} that is trying to adapt the \emph{Rijndael} to be used as lightweight symmetric and also with sizes above the originals.
 
-In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size and using directly the AES will at least duplicate the information to transfer for each value. 
+In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size and using directly the AES will at least duplicate the information to transfer for each value.
 
-    \begin{itemize}
-        \item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
-        \begin{itemize}
-            \item Adapt the Rijndael \cite{gRijndael} (AES contest \cite{AES-FIPS} and the book \cite{Daemen:2002:DR:560131})
-            \item key size must be related with the security levels (section \ref{sec:securityLevels}) and this also has relation with the number of rounds
-        \end{itemize}
-        \item Possibilities of the AESWrap \cite{rfc3394}
-        \item stream ciphers: non block size limited for event transmission
-        \begin{itemize}
-            \item Key derivation Funtions as PRGs for stream ciphers
-            \item Rabbit \cite{rfc4503}
-            \item \emph{Secret splitting} for multicasting information.
-        \end{itemize}
-    \end{itemize}
+About the other block size change, the key size, can be useful the feature to have much more key sizes in order to have it in correspondence with the related security levels mention in section \ref{sec:securityLevels}. The paper mentioned there \cite{lenstrauniversal13} about the key sizes remarks also that it is mandatory to have correspondence between the three elements in a pack of security: public key, symmetric and hash\footnote{In this paper are not included the hash algorithms as like as the symmetric algorithms are due to an scope reason, but with them it happens a similar thing than with the \emph{Rijndael}.} sizes. This sizes must be selected with utmost case, because the weakest is our incoming invitation to the attacks.
+
+\paragraph{Stream ciphers:} There is another tool for the information transmission to be explored. This has the advantage of non block size limitation. One can see it as one particular case of symmetric systems. As it is a very often system used for broadcasting information, it is a candidate for the multicasting feature of the events emission using the \zmq. There is a field in cryptology, called \emph{secret splitting} that focus in this multicast feature.
+
+Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) and is very tricky because the key size choice is not the only restriction on it, there is also the live time of the key. The source of this systems are \emph{Key Derivation Funtion}s (short for KDF) used as PRGs to {\tt xor} the key flow with the data flow. As this is almost a \emph{One Time Pad} (short for OTP) the system can be considered a \emph{perfect secrecy} as define by \emph{Shannon} in \cite{shannon-comTheorySecSys}. But do not forget that is almost OTP and the only way to maintain it secure is to renew the key before the KDF can start to produce repeated sequences.
+
+\todo{Rabbit \cite{rfc4503}}
+
+%     \begin{itemize}
+%         %\item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
+%         %\begin{itemize}
+%         %    %\item Adapt the Rijndael \cite{gRijndael} (AES contest \cite{AES-FIPS} and the book \cite{Daemen:2002:DR:560131})
+%         %    %\item key size must be related with the security levels (section \ref{sec:securityLevels}) and this also has relation with the number of rounds
+%         %\end{itemize}
+%         %\item Possibilities of the AESWrap \cite{rfc3394}
+%         \item stream ciphers: non block size limited for event transmission
+%         \begin{itemize}
+%             \item Key derivation Funtions as PRGs for stream ciphers
+%             \item Rabbit \cite{rfc4503}
+%             \item \emph{Secret splitting} for multicasting information.
+%         \end{itemize}
+%     \end{itemize}
 
 \todo{Figure about how an agent can send (after request or by events) attribute data.}
-    
+\\\\
+\todo{Later sections can be grouped as they will need a harder further study, and add hash to them.}
+
 \subsection{Cryptography for the database}
     \begin{itemize}
         \item Permanent storage in a database, where there is no authentication of who is doing an operation.
