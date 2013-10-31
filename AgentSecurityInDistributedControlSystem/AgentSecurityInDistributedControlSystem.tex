@@ -1,6 +1,7 @@
 \documentclass[10pt,a4paper,twoside]{llncs}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
 \pagestyle{plain}
+\setcounter{secnumdepth}{3}%to set numbering over subsubsections
 
 \usepackage[latin1]{inputenc}
 
@@ -75,7 +76,7 @@
 of cryptology to mathematically protect the 
 system.
 
-A goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation or e-mail, but not only. The final goal to provide security must be involve the other levels of the Open System Interconnection model (the OSI layers) by provide end-to-end agent authentication and encryption. Event than a migration environment should allow to co-love with non secured access, the setup of the system must provide a complete transparent security. Concepts like the certificates shall be integrated to not increase the current complexity of a \tango\, installation.
+A goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation or e-mail, but not only. The final goal to provide security must be involve the other levels of the Open System Interconnection model (the OSI layers) by provide end-to-end agent authentication and encryption. Event than a migration environment should allow to coexist with non secured access, the setup of the system must provide a complete transparent security. Concepts like the certificates shall be integrated to not increase the current complexity of a \tango\, installation.
 
 The instances running of \tango\, are in a very specialized situation, but the scientific facilities may not be so different than industry applications. \tango\, runs over different architectures and operating systems, having the computing sources of a very big computer with small embedded systems in the same network. When security is introduced, it must not ``disturb'' or it's easily deactivated. Then the solutions shall work fine in the smaller case, and \emph{Elliptic curves}, \emph{lightweight symmetrics} and \emph{stream cyphers} are the best candidates on this business.
 
@@ -402,7 +403,7 @@ What \tango\, needs as final product that introduces security, is to add to the 
 
 Another fact has been mention in section \ref{sec:SecurityEngineering} and it is about the issue that any agent can not be trusted if the machine where this agent runs can not be trusted. It does not have any sense to trust in an agent that is carrying a secret key that may have been compromised during an execution inside a machine that is out of our trust ring.
 
-Once said this points, it is time to go inside of the three proposed solutions for \tango.
+Once said this points, it is time to go inside of the proposed solutions for \tango. Here we have two main solutions in the next subsections to complain with the basic principles of \emph{information security} (see table \ref{tab:infosec} in section \ref{sec:InfoSec}), followed by two introductions to advance solutions.
 
 \subsection{Use of \emph{Elliptic curves} for authentication and public key encryption}
 
@@ -471,7 +472,9 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
 \\\\
 \todo{Later sections can be grouped as they will need a harder further study, and add hash to them.}
 
-\subsection{Cryptography for the database}
+\subsection{Further advanced solutions}
+
+\subsubsection{Cryptography for the database}
     \begin{itemize}
         \item Permanent storage in a database, where there is no authentication of who is doing an operation.
         \item Homomorphic encryption:
@@ -491,7 +494,7 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
         %http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/
     \end{itemize}
 
-\subsection{Command authorizations}
+\subsubsection{Command authorizations}
 
 As mention in the scenario of a bank in section \ref{sec:SecurityEngineering}, a desired feature can be the dilute the authorization with more than one controller (agent or human). This kind of solutions can come from \emph{Secret Sharing} solutions.
 
