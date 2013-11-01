@@ -59,20 +59,20 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
  
-    Distributed Control Systems are a solution that mixes two concepts: Industrial Control and Distributed Systems. Nowadays this type of solution is widely spread in disseminated resources by networks that can be open accessed or, in the best case, only protected by firewalls. The problems that an attack to this systems can cause can be quantified easily when keystone industries are targeted like energy grids or one can imagine the effects on other like traffic lights. Too often, during the developments, the security is forgotten in favour of time schedule restrictions.
+    Distributed Control Systems is a solution that mixes two concepts: Industrial Control and Distributed Systems. Nowadays this type of solution is widely spread in disseminated resources by networks that can be open accessed or, in the best case, only protected by firewalls. An attack to these systems can be considered very serious, specially when they can be used in energy grids. Too often, during the developments, the security is forgotten in favour of time schedule restrictions.
 
     \tango\, is an example of this Distributed Control Systems where by its isolated environment inside an institution (firewalled cases) has helped to avoid the security issues. But this is a defect that blocks this systems to arrive to a new horizon of industries. Recently voices have raised the problem and a request has arrived to introduce this goal to the system core.
 
     As in the past has happen with the world wide protocols, like web, e-mail and others, it is a requirement for exposed to attacks systems to have security protocols to cover the security over the different levels of the communication.
 
-{\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, \emph{stream cyphers}, \emph{secret sharing} and also \emph{Homomorphic encryption} for databases.}, Distributed Control Systems, Cryptography Engineering.
+{\bf Keywords:} Cryptography\footnote{This big keyword includes proposals over \emph{Public key}, \emph{Elliptic Curves}, \emph{Symmetric algorithms}, and \emph{stream cyphers}. Other keywords mention are the \emph{Homomorphic encryption} and \emph{secret sharing} but they are not the centre of this paper.}, Distributed Control Systems, Cryptography Engineering.
 
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}\label{sec:introduction}
 
-\tango\, is a software tool supported by the \emph{Consortium}\footnote{see \href{https://www.tango-controls.org/}{tango-controls.org} for further information about the consortium.} where 8 of the member institutions are synchrotrons\footnote{Synchrotron is a circular particle accelerator design to generate electromagnetic radiation (specially in the region of the X-rays but not only). This light is used in scientific experiments} and the ninth is a neutron source\footnote{Neutron sources are scientific facilities with nuclear reactors or particle accelerators designed to emit neutrons for experimental studies}. Apart from this institutions there are other projects that uses \tango\, to control the research facility and recently the industry have shown interest to use it in their process. But this industry have pointed a very important feature forgotten in this system, the security. An not concerning only the classical IT environmental security, that is a institution/user choice, the feature is about the use 
+\tango\, is a software tool supported by the \emph{Consortium}\footnote{see \href{https://www.tango-controls.org/}{tango-controls.org} for further information about the consortium.} where 8 of the member institutions are synchrotrons\footnote{Synchrotron is a circular particle accelerator design to generate electromagnetic radiation (specially in the region of the X-rays but not only). This light is used in scientific experiments} and the ninth is a neutron source\footnote{Neutron sources are scientific facilities with nuclear reactors or particle accelerators designed to emit neutrons for experimental studies}. Apart from this institutions there are other projects that uses \tango\, to control the research facility and recently the industry have shown interest to use it in their processes. But this industry have pointed a very important feature not yet implemented in this system: the security. An not concerning only the classical IT environmental security, that is a institution/user choice, the feature is about the use 
 of cryptology to mathematically protect the 
 system.
 
@@ -80,7 +80,7 @@ A goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} i
 
 The instances running of \tango\, are in a very specialized situation, but the scientific facilities may not be so different than industry applications. \tango\, runs over different architectures and operating systems, having the computing sources of a very big computer with small embedded systems in the same network. When security is introduced, it must not ``disturb'' or it's easily deactivated. Then the solutions shall work fine in the smaller case, and \emph{Elliptic curves}, \emph{lightweight symmetrics} and \emph{stream cyphers} are the best candidates on this business.
 
-\tango\, is a Free Software implementation, divided in 2 parts (as will be explained in section \ref{sec:concepts}). The core is distributed under \emph{LGPLv3} license and the device servers distributed by the \emph{Consortium} are licensed under \emph{GPLv3}. There are other satellite tools in \tango\, that helps to cover more area and extend the usage. This tools are also distributed under Free Software licenses and they are \atk, \sardana\footnote{See \href{https://www.sardana-controls.org/}{sardana-controls.org} for further information about this collaboration.}, \taurus (to help on the SCADA behaviour) and \mambo (that covers the feature of the data archiving). The auxiliary tools used inside the \tango\, implementation are also Free Software as it is the \omniorb \cite{omniORB41} and \zmq \cite{zmq32}.
+\tango\cite{tango81} is a Free Software implementation, divided in 2 parts (as will be explained in section \ref{sec:concepts}). The core is distributed under \emph{LGPLv3} license and the device servers distributed by the \emph{Consortium} are licensed under \emph{GPLv3}. There are other satellite tools in \tango\, that helps to cover more area and extend the usage. This tools are also distributed under Free Software licenses and they are \atk, \sardana\footnote{See \href{https://www.sardana-controls.org/}{sardana-controls.org} for further information about this collaboration.}, \taurus\, (to help on the SCADA behaviour) and \mambo\, (that covers the feature of the data archiving). The auxiliary tools used inside the \tango\, implementation are also Free Software as it is the \omniorb \cite{omniORB41} and \zmq \cite{zmq32}.
 
 It is very important goal to have the \tango\, implementation as Free Software, as this paper cryptography outcomes must be to have public access with auditable algorithms and sources.
 
@@ -98,7 +98,7 @@ It is very important goal to have the \tango\, implementation as Free Software, 
 Largely used in the industry, a \emph{Distributed Control system} is a particular case of an \emph{Industrial Control System} and is a particular case of \emph{distributed computer network}. Lets start from the industrial side for the definitions.
 
 \begin{definition}[\href{http://en.wikipedia.org/wiki/Industrial_Control_System}{Wikipedia (en)}]\label{def:ICS}
-    \emph{Industrial Control System} (short for ICS) is a general term that encompasses several types of control systems used in industrial production, including \emph{Supervisory Control And Data Acquisition} (short fro SCADA) systems, \emph{Distributed Control Systems} (short for DCS), and other smaller control system configurations such as \emph{Programmable Logic Controllers} (short for PLC) often found in the industrial sectors and critical infrastructures.
+    \emph{Industrial Control System} (abbreviation ICS) is a general term that encompasses several types of control systems used in industrial production, including \emph{Supervisory Control And Data Acquisition} (abbreviation SCADA) systems, \emph{Distributed Control Systems} (abbreviation DCS), and other smaller control system configurations such as \emph{Programmable Logic Controllers} (abbreviation PLC) often found in the industrial sectors and critical infrastructures.
 \end{definition}
 
 In this definition \ref{def:ICS} are nested 3 concepts that must de also defined, and lets start from the smaller and then continues for the next little bigger.
@@ -107,13 +107,13 @@ In this definition \ref{def:ICS} are nested 3 concepts that must de also defined
     A \emph{Programmable Logic Controller} (PLC) is a digital computer used for automation of electromechanical processes, such as control of machinery on factory assembly lines, amusement rides, or light fixtures.
 \end{definition}
 
-With PLCs a production line can be controlled and monitored. This systems, even they are thought for local uses, often have telephony \emph{sim} cards and are exposed throw insecure environments. Above those PLCs, the common is to have \emph{Graphical User Interfaces} (short for GUI), and them are also the next level in the ICS.
+With PLCs a production line can be controlled and monitored. This systems, even they are thought for local uses, often have telephony \emph{sim} cards and are exposed throw insecure environments. Above those PLCs, the common is to have \emph{Graphical User Interfaces} (abbreviation GUI), and them are also the next level in the ICS.
 
 \begin{definition}[\href{http://es.wikipedia.org/wiki/SCADA}{Wikipedia (es)}]\label{def:SCADA}
     A \emph{Supervisory Control And Data Acquisition} (SCADA) is a computer software to control and supervise industrial process remotely.
 \end{definition}
 
-By this definition of SCADA, many more computing elements can be introduced. As mention before, below SCADAs can be one or many PLCs, but also other computers with other very specific tasks, like specific measurement cards plugged or FPGAs\footnote{FPGA is the short for Field-Programmable Gate Array even is widely used in Controls, here is not have its definition because it is not considered an element of an ICS, but can be comparable to a PLC}. Once here a higher level abstraction can be found when goes to a larger scale:
+By this definition of SCADA, many more computing elements can be introduced. As mention before, below SCADAs can be one or many PLCs, but also other computers with other very specific tasks, like specific measurement cards plugged or FPGAs\footnote{FPGA is the abbreviation Field-Programmable Gate Array even is widely used in Controls, here is not have its definition because it is not considered an element of an ICS, but can be comparable to a PLC}. Once here a higher level abstraction can be found when goes to a larger scale:
 
 \begin{definition}[\href{http://en.wikipedia.org/wiki/Distributed_control_system}{Wikipedia (en)}]\label{def:DCS}
     A \emph{Distributed Control System} (DCS) is the computer software for a manufacturing system, process or any kind of dynamic system, in which the controller elements are not central in location (like the brain) but are distributed throughout the system with each component sub-system controlled by one or more controllers.
@@ -130,7 +130,7 @@ From the \emph{Distributed Control System} definition (\ref{def:DCS}) has been u
 
 Every single element, called an \emph{agent} of a distributed system is independent of all the others, but its meaning comes from the interaction with those others (and obviously some of them with the user). This independence is what gives one of the most special features to a distributed system: the scalability. Because there is no central point, neither the agents depends hardly one each other, the growing number of agents depends only on the infrastructure capacity. Perhaps more cpu can be required, perhaps more bandwidth, but the number of agents has virtually no limit.
 
-Once a system likes to receive the \emph{tag} of distributed some conditions must be complained. Continuing with the Tanenbaum's explanations, there are several \emph{transparencies} that a candidate for distributed should complain. They are refereed to facts that shall be hide to the user of the system. But every rule can have exceptions, then one can define degrees on this transparencies complain. Not all the distributed systems respect all this transparencies and neither they are complained in the same extension.
+Once a system likes to receive the \emph{tag} of distributed some conditions must be complained. Continuing with the Tanenbaum's explanations, there are several \emph{transparencies} that a candidate for distributed should complain. They are refereed to characteristics that shall be hide to the user of the system. But every rule can have exceptions, then one can define degrees of compliance with these transparencies. Not all the distributed systems respect all these transparencies, neither in the same extent.
 
 \begin{table}[h]
     \begin{center}
@@ -149,11 +149,11 @@ Once a system likes to receive the \emph{tag} of distributed some conditions mus
     \end{center}
 \end{table}
 
-In table \ref{tab:transparencies} are listed 8 transparencies that a system should complain to be called distributed, but as was said before not all the distributed system follows all of them neither in the same degree. Depending on the requirements of a distributed system those transparencies will need more or less degree of presence. It is not the same a mobile agent system than a DCS. Specifically, in the case of DCS in the industry, a highly specialized hardware would be only controlled from an specific computer that has the precise card plugged. This happens most of the time with \tango, but it does not mean that other agents can be moved from one machine to another, when they do not have requirements like the mention before (for example a cpu intensive processes).
+In table \ref{tab:transparencies} are listed 8 transparencies that a system should complain to be called distributed, but as mention not all the distributed system follows all of them neither in the same degree. Depending on the requirements of a distributed system those transparencies will need more or less degree of presence. It is not the same a mobile agent system than a DCS. Specifically, in the case of DCS in the industry, a highly specialized hardware would be only controlled from an specific computer that has the specific card plugged (often expensive	). This happens most of the time with \tango, but it does not mean that other agents can be moved from one machine to another, when they do not have requirements like the mention before (for example a cpu intensive processes).
 
 Although the first idea of transparency seems broken by hardware restrictions (one may think in the \emph{location} transparency), this can be wrong. Imagine what would happen if this specialized hardware fails. If the agent can be moved to new location (autonomously) and from there report this failure by itself, the consistency of the system will be greater that to realize of this failure because the agent is not available.
 
-Detailed description on \tango's transparencies will be set up in section \ref{sec:characteristics}
+Detailed description on \tango's transparencies will be set up in section \ref{sec:characteristics}.
 
 What allows all this agents in a distributed system to be relocated, replicated, and so on with the transparencies is what gives coherence to the system, and this receives the name of \emph{middleware}.
 
@@ -166,13 +166,13 @@ The middleware is nothing by itself, it is nothing \emph{tangible} in the system
 %%%%%%%%%%%
 \subsection{Information security}\label{sec:InfoSec}
 
-At this point where is clear what is a Distributed Control System, it is time to define the concept of the \emph{information security}. 
+At this point it becomes clear what is a Distributed Control System. Now, it is time to define other key concepts for the purpose of this paper like it is the \emph{information security}. 
 
 \begin{definition}\label{def:infosec}
     \emph{Information security} is the protection provided to the information in order to minimize the risk that it becomes compromised.
 \end{definition}
 
-By this definition \ref{def:infosec} many risks has to be consider like unauthorized access, any modification and also the destruction of the information to be protected. Following this risks the principles of the information security are listed in the table \ref{tab:infosec}. There are the $5$ basics and well know, and has been added a sixth principle about the auditory and a seventh about collateral damages.
+By this definition \ref{def:infosec} many risks has to be consider like unauthorized access, any modification and also the destruction of the information to be protected. Following this risks the principles of the information security are listed in the table \ref{tab:infosec}. There are the $5$ basics and well know, and has been added some extra that will be needed for the purpose of this paper.
 
 \begin{table}[h]
     \begin{center}
@@ -185,14 +185,16 @@ By this definition \ref{def:infosec} many risks has to be consider like unauthor
             Non-repudiation & Forbid validity changes on the information emitters. \\
             \hline
             Auditory & Trace who access where (extremely useful for a security breach analysis). \\
-            Third-party & protection to averting damage. \\
+            Third-party & Protection to averting damage. \\
             \hline
         \end{tabular}
         \caption{Basic principles of the information security plus extra non-basic objectives.}\label{tab:infosec}
     \end{center}
 \end{table}
 
-These last elements about auditory and damage control, are like many other things in security, they are double-edge swords, specially in the auditory case. Always depends on the moment to install an specific system, to device if those principles clashes with privacy. Perhaps that is why they are not \emph{basic}s. Privacy is not against security neither the other way around, but the difference in this auditory principle is who does it and under which circumstances. When is the same the owner who audits itself, with transparency with the users, in order to find if someone is acting improperly, this can be a good tool. But this tool can be also used to spy the behaving of the users.
+These last elements about auditory and damage control, are like many other things in security, they are double-edge swords, specially in the auditory case. Always depends on how to install an specific system, to decide if those principles clashes with privacy. Perhaps that is why they are not \emph{basic}s. 
+
+Privacy is not against security neither the other way around, but the difference in this auditory principle is who does it and under which circumstances. When is the same the owner who audits itself, with transparency with the users, in order to find if someone is acting improperly, this can be a good tool. But this tool can be also used to spy the behaving of the users.
 
 Further than secure the information itself there is an environment, where the code runs, to be secured. In a distributed system besides the fact of provide the basic principles of the information security, one have to step in the trustiness of the machine where this code is running. From the example of the multi-user machines, where one had to be aware of the other users, in a distributed system there are other agents (perhaps with the same user identification and permissions) running in parallel. The security in the agents communication is not only a matter of networking (the channel), many other layers are involved.
 
@@ -424,7 +426,7 @@ In fact, what can help to follow the recommendations from the the ANSI X9.62 is 
 
 On this public auditable algorithm, there is work on going \cite{secRickShareECs} where is proposed solutions based on \emph{Complex multiplication} or in elliptic curve \emph{isogenies}. This work has been based in previous development of \cite{Ramiro05}, \cite{Rostovtsev06public} \cite{Rosana11}, and \cite{JValera11}. From this two possible solutions, one has an extra feature, because from the idea of a public key cryptosystem using isogenies \cite{Rostovtsev06public} would be possible to introduce a new operation that any other system can not do: the \emph{cryptosystem reset}. This feature could allow the system to renew the elliptic curve in use, by a newer one with the same size but where if there is any attack ongoing on the first curve, the cost to \emph{migrate} the attack from one curve to the other will be bigger than start the attack on the second from scratch.
 
-As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{Certificate Authority)} (short of CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango\, has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
+As mention, the \emph{Public Key Infrastructure} (abbreviation PKI) and the \emph{Certificate Authority)} (abbreviation CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango\, has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
 
 \todo{Figure about how an agent can be identified, authenticated and authorized.}
 
@@ -452,7 +454,7 @@ The constrains to select one way or the other must be the flux of data. The need
 
 \paragraph{Symmetric algorithms:} The first of the solutions proposed for the information transmission is the use of lightweight symmetric algorithms. An important feature for this is the possibility to adapt the sizes of the blocks to be used, together with the encryption modes.
 
-One of the most used algorithms for symmetric encryption is the \emph{Rijndael}. This was the winner of the \emph{Advanced Encryption Standard} (short of AES) \cite{AES-FIPS} that replaces the \emph{DES} algorithm. There is a book \cite{Daemen:2002:DR:560131} from the algorithm authors that explains very well the mathematics behind this algorithm. The original algorithm supports a block size of 128 bits and 5 key sizes (128, 160, 192, 224 and 256 bits) but when it was standardised, there where only used 3 of them (128, 192 and 256). But based on the mathematics behind it is possible to fine tune both sizes, the block and the key. There is a work in progress on this field \cite{gRijndael} that is trying to adapt the \emph{Rijndael} to be used as lightweight symmetric and also with sizes above the originals.
+One of the most used algorithms for symmetric encryption is the \emph{Rijndael}. This was the winner of the \emph{Advanced Encryption Standard} (abbreviation AES) \cite{AES-FIPS} that replaces the \emph{DES} algorithm. There is a book \cite{Daemen:2002:DR:560131} from the algorithm authors that explains very well the mathematics behind this algorithm. The original algorithm supports a block size of 128 bits and 5 key sizes (128, 160, 192, 224 and 256 bits) but when it was standardised, there where only used 3 of them (128, 192 and 256). But based on the mathematics behind it is possible to fine tune both sizes, the block and the key. There is a work in progress on this field \cite{gRijndael} that is trying to adapt the \emph{Rijndael} to be used as lightweight symmetric and also with sizes above the originals.
 
 In the context of this paper, it is important to have smaller block sizes because the attribute types (section \ref{sec:characteristics}) are smaller than the basic block size and using directly the AES will at least duplicate the information to transfer for each value.
 
@@ -460,19 +462,17 @@ About the other block size change, the key size, can be useful the feature to ha
 
 \todo{Set up a figure with an input key with size depending on the security level, \& block size depending on the size of the data to encrypt.}
 
-%\todo{In the case of \emph{scalar} dimension ($0D$) perhaps a data block a bit bigger than the data can store a \emph{padding} for integrity}
-
 To use a data block of exactly the same size of the information to be encrypted could be a wrong solution. For data integrity could be good to include a \emph{padding} to the information with an extra information there. The data could have an structure that can reveal information even encrypted, for example if there is an integer of $64$ bits long but it is a counter that the attacker knows that it has started recently. In this cases the \emph{padding} is useful because it adds unpredictability to the data sent.
 
 In the case of the arrays of data, like \emph{spectrum} and \emph{image} dimensions ($1D$ \& $2D$), the data to be encrypted can be too big to fit in a block size even if we try to extend this size. The waveform of an oscilloscope or a picture taken from a camera, must use an upper layer in the encryption. The block size can be the size of the original data format, and help with the \emph{block cipher modes} to operate with the complete set of information to be sent.
 
-There are several modes. Starting with the Electronic CodeBook (short of ECB) that is insecure at all because it has not a good randomness and, for example the case of an image, the structure of the data maintains the structure and the view of the ciphertext suggest the original image. Others like can be the \emph{Cipher-Block Chaining} (short for CBC), \emph{Propagating Cipher-Block Chaining} (short for PCBC), \emph{Cipher FeedBack} (short for CFB) or \emph{Output FeedBack} (short for OFB) can be really good but they are not parallelizable. The option of the \emph{Counter mode} (short for CTR) includes the best options: does not requires padding and is parallelizable. This mode turns the block cipher into a stream cipher.
+There are several modes. Starting with the Electronic CodeBook (abbreviation ECB) that is insecure at all because it has not a good randomness and, for example the case of an image, the structure of the data maintains the structure and the view of the ciphertext suggest the original image. Others like can be the \emph{Cipher-Block Chaining} (abbreviation CBC), \emph{Propagating Cipher-Block Chaining} (abbreviation PCBC), \emph{Cipher FeedBack} (abbreviation CFB) or \emph{Output FeedBack} (abbreviation OFB) can be really good but they are not parallelizable. The option of the \emph{Counter mode} (abbreviation CTR) includes the best options: does not requires padding and is parallelizable. This mode turns the block cipher into a stream cipher.
 
 \todo{Figure with the CTR mode for arrays.}
 
 \paragraph{Stream ciphers:} There is another tool for the information transmission to be explored. This has the advantage of non block size limitation. One can see it as one particular case of symmetric systems. As it is a very often system used for broadcasting information, it is a candidate for the multicasting feature of the events emission using the \zmq. There is a field in cryptology, called \emph{secret splitting} that focus in this multicast feature.
 
-Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) and is very tricky because the key size choice is not the only restriction on it, there is also the live time of the key. The source of this systems are \emph{Key Derivation Funtion}s (short for KDF) used as PRGs to {\tt xor} the key flow with the data flow. As this is almost a \emph{One Time Pad} (short for OTP) the system can be considered a \emph{perfect secrecy} as define by \emph{Shannon} in \cite{shannon-comTheorySecSys}. But do not forget that is almost OTP and the only way to maintain it secure is to renew the key before the KDF can start to produce repeated sequences.
+Basically a stream cipher is a \emph{Pseudo Random Generator} (abbreviation PRG) and is very tricky because the key size choice is not the only restriction on it, there is also the live time of the key. The source of this systems are \emph{Key Derivation Funtion}s (abbreviation KDF) used as PRGs to {\tt xor} the key flow with the data flow. As this is almost a \emph{One Time Pad} (abbreviation OTP) the system can be considered a \emph{perfect secrecy} as define by \emph{Shannon} in \cite{shannon-comTheorySecSys}. But do not forget that is almost OTP and the only way to maintain it secure is to renew the key before the KDF can start to produce repeated sequences.
 
 \todo{Many of the stream ciphers shows a limitation on the key size. Like {\tt Rabbit} \cite{rfc4503} has been only designed to $128$bits (with and initialisation vector $IV$ of $64$bits, or {\tt Chacha} \cite{bernstein2008chacha} has $256$bits for the key.}
 
