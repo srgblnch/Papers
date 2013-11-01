@@ -1,6 +1,7 @@
 \documentclass[10pt,a4paper,twoside]{llncs}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
 \pagestyle{plain}
+\setcounter{secnumdepth}{3}%to set numbering over subsubsections
 
 \usepackage[latin1]{inputenc}
 
@@ -75,7 +76,7 @@
 of cryptology to mathematically protect the 
 system.
 
-A goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation or e-mail, but not only. The final goal to provide security must be involve the other levels of the Open System Interconnection model (the OSI layers) by provide end-to-end agent authentication and encryption. Event than a migration environment should allow to co-love with non secured access, the setup of the system must provide a complete transparent security. Concepts like the certificates shall be integrated to not increase the current complexity of a \tango\, installation.
+A goal of ensure \tango\, must produce an outcome as similar as the \emph{TLS} is for the web navigation or e-mail, but not only. The final goal to provide security must be involve the other levels of the Open System Interconnection model (the OSI layers) by provide end-to-end agent authentication and encryption. Event than a migration environment should allow to coexist with non secured access, the setup of the system must provide a complete transparent security. Concepts like the certificates shall be integrated to not increase the current complexity of a \tango\, installation.
 
 The instances running of \tango\, are in a very specialized situation, but the scientific facilities may not be so different than industry applications. \tango\, runs over different architectures and operating systems, having the computing sources of a very big computer with small embedded systems in the same network. When security is introduced, it must not ``disturb'' or it's easily deactivated. Then the solutions shall work fine in the smaller case, and \emph{Elliptic curves}, \emph{lightweight symmetrics} and \emph{stream cyphers} are the best candidates on this business.
 
@@ -191,13 +192,9 @@ By this definition \ref{def:infosec} many risks has to be consider like unauthor
     \end{center}
 \end{table}
 
-These last elements about auditory and damage control, are like many other things in security, they are double-edge swords, specially in the auditory case. Always depends on the moment to install an specific system, to device if those principles clashes with privacy. Perhaps that is why they are not \emph{basic}s. Privacy is not against security neither the other way around, but the difference in this auditory principle is who does it. When is the same the owner who audits itself, with transparency with the users, in order to find if someone is acting improperly, this can be a good tool. But this tool can be also used to spy the behaving of the users.
+These last elements about auditory and damage control, are like many other things in security, they are double-edge swords, specially in the auditory case. Always depends on the moment to install an specific system, to device if those principles clashes with privacy. Perhaps that is why they are not \emph{basic}s. Privacy is not against security neither the other way around, but the difference in this auditory principle is who does it and under which circumstances. When is the same the owner who audits itself, with transparency with the users, in order to find if someone is acting improperly, this can be a good tool. But this tool can be also used to spy the behaving of the users.
 
 Further than secure the information itself there is an environment, where the code runs, to be secured. In a distributed system besides the fact of provide the basic principles of the information security, one have to step in the trustiness of the machine where this code is running. From the example of the multi-user machines, where one had to be aware of the other users, in a distributed system there are other agents (perhaps with the same user identification and permissions) running in parallel. The security in the agents communication is not only a matter of networking (the channel), many other layers are involved.
-
-% \begin{itemize}
-%     \item \todo{Link the information security with the security engineering using the fact that in distributed systems many machines are running in parallel and there is a very importan element: the trustiness of the machines where the agents runs (physical/network access)}
-% \end{itemize}
 
 \subsection{Security engineering}\label{sec:SecurityEngineering}
 
@@ -205,7 +202,7 @@ Develop security engineering is a multi-disciplinary field. It is not only a mat
 
 This field makes feel like a bad guy. Everyday training is required and the best way is to think over all the aspects of the live, from the insignificant to transcendent. How to protect a pet shop if you do not allow yourself to think how on steal it? You do not have to steal it but is not impure to think how one that likes to do it can behave as.
 
-In the book ``\emph{Security engineering \cite{SecEngRossAnderson}}'' three\footnote{There is a fourth scenario in the book, but is more a corollary of the previous.} scenarios are highlighted: A \emph{bank}, a \emph{military base} and a \emph{hospital}. Why this four and not others? Probably because with them all the critical assurance requirements are covered. The fundamental on each scenario is the point of view, and any new scenario can be described in terms of different degrees of the characteristics on those highlighted. Any new scenario can use this to define which is the current protection problem on it.
+In the book ``\emph{Security engineering \cite{SecEngRossAnderson}}'' three\footnote{There is a fourth scenario in the book, but is more a corollary of the previous.} scenarios are highlighted: A \emph{bank}, a \emph{military base} and a \emph{hospital}. Why this three and not others? Probably because with them all the critical assurance requirements are covered. The fundamental on each scenario is the point of view, and any new scenario can be described in terms of different degrees of the characteristics on those highlighted. Any new scenario can use this to define which is the current protection problem on it.
 
 \paragraph{Inside a bank:} In this case what must be clear is the goal of the security: protect information and avoid deceptive transactions. Then the information and the capacity to do these things must be uniquely in the hands of the stuff. But even if there is trust with staff, is a good procedure to dilute the authorizations when the operation has some degree of unusual or dangerousness. To any operation, a degree (or degrees) of different risks can be tabulated. With this information, a single operation can require some level on the person who is doing or even require the approval from more than one person. This also includes current web applications systems where the staff are not directly involved, but the client gets some staff roles.
 
@@ -274,6 +271,27 @@ There is another element to consider that the solutions proposed in section \ref
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\tango\,characteristics as a DCS}\label{sec:characteristics}
 
+% \begin{itemize}
+%     \item \ok{\tango-core as middleware}
+%     \item \ok{\tango-ds as the agents in the distributed system (figure \ref{fig:tangoDeviceStructure})}
+%     \begin{itemize}
+%         \item \ok{\tango\,Device Servers}
+%         \item \ok{\tango\,Device Class}
+%         \item \ok{\tango\,Device}
+%         \begin{itemize}
+%             \item \ok{Properties}
+%             \item \ok{Attributes}
+%             \item \ok{Commands}
+%         \end{itemize}
+%     \end{itemize}
+%     \item \tango-database
+%     \begin{itemize}
+%         \item \ok{as agent \emph{phone-book}}
+%         \item \ok{as permanent storing system}
+%         \item \ok{as logging service}
+%     \end{itemize}
+% \end{itemize}
+
 As \tango\, is a Distributed Control System (definition \ref{def:DCS}), even if it has skills of an SCADA (definition \ref{def:SCADA}) for particular user cases, the elements defined in section \ref{sec:DistrSys} shall be glimpsed. What is known as the \tango-core is the part of the system that follows the definition \ref{def:middleware} of the middleware and it is what provides the necessary homogeneity to the agents in the system shown coherence.
 
 In this distributed system, the agents are called \emph{Device}s, each device has one and only one class (called \emph{DeviceClass}), and runs inside a process in an specific machine (called \emph{DeviceServer}). Figure \ref{fig:tangoDeviceStructure} can clarify the schema but in words can be said that one \emph{DeviceServer} can host many different \emph{Device}s, being them from the same \emph{DeviceClass} or not. This provides the flexibility to the system for inter-device communication can be setup using the middlelayer of internal process communication like shared memory or message passing.
@@ -321,27 +339,6 @@ In this database there is another valuable information stored. The database is t
 
 Last of the details to mention from \tango\, is the logging system. It is very simple and consists of a series of files stored locally by the agents in the machine where each agent runs. As the machines where the system runs are inside a trust enviroment the access to this log files is guaranted but anyone with access to the machine can read those files. The content on this files depends on the agent developer and the use of the streams with different logging levels available and when a \emph{device} process (the DeviceServer) is launched, in the command line the log level can be set up.
 
-% \begin{itemize}
-%     \item \ok{\tango-core as middleware}
-%     \item \ok{\tango-ds as the agents in the distributed system (figure \ref{fig:tangoDeviceStructure})}
-%     \begin{itemize}
-%         \item \ok{\tango\,Device Servers}
-%         \item \ok{\tango\,Device Class}
-%         \item \ok{\tango\,Device}
-%         \begin{itemize}
-%             \item \ok{Properties}
-%             \item \ok{Attributes}
-%             \item \ok{Commands}
-%         \end{itemize}
-%     \end{itemize}
-%     \item \tango-database
-%     \begin{itemize}
-%         \item \ok{as agent \emph{phone-book}}
-%         \item \ok{as permanent storing system}
-%         \item \todo{as logging service}
-%     \end{itemize}
-% \end{itemize}
-
 \begin{figure}[h]
     \centering{
          \includegraphics[width=0.7\textwidth]{imgs/tango_DeviceServer_DeviceClass_Device.png}
@@ -364,16 +361,6 @@ launched with the hardware not present, instead of a notification from the \emph
 
 \subsection{Attacks}
 
-Previous references to books in section \ref{sec:SecurityEngineering} let seen between practical attacks to a distributed system like \tango. But event this type of system have some peculiarities, there are many things that can be reused. In a widespread distributed system, the agents communication is not too different than RFID card/reader communication \cite{Santi11}. The figure \ref{fig:tangoLayout} shows an example of the agents involved in a normal operation of the Control System. For example, in the centre there is a representation of an agent in the distributed system in charge of the alarms. This is a key device in charge to do the monotonous task of check that everything is running as expected. This is a good example because this must be able to talk with every one that is being monitored.
-
-First type of attacks to any system, are the passive \emph{Eavesdropping}. An attacker can do almost the same than this agent in charge of the alarms but not to advice about problems, but something else like record private information, like can be data from a scientific experiment or industrial secrets.
-
-There are other type of attacks that passes the line of the observation and starts to introduce actions to the system, and that is why they are called \emph{active}. There are many different ways to do this tasks. The most known is the \emph{Men-in-the-middle}, with good skills when the two participants to the communication, and because they do not know each other (no authentication), have the communication bridged by some one else in the middle that is repeating the communication from one to the other and all the information is accessible to this Eavesdropper. This attack is just half a way between active and passive, but often is combined with the other type of active attacks.
-
-The active attacks can be splitted in three main categories: avoid the information transmission, avoid the reception, modify the transmitted information. For the first case, adding enough noise to the communication channel you can block the transmission of data from RFIDs and in this case you may not distinguish from where there are not cards. In a distributed control system the situation is different because, the environment are better known. The disappearance of a device will be perceived. But there are other degrees of this noise attack, perhaps with only poisoning the information the attack can reach the goal. Imagine a device that is raising an alarm, but the attacker is interrupting this. Even further the attacker can \emph{spoof} (modify or send an old message with a new time stamp) the data and the receivers still think that everything is going well. Still more beyond, the alarm device can be completely supplanted or tampered and build information from inside the system like one more of the agents.
-
-It is mandatory in any system that likes to practice security, not only to have the necessary tools to protect itself to the attacks, but the tools to detect if something has crossed the barriers. As was been mention about perfect security in \ref{sec:SecurityEngineering}, do never have an \emph{ego} that makes you thing no one can cross the defences. But detection is nothing if there is not recovery. Never forget the social engineering against supervisors, and left the first line of this work to \emph{auditor agents} that, in case of detection, can start the fight and the humans get notice to monitorise what is happening.
-
 % \begin{itemize}
 %     \item Attacks
 %     \begin{itemize}
@@ -385,6 +372,16 @@ It is mandatory in any system that likes to practice security, not only to have 
 %     \end{itemize}
 %     \item \ok{Detection and recovery: auditor agents}
 % \end{itemize}
+
+Previous references to books in section \ref{sec:SecurityEngineering} let seen between practical attacks to a distributed system like \tango. But event this type of system have some peculiarities, there are many things that can be reused. In a widespread distributed system, the agents communication is not too different than RFID card/reader communication \cite{Santi11}. The figure \ref{fig:tangoLayout} shows an example of the agents involved in a normal operation of the Control System. For example, in the centre there is a representation of an agent in the distributed system in charge of the alarms. This is a key device in charge to do the monotonous task of check that everything is running as expected. This is a good example because this must be able to talk with every one that is being monitored.
+
+First type of attacks to any system, are the passive \emph{Eavesdropping}. An attacker can do almost the same than this agent in charge of the alarms but not to advice about problems, but something else like record private information, like can be data from a scientific experiment or industrial secrets.
+
+There are other type of attacks that passes the line of the observation and starts to introduce actions to the system, and that is why they are called \emph{active}. There are many different ways to do this tasks. The most known is the \emph{Men-in-the-middle}, with good skills when the two participants to the communication, and because they do not know each other (no authentication), have the communication bridged by some one else in the middle that is repeating the communication from one to the other and all the information is accessible to this Eavesdropper. This attack is just half a way between active and passive, but often is combined with the other type of active attacks.
+
+The active attacks can be splitted in three main categories: avoid the information transmission, avoid the reception, modify the transmitted information. For the first case, adding enough noise to the communication channel you can block the transmission of data from RFIDs and in this case you may not distinguish from where there are not cards. In a distributed control system the situation is different because, the environment are better known. The disappearance of a device will be perceived. But there are other degrees of this noise attack, perhaps with only poisoning the information the attack can reach the goal. Imagine a device that is raising an alarm, but the attacker is interrupting this. Even further the attacker can \emph{spoof} (modify or send an old message with a new time stamp) the data and the receivers still think that everything is going well. Still more beyond, the alarm device can be completely supplanted or tampered and build information from inside the system like one more of the agents.
+
+It is mandatory in any system that likes to practice security, not only to have the necessary tools to protect itself to the attacks, but the tools to detect if something has crossed the barriers. As was been mention about perfect security in \ref{sec:SecurityEngineering}, do never have an \emph{ego} that makes you thing no one can cross the defences. But detection is nothing if there is not recovery. Never forget the social engineering against supervisors, and left the first line of this work to \emph{auditor agents} that, in case of detection, can start the fight and the humans get notice to monitorise what is happening.
 
 \begin{figure}[h]
     \centering{
@@ -402,9 +399,18 @@ What \tango\, needs as final product that introduces security, is to add to the 
 
 Another fact has been mention in section \ref{sec:SecurityEngineering} and it is about the issue that any agent can not be trusted if the machine where this agent runs can not be trusted. It does not have any sense to trust in an agent that is carrying a secret key that may have been compromised during an execution inside a machine that is out of our trust ring.
 
-Once said this points, it is time to go inside of the three proposed solutions for \tango.
+Once said this points, it is time to go inside of the proposed solutions for \tango. Here we have two main solutions in the next subsections to complain with the basic principles of \emph{information security} (see table \ref{tab:infosec} in section \ref{sec:InfoSec}), followed by two introductions to advance solutions.
 
-\subsection{Use of \emph{Elliptic curves} for authentication and public key encryption}
+\subsection{Use of \emph{Elliptic curves} for authentication and public key encryption}\label{sec:authentication}
+
+%     \begin{itemize}
+%         %\item Important: agents can only be authenticated if they run on trusted machines. Other ways is useless that an agent carries a private key if it can be saw by a compromised machine.
+%         %\item Because the mix with computationally powerful hardware, living with embedded systems, the solution must follow the most restrictive, to also follow the \emph{access} transparency of a distributed system.
+%         %\item Following section \ref{sec:securityLevels}, inside an institution some sets of different curves distinguishing the level by the curve size but also different curves of the same size to separate systems with the same level of secrecy but isolate them in cryptoanalysis. Isogeny volcanoes \cite{secRickShareECs}. Together with the contribution work of \cite{JValera11}, \cite{Ramiro05}, \cite{Rosana11}.
+%         %\item Capability to reset a curve setup on any of those secrecy levels and the feature to have different setups between different subsystems to have separated environments between them.
+%         %\item Standards about elliptic curves; International \cite{rfc6637}, \cite{rfc4492} (Updated by \cite{rfc5246} and this one by \cite{rfc5746}, \cite{rfc5878} and \cite{rfc6176}), \cite{sec1}, \cite{sec2}, USA: \cite{P1363}, \cite{X9.62-1998}, German: \cite{brainpool},\cite{BSI_TR-03111}, Russian: \cite{GOSTR341001}
+%         %\item \todo{\tango-db as the base for PKI (\emph{Public Key Infrastructure} and CA (\emph{Certificate Authority)}}
+%     \end{itemize}
 
 The \tango\, DCS runs its agents in very different kinds of hardware. It is possible that an agent runs in a huge server with more resources that it could even use, and the same agent later on is moved to an embedded board where the resources are extremely limited. Or perhaps the user interface runs in a good workstation with genuine resources, and there must not be differences between device running in big or small machines. Remember this is a requirement for distributed systems transparencies (focus in \emph{access} transparency, see section \ref{sec:DistrSys} table \ref{tab:transparencies} and specifically about \tango\, in section \ref{sec:characteristics}, these are tools that the \emph{middleware} must provide).
 
@@ -420,19 +426,25 @@ On this public auditable algorithm, there is work on going \cite{secRickShareECs
 
 As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{Certificate Authority)} (short of CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango\, has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
 
-%     \begin{itemize}
-%         %\item Important: agents can only be authenticated if they run on trusted machines. Other ways is useless that an agent carries a private key if it can be saw by a compromised machine.
-%         %\item Because the mix with computationally powerful hardware, living with embedded systems, the solution must follow the most restrictive, to also follow the \emph{access} transparency of a distributed system.
-%         %\item Following section \ref{sec:securityLevels}, inside an institution some sets of different curves distinguishing the level by the curve size but also different curves of the same size to separate systems with the same level of secrecy but isolate them in cryptoanalysis. Isogeny volcanoes \cite{secRickShareECs}. Together with the contribution work of \cite{JValera11}, \cite{Ramiro05}, \cite{Rosana11}.
-%         %\item Capability to reset a curve setup on any of those secrecy levels and the feature to have different setups between different subsystems to have separated environments between them.
-%         %\item Standards about elliptic curves; International \cite{rfc6637}, \cite{rfc4492} (Updated by \cite{rfc5246} and this one by \cite{rfc5746}, \cite{rfc5878} and \cite{rfc6176}), \cite{sec1}, \cite{sec2}, USA: \cite{P1363}, \cite{X9.62-1998}, German: \cite{brainpool},\cite{BSI_TR-03111}, Russian: \cite{GOSTR341001}
-%         %\item \todo{\tango-db as the base for PKI (\emph{Public Key Infrastructure} and CA (\emph{Certificate Authority)}}
-%     \end{itemize}
-
 \todo{Figure about how an agent can be identified, authenticated and authorized.}
 
 
-\subsection{Lightweight symmetric and/or stream ciphers}
+\subsection{Lightweight symmetric and/or stream ciphers}\label{sec:encryption}
+
+%     \begin{itemize}
+%         %\item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
+%         %\begin{itemize}
+%         %    %\item Adapt the Rijndael \cite{gRijndael} (AES contest \cite{AES-FIPS} and the book \cite{Daemen:2002:DR:560131})
+%         %    %\item key size must be related with the security levels (section \ref{sec:securityLevels}) and this also has relation with the number of rounds
+%         %\end{itemize}
+%         %\item Possibilities of the AESWrap \cite{rfc3394}
+%         \item stream ciphers: non block size limited for event transmission
+%         \begin{itemize}
+%             \item Key derivation Funtions as PRGs for stream ciphers
+%             \item Rabbit \cite{rfc4503}
+%             \item \emph{Secret splitting} for multicasting information.
+%         \end{itemize}
+%     \end{itemize}
 
 Once a device is authenticated and there is a secure channel using asymmetric encryption, this can be used to exchange session key when an attribute likes to be accessed. This paper proposes two main ways: symmetric algorithms and/or stream ciphers. Both have \emph{pros and cons} and a hybrid system would support both and use the best of them depending on the situation. The key agreement should also agreed how the later communication will be.
 
@@ -471,26 +483,20 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
 
 \todo{To overcome the key size limitation, it can be good to use the KDF of the AESWrap \cite{rfc3394} to be a bit flow generator (This AESWrap is an extension to the AES, like the 3DES was to the DES).}
 
-%     \begin{itemize}
-%         %\item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
-%         %\begin{itemize}
-%         %    %\item Adapt the Rijndael \cite{gRijndael} (AES contest \cite{AES-FIPS} and the book \cite{Daemen:2002:DR:560131})
-%         %    %\item key size must be related with the security levels (section \ref{sec:securityLevels}) and this also has relation with the number of rounds
-%         %\end{itemize}
-%         %\item Possibilities of the AESWrap \cite{rfc3394}
-%         \item stream ciphers: non block size limited for event transmission
-%         \begin{itemize}
-%             \item Key derivation Funtions as PRGs for stream ciphers
-%             \item Rabbit \cite{rfc4503}
-%             \item \emph{Secret splitting} for multicasting information.
-%         \end{itemize}
-%     \end{itemize}
+\subsection{Further advanced solutions}\label{sec:advancedSolutions}
 
-\todo{Later sections can be grouped as they will need a harder further study, and add hash to them.}
+Apart from the two solutions to introduce security in the communication between agent in a Distributed Control System like \tango, other features can be developed inside this system to provide security under other aspects of its operation. First of all will be highlighted the solution to introduce cryptography in the \tango-db, but one should not forget that this is a centralized element in a distributed system that, more than think in secure it, could be better to think in secure distributed alternatives.
 
-\subsection{Cryptography for the database}
+There is another advanced solution proposed, basically thinking in one of the scenarios mention in section \ref{sec:SecurityEngineering} (the bank remember the bank scenario). A desired feature for a Distributed Control System would be to have integrated with in the middleware the possibility to have \emph{command authorization}, like can be to have the \emph{acknowledge} from 3 users (or even agents) from a set of many more.
+
+\subsubsection{Cryptography for the database}\label{sec:Database}
+
+The \tango-db, as has been described in section \ref{sec:characteristics}, is used mainly for two functions: a \emph{phone-book} to locate the agents in the system and for the permanent storage of the \emph{properties} that are, at the end, the configurations for the agents when they start running. Now a days there is no authentication at all in this part of the system, while it is true that the \mysql database access can be password protected, the middleware access to this database allows anyone within the system to, not only query, but also modify this database.
+
+A desirable feature can be to provide this database with access authentication once the agents (and the users) have this system proposed in section \ref{sec:authentication}. But what about the contents? The solutions about encryption provided in section \ref{sec:encryption} are not a choice for database contents. There is a field in cryptology called \emph{Homomorphic encryption} (also known as \emph{Ordered cryptography}) that explores this possibility.
+
     \begin{itemize}
-        \item Permanent storage in a database, where there is no authentication of who is doing an operation.
+        %\item Permanent storage in a database, where there is no authentication of who is doing an operation.
         \item Homomorphic encryption:
         \begin{itemize}
             \item ``Fully homomorphic encryption using ideal lattices'' \cite{Gentry:2009:FHE:1536414.1536440}
@@ -508,25 +514,30 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
         %http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/
     \end{itemize}
 
-\subsection{Command authorizations}
+\subsubsection{Command authorizations}\label{sec:secretSharing}
 
-As mention in the scenario of a bank in section \ref{sec:SecurityEngineering}, a desired feature can be the dilute the authorization with more than one controller (agent or human). This kind of solutions can come from \emph{Secret Sharing} solutions.
+As mention in the scenario of a bank in section \ref{sec:SecurityEngineering}, a desired feature can be the dilute the authorization with more than one controller (agent or human). This kind of solutions can come from \emph{Secret Sharing} solutions. The secret sharing schemas are based on the primitive that there are $n$ participants and from them are required $k$ to access one specific secret. This is called \emph{(k,n)-threshold} schemas, and the interesting point is that the $k$ required should not be established in advance. Any combination of $k$ from the $n$ participants will grant access to the secret, and this secret can be used for anything, for example in this case authorise an operation.
 
 \begin{itemize}
-    \item \todo{Describe and reference about secret sharing}
+    \item \todo{reference to secret sharing}
 \end{itemize}
 
     
 %%%%%%%%%%%%%%%%%%%
 \section{Conclusions}\label{sec:conclusions}
 
-\begin{itemize}
-    \item Add security to a DCS like \tango\, is not to simply add the flag to \omniorb\, compilation to use {\tt openssl}. Much more work must be done in the level of the \emph{middleware} as: \emph{identify}, \emph{authenticate} and \emph{authorise}. And this together with countermeasures when necessary.
-    \item \tango-db is a weak point in the DCS. Explore tools like {\tt UPnP} protocols to discover elements in the system.
-    \item Debug on the fly will be harder due to the countermeasures to tampering. Code testing procedures required.
-    \item Many more ideas can be taken from this paper as \emph{further work}.
-\end{itemize}
+% \begin{itemize}
+%     \item Add security to a DCS like \tango\, is not to simply add the flag to \omniorb\, compilation to use {\tt openssl}. Much more work must be done in the level of the \emph{middleware} as: \emph{identify}, \emph{authenticate} and \emph{authorise}. And this together with countermeasures when necessary.
+%     \item \tango-db is a weak point in the DCS. Explore tools like {\tt UPnP} protocols to discover elements in the system.
+%     \item Debug on the fly will be harder due to the countermeasures to tampering. Code testing procedures required.
+%     \item Many more ideas can be taken from this paper as \emph{further work}.
+% \end{itemize}
 
+As has been mention at the beginning, introduce security to a Control System like \tango\, is not as simple as activate the flag to \omniorb\, to compile it using {\tt openssl}. With this the middleware will have a very interesting access to many primitives in this free software, but the schemas where these primitives some higher level protocols must be developed and implemented for bidirectional authentication of the communication actors (always thinking that they would be agents or users). In the case of the data transmission, the {\tt openssl} would be not enough. Some algorithms must be gently modified from the standards, to adapt to the specific needs of this case. And must insist on the idea of this finely adjustments because it can break the maths behind, and there must be a consciousness revision to avoid side channel attacks.
+
+After the basics for introduce security on this system, not forget that other elements can be weak (and the weaker will mean the attack). In this text some issues with the \tango-db has been pointed, but would be good to explore other distributed solutions like the {\tt UPnP} protocols to discover elements in the system and the permanent storage.
+
+This has been only a start, highlighting what has been already isolated as possible thread and pointed to some solutions. But the fly to this destination will be long. Also this solutions will require a mind change on the development because, something like \emph{debug on the fly} will be harder when the system have countermeasures against tampering. Code testing procedures will be required to the order of satellite navigation systems or similar.
 
 \bibliographystyle{ieeetr}
 \bibliography{../bibtex/sblanch.bib,../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/tango.bib,../bibtex/crypto.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/symmetrics.bib,../bibtex/rijndael.bib,../bibtex/stream.bib,../bibtex/homomorphic.bib}
