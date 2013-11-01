@@ -460,18 +460,13 @@ About the other block size change, the key size, can be useful the feature to ha
 
 \todo{Set up a figure with an input key with size depending on the security level, \& block size depending on the size of the data to encrypt.}
 
-\todo{In the case of \emph{scalar} dimension ($0D$) perhaps a data block a bit bigger than the data can store a \emph{padding} for integrity}
+%\todo{In the case of \emph{scalar} dimension ($0D$) perhaps a data block a bit bigger than the data can store a \emph{padding} for integrity}
 
-\todo{In arrays of data, like \emph{spectrum} and \emph{image} dimensions ($1D$ \& $2D$), block size can match the size of the data type and use \emph{block cipher modes}:}
+To use a data block of exactly the same size of the information to be encrypted could be a wrong solution. For data integrity could be good to include a \emph{padding} to the information with an extra information there. The data could have an structure that can reveal information even encrypted, for example if there is an integer of $64$ bits long but it is a counter that the attacker knows that it has started recently. In this cases the \emph{padding} is useful because it adds unpredictability to the data sent.
 
-\begin{itemize}
-    \item ECB: it has not a good randomness.
-    \item CBC: requires padding and encryption is not parallelizable. 
-    \item PCBC: not parallelizable.
-    \item CFB: encryption not parallelizable.
-    \item OFB: not parallelizable.
-    \item[!!] CTR: turns a block cipher into a stream cipher. parallelizable and not requires a padding.
-\end{itemize}
+In the case of the arrays of data, like \emph{spectrum} and \emph{image} dimensions ($1D$ \& $2D$), the data to be encrypted can be too big to fit in a block size even if we try to extend this size. The waveform of an oscilloscope or a picture taken from a camera, must use an upper layer in the encryption. The block size can be the size of the original data format, and help with the \emph{block cipher modes} to operate with the complete set of information to be sent.
+
+There are several modes. Starting with the Electronic CodeBook (short of ECB) that is insecure at all because it has not a good randomness and, for example the case of an image, the structure of the data maintains the structure and the view of the ciphertext suggest the original image. Others like can be the \emph{Cipher-Block Chaining} (short for CBC), \emph{Propagating Cipher-Block Chaining} (short for PCBC), \emph{Cipher FeedBack} (short for CFB) or \emph{Output FeedBack} (short for OFB) can be really good but they are not parallelizable. The option of the \emph{Counter mode} (short for CTR) includes the best options: does not requires padding and is parallelizable. This mode turns the block cipher into a stream cipher.
 
 \todo{Figure with the CTR mode for arrays.}
 
@@ -482,6 +477,8 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
 \todo{Many of the stream ciphers shows a limitation on the key size. Like {\tt Rabbit} \cite{rfc4503} has been only designed to $128$bits (with and initialisation vector $IV$ of $64$bits, or {\tt Chacha} \cite{bernstein2008chacha} has $256$bits for the key.}
 
 \todo{To overcome the key size limitation, it can be good to use the KDF of the AESWrap \cite{rfc3394} to be a bit flow generator (This AESWrap is an extension to the AES, like the 3DES was to the DES).}
+
+\todo{Figure about how an agent can send events attribute data to the subscribed receivers, who have previously authenticated in the subscription.}
 
 \subsection{Further advanced solutions}\label{sec:advancedSolutions}
 
