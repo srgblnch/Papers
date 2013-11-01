@@ -488,36 +488,40 @@ There is another advanced solution proposed, basically thinking in one of the sc
 
 \subsubsection{Cryptography for the database}\label{sec:Database}
 
-The \tango-db, as has been described in section \ref{sec:characteristics}, is used mainly for two functions: a \emph{phone-book} to locate the agents in the system and for the permanent storage of the \emph{properties} that are, at the end, the configurations for the agents when they start running. Now a days there is no authentication at all in this part of the system, while it is true that the \mysql database access can be password protected, the middleware access to this database allows anyone within the system to, not only query, but also modify this database.
+The \tango-db, as has been described in section \ref{sec:characteristics}, is used mainly for two functions: a \emph{phone-book} to locate the agents in the system and for the permanent storage of the \emph{properties} that are, at the end, the configurations for the agents when they start running. Now a days there is no authentication at all in this part of the system, while it is true that the \mysql\, database access can be password protected, the middleware access to this database allows anyone within the system to, not only query, but also modify this database.
 
 A desirable feature can be to provide this database with access authentication once the agents (and the users) have this system proposed in section \ref{sec:authentication}. But what about the contents? The solutions about encryption provided in section \ref{sec:encryption} are not a choice for database contents. There is a field in cryptology called \emph{Homomorphic encryption} (also known as \emph{Ordered cryptography}) that explores this possibility.
 
-    \begin{itemize}
-        %\item Permanent storage in a database, where there is no authentication of who is doing an operation.
-        \item Homomorphic encryption:
-        \begin{itemize}
-            \item ``Fully homomorphic encryption using ideal lattices'' \cite{Gentry:2009:FHE:1536414.1536440}
-            \item ``Fully Homomorphic Encryption with Relatively Small Key and Ciphertext Sizes''\cite{SmartVecauteren10}
-            \item ``Can homomorphic encryption be practical?'' \cite{Naehrig:2011:HEP:2046660.2046682}
-            \item ``Faster fully homomorphic encryption'' \cite{stehle2010faster}
-            \item ``Private database queries using somewhat homomorphic encryption'' \cite{iacr422}: Ordered cryptography.
-            \item ``Homomorphic Encryption: Theory \& Applications'' \cite{Jaydip2013}
-        \end{itemize}
-%         \item Searchable symmetric encryption
-%         \begin{itemize}
-%             \item 
-%         \end{itemize}
+It can be too advanced to introduce this field here because first must be discussed the viability of the database as the centralized point of \tango. Could be better to start with an authentication to access the database (for reading but specially for writing) and focus the efforts in a distributed database where later concepts like the \emph{homomorphic encryption} can be applied.
 
-        %http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/
-    \end{itemize}
+%     \begin{itemize}
+%         %\item Permanent storage in a database, where there is no authentication of who is doing an operation.
+%         \item Homomorphic encryption:
+%         \begin{itemize}
+%             \item ``Fully homomorphic encryption using ideal lattices'' \cite{Gentry:2009:FHE:1536414.1536440}
+%             \item ``Fully Homomorphic Encryption with Relatively Small Key and Ciphertext Sizes''\cite{SmartVecauteren10}
+%             \item ``Can homomorphic encryption be practical?'' \cite{Naehrig:2011:HEP:2046660.2046682}
+%             \item ``Faster fully homomorphic encryption'' \cite{stehle2010faster}
+%             \item ``Private database queries using somewhat homomorphic encryption'' \cite{iacr422}: Ordered cryptography.
+%             \item ``Homomorphic Encryption: Theory \& Applications'' \cite{Jaydip2013}
+%         \end{itemize}
+% %         \item Searchable symmetric encryption
+% %         \begin{itemize}
+% %             \item 
+% %         \end{itemize}
+% 
+%         %http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/
+%     \end{itemize}
 
 \subsubsection{Command authorizations}\label{sec:secretSharing}
 
 As mention in the scenario of a bank in section \ref{sec:SecurityEngineering}, a desired feature can be the dilute the authorization with more than one controller (agent or human). This kind of solutions can come from \emph{Secret Sharing} solutions. The secret sharing schemas are based on the primitive that there are $n$ participants and from them are required $k$ to access one specific secret. This is called \emph{(k,n)-threshold} schemas, and the interesting point is that the $k$ required should not be established in advance. Any combination of $k$ from the $n$ participants will grant access to the secret, and this secret can be used for anything, for example in this case authorise an operation.
 
-\begin{itemize}
-    \item \todo{reference to secret sharing}
-\end{itemize}
+This is a field also to have on mind during a first stage to introduce security to \tango. The authentication and encryption must be developed facing the situation where a secret needed to execute a command comes from a negotiation or from an schema that includes \emph{secret sharing}.
+
+% \begin{itemize}
+%     \item \todo{reference to secret sharing}
+% \end{itemize}
 
     
 %%%%%%%%%%%%%%%%%%%
