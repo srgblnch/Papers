@@ -408,7 +408,7 @@ Once said this points, it is time to go inside of the three proposed solutions f
 
 The \tango\, DCS runs its agents in very different kinds of hardware. It is possible that an agent runs in a huge server with more resources that it could even use, and the same agent later on is moved to an embedded board where the resources are extremely limited. Or perhaps the user interface runs in a good workstation with genuine resources, and there must not be differences between device running in big or small machines. Remember this is a requirement for distributed systems transparencies (focus in \emph{access} transparency, see section \ref{sec:DistrSys} table \ref{tab:transparencies} and specifically about \tango\, in section \ref{sec:characteristics}, these are tools that the \emph{middleware} must provide).
 
-Elliptic curves are a very good tool to be helpful with this scenarios where embedded system co-live with others. But there is another feature of the elliptic curves that can be useful here. Remember in the \emph{security levels} (section \ref{sec:securityLevels}) where the idea of different systems that shares the same levels should be isolated between them, and this solutions is helping this requirement, because with a different elliptic curve per subsystem, the cryptanalysis on each is different even if they are defined over  a finite field of the same size (even when they share the same prime).
+Elliptic curves are a very good tool to be helpful with this scenarios where embedded system coexist with others. But there is another feature of the elliptic curves that can be useful here. Remember in the \emph{security levels} (section \ref{sec:securityLevels}) where the idea of different systems that shares the same levels should be isolated between them, and this solutions is helping this requirement, because with a different elliptic curve per subsystem, the cryptanalysis on each is different even if they are defined over  a finite field of the same size (even when they share the same prime).
 
 Nowadays there is a big discussion over this possibility of the curves use. The beginning of the standardisation there where two tendencies: allow any curve or restrict the number of curves. Focussing on the ANSI X9.62 recommendations \cite{X9.62-1998}, not only restrict the set of curves is bad, but too many keys sharing a curve are a thread by itself. For this purpose the use of the NIST curves is not enough (they have been published in 2000 with in the annex 6 for the FIPS PUB186-2 updated in a third version \cite{NIST186-3} in 2009) even they come from a bit bigger list from \cite{sec2}. The standard for \emph{OpenPGP messages} \cite{rfc6637} restricts even more this set to only 3 curves for all the world over 3 security levels on the standard. When in another hand, the standard for \emph{TLS} with curves \cite{rfc4492} allows any curve from certain formulations of the curves over \ensuremath{\mathbb{F}_{p}} and \ensuremath{\mathbb{F}_{2^m}}.
 
@@ -418,7 +418,7 @@ In fact, what can help to follow the recommendations from the the ANSI X9.62 is 
 
 On this public auditable algorithm, there is work on going \cite{secRickShareECs} where is proposed solutions based on \emph{Complex multiplication} or in elliptic curve \emph{isogenies}. This work has been based in previous development of \cite{Ramiro05}, \cite{Rostovtsev06public} \cite{Rosana11}, and \cite{JValera11}. From this two possible solutions, one has an extra feature, because from the idea of a public key cryptosystem using isogenies \cite{Rostovtsev06public} would be possible to introduce a new operation that any other system can not do: the \emph{cryptosystem reset}. This feature could allow the system to renew the elliptic curve in use, by a newer one with the same size but where if there is any attack ongoing on the first curve, the cost to \emph{migrate} the attack from one curve to the other will be bigger than start the attack on the second from scratch.
 
-As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{Certificate Authority)} (short of CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
+As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{Certificate Authority)} (short of CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango\, has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
 
 %     \begin{itemize}
 %         %\item Important: agents can only be authenticated if they run on trusted machines. Other ways is useless that an agent carries a private key if it can be saw by a compromised machine.
@@ -436,7 +436,7 @@ As mention, the \emph{Public Key Infrastructure} (short for PKI) and the \emph{C
 
 Once a device is authenticated and there is a secure channel using asymmetric encryption, this can be used to exchange session key when an attribute likes to be accessed. This paper proposes two main ways: symmetric algorithms and/or stream ciphers. Both have \emph{pros and cons} and a hybrid system would support both and use the best of them depending on the situation. The key agreement should also agreed how the later communication will be.
 
-The constrains to select one way or the other must be the flux of data. The needs are very different when the transmission means a boolean subscribed that changes every few milliseconds, or if the transmission is a detector image of 6 mega-pixels, where each pixel is a \emph{DevLong}, generated in the order of the hundreds of milliseconds.
+The constrains to select one way or the other must be the flux of data. The needs are very different when the transmission means a boolean subscribed that changes every few milliseconds, or if the transmission is a detector image of 6 mega-pixels, where each pixel is a \emph{DevLong} ($32$ bit size), generated in the order of the hundreds of milliseconds.
 
 \paragraph{Symmetric algorithms:} The first of the solutions proposed for the information transmission is the use of lightweight symmetric algorithms. An important feature for this is the possibility to adapt the sizes of the blocks to be used, together with the encryption modes.
 
@@ -446,11 +446,30 @@ In the context of this paper, it is important to have smaller block sizes becaus
 
 About the other block size change, the key size, can be useful the feature to have much more key sizes in order to have it in correspondence with the related security levels mention in section \ref{sec:securityLevels}. The paper mentioned there \cite{lenstrauniversal13} about the key sizes remarks also that it is mandatory to have correspondence between the three elements in a pack of security: public key, symmetric and hash\footnote{In this paper are not included the hash algorithms as like as the symmetric algorithms are due to an scope reason, but with them it happens a similar thing than with the \emph{Rijndael}.} sizes. This sizes must be selected with utmost case, because the weakest is our incoming invitation to the attacks.
 
+\todo{Set up a figure with an input key with size depending on the security level, \& block size depending on the size of the data to encrypt.}
+
+\todo{In the case of \emph{scalar} dimension ($0D$) perhaps a data block a bit bigger than the data can store a \emph{padding} for integrity}
+
+\todo{In arrays of data, like \emph{spectrum} and \emph{image} dimensions ($1D$ \& $2D$), block size can match the size of the data type and use \emph{block cipher modes}:}
+
+\begin{itemize}
+    \item ECB: it has not a good randomness.
+    \item CBC: requires padding and encryption is not parallelizable. 
+    \item PCBC: not parallelizable.
+    \item CFB: encryption not parallelizable.
+    \item OFB: not parallelizable.
+    \item[!!] CTR: turns a block cipher into a stream cipher. parallelizable and not requires a padding.
+\end{itemize}
+
+\todo{Figure with the CTR mode for arrays.}
+
 \paragraph{Stream ciphers:} There is another tool for the information transmission to be explored. This has the advantage of non block size limitation. One can see it as one particular case of symmetric systems. As it is a very often system used for broadcasting information, it is a candidate for the multicasting feature of the events emission using the \zmq. There is a field in cryptology, called \emph{secret splitting} that focus in this multicast feature.
 
 Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) and is very tricky because the key size choice is not the only restriction on it, there is also the live time of the key. The source of this systems are \emph{Key Derivation Funtion}s (short for KDF) used as PRGs to {\tt xor} the key flow with the data flow. As this is almost a \emph{One Time Pad} (short for OTP) the system can be considered a \emph{perfect secrecy} as define by \emph{Shannon} in \cite{shannon-comTheorySecSys}. But do not forget that is almost OTP and the only way to maintain it secure is to renew the key before the KDF can start to produce repeated sequences.
 
-\todo{Rabbit \cite{rfc4503}}
+\todo{Many of the stream ciphers shows a limitation on the key size. Like {\tt Rabbit} \cite{rfc4503} has been only designed to $128$bits (with and initialisation vector $IV$ of $64$bits, or {\tt Chacha} \cite{bernstein2008chacha} has $256$bits for the key.}
+
+\todo{To overcome the key size limitation, it can be good to use the KDF of the AESWrap \cite{rfc3394} to be a bit flow generator (This AESWrap is an extension to the AES, like the 3DES was to the DES).}
 
 %     \begin{itemize}
 %         %\item Adapt the symmetric algorithms to manage the block size in the same size of the data block. If with symmetric systems the data block is smaller than the cipher block, there is an expansion in the data transmission from the insecure option.
@@ -467,8 +486,6 @@ Basically a stream cipher is a \emph{Pseudo Random Generator} (short for PRG) an
 %         \end{itemize}
 %     \end{itemize}
 
-\todo{Figure about how an agent can send (after request or by events) attribute data.}
-\\\\
 \todo{Later sections can be grouped as they will need a harder further study, and add hash to them.}
 
 \subsection{Cryptography for the database}
@@ -512,6 +529,6 @@ As mention in the scenario of a bank in section \ref{sec:SecurityEngineering}, a
 
 
 \bibliographystyle{ieeetr}
-\bibliography{../bibtex/sblanch.bib,../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/tango.bib,../bibtex/crypto.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/symmetrics.bib,../bibtex/rijndael.bib,../bibtex/homomorphic.bib}
+\bibliography{../bibtex/sblanch.bib,../bibtex/books.bib,../bibtex/standards.bib,../bibtex/rfc.bib,../bibtex/tango.bib,../bibtex/crypto.bib,../bibtex/ecc.bib,../bibtex/isogeny.bib,../bibtex/symmetrics.bib,../bibtex/rijndael.bib,../bibtex/stream.bib,../bibtex/homomorphic.bib}
 
 \end{document}
