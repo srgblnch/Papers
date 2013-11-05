@@ -429,8 +429,15 @@ On this public auditable algorithm, there is work on going \cite{secRickShareECs
 
 As mention, the \emph{Public Key Infrastructure} (abbreviation PKI) and the \emph{Certificate Authority)} (abbreviation CA) has to be designed from scratch to be inserted in the \tango\, middleware. And this is a great advantage because this can save many of the design issues where the current infrastructure have limitations. It is a great opportunity to have nothing that forces backward compatibility on this point, but is a great responsibility because each decision on this matter will affect the later evolution. As \tango\, has, and will probably continue having, the \tango-db, this PKI can use it. But if someday, \tango\, does one step further in distribution, a hard link on that would be a lace shoe pinches.
 
-\todo{Figure about how an agent can be identified, authenticated and authorized.}
+%\todo{Figure about how an agent can be identified, authenticated and authorized.}
+\begin{figure}[h]
+    \centering{
+         \includegraphics[width=0.75\textwidth]{imgs/identify_authenticate_authorise.png}
+         \caption{Two agents authenticate each \fixme{To be improved}} \label{fig:doubleAuthentification}
+    }
+\end{figure}
 
+In figure \ref{fig:doubleAuthentification} are a representation on how a double authentication between agents can be set up. It is not a unique solution but anyway it must be reviewed in the design and when implementation to avoid any of the known mistakes in authentication process. But this schema is good enough to show one initial problem to be resolved: \emph{how to introduce a new agent in the system?} This is a keystone point because the first time the agent is introduced to the system, it has to be authenticated by someone. It is like the developer of the \emph{DeviceServer} introduces to the system the \emph{Device}s from the process \emph{instance}. This paper does not go inside these protocols, but in the system start up for sure the \emph{installer} must setup a set of developers (humans at the end) that are allowed to introduce agents to the system. These, as usual, introduces the same problem of the \emph{certificates} and the solution can be similar to a \emph{trust ring}.
 
 \subsection{Lightweight symmetric and/or stream ciphers}\label{sec:encryption}
 
