@@ -432,7 +432,7 @@ As mention, the \emph{Public Key Infrastructure} (abbreviation PKI) and the \emp
 %\todo{Figure about how an agent can be identified, authenticated and authorized.}
 \begin{figure}[h]
     \centering{
-         \includegraphics[width=0.75\textwidth]{imgs/identify_authenticate_authorise.png}
+         \includegraphics[width=0.7\textwidth]{imgs/identify_authenticate_authorise.png}
          \caption{Two agents authenticate each \fixme{To be improved}} \label{fig:doubleAuthentification}
     }
 \end{figure}
@@ -456,9 +456,9 @@ In figure \ref{fig:doubleAuthentification} are a representation on how a double 
 %         \end{itemize}
 %     \end{itemize}
 
-Once a device is authenticated and there is a secure channel using asymmetric encryption, this can be used to exchange session key when an attribute likes to be accessed. This paper proposes two main ways: symmetric algorithms and/or stream ciphers. Both have \emph{pros and cons} and a hybrid system would support both and use the best of them depending on the situation. The key agreement should also agreed how the later communication will be.
+Once a device is authenticated and there is a secure channel using asymmetric encryption, this can be used to exchange session key when an attribute likes to be accessed. This paper proposes two main ways: symmetric algorithms and/or stream ciphers. Both have \emph{pros and cons} and a hybrid system would support both and use the best of them depending on the situation (with and agreement between the parts in the authentication). The key agreement should also agreed how the later communication will be.
 
-The constrains to select one way or the other must be the flux of data. The needs are very different when the transmission means a boolean subscribed that changes every few milliseconds, or if the transmission is a detector image of 6 mega-pixels, where each pixel is a \emph{DevLong} ($32$ bit size), generated in the order of the hundreds of milliseconds.
+The constrains to select one way or the other must be the flux of data. The needs are very different when the transmission means a boolean subscribed that changes every few milliseconds, or if the transmission is a detector image of 6 mega-pixels, where each pixel is a \emph{DevLong} ($32$ bit size), generated in the order of the hundreds of milliseconds. But the objective of this step is clear: made the transmission indistinguishable from \emph{random}.
 
 \paragraph{Symmetric algorithms:} The first of the solutions proposed for the information transmission is the use of lightweight symmetric algorithms. An important feature for this is the possibility to adapt the sizes of the blocks to be used, together with the encryption modes.
 
@@ -468,7 +468,7 @@ In the context of this paper, it is important to have smaller block sizes becaus
 
 About the other block size change, the key size, can be useful the feature to have much more key sizes in order to have it in correspondence with the related security levels mention in section \ref{sec:securityLevels}. The paper mentioned there \cite{lenstrauniversal13} about the key sizes remarks also that it is mandatory to have correspondence between the three elements in a pack of security: public key, symmetric and hash\footnote{In this paper are not included the hash algorithms as like as the symmetric algorithms are due to an scope reason, but with them it happens a similar thing than with the \emph{Rijndael}.} sizes. This sizes must be selected with utmost case, because the weakest is our incoming invitation to the attacks.
 
-\todo{Set up a figure with an input key with size depending on the security level, \& block size depending on the size of the data to encrypt.}
+%\todo{Set up a figure with an input key with size depending on the security level, \& block size depending on the size of the data to encrypt.}
 
 To use a data block of exactly the same size of the information to be encrypted could be a wrong solution. For data integrity could be good to include a \emph{padding} to the information with an extra information there. The data could have an structure that can reveal information even encrypted, for example if there is an integer of $64$ bits long but it is a counter that the attacker knows that it has started recently. In this cases the \emph{padding} is useful because it adds unpredictability to the data sent.
 
@@ -476,7 +476,15 @@ In the case of the arrays of data, like \emph{spectrum} and \emph{image} dimensi
 
 There are several modes. Starting with the Electronic CodeBook (abbreviation ECB) that is insecure at all because it has not a good randomness and, for example the case of an image, the structure of the data maintains the structure and the view of the ciphertext suggest the original image. Others like can be the \emph{Cipher-Block Chaining} (abbreviation CBC), \emph{Propagating Cipher-Block Chaining} (abbreviation PCBC), \emph{Cipher FeedBack} (abbreviation CFB) or \emph{Output FeedBack} (abbreviation OFB) can be really good but they are not parallelizable. The option of the \emph{Counter mode} (abbreviation CTR) includes the best options: does not requires padding and is parallelizable. This mode turns the block cipher into a stream cipher.
 
-\todo{Figure with the CTR mode for arrays.}
+%\todo{Figure with the CTR mode for arrays.}
+\begin{figure}[h]
+    \centering{
+         \includegraphics[width=0.7\textwidth]{imgs/rijndael_ctr.png}
+         \caption{Counter (CTR) block cipher mode.} \label{fig:rijdaelCTR}
+    }
+\end{figure}
+
+The figure \ref{fig:rijdaelCTR} shows a use of the CTR block cipher mode, but there is a prevention before use it. One must be absolutely sure that no \emph{Rijndael(k,x)} is used more than once the the $IV$ (known as \emph{Initial Vector}) shall be choose with two parts: a \emph{nonce} and the counter, being this \emph{nonce} sufficiently large to be never repeated during the live time of the key.
 
 \paragraph{Stream ciphers:} There is another tool for the information transmission to be explored. This has the advantage of non block size limitation. One can see it as one particular case of symmetric systems. As it is a very often system used for broadcasting information, it is a candidate for the multicasting feature of the events emission using the \zmq. There is a field in cryptology, called \emph{secret splitting} that focus in this multicast feature.
 
