@@ -85,9 +85,11 @@ The instances running of \tango\, are in a very specialized situation, but the s
 
 It is very important goal to have the \tango\, implementation as Free Software, as this paper cryptography outcomes must be to have public access with auditable algorithms and sources.
 
-\begin{itemize}
-    \item \todo{Structure of this paper}
-\end{itemize}
+% \begin{itemize}
+%     \item \todo{Structure of this paper}
+% \end{itemize}
+
+After the introduction this paper is divided in $3$ main parts. The first is section \ref{sec:concepts} to introduce concepts and definitions about \emph{industrial control}, \emph{distributed systems}, \emph{information security} and \emph{security engineering}. As this paper deal with the case of \tango\, section \ref{sec:characteristics} puts in context those previous definitions in over this particular case. Once all those things are on the table, section \ref{sec:solutions} can describe the first solutions that can be introduced on this system, together with others, more advance, that are candidates for next stages of a \emph{cryptographic enginering} solution for \tango.
 
 
 %%%%%%%%%%%%%%%%%%
@@ -494,7 +496,7 @@ The main stream ciphers shows a limitation in the key size. Starting with the {\
 
 But as has been said at the beginning of this stream section, the basic skill of them are that they are PRGs that, with simply an {\tt xor} with the data are good enough to be something like a OTP. Then another option can be the use of the KDF of the \emph{Rijndael} that has this feature to allow many key sizes due to the generalisation. But where again another option must be evaluated. There is an RFC \cite{rfc3394} with an algorithm called AESWrap that uses the AES in 6 peculiar turns like the 3DES did with the DES. In this algorithm the key is split in such a way that this algorithm can be used as a KDF.
 
-\todo{Figure about how an agent can send events attribute data to the subscribed receivers, who have previously authenticated in the subscription.}
+%\todo{Figure about how an agent can send events attribute data to the subscribed receivers, who have previously authenticated in the subscription.}
 
 \subsection{Further advanced solutions}\label{sec:advancedSolutions}
 
