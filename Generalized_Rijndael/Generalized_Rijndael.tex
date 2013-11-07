@@ -16,8 +16,8 @@
 %\input{version.tex}
 %\newcommand{\version}{git: \GITAuthorDate \; (revision~\GITAbrHash)}
 
-\usepackage{gitinfo}
-\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
+%\usepackage{gitinfo}
+%\newcommand{\version}{github.Papers: \gitCommitterDate\;(revision \gitAbbrevHash) }
 \newcommand{\todo}[1]{\texttt{\color{red}TODO:} ``\emph{#1}''}
 \newcommand{\fixme}[1]{\texttt{\color{red}FIXME:} ``\emph{#1}''}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,20 +67,18 @@
 \begin{document}
 \maketitle
 \begin{center}
+ {\tt DRAFT}\\
  \today\\
- \version
+ %\version
 \end{center}
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
-\begin{itemize}
- \item \todo{Why to generalize?}
- \item \todo{Encrypt data much smaller than current block sizes}
- \item \todo{Why not other lightweight cyphers?}
- \item \todo{Can current 64 bit architectures take advantage with different \emph{Rijndael} configurations?}
- \item \todo{Can the generalization increase the like of the algorithm?}
-\end{itemize}
-\\\\    
-{\bf Keywords:} Cryptography, Symmetric, Rijndael
+
+Why to generalize? The standard AES stablishes 3 key sizes and a unique block size, but starting from the original \emph{Rijndael} there where 5 key sizes. This algorithm allows to adjust some parameters to changes those size restrictions maintaining the cryptographical properties because the mathamatical background remains intact. While the mathematics remains valid against the attacks, the brute force can be fought by a key size increase, together with a block size that follows the key size, or if necessary fit the information size (for example to avoid overheads in message passing). This generalization goes further than the lightweight ciphers because it can be in this category at the same time that can play with other levels.
+Another reason for the generalization is to analyse if there are other configurations that can take advantage of the $64$bit architectures, because the original \emph{Rijndael} fits very well in $32$ bits.
+What can really do a generalization is to increase the live time of an algorithm like the \emph{Rijndael}.
+
+{\bf Keywords:} Cryptography, Symmetric, Block cipher, Rijndael
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -299,7 +297,7 @@ Also for the key a similar representation is used having a matrix but, because t
 An schematic view of the \emph{Rijndael} algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cipher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-comTheorySecSys} part III section 23) of diffusion and confusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
-\begin{figure}[h!]
+\begin{figure}[h]
  \centering
  \includegraphics[scale=0.3,keepaspectratio=true]{./images/rijndaelDiagram.png}
  %\input{images/rijndaelDiagram.pgf}
@@ -389,7 +387,7 @@ Back to the \emph{key expansion} of the \emph{Rijndael}, and assuming that it is
 All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
 
 % draw the algorithm as a diagram
-\begin{figure}[h!]
+\begin{figure}[ht]
 \begin{center}
 \input{images/keyExpansionFigure.pgf}
 \caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG}
@@ -449,7 +447,7 @@ This function means that the number of rounds is the biggest number of columns b
 
 Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emph{addRoundKey} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the first operation in a \emph{Rijndael} round. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
-\begin{figure}[h!]{\tiny
+\begin{figure}[h]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0 &0x1 &0x2 &0x3 &0x4 &0x5 &0x6 &0x7 &0x8 &0x9 &0xA &0xB &0xC &0xD &0xE &0xF \\\hline\hline
@@ -475,7 +473,7 @@ Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emp
 \label{tab:sbox8}
 \end{figure}
 
-\begin{figure}[h!]{\tiny
+\begin{figure}[h]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0& 0x1& 0x2& 0x3& 0x4& 0x5& 0x6& 0x7& 0x8& 0x9& 0xA& 0xB& 0xC& 0xD& 0xE& 0xF\\\hline\hline
@@ -614,7 +612,7 @@ For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
 The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}(z)=g^{-1}(f^{-1}(z))=g(f^{-1}(z))$
 
 % draw schematic of this step
-\begin{figure}[h!]
+\begin{figure}[h]
 \begin{center}
 \input{images/subBytesFigure.pgf}
 \caption{Schematic diagram of the subBytes() transformation}
@@ -673,10 +671,10 @@ Now we are over the second operation of a \emph{Rijndael} round --remember figur
 %\end{itemize}
 
 % draw schematic of this step
-\begin{figure}[h!]
+\begin{figure}[ht]
 \begin{center}
 \input{images/shiftRowsFigure.pgf}
-\caption{Schematic diagram of the shiftRows() transformation \fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
+\caption{Schematic diagram of the shiftRows() transformation simplified to four rows and four columns.}%\fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
 \label{fig:shiftRows}
 \end{center}
 \end{figure}
@@ -702,7 +700,7 @@ This is the most complicated step in the \emph{Rijndael} under mathematical term
 
 % FIXME (review) draw schematic of this step
 
-\begin{figure}[h!]
+\begin{figure}[h]
 \begin{center}
 \input{images/mixColumnsFigure.pgf}
 \caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field. Invert the mixColumns() is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
@@ -764,7 +762,7 @@ Even this is the first operation in in the \emph{Rijndael} schema (review figure
  \item \todo{Explain why the state matrix is taken by columns if the \emph{xor} is for bit elements? It's nothing more than simplicity with the common 32 bit architecture}
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 \begin{center}
 \input{images/addRoundKeyFigure.pgf}
 \caption{Diagram of the addRoundKey()}
