@@ -83,25 +83,20 @@ What can really do a generalization is to increase the live time of an algorithm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}\label{sec:intro}
-\begin{itemize}
- \item \todo{Short view on the symmetric algorithms history}
- \begin{itemize}
-  \item Previous to AES was the \emph{Data Encryption Standard}, 56 bit key length and 64 bit block size.%, as the standard but together with other block ciphers in 64 bit block and key length.
-  \item Triple DES, increase the key size (to 128 bits) with the same block size (64 bits). The DES key sizes were a problem.
- \end{itemize}
- \item \todo{Review on the AES contest}
- \begin{itemize}
-  \item January 1997: NIST announce that is seeking a replacement for the DES. 15 ``opponents'' (plus other 10 rejected due to security or efficiency reasons). \cite{Daemen98aesproposal:} and \cite{Daemen:1998:BCR:646692.759487} in 1998 for AES candidate.
-  \item August 1999: five finalists. Rjindael revised \cite{Daemen01aes-ammended}.
-  \item Rijndael chosen as AES in October 2000 \cite{AES-FIPS}.
-  \begin{itemize}
-   \item What checks gives the victory to the \emph{Rijndael}.
-  \end{itemize}
-  \item and the \cite{Daemen:2002:DR:560131} book publish in 2002.
- \end{itemize}
-\end{itemize}
 
-% TODO problem approach (rijndael scalability)
+In January 1997 the \emph{National Institute for Standards and Technology} (NIST) set up a contest to replace the \emph{Data Encryption Standard} (the DES, publish in 1975 and standardised in 1977). This contest was to tag a modern symmetric algorithm as \emph{Advanced Encryption Standard} (AES). The issue of the old DES was not the time, was the key size ($56$ bits). This has been patched to extend the live with the \emph{triple-DES} (or 3DES) that works as:
+\begin{equation}\label{eq:3DES}
+    E_{k_3}(D_{k_2}(E_{k_1}(plaintext)))
+\end{equation}
+where normally the $k_3=k_1$, then the effective key size were $2*56=112$ bits (but having the possibility to become $3*56=168$). Even if the contest winner of the AES has something similar to the 3DES, called AESWrap \cite{rfc3394}, in this case the original algorithm can be extended to change the block size and the key size.
+
+To this contest, 15 ``opponents'' have presented their candidacy (plus other 10 rejected on the preliminary stage due to security or efficiency reasons). In 1998 the \emph{rijndael} proposal \cite{Daemen98aesproposal:} was sent, and in 1999 was again presented as an efficient algorithm for hardware implementations \cite{Daemen:1998:BCR:646692.759487}. And was in August 1999 when the 5 finalists where announced: \emph{MARS}, \emph{RC6}, \emph{Twofish}, \emph{Serpent} and \emph{Rijndael}. Then the algorithm was revised by the authors \cite{Daemen01aes-ammended} and they wait until October 2000 when the announce was the choice  \cite{AES-FIPS}. After that, in 2002 the authors have published a book \cite{Daemen:2002:DR:560131} with more description and detailed information about the algorithm and its internalises.
+
+What gives the victory to the \emph{Rijndael} was the good skills over software and hardware implementations, low memory requirements, key agility, and performance. Also it was the algorithm, on the contest, that shows a greater ability in the operations to protects itself against power and timing attacks without a significant impact on the performance.
+
+\todo{Review deeply the ``Report on the AES selection'' from http://www.nist.gov/aes}
+
+% problem approach (rijndael scalability)
 Approach:
 \begin{itemize}
  \item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size. 
