@@ -449,7 +449,7 @@ This function means that the number of rounds is the biggest number of columns b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
 
-Looking on the schema of the figure \ref{fig:RijndaelDiagram} the first operation, skipping the first round where it is the {\tt addRoundKey()} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the {\tt subBytes()}. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
+Looking on the schema of the figure \ref{fig:RijndaelDiagram} the first operation is the {\tt subBytes()}, skipping the first round where it is the {\tt addRoundKey()} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}--. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
 \begin{figure}[ht]{\tiny
 \begin{center}
@@ -517,7 +517,7 @@ But this tool of the \emph{S-Box} is a faster way to compose two transformations
 % operations in the polynomial field F_{2^w} w: wordsize
 The first transformation (called $g$) is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original \rijndael\, that has become \emph{AES}).
 \begin{equation}\label{eq:multInvPolyField}
- g:a\rightarrow b = a^{-1} \in \Fpnm{w}{z} 
+ g:x\rightarrow y = x^{-1} \in \Fpnm{w}{z} 
 \end{equation}
 
 Note that the inverse operation $g^{-1}$of the function $g$ is itself.
@@ -526,70 +526,67 @@ Using the polynomial representation of the word on each cell of the state matrix
 
 The second transformation (called $f$) is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is (where $w=8$):
 \begin{equation}\label{eq:subBytes:affine}
- b_{i}' = b_{i} \oplus b_{(i+4)mod8} \oplus b_{(i+5)mod8} \oplus 
-          b_{(i+6)mod8} \oplus b_{(i+7)mod8} \oplus c_{i}
+ b_{i}' = (b_{i} \oplus b_{(i+4)mod8} \oplus b_{(i+5)mod8} \oplus 
+          b_{(i+6)mod8} \oplus b_{(i+7)mod8}) \oplus c_{i}
 \end{equation}
-Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation:
-
-\begin{enumerate}
- \item \todo{from where the matrix comes from?}
- \item \todo{is it a MDS? and/or a circulant matrix?}
- \item \todo{From where $b$ and $c$ comes from? How they have been selected? Which properties they have and give is crucial to determine the for the word size and to analyse if they are good enough}
-\end{enumerate}
+Where $b$ is the byte to be transformed, denoting the vector $a$ as the chosen elements from $b$ with the value \texttt{0xF1=0b11110001} and $c$ is a fix value \texttt{0x63=0b01100011}. This transformation can be expressed as a matrix operation as an affine transformation of a polynomial product followed by an {\tt xor} with a constant:
 
 \begin{equation}\label{eq:subBytes:matrix}
- f:
+ b' = f(b)\Longleftrightarrow
  \left[
   \begin{array}{c}
-    b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'
+    b_{7}'\\b_{6}'\\b_{5}'\\b_{4}'\\b_{3}'\\b_{2}'\\b_{1}'\\b_{0}'
   \end{array}
  \right]=\left[
   \begin{array}{cccccccc}
-    1&0&0&0&1&1&1&1\\
-    1&1&0&0&0&1&1&1\\
-    1&1&1&0&0&0&1&1\\
-    1&1&1&1&0&0&0&1\\
     1&1&1&1&1&0&0&0\\
     0&1&1&1&1&1&0&0\\
     0&0&1&1&1&1&1&0\\
     0&0&0&1&1&1&1&1\\
+    1&0&0&0&1&1&1&1\\
+    1&1&0&0&0&1&1&1\\
+    1&1&1&0&0&0&1&1\\
+    1&1&1&1&0&0&0&1\\
   \end{array}
  \right]\times\left[
   \begin{array}{c}
-    b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}
+    b_{7}\\b_{6}\\b_{5}\\b_{4}\\b_{3}\\b_{2}\\b_{1}\\b_{0}
   \end{array}
  \right]\oplus\left[
   \begin{array}{c}
-    1\\1\\0\\0\\0\\1\\1\\0
+    0\\1\\1\\0\\0\\0\\1\\1
   \end{array}
  \right]
 \end{equation}
+where the vector $a$ has been converted to a $A$ as a \emph{Maximum Separable Distance} (MDS) matrix.
 
-Because all the \rijndael\, operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:invSubBytes:affine} and also expressed as matrix operation in \ref{eq:subBytes:matrix}:
+\begin{enumerate}
+ %\item \todo{is it a \emph{Maximum Distance Separeble} (MDS) matrix? and/or a circulant matrix?}
+ \item \todo{From where $a$ and $c$ comes from? From where they have been selected? Which properties they have and give is crucial to determine the ones for other word sizes and to analyse if any other proposal is good enough.}
+\end{enumerate}
+
+Because all the \rijndael\, operations must be invertible, and the $g(x)$ is self-inverse ($x=(x^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:invSubBytes:affine} and also expressed as matrix operation in \ref{eq:subBytes:matrix}:
 
 \begin{equation}\label{eq:invSubBytes:affine}
- b'^{-1}_{i} = b^{-1}_{(i+1)mod8} \oplus b^{-1}_{(i+3)mod8} \oplus 
-          b^{-1}_{(i+6)mod8} \oplus c^{-1}_{i}
+ b'^{-1}_{i} = (b^{-1}_{(i+1)mod8} \oplus b^{-1}_{(i+3)mod8} \oplus 
+          b^{-1}_{(i+6)mod8}) \oplus c^{-1}_{i}
 \end{equation}
 
-For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
+For the inverse operation their inverse $a^{-1}$ and $c^{-1}$ are:
 \begin{equation}
  \begin{tabular}{c}
-  $b^{-1}$ = \texttt{0b01010010}=\texttt{0x52}\\
+  $a^{-1}$ = \texttt{0b01010010}=\texttt{0x52}\\
   $c^{-1}$ = \texttt{0b00000101}=\texttt{0x05}
  \end{tabular}
 \end{equation}
 
-\begin{itemize}
- \item todo{What's the relation between $b$ and $b$ $b^{-1}$, and between $c$ and $c^{-1}$?}
-\end{itemize}
-
+Having then the inverse to the equation \ref{eq:subBytes:matrix} in the matrix notation:
 
 \begin{equation}\label{eq:invSubBytes:matrix}
  f^{-1}:
  \left[
   \begin{array}{c}
-    b_{0}\\b_{1}\\b_{2}\\b_{3}\\b_{4}\\b_{5}\\b_{6}\\b_{7}
+    b_{7}\\b_{6}\\b_{5}\\b_{4}\\b_{3}\\b_{2}\\b_{1}\\b_{0}
   \end{array}
  \right]=\left[
   \begin{array}{cccccccc}
@@ -604,7 +601,7 @@ For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
   \end{array}
  \right]\times\left[
   \begin{array}{c}
-    b_{0}'\\b_{1}'\\b_{2}'\\b_{3}'\\b_{4}'\\b_{5}'\\b_{6}'\\b_{7}'
+    b_{7}'\\b_{6}'\\b_{5}'\\b_{4}'\\b_{3}'\\b_{2}'\\b_{1}'\\b_{0}'
   \end{array}
  \right]\oplus\left[
   \begin{array}{c}
