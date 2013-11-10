@@ -76,9 +76,9 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
-Why to generalize? The standard AES stablishes 3 key sizes and a unique block size, but starting from the original \rijndael there where 5 key sizes. This algorithm allows to adjust some parameters to changes those size restrictions maintaining the cryptographical properties because the mathamatical background remains intact. While the mathematics remains valid against the attacks, the brute force can be fought by a key size increase, together with a block size that follows the key size, or if necessary fit the information size (for example to avoid overheads in message passing). This generalization goes further than the lightweight ciphers because it can be in this category at the same time that can play with other levels.
-Another reason for the generalization is to analyse if there are other configurations that can take advantage of the $64$bit architectures, because the original \rijndael fits very well in $32$ bits.
-What can really do a generalization is to increase the live time of an algorithm like the \rijndael.
+Why to generalize? The standard AES stablishes 3 key sizes and a unique block size, but starting from the original \rijndael\, there where 5 key sizes. This algorithm allows to adjust some parameters to changes those size restrictions maintaining the cryptographical properties because the mathamatical background remains intact. While the mathematics remains valid against the attacks, the brute force can be fought by a key size increase, together with a block size that follows the key size, or if necessary fit the information size (for example to avoid overheads in message passing). This generalization goes further than the lightweight ciphers because it can be in this category at the same time that can play with other levels.
+Another reason for the generalization is to analyse if there are other configurations that can take advantage of the $64$bit architectures, because the original \rijndael\, fits very well in $32$ bits.
+What can really do a generalization is to increase the live time of an algorithm like the \rijndael\,.
 
 {\bf Keywords:} Cryptography, Symmetric, Block cipher, Rijndael
 \end{abstract}
@@ -92,32 +92,32 @@ In January 1997 the \emph{National Institute for Standards and Technology} (NIST
 \end{equation}
 where normally the $k_3=k_1$, then the effective key size were $2*56=112$ bits (but having the possibility to become $3*56=168$). Even if the contest winner of the AES has something similar to the 3DES, called AESWrap \cite{rfc3394}, in this case the original algorithm can be extended to change the block size and the key size.
 
-To this contest, 15 ``opponents'' have presented their candidacy (plus other 10 rejected on the preliminary stage due to security or efficiency reasons). In 1998 the \rijndael proposal \cite{Daemen98aesproposal:} was sent, and in 1999 was again presented as an efficient algorithm for hardware implementations \cite{Daemen:1998:BCR:646692.759487}. And was in August 1999 when the 5 finalists where announced: \emph{MARS}, \emph{RC6}, \emph{Twofish}, \emph{Serpent} and \rijndael. Then the algorithm was revised by the authors \cite{Daemen01aes-ammended} and they wait until October 2000 when the announce was the choice  \cite{AES-FIPS}. After that, in 2002 the authors have published a book \cite{Daemen:2002:DR:560131} with more description and detailed information about the algorithm and its internalises.
+To this contest, 15 ``opponents'' have presented their candidacy (plus other 10 rejected on the preliminary stage due to security or efficiency reasons). In 1998 the \rijndael\, proposal \cite{Daemen98aesproposal:} was sent, and in 1999 was again presented as an efficient algorithm for hardware implementations \cite{Daemen:1998:BCR:646692.759487}. And was in August 1999 when the 5 finalists where announced: \emph{MARS}, \emph{RC6}, \emph{Twofish}, \emph{Serpent} and \rijndael\,. Then the algorithm was revised by the authors \cite{Daemen01aes-ammended} and they wait until October 2000 when the announce was the choice  \cite{AES-FIPS}. After that, in 2002 the authors have published a book \cite{Daemen:2002:DR:560131} with more description and detailed information about the algorithm and its internalises.
 
-What gives the victory to the \rijndael was the good skills over software and hardware implementations, low memory requirements, key agility, and performance. Also it was the algorithm, on the contest, that shows a greater ability in the operations to protects itself against power and timing attacks without a significant impact on the performance.
+What gives the victory to the \rijndael\, was the good skills over software and hardware implementations, low memory requirements, key agility, and performance. Also it was the algorithm, on the contest, that shows a greater ability in the operations to protects itself against power and timing attacks without a significant impact on the performance.
 
 \todo{Review deeply the ``Report on the AES selection'' from http://www.nist.gov/aes}
 
 % problem approach (rijndael scalability)
 
-Once mention the \rijndael candidacy to the AES and name the last contenders, at least the other finalists, there are also other algorithms published later. Usually the algorithms published have some settings that restricts the use to a certain set of block sizes (often a set of one element) and a set of key sizes (often a small number of possibilities). There is a group in the symmetric algorithms, called the \emph{lightweight block ciphers}, 
+Once mention the \rijndael\, candidacy to the AES and name the last contenders, at least the other finalists, there are also other algorithms published later. Usually the algorithms published have some settings that restricts the use to a certain set of block sizes (often a set of one element) and a set of key sizes (often a small number of possibilities). There is a group in the symmetric algorithms, called the \emph{lightweight block ciphers}, 
 
 \todo{Define what means \emph{lightweight block ciphers}}
 
 \begin{itemize}
  %\item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size. 
- \item \todo{There are many other options of symmetric ciphers with different block sizes. AES is very static, but \rijndael allows to play with parameters, being (the standard) widely used.}
- \item \todo{\rijndael scalability}. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
+ \item \todo{There are many other options of symmetric ciphers with different block sizes. AES is very static, but \rijndael\, allows to play with parameters, being (the standard) widely used.}
+ \item \todo{\rijndael\, scalability}. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
 \end{itemize}
 
 Paper structure:
 \begin{itemize}
- \item \todo{First of all introduce the maths behind the \rijndael in section \ref{sec:math}.}
+ \item \todo{First of all introduce the maths behind the \rijndael\, in section \ref{sec:math}.}
  \item \todo{Design explanation in section \ref{sec:design} to explain the basic bricks and how they can be generalized in section \ref{sec:generalising}.}
  \item \todo{With the generalization there are equivalent sizes with different parameter combinations, explained in section \ref{sec:parameterCombinations}.}
  \item \todo{There is a new bunch of sizes with this to take advantage in section \ref{sec:newSizes}.}
- %\item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \rijndael \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it). Section \ref{sec:attacks}.
- %\item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \rijndael has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}). Section \ref{sec:aeswrap}
+ %\item \todo{key recovery attacks} \cite{fullaes-192-256} and \cite{cryptoeprint:2009:241}. And attacks that theoretically breaks \rijndael\, \cite{cryptoeprint:2009:374}, \cite{biclique-fullaes} (as said in \cite{arXiv:1210.7942} unpractical but theoretically breaks it). Section \ref{sec:attacks}.
+ %\item \todo{Like \emph{$3$-DES} helps the algorithm to \emph{survive}} for a longer time, \rijndael\, has something similar with the \emph{AESWrap} in the rfc3394 \cite{rfc3394}. (say it better, but it can be saw like a sextuple-AES: \emph{sequential multiple encryption}). Section \ref{sec:aeswrap}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,7 +126,7 @@ Before to enter in the design of the Rijndael schema is good to have a review ov
 \begin{equation}\label{eq:polynomialField} 
     \Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}
 \end{equation}
-Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ -known as \emph{word size}- and has correspondence with the \rijndael schema of section \ref{sec:approach}.
+Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ -known as \emph{word size}- and has correspondence with the \rijndael\, schema of section \ref{sec:approach}.
 
 This polynomial set has one operation, we can call it \emph{addition} that describes an structure of an Abelian group $(G,+)$:
 \begin{enumerate}
@@ -155,26 +155,26 @@ with $l(x)$ reducible and $gr(l(x))=l$.
 
 This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the \emph{mixColumn} operation.
 
-The fact that in this case the modular polynomial $l(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in fact for this we use \emph{c} -known as \emph{number of columns}- to denote this degree. This has correspondence with the \rijndael schema of section \ref{sec:mixColumns}.
+The fact that in this case the modular polynomial $l(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in fact for this we use \emph{c} -known as \emph{number of columns}- to denote this degree. This has correspondence with the \rijndael\, schema of section \ref{sec:mixColumns}.
 
 Remember that even if this distributive property is still valid, and because the polynomial modulo is composited, the second operation is non-commutative.
 
 The only remaining mathematical background to explain is what means modular. Without enter in the explanation of the \emph{equivalence classes}, the result of any operation inside the ring or the field must be reduced modulo the polynomial that defines the set. That is, divide by this polynomial and use the rest as the equivalent representative in the set.
 
-Those basic mathematical bricks of the \rijndael algorithm is what gives to it a genuine strongness. All the operations can be reduced to \emph{xor}s ans bit shifts, and how they behave is regulated by mathematical elegance. 
+Those basic mathematical bricks of the \rijndael\, algorithm is what gives to it a genuine strongness. All the operations can be reduced to \emph{xor}s ans bit shifts, and how they behave is regulated by mathematical elegance. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operation example over the polynomial field}\label{sec:polynomialField}
 
 \begin{itemize}
- \item \todo{Pick two ``random'' elements of the polynomial field of degree $8$, using the $m(z)$ of the original \rijndael, and show their possible representations and operations like sum and product. (specially with the modular reduction). Choose this two ``random'' elements to have a result bigger than $m(z)$ that requires the reduction.}
+ \item \todo{Pick two ``random'' elements of the polynomial field of degree $8$, using the $m(z)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Choose this two ``random'' elements to have a result bigger than $m(z)$ that requires the reduction.}
  \item \todo{Explain that in the lower level the addition operation can be set as a bitwise \emph{xor} of the binary representation of the polynomial.}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
 \begin{itemize}
-\item \todo{Pick two ``random'' elements of the polynomial ring of degree $4$, using the $l(x)$ of the original \rijndael, and show their possible representations and operations like sum and product. (specially with the modular reduction). Like in the previous, pick this ``random'' elements to require reduction to get the result.}
+\item \todo{Pick two ``random'' elements of the polynomial ring of degree $4$, using the $l(x)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Like in the previous, pick this ``random'' elements to require reduction to get the result.}
  \item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
 \end{itemize}
 
@@ -246,7 +246,7 @@ In other words, a \emph{PRP} is secure if the permutation given by it is indisti
 % and why is Rijndael a secure PRP? FIXME: is this enough? Can explain deep from where the 2^64 comes from?
 In the case of the Rijndael, the most efficient attacks on this symmetric cryptosystem, like the best key recovery attack it is \emph{only} $4$ times better than the exhaustive search using the biclique cryptoanalysis \cite{biclique-fullaes}. But this $4$ times means that we must think in aes-128 to be like an aes-126 and this is still far, far away to an efficient break because it must be down to an attack in the order of $2^{64}$. It means that this algorithm can be trusted as \emph{still secure}.
 
-At this point it must be mention that the key sizes of $192$ and $256$ bits have a weakness due to the design of the key expansion, but this will be explained later when in section \ref{sec:keyExpansion} will be detailed this operation. Even that, this can be fixed because the incredibly good characteristics of the \rijndael are because it is absolutely based on an strong mathematical background.
+At this point it must be mention that the key sizes of $192$ and $256$ bits have a weakness due to the design of the key expansion, but this will be explained later when in section \ref{sec:keyExpansion} will be detailed this operation. Even that, this can be fixed because the incredibly good characteristics of the \rijndael\, are because it is absolutely based on an strong mathematical background.
 
 % structure of the input (fix block size)
 Out of the standard specification \cite{AES-FIPS}, the revision of 1999 of the Rijndael block cipher \cite{Daemen01aes-ammended} includes the section 12 about extensions. Is in this section where are mention block and key sizes different than the standardised having steps of 32 bits in between the 3 in the standard. This extensions can be because it only changes the number of columns. It already happens with the cases where the key have more columns than the block, and in a very similar way the block can also saw it number of columns increased.
@@ -259,9 +259,9 @@ From the 4 basic operations of the Rijndael this change is the one than can need
 \subsection{The Rijndael Design}\label{sec:design}
 
 % TODO what is the state matrix
-The design of the \rijndael starts its elegance by the data structure of the \emph{State matrix}. This algorithm represents the data with in a matrix of a given number of rows and columns. On each cell of this matrix is allocated information in binary grouped in sets of the word size.
+The design of the \rijndael\, starts its elegance by the data structure of the \emph{State matrix}. This algorithm represents the data with in a matrix of a given number of rows and columns. On each cell of this matrix is allocated information in binary grouped in sets of the word size.
 
-From the standardised \rijndael, $4$ rows per $4$ columns with words of $8$ bit size.
+From the standardised \rijndael\,, $4$ rows per $4$ columns with words of $8$ bit size.
 \begin{equation}\label{eq:stateMatrix}
  \left[
  \begin{tabular}{cccc}
@@ -280,21 +280,11 @@ Very smart, simple and versatile data representation.
 
 With this matrix, the input plain text is transformed by the algorithm to the cipher text and the state matrix is the snapshot of each modification made with this transformation. Also with the decipher algorithm this state matrix contains the conversions to recover, from a cypher text the original plain text.
 
-Understanding the \rijndael schema as a \emph{Pseudo-Random Permutation}, the PRP from definition \ref{def:PRP} on section \ref{sec:approach}, with the \emph{State Matrix} the full \emph{message space} $\mathcal{M}$ can be represented.
+Understanding the \rijndael\, schema as a \emph{Pseudo-Random Permutation}, the PRP from definition \ref{def:PRP} on section \ref{sec:approach}, with the \emph{State Matrix} the full \emph{message space} $\mathcal{M}$ can be represented.
 
 Also for the key a similar representation is used having a matrix but, because the standard allows different key sizes, in that case the number of columns is in the range between $4$, $6$ and $8$ (for $128$, $192$, $256$ key sizes).
 
-% TODO describe the transformations from the Shannon ``confusion and diffusion'' point of view.
-\begin{itemize}
- \item Shannon: diffusion \& confusion \cite{shannon-comTheorySecSys} (part III section 23)) $\Rightarrow$ substitution \& permutation
- \begin{itemize}
-  \item \todo{(a bit deep than what have said in the PRP, definition \ref{def:shannonPerfectSecrecy} about perfect secrecy.}
- \end{itemize}
- \item \todo{Explain the round transformation as one (composed) operation to provide diffusion and guarantee non-linear distribution.}
-\end{itemize}
-
-%Shannon
-An schematic view of the \rijndael algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cipher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle (\cite{shannon-comTheorySecSys} part III section 23) of diffusion and confusion.
+What \rijndael\, does as a PRP is find a way to reach the goal of perfect secrecy (definition \ref{def:shannonPerfectSecrecy}) and the best path to find that is what Shannon has defined as \emph{diffusion \& confusion} \cite{shannon-comTheorySecSys} (part III section 23)) by doing \emph{substitutions \& permutations}. An schematic view of the \rijndael\, algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cipher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle of diffusion and confusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
 \begin{figure}[h]
@@ -312,7 +302,7 @@ An schematic view of the \rijndael algorithm can be saw in the figure \ref{fig:R
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
 % define s Pseudo-Random Generator (PRG), What a Pseudo-Random Generator is?
-The first important operation in the \rijndael schema is the \emph{key expansion}. This operation takes the key as a seed to expand it until generate all the subkeys used on each round. In the smaller case of \emph{AES} standard, the 128 bits become expanded to 1280 extra bits to be used like if the key was this size. But why the usage 128 bits in the key, can be trusted like having an independent key 10 times longer? This important mathematical item where this security rest is what is called \emph{Pseudo-Random Generator}, PRG, generating a unique, and always the same, stream of bits from a much shorter seed. Lets define what PRG means:
+The first important operation in the \rijndael\, schema is the \emph{key expansion}. This operation takes the key as a seed to expand it until generate all the subkeys used on each round. In the smaller case of \emph{AES} standard, the 128 bits become expanded to 1280 extra bits to be used like if the key was this size. But why the usage 128 bits in the key, can be trusted like having an independent key 10 times longer? This important mathematical item where this security rest is what is called \emph{Pseudo-Random Generator}, PRG, generating a unique, and always the same, stream of bits from a much shorter seed. Lets define what PRG means:
 
 \begin{definition}\label{def:PRG}
  A \emph{Pseudo-Random Generator} is a function that takes a seed and generates a much larger stream:
@@ -371,9 +361,9 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
   \WHILE{$i<nRouns*(nRows+1)$}
     \STATE temp := $k_{out}[i-1]$
     \IF{i mod nColumns == 0}
-      \STATE temp := SubWord(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
+      \STATE temp := SubBytes(RotWord(temp)) $\oplus$ Rcon[i/nColumns]
     \ELSE
-      \STATE temp := SubWord(temp)
+      \STATE temp := SubBytes(temp)
     \ENDIF
     \STATE $k_{out}[i]$ := $k_{out}[i-nColumns]$ $\oplus$ temp
     \STATE i++
@@ -381,17 +371,10 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
  \end{algorithmic}
 \end{algorithm}
 
-Back to the \emph{key expansion} of the \rijndael, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. Different but equivalent than the algorithm give in the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+Back to the \emph{key expansion} of the \rijndael\,, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. Different but equivalent than the algorithm give in the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
 %TODO: check how it was the keyExpansion in the first proposal \cite{Daemen98aesproposal:}
 
 All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
-
-\todo{algorithm \ref{alg:keyExpansion}, has a operation {\tt Rcon[i/nColumns]} and it can be precalculated in a table or recursively generated:
-\begin{equation}
-    x(i) = x^i = x\cdot x^{i-1}=x\cdot x(i-1)
-\end{equation}
-with $x_1=2$ in \Fpn{2}{8}, but it must be generalized for \Fpn{2}{w}.}
-
 
 % draw the algorithm as a diagram
 \begin{figure}[ht]
@@ -406,13 +389,25 @@ Perhaps a better way to see the algorithm \ref{alg:keyExpansion} is the figure \
 
 With this figure seems to be easier to recognise this iterative algorithm, that is generating the new column $i$ by taking the previous (with may be some transformations when the key size is bigger than the block size) and the one in the same relative position of the previous \emph{subkey}, to do over it some transformations to introduce diffusion and confusion in the newer bits generation.
 
-Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \rijndael. This is one of the bests characteristics of this algorithm.
+Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \rijndael\,. This is one of the bests characteristics of this algorithm.
+
+Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the line 5 of the algorithm \ref{alg:keyExpansion}, and two extra primitive arr called over certain columns (the ones multiple of the initial number of columns), the {\tt rotWord()} and the {\tt Rcon} (name used in the algorithm \ref{alg:keyExpansion} represented as $1^i \in\frac{\Fpn{2}{w}[z]}{m(z)$} in the figure \ref{fig:keyExpansionDiagram}), when the {\tt subBytes()} is called on each iteration. The effect of these different transformations on certain columns is propagated to the next columns on the subset because the input to build a new one uses the previous. But lets seen a bit what they do.
+
+At this point we only need to know that the {\tt subBytes()} uses an \emph{SBox} and the other details are explained in section \ref{sec:subBytes}. The {\tt rotWord()} does a cyclic permutation of one step to the left. And the {\tt Rcon} best way to define it is the formulation in the figure \ref{fig:keyExpansionDiagram}, and more formally:
+\begin{equation}\label{eq:rcon}
+    x(i) = x^i = x\cdot x^{i-1}=x\cdot x(i-1)
+\end{equation}
+with an initial value of $x_1=2$ in \Fpn{2}{8}.
+
+\fixme{{\tt Rcon} as with $x_1=2$ in \Fpn{2}{8} can be generalized for \Fpn{2}{w}?}
+
+This {\tt Rcon} can be pre-calculated and stored in a table or recursively generated in each of the rounds on the loop.
 
 \begin{itemize}
- \item \todo{subBytes()} is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
- \item \todo{rotWord()} should be explained here because is not used before and cannot be postponed because is not used later.
+ %\item \todo{subBytes()} is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
+ %\item \todo{rotWord()} should be explained here because is not used before and cannot be postponed because is not used later.
  \item \todo{What means to have different number of columns in the message than in the key matrix representation.}
- \item \todo{Explain what is the proposal of the Rcon matrix (or as a recursive function).}
+ %\item \todo{Explain what is the proposal of the Rcon matrix (or as a recursive function).}
 \end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
@@ -454,7 +449,7 @@ This function means that the number of rounds is the biggest number of columns b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
 
-Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emph{addRoundKey} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the first operation in a \rijndael round. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
+Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emph{addRoundKey} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the first operation in a \rijndael\, round. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
 \begin{figure}[h]{\tiny
 \begin{center}
@@ -517,17 +512,17 @@ A schematic of how this step can be visualized if in the figure \ref{fig:subByte
 
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 
-But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation (the big thing is pre-computed). There can be implementations that have more memory limitations than cpu, and can make this transformation analytically better than maintain those tables (the \emph{S-Box} and its inverse), but for the generalization of the \rijndael for new word sizes, at least, we must be capable to build those boxes for those new sizes.
+But this tool of the \emph{S-Box} is a faster way to compose two transformations in one and with not much computation (the big thing is pre-computed). There can be implementations that have more memory limitations than cpu, and can make this transformation analytically better than maintain those tables (the \emph{S-Box} and its inverse), but for the generalization of the \rijndael\, for new word sizes, at least, we must be capable to build those boxes for those new sizes.
 
 % operations in the polynomial field F_{2^w} w: wordsize
-The first transformation (called $g$) is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original \rijndael that has become \emph{AES}).
+The first transformation (called $g$) is to compute the multiplicative inverse in the polynomial field \Fpn{2}{w}, where w is the wordsize ($w=8$ in the original \rijndael\, that has become \emph{AES}).
 \begin{equation}\label{eq:multInvPolyField}
  g:a\rightarrow b = a^{-1} \in \Fpnm{w}{z} 
 \end{equation}
 
 Note that the inverse operation $g^{-1}$of the function $g$ is itself.
 
-Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreductible $m(z)$, in the original \rijndael: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
+Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreductible $m(z)$, in the original \rijndael\,: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
 
 The second transformation (called $f$) is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is (where $w=8$):
 \begin{equation}\label{eq:subBytes:affine}
@@ -570,7 +565,7 @@ Where $b$ is the byte to be transformed and $c$ is a fix value \texttt{0x63=0b01
  \right]
 \end{equation}
 
-Because all the \rijndael operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:invSubBytes:affine} and also expressed as matrix operation in \ref{eq:subBytes:matrix}:
+Because all the \rijndael\, operations must be invertible, and the $g(a)$ is self-inverse ($a=(a^{-1})^{-1})$), it is necessary to have an inverse $f^{-1}$ by do an inverse affine transformation of the operation $f$ described in equation \ref{eq:invSubBytes:affine} and also expressed as matrix operation in \ref{eq:subBytes:matrix}:
 
 \begin{equation}\label{eq:invSubBytes:affine}
  b'^{-1}_{i} = b^{-1}_{(i+1)mod8} \oplus b^{-1}_{(i+3)mod8} \oplus 
@@ -673,7 +668,7 @@ Using the same \emph{wordsize} there are two different things that can be change
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{shiftRows}\label{sec:shiftRows}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
-Now we are over the second operation of a \rijndael round --remember figure \ref{fig:RijndaelDiagram}--. This operation is a transposition, and again, in Shannon's terms this provides \emph{diffusion} to the schema. This operation takes the state matrix in rows to do a cyclic shift to the left over its cells, each row as many times as its index. Row $n$ cyclically shifted its cells $n$ times as the figure \ref{fig:shiftRows} represents for 4 rows --as the classic \rijndael is--. As mention in \cite{Daemen:2002:DR:560131} (section 3.4.2) the assignment of number of offsets per rows is arbitrary, and they are done in this order for simplicity.
+Now we are over the second operation of a \rijndael\, round --remember figure \ref{fig:RijndaelDiagram}--. This operation is a transposition, and again, in Shannon's terms this provides \emph{diffusion} to the schema. This operation takes the state matrix in rows to do a cyclic shift to the left over its cells, each row as many times as its index. Row $n$ cyclically shifted its cells $n$ times as the figure \ref{fig:shiftRows} represents for 4 rows --as the classic \rijndael\, is--. As mention in \cite{Daemen:2002:DR:560131} (section 3.4.2) the assignment of number of offsets per rows is arbitrary, and they are done in this order for simplicity.
 
 %\begin{itemize}
 % \item \todo{What this means mathematically, independently to the parameters \#rows, \#columns, wordsize}
@@ -690,18 +685,18 @@ Now we are over the second operation of a \rijndael round --remember figure \ref
 
 Its inverse operation is quite simple as the operation itself is, only that this time the cyclic shift is to the right the same number of times that was before to the left.
 
-About the generalization of the \rijndael schema, this operation does not show special hassles. There is only one restriction that makes a constrain in the generalization: there must not be two different rows that does the same number of shifts. And to complain that the number of rows must be equally or greater than the number or columns.
+About the generalization of the \rijndael\, schema, this operation does not show special hassles. There is only one restriction that makes a constrain in the generalization: there must not be two different rows that does the same number of shifts. And to complain that the number of rows must be equally or greater than the number or columns.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{mixColumns}\label{sec:mixColumns}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
-This is the third operation of the \rijndael round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than \emph{subBytes} from section \ref{sec:subBytes}-- this transformation is lineal.
+This is the third operation of the \rijndael\, round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than \emph{subBytes} from section \ref{sec:subBytes}-- this transformation is lineal.
 
-This is the most complicated step in the \rijndael under mathematical terms. This operation takes the columns of the states matrix and interprets it as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$ (with degree the number of rows: $deg(m')=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $deg(m)=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
+This is the most complicated step in the \rijndael\, under mathematical terms. This operation takes the columns of the states matrix and interprets it as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$ (with degree the number of rows: $deg(m')=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $deg(m)=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
 
 % polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, deg(m)=#rows
-%   (this is, imho, one of the most important points of \rijndael)
+%   (this is, imho, one of the most important points of \rijndael\,)
 % \begin{itemize}
 %  \item \todo{What this means mathematically?} And what implies the changes on the parameters \#rows, \#columns, wordsize
 %  \item \todo{polynomial ring} introduced in section \ref{sec:math}, where the coeficients are elements from a binary polynomial field \Fpnm{n}{x}, $deg(m)=\#rows$
@@ -723,7 +718,7 @@ The inverse of this operation requires to inverse the polynomial $c(x)$ to do th
 \subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
 In section \ref{sec:polynomialRing} the operation between elements of this kind of polynomial ring that has coefficients in a binary polynomial field, has been explained. But there is an specific improvement of the \emph{product} operation that gives a valuable advantage to speed up this step of the process. 
 
-In the specification of the \rijndael schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the \emph{mixColumns} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
+In the specification of the \rijndael\, schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the \emph{mixColumns} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
 
 Then the fix polynomial element in the ring have set in the standard:
 $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$
@@ -763,7 +758,7 @@ The matrix multiplication of this polynomial ring operation can be written as:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{addRoundKey}\label{sec:addRoundKey}
 
-Even this is the first operation in in the \rijndael schema (review figure \ref{fig:RijndaelDiagram}), it is considered the last of the four of one round. This operation is a substitution of the elements in the cells of the state matrix, and because of that, on the Shannon's view this provides \emph{confusion} to the schema. This is the only operation in the \rijndael that interacts with the expanded key, and the operation is a \emph{bitwise xor}, the addition of the very basic bricks below \rijndael maths, the binary field $\mathbb{F}_{2}$.
+Even this is the first operation in in the \rijndael\, schema (review figure \ref{fig:RijndaelDiagram}), it is considered the last of the four of one round. This operation is a substitution of the elements in the cells of the state matrix, and because of that, on the Shannon's view this provides \emph{confusion} to the schema. This is the only operation in the \rijndael\, that interacts with the expanded key, and the operation is a \emph{bitwise xor}, the addition of the very basic bricks below \rijndael\, maths, the binary field $\mathbb{F}_{2}$.
 
 \begin{itemize}
  %\item \todo{this is the operation where the key is used (from the 4 rijndael operations)}
@@ -784,12 +779,12 @@ Even this is the first operation in in the \rijndael schema (review figure \ref{
 \section{New useful sizes for Rijndael}\label{sec:newSizes}
 % because of the newer processors with 64 bits, it can be easy to have bigger sizes with less costs
 \begin{itemize}
-    \item \todo{With the newer architectures (64bits) which parameter changes can improve the cost of the \rijndael? \cite{Daemen:1999:EBC:1267115.1267119} In $64$ bits arch, a block size doubles to $256$ in two ways:} 
+    \item \todo{With the newer architectures (64bits) which parameter changes can improve the cost of the \rijndael\,? \cite{Daemen:1999:EBC:1267115.1267119} In $64$ bits arch, a block size doubles to $256$ in two ways:} 
     \begin{itemize}
         \item \emph{nRows=8} $\Rightarrow$ $($\Fpn{2}{8}$)^8$
         \item \emph{wSize=16} $\Rightarrow$ $($\Fpn{2}{{16}}$)^4$
     \end{itemize}
-    \item Small sizes of \rijndael vs. lightweight alternatives (like \emph{Present}: $64b$ block with keys between $80b$ and $128b$.
+    \item Small sizes of \rijndael\, vs. lightweight alternatives (like \emph{Present}: $64b$ block with keys between $80b$ and $128b$.
     \item Check the AES contest tests with those new sizes
 \end{itemize}
 
@@ -805,8 +800,8 @@ Even this is the first operation in in the \rijndael schema (review figure \ref{
 
 \section{Conclusions}\label{sec:conclusion}
 \begin{itemize}
-    \item \todo{This paper has proposed a new way to use the \rijndael, but it is not the last word as never is said in cryptography.}
-    \item \todo{The implications of the known attacks to the \rijndael has been studied in section \ref{sec:newSizes} in the sense that was studied the original algorithm, but it is has not yet review the degree to which will affect other attacks proposed over the time.}
+    \item \todo{This paper has proposed a new way to use the \rijndael\,, but it is not the last word as never is said in cryptography.}
+    \item \todo{The implications of the known attacks to the \rijndael\, has been studied in section \ref{sec:newSizes} in the sense that was studied the original algorithm, but it is has not yet review the degree to which will affect other attacks proposed over the time.}
     \item \todo{This proposal, with the required calm and leisurely revision that cryptography needs, can be used to extend the live of this algorithm over the time like in asymmetric algorithms the increase of key size is used instead of discard completelly the algorithm. This as long as the maths behind keep valid.}
 \end{itemize}
 
