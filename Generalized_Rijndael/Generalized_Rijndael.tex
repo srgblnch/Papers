@@ -143,7 +143,7 @@ When one of those operations is an Abelian group, and the other is a non-commuta
 \begin{enumerate}
  \item '*' Distributive: $\forall a(z),b(z),c(z) \in \Fpn{2}{n}, a(z)*(b(z)+c(z)=[a(z)+b(z)]*[a(z)+c(z)]$
 \end{enumerate}
-This is called a \emph{ring} $(R,+,*)$ as it is the basis for the operation of the \emph{subBytes} in section \ref{sec:subBytes}.
+This is called a \emph{ring} $(R,+,*)$ as it is the basis for the operation of the {\tt subBytes()} in section \ref{sec:subBytes}.
 
 In the case of when those involved operations are Abelian groups, and it is also satisfied the property that the second operation is distributive respect the first, then this structure becomes what is called a \emph{field} $(K,+,*)$.
 
@@ -153,7 +153,7 @@ At this point is already clear the algebraic properties of the field described i
 \end{equation}
 with $l(x)$ reducible and $gr(l(x))=l$.
 
-This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the \emph{mixColumn} operation.
+This polynomial ring is used in the Rijndael schema, specifically in section \ref{sec:mixColumns} with the {\tt mixColumns()} operation.
 
 The fact that in this case the modular polynomial $l(x)$ is a composited polynomial\footnote{say that is a \emph{composited polynomial} is the same than say that it is reducible. Being factorizable this polynomial it has an algebraic structure of a ring. In the case of an \emph{irreducible polynomial} what is get is an algebraic structure of a field} with some degree (not necessarily the same than in the polynomial field, in fact for this we use \emph{c} -known as \emph{number of columns}- to denote this degree. This has correspondence with the \rijndael\, schema of section \ref{sec:mixColumns}.
 
@@ -287,7 +287,7 @@ Also for the key a similar representation is used having a matrix but, because t
 What \rijndael\, does as a PRP is find a way to reach the goal of perfect secrecy (definition \ref{def:shannonPerfectSecrecy}) and the best path to find that is what Shannon has defined as \emph{diffusion \& confusion} \cite{shannon-comTheorySecSys} (part III section 23)) by doing \emph{substitutions \& permutations}. An schematic view of the \rijndael\, algorithm can be saw in the figure \ref{fig:RijndaelDiagram} where the left branch shows to cipher operation and the right side the inverse or decipher. Those branches have a loop part of many rounds (the number of them will be discussed in section \ref{sec:rounds}) proceeded and ceased by slightly different initial and final rounds. Each round is a composition of a set of operations design to give the substitutions and permutations in the given idea from Shannon's principle of diffusion and confusion.
 
 % Draw the procedure as diagram FIXME: maybe better draw using TikZ
-\begin{figure}[h]
+\begin{figure}[ht]
  \centering
  \includegraphics[scale=0.3,keepaspectratio=true]{./images/rijndaelDiagram.png}
  %\input{images/rijndaelDiagram.pgf}
@@ -391,7 +391,7 @@ With this figure seems to be easier to recognise this iterative algorithm, that 
 
 Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \rijndael\,. This is one of the bests characteristics of this algorithm.
 
-Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the line 5 of the algorithm \ref{alg:keyExpansion}, and two extra primitive arr called over certain columns (the ones multiple of the initial number of columns), the {\tt rotWord()} and the {\tt Rcon} (name used in the algorithm \ref{alg:keyExpansion} represented as $1^i \in\frac{\Fpn{2}{w}[z]}{m(z)$} in the figure \ref{fig:keyExpansionDiagram}), when the {\tt subBytes()} is called on each iteration. The effect of these different transformations on certain columns is propagated to the next columns on the subset because the input to build a new one uses the previous. But lets seen a bit what they do.
+Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the line 5 of the algorithm \ref{alg:keyExpansion}, and two extra primitive arr called over certain columns (the ones multiple of the initial number of columns), the {\tt rotWord()} and the {\tt Rcon} (name used in the algorithm \ref{alg:keyExpansion} represented as $1^{i} \in\frac{\mathbb{F}_{2^{w}}[z]}{m(z)}$ in the figure \ref{fig:keyExpansionDiagram}), when the {\tt subBytes()} is called on each iteration. The effect of these different transformations on certain columns is propagated to the next columns on the subset because the input to build a new one uses the previous. But lets seen a bit what they do.
 
 At this point we only need to know that the {\tt subBytes()} uses an \emph{SBox} and the other details are explained in section \ref{sec:subBytes}. The {\tt rotWord()} does a cyclic permutation of one step to the left. And the {\tt Rcon} best way to define it is the formulation in the figure \ref{fig:keyExpansionDiagram}, and more formally:
 \begin{equation}\label{eq:rcon}
@@ -449,9 +449,9 @@ This function means that the number of rounds is the biggest number of columns b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{subBytes}\label{sec:subBytes}
 
-Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emph{addRoundKey} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the first operation in a \rijndael\, round. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
+Looking on the schema of the figure \ref{fig:RijndaelDiagram} the first operation, skipping the first round where it is the {\tt addRoundKey()} with $k_0$ --that will be explain later in section \ref{sec:addRoundKey}-- is the {\tt subBytes()}. About what has been said in section \ref{sec:design} about Shannon's perfect secrecy, this operation skill is the \emph{confusion} because is a permutation. This transformation is a non-linear substitution of each word in the \emph{state} matrix. In the original Rijndael it is used a substitution table called \emph{S-Box}. This S-Box is represented in the figure \ref{tab:sbox8} and there is also an inverse of it in figure \ref{tab:inv-sbox8}.
 
-\begin{figure}[h]{\tiny
+\begin{figure}[ht]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0 &0x1 &0x2 &0x3 &0x4 &0x5 &0x6 &0x7 &0x8 &0x9 &0xA &0xB &0xC &0xD &0xE &0xF \\\hline\hline
@@ -477,7 +477,7 @@ Looking on the schema of the figure \ref{fig:RijndaelDiagram}, skipping the \emp
 \label{tab:sbox8}
 \end{figure}
 
-\begin{figure}[h]{\tiny
+\begin{figure}[ht]{\tiny
 \begin{center}
 \begin{tabular}[]{|l||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}\hline
     & 0x0& 0x1& 0x2& 0x3& 0x4& 0x5& 0x6& 0x7& 0x8& 0x9& 0xA& 0xB& 0xC& 0xD& 0xE& 0xF\\\hline\hline
@@ -616,10 +616,10 @@ For the inverse operation their inverse $b^{-1}$ and $c^{-1}$ are:
 The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}(z)=g^{-1}(f^{-1}(z))=g(f^{-1}(z))$
 
 % draw schematic of this step
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 \input{images/subBytesFigure.pgf}
-\caption{Schematic diagram of the subBytes() transformation}
+\caption{Schematic diagram of the {\tt subBytes()} transformation}
 \label{fig:subBytes}
 \end{center}
 \end{figure}
@@ -678,7 +678,7 @@ Now we are over the second operation of a \rijndael\, round --remember figure \r
 \begin{figure}[ht]
 \begin{center}
 \input{images/shiftRowsFigure.pgf}
-\caption{Schematic diagram of the shiftRows() transformation simplified to four rows and four columns.}%\fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
+\caption{Schematic diagram of the {\tt shiftRows()} transformation simplified to four rows and four columns.}%\fixme{This diagram must be improved, use indexes on the cells} \fixme{rows $0$ is shifted $0$ cells (in standard but this is an arbitrary decision)}}
 \label{fig:shiftRows}
 \end{center}
 \end{figure}
@@ -690,7 +690,7 @@ About the generalization of the \rijndael\, schema, this operation does not show
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{mixColumns}\label{sec:mixColumns}
 % abstraction of what it is, independent from the #rows, #columns, wordsize
-This is the third operation of the \rijndael\, round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than \emph{subBytes} from section \ref{sec:subBytes}-- this transformation is lineal.
+This is the third operation of the \rijndael\, round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than {\tt subBytes()} from section \ref{sec:subBytes}-- this transformation is lineal.
 
 This is the most complicated step in the \rijndael\, under mathematical terms. This operation takes the columns of the states matrix and interprets it as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$ (with degree the number of rows: $deg(m')=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $deg(m)=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
 
@@ -704,10 +704,10 @@ This is the most complicated step in the \rijndael\, under mathematical terms. T
 
 % FIXME (review) draw schematic of this step
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 \input{images/mixColumnsFigure.pgf}
-\caption{Diagram of the mixColumns() operation over the polynomial ring with coeficients in a polynomial field. Invert the mixColumns() is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
+\caption{Diagram of the {\tt mixColumns()} operation over the polynomial ring with coeficients in a polynomial field. Invert the {\tt mixColumns()} is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
 \label{fig:mixColumns}
 \end{center}
 \end{figure}
@@ -718,11 +718,11 @@ The inverse of this operation requires to inverse the polynomial $c(x)$ to do th
 \subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
 In section \ref{sec:polynomialRing} the operation between elements of this kind of polynomial ring that has coefficients in a binary polynomial field, has been explained. But there is an specific improvement of the \emph{product} operation that gives a valuable advantage to speed up this step of the process. 
 
-In the specification of the \rijndael\, schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the \emph{mixColumns} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
+In the specification of the \rijndael\, schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the {\tt mixColumns()} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
 
 Then the fix polynomial element in the ring have set in the standard:
 $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$
-This is using the best notation to denote that the coefficients on the polynomial ring are elements of a polynomial field. The polynomial field have binary coefficients, then those polynomials can be shorted using a binary notation. Like $(z+1)=\texttt{0b11}=\texttt{0x3}$ and other like $(z^3+z+1)=\texttt{0b1011}=\texttt{0xB}$. Then this $c(x)$ can be shorted represented by: $c(x) = \texttt{0x3}x^3+\texttt{0x1}x^2+\texttt{0x1}x+\texttt{0x2}$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the \emph{mixColumns}: $c^{-1}(x) = \texttt{0xB}x^3+\texttt{0xD}x^2+\texttt{0x9}x+\texttt{0xE}=d(x)$.
+This is using the best notation to denote that the coefficients on the polynomial ring are elements of a polynomial field. The polynomial field have binary coefficients, then those polynomials can be shorted using a binary notation. Like $(z+1)=\texttt{0b11}=\texttt{0x3}$ and other like $(z^3+z+1)=\texttt{0b1011}=\texttt{0xB}$. Then this $c(x)$ can be shorted represented by: $c(x) = \texttt{0x3}x^3+\texttt{0x1}x^2+\texttt{0x1}x+\texttt{0x2}$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the {\tt mixColumns()}: $c^{-1}(x) = \texttt{0xB}x^3+\texttt{0xD}x^2+\texttt{0x9}x+\texttt{0xE}=d(x)$.
 
 The matrix multiplication of this polynomial ring operation can be written as:
 \begin{equation}\label{eq:MDS}
@@ -794,7 +794,7 @@ Even this is the first operation in in the \rijndael\, schema (review figure \re
 %how, with different parameters, can have the same block sizes, and what's different between them
 \begin{itemize}
  \item \todo{different parameter combinations} can produce the same block (and key) sizes. What can help on the option chose?
- \item \todo{Remember, from \emph{shiftRows} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.}
+ \item \todo{Remember, from {\tt shiftRows()} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.}
  \item \todo{Can the wordsize be smaller than \#rows? It looks that no restriction in this. There is no relation between the degree of the elements in of the polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$, with the degree of the coefficients that are elements on a polynomial field $\frac{\Fpn{2}[z]}{m(z)}$}
 \end{itemize}
 
