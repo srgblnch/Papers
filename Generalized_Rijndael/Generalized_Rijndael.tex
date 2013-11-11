@@ -395,11 +395,11 @@ Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the lin
 
 At this point we only need to know that the {\tt subBytes()} uses an \emph{SBox} and the other details are explained in section \ref{sec:subBytes}. The {\tt rotWord()} does a cyclic permutation of one step to the left. And the {\tt Rcon} best way to define it is the formulation in the figure \ref{fig:keyExpansionDiagram}, and more formally:
 \begin{equation}\label{eq:rcon}
-    x(i) = x^i = x\cdot x^{i-1}=x\cdot x(i-1)
+    \texttt{Rcon[n]} = x(n) = x^n = x\cdot x^{n-1}=x\cdot x(n-1)
 \end{equation}
-with an initial value of $x_1=2$ in \Fpn{2}{8}.
+with an initial value of $x(1)=2$ in \Fpn{2}{8}.
 
-\fixme{{\tt Rcon} as with $x_1=2$ in \Fpn{2}{8} can be generalized for \Fpn{2}{w}?}
+\fixme{{\tt Rcon} as with $x(1)=2$ in \Fpn{2}{8} can be generalized for \Fpn{2}{w}?}
 
 This {\tt Rcon} can be pre-calculated and stored in a table or recursively generated in each of the rounds on the loop.
 
