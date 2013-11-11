@@ -86,28 +86,18 @@ What can really do a generalization is to increase the live time of an algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}\label{sec:intro}
 
-In January 1997 the \emph{National Institute for Standards and Technology} (NIST) set up a contest to replace the \emph{Data Encryption Standard} (the DES, publish in 1975 and standardised in 1977). This contest was to tag a modern symmetric algorithm as \emph{Advanced Encryption Standard} (AES). The issue of the old DES was not the time, was the key size ($56$ bits). This has been patched to extend the live with the \emph{triple-DES} (or 3DES) that works as:
-\begin{equation}\label{eq:3DES}
-    E_{k_3}(D_{k_2}(E_{k_1}(plaintext)))
-\end{equation}
-where normally the $k_3=k_1$, then the effective key size were $2*56=112$ bits (but having the possibility to become $3*56=168$). Even if the contest winner of the AES has something similar to the 3DES, called AESWrap \cite{rfc3394}, in this case the original algorithm can be extended to change the block size and the key size.
+In January 1997 the \emph{National Institute for Standards and Technology} (NIST) set up a contest to replace the \emph{Data Encryption Standard} (the DES, publish in 1975 and standardised in 1977, with last revision in 1999 \cite{FIPS_46-3}). This contest was to tag a modern symmetric algorithm as \emph{Advanced Encryption Standard} (AES). The issue of the old DES was not the time, was the key size ($56$ bits). This has been patched to extend the live with the \emph{triple-DES} (or 3DES) that works as: $ E_{k_3}(D_{k_2}(E_{k_1}(plaintext)))$, where normally the $k_3=k_1$, then the effective key size were $2*56=112$ bits (but having the possibility to become $3*56=168$). Even if the contest winner of the AES has something similar to the 3DES, called AESWrap \cite{rfc3394}, in this case the original algorithm can be extended to change the block size and the key size.
 
 To this contest, 15 ``opponents'' have presented their candidacy (plus other 10 rejected on the preliminary stage due to security or efficiency reasons). In 1998 the \rijndael\, proposal \cite{Daemen98aesproposal:} was sent, and in 1999 was again presented as an efficient algorithm for hardware implementations \cite{Daemen:1998:BCR:646692.759487}. And was in August 1999 when the 5 finalists where announced: \emph{MARS}, \emph{RC6}, \emph{Twofish}, \emph{Serpent} and \rijndael\,. Then the algorithm was revised by the authors \cite{Daemen01aes-ammended} and they wait until October 2000 when the announce was the choice  \cite{AES-FIPS}. After that, in 2002 the authors have published a book \cite{Daemen:2002:DR:560131} with more description and detailed information about the algorithm and its internalises.
 
 What gives the victory to the \rijndael\, was the good skills over software and hardware implementations, low memory requirements, key agility, and performance. Also it was the algorithm, on the contest, that shows a greater ability in the operations to protects itself against power and timing attacks without a significant impact on the performance.
 
-\todo{Review deeply the ``Report on the AES selection'' from http://www.nist.gov/aes}
-
-% problem approach (rijndael scalability)
+When the \rijndael\, was chosen as the AES, the report \cite{AES-report}, was highlighting those finalists over security and efficiency. As it is said in the report, all the finalists where tested over $32$ bits architectures knowing that sooner or later the $64$ bits will arrive (even the $128$ bits architectures are mention as a possibility). One of the special features mention about the \rijndael is it flexibility to support other sizes than the proposed, even they only thought in gaps of $32$ bits between those alternative block and key sizes. But it has a much bigger flexibility because other intermediate sizes can be also in the alternatives list. Is this \rijndael\, scalability the objective of this paper.
 
 Once mention the \rijndael\, candidacy to the AES and name the last contenders, at least the other finalists, there are also other algorithms published later. Usually the algorithms published have some settings that restricts the use to a certain set of block sizes (often a set of one element) and a set of key sizes (often a small number of possibilities). There is a group in the symmetric algorithms, called the \emph{lightweight block ciphers}, 
 
-\todo{Define what means \emph{lightweight block ciphers}}
-
 \begin{itemize}
- %\item \todo{alternative symmetric cryptosystems}. Apart than the opponents in the AES contest, thinking more in the smaller block size or, even better, variable block size. 
- \item \todo{There are many other options of symmetric ciphers with different block sizes. AES is very static, but \rijndael\, allows to play with parameters, being (the standard) widely used.}
- \item \todo{\rijndael\, scalability}. As mentioned in \cite{Daemen01aes-ammended} the standard for the AES has only 3 key sizes (128,192,256 bits), but the original specification supports blocks and keys also of lengths 160 and 224 bits. In section 12.1 the extendibility of the Rijndael is set to any multiple of 4 bytes (32 bits), with a minimum of 16 bytes (the 128 bits), but why?
+ \item \todo{Define what means \emph{lightweight block ciphers}}
 \end{itemize}
 
 Paper structure:
@@ -440,10 +430,7 @@ $N_k = 8$ &    $14$   &    $14$   &    $14$   \\ \hline
 \end{equation}
 This function means that the number of rounds is the biggest number of columns between the block and the key, plus the security margin set as $6$.
 
-\begin{itemize}
- \item \todo{ But, with this, there isn't a proof of why those sizes yet. And this is because include the \emph{nColumns} will help to inderstand and decide which way is better, in section \ref{sec:parameterCombinations}}
-\end{itemize}
-
+There is not theoretical method to stablish which is the good number of rounds, it is only an empirical attempt base on known attacks, As this paper tries to propose different sizes for the \rijndael, will be in section \ref{sec:parameterCombinations} about the parameter combinations where this number will be discussed.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -788,6 +775,7 @@ Even this is the first operation in in the \rijndael\, schema (review figure \re
  \item \todo{different parameter combinations} can produce the same block (and key) sizes. What can help on the option chose?
  \item \todo{Remember, from {\tt shiftRows()} section \ref{sec:shiftRows}, the number of rows must be equal or greater than number of columns.}
  \item \todo{Can the wordsize be smaller than \#rows? It looks that no restriction in this. There is no relation between the degree of the elements in of the polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$, with the degree of the coefficients that are elements on a polynomial field $\frac{\Fpn{2}[z]}{m(z)}$}
+ \item \todo{Number of Rounds: security and performance}
 \end{itemize}
 
 \section{Conclusions}\label{sec:conclusion}
@@ -795,6 +783,7 @@ Even this is the first operation in in the \rijndael\, schema (review figure \re
     \item \todo{This paper has proposed a new way to use the \rijndael\,, but it is not the last word as never is said in cryptography.}
     \item \todo{The implications of the known attacks to the \rijndael\, has been studied in section \ref{sec:newSizes} in the sense that was studied the original algorithm, but it is has not yet review the degree to which will affect other attacks proposed over the time.}
     \item \todo{This proposal, with the required calm and leisurely revision that cryptography needs, can be used to extend the live of this algorithm over the time like in asymmetric algorithms the increase of key size is used instead of discard completelly the algorithm. This as long as the maths behind keep valid.}
+    \item \todo{Block encryption modes}
 \end{itemize}
 
 
