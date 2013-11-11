@@ -689,7 +689,7 @@ About the generalization of the \rijndael\, schema, this operation does not show
 % abstraction of what it is, independent from the #rows, #columns, wordsize
 This is the third operation of the \rijndael\, round, and as it is a permutation in terms of Shannon this means that the step provides \emph{confusion} to the schema. In this case --and this is different than {\tt subBytes()} from section \ref{sec:subBytes}-- this transformation is lineal.
 
-This is the most complicated step in the \rijndael\, under mathematical terms. This operation takes the columns of the states matrix and interprets it as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$ (with degree the number of rows: $deg(m')=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $deg(m)=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
+This would the most complicated step in the \rijndael\, under mathematical terms. This operation takes the columns of the states matrix and interprets them as elements in a polynomial ring. This mathematics has been introduced in section \ref{sec:math} with an example in \ref{sec:polynomialRing}. A columns represents an element of a polynomial ring $\frac{\Fpn{2}{w}[x]}{l(x)}$ (with degree the number of rows: $gr(l(x))=\#rows$), where each of its cells are elements of a polynomial field $\Fpn{2}{w}=\frac{\mathbb{F}_{2}[z]}{m(z)}$  (with degree the word size: $gr(m(z))=wordsize$), and all the columns were operated with another element of the ring. This element, denoted by $c(x)$ in figure \ref{fig:mixColumns} must be invertible in the ring --remember that in a ring, not all the elements has inverse--.
 
 % polynomial ring, where the coeficients are elements from a binary polynomial field
 %   \Fpnm{x}{z}, deg(m)=#rows
@@ -709,7 +709,7 @@ This is the most complicated step in the \rijndael\, under mathematical terms. T
 \end{center}
 \end{figure}
 
-The inverse of this operation requires to inverse the polynomial $c(x)$ to do the same operation in the polynomial ring to reverse the column on the state matrix.
+The inverse of this operation requires to inverse the polynomial $c(x)$ to do the same operation in the polynomial ring to reverse the column on the state matrix. As long as this $c(x)$ polynomial is an element of a ring, it must be chosen carefully because not all the elements in the ring are invertible.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
@@ -743,8 +743,8 @@ The matrix multiplication of this polynomial ring operation can be written as:
 
 \begin{itemize}
  \item \todo{Different number of rows means different degree on the polynomial ring than a column means}
- \item \todo{How to find a composited polynomial of the wanted degree? How to rule this to have it standardised and no need to deal with it to advice on the decryption}
- \item \todo{How to find an invertible element $c(x)$? How to standardised to avoid extra information requirement to the decipher?}
+ \item \todo{How to choose a composited polynomial of the wanted degree? How to rule this to have it standardised and no need to deal with it to advice on the decryption}
+ \item \todo{How to choose an invertible element $c(x)$? How to standardised to avoid extra information requirement to the decipher?}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
