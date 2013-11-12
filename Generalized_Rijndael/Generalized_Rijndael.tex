@@ -9,6 +9,7 @@
 \usepackage{tikz}
 \usetikzlibrary{matrix}
 \usetikzlibrary{matrix,arrows,shapes}%,decorations.pathmorphing,snakes
+%\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 
 \pagestyle{headings}%page numbers
 
@@ -94,13 +95,7 @@ What gives the victory to the \rijndael\, was the good skills over software and 
 
 When the \rijndael\, was chosen as the AES, the report \cite{AES-report}, was highlighting those finalists over security and efficiency. As it is said in the report, all the finalists where tested over $32$ bits architectures knowing that sooner or later the $64$ bits will arrive (even the $128$ bits architectures are mention as a possibility). One of the special features mention about the \rijndael is it flexibility to support other sizes than the proposed, even they only thought in gaps of $32$ bits between those alternative block and key sizes. But it has a much bigger flexibility because other intermediate sizes can be also in the alternatives list. Is this \rijndael\, scalability the objective of this paper.
 
-Once mention the \rijndael\, candidacy to the AES and name the last contenders, at least the other finalists, there are also other algorithms published later. Usually the algorithms published have some settings that restricts the use to a certain set of block sizes (often a set of one element) and a set of key sizes (often a small number of possibilities). There is a group in the symmetric algorithms, called the \emph{lightweight block ciphers}, 
-
-\begin{itemize}
- \item \todo{Define what means \emph{lightweight block ciphers}}
-\end{itemize}
-
-Paper structure:
+\paragraph{Paper structure:}
 \begin{itemize}
  \item \todo{First of all introduce the maths behind the \rijndael\, in section \ref{sec:math}.}
  \item \todo{Design explanation in section \ref{sec:design} to explain the basic bricks and how they can be generalized in section \ref{sec:generalising}.}
