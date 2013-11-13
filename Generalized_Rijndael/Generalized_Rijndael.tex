@@ -77,7 +77,7 @@
 
 \begin{abstract}\footnote{Partially supported by grants MTM2010-21580-C02-01 (Spanish Ministerio de Ciencia e Innovaci\'on), 2009SGR-442 (Generalitat de Catalunya).}
 
-Why to generalize? The standard AES stablishes 3 key sizes and a unique block size, but starting from the original \rijndael\, there where 5 key sizes. This algorithm allows to adjust some parameters to changes those size restrictions maintaining the cryptographical properties because the mathamatical background remains intact. While the mathematics remains valid against the attacks, the brute force can be fought by a key size increase, together with a block size that follows the key size, or if necessary fit the information size (for example to avoid overheads in message passing). This generalization goes further than the lightweight ciphers because it can be in this category at the same time that can play with other levels.
+Why to generalize? The standard AES establishes 3 key sizes and a unique block size, but starting from the original \rijndael\, there where 5 key sizes. This algorithm allows to adjust some parameters to changes those size restrictions maintaining the cryptographical properties because the mathematical background remains intact. While the mathematics remains valid against the attacks, the brute force can be fought by a key size increase, together with a block size that follows the key size, or if necessary fit the information size (for example to avoid overheads in message passing). This generalization goes further than the lightweight ciphers because it can be in this category at the same time that can play with other levels.
 Another reason for the generalization is to analyse if there are other configurations that can take advantage of the $64$bit architectures, because the original \rijndael\, fits very well in $32$ bits.
 What can really do a generalization is to increase the live time of an algorithm like the \rijndael\,.
 
@@ -111,7 +111,7 @@ Before to enter in the design of the Rijndael schema is good to have a review ov
 \begin{equation}\label{eq:polynomialField} 
     \Fpn{2}{n}=\frac{\mathbb{F}_{2}[z]}{m(z)}
 \end{equation}
-Where the polynomial $m(z)$ is an irreductible with some given degree. As later will be used, for the notation of this degree we use $w$ -known as \emph{word size}- and has correspondence with the \rijndael\, schema of section \ref{sec:approach}.
+Where the polynomial $m(z)$ is an irreducible with some given degree. As later will be used, for the notation of this degree we use $w$ -known as \emph{word size}- and has correspondence with the \rijndael\, schema of section \ref{sec:approach}.
 
 This polynomial set has one operation, we can call it \emph{addition} that describes an structure of an Abelian group $(G,+)$:
 \begin{enumerate}
@@ -132,7 +132,7 @@ This is called a \emph{ring} $(R,+,*)$ as it is the basis for the operation of t
 
 In the case of when those involved operations are Abelian groups, and it is also satisfied the property that the second operation is distributive respect the first, then this structure becomes what is called a \emph{field} $(K,+,*)$.
 
-At this point is already clear the algebraic properties of the field described in equation \ref{eq:polynomialField}. But like this polynomial binary field uses an below a binary group, this field can be used as coefficients for an even above superstructure: a polynomial ring, where the coeficients are elements of the polynomial field:
+At this point is already clear the algebraic properties of the field described in equation \ref{eq:polynomialField}. But like this polynomial binary field uses an below a binary group, this field can be used as coefficients for an even above superstructure: a polynomial ring, where the coefficients are elements of the polynomial field:
 \begin{equation}\label{eq:polynomialRing}
     (\Fpn{2}{n})^l=\frac{\Fpn{2}{n}[x]}{l(x)}
 \end{equation}
@@ -157,7 +157,7 @@ Those basic mathematical bricks of the \rijndael\, algorithm is what gives to it
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Operate in a polynomial ring, with coeficients in a polynomial field}\label{sec:polynomialRing}
+\subsection{Operate in a polynomial ring, with coefficients in a polynomial field}\label{sec:polynomialRing}
 \begin{itemize}
 \item \todo{Pick two ``random'' elements of the polynomial ring of degree $4$, using the $l(x)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Like in the previous, pick this ``random'' elements to require reduction to get the result.}
  \item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
@@ -259,7 +259,7 @@ From the standardised \rijndael\,, $4$ rows per $4$ columns with words of $8$ bi
 \end{equation}
 This sets the block size of the $4\times4\times8=128$ bits, and each cell represents an element of the polynomial field described in section \ref{sec:math}. This representation gives a big simplicity, also because the order of the modulo (the irreducible polynomial $m(z)$ in equation \ref{eq:polynomialField}) corresponds with $8$ bits, the \emph{word size}, a Byte: basic brick of the current computation resources.
 
-Also the columns are used as one element representation of the polynomial ring also described in section \ref{sec:math}, the polynomial ring where the coeficients are elements of the mentioned polynomial field. Also the simplicity of this makes easy the operability because the chosen number of columns, $4$ (the degree of the reducible polynomial $l(x)$ in equation \ref{eq:polynomialRing}) that corresponds the 4 Bytes, 32 bits, the most extended architecture size at the time of the \emph{AES contest}.
+Also the columns are used as one element representation of the polynomial ring also described in section \ref{sec:math}, the polynomial ring where the coefficients are elements of the mentioned polynomial field. Also the simplicity of this makes easy the operability because the chosen number of columns, $4$ (the degree of the reducible polynomial $l(x)$ in equation \ref{eq:polynomialRing}) that corresponds the 4 Bytes, 32 bits, the most extended architecture size at the time of the \emph{AES contest}.
 
 Very smart, simple and versatile data representation.
 
@@ -396,7 +396,7 @@ This {\tt Rcon} can be pre-calculated and stored in a table or recursively gener
 \end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
-An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to untrust the algorithm. Also avoiding to use related keys, this attack would not apply.
+An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to distrust the algorithm. Also avoiding to use related keys, this attack would not apply.
 %FIXME:it may would be developed or rewritten better
 %FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
 
@@ -504,7 +504,7 @@ The first transformation (called $g$) is to compute the multiplicative inverse i
 
 Note that the inverse operation $g^{-1}$of the function $g$ is itself.
 
-Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreductible $m(z)$, in the original \rijndael\,: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
+Using the polynomial representation of the word on each cell of the state matrix (that is considering those elements of the word, as coefficients in the field \Fq{2} on a polynomial field where those polynomials are modulo an irreducible $m(z)$, in the original \rijndael\,: $m(z)=z^8+z^4+z^3+z+1$ with binary representation \texttt{0b100011011=0x11B}).
 
 The second transformation (called $f$) is an affine transformation over the polynomial field \Fpn{2}{w}. In the original Rijndael is (where $w=8$):
 \begin{equation}\label{eq:subBytes:affine}
@@ -607,7 +607,7 @@ The \emph{S-Box} can be build, then, from $S(z)=f(g(z))$ and the inverse $S^{-1}
 \subsubsection{How to build different SBoxes}\label{sec:sbox}
 
 % and how to build a new one with different parameters
-Using the same \emph{wordsize} there are two different things that can be changed: $b$ and $c$. The $c=$\texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpnm{4}{z}, over $16$ the field will be \Fpnm{{16}}{z}, and the subparameters of the affine transformation must also be set up.
+Using the same \emph{wordsize} there are two different things that can be changed: $b$ and $c$. The $c=$\texttt{0x63} and the product over the field of equation \ref{eq:subBytes:affine}. If the option is to use another wordsize this is the unique main parameter of the original Rijndael to set a different. With a wordsize of $4$ the operations will be defined over \Fpnm{4}{z}, over $16$ the field will be \Fpnm{{16}}{z}, and the sub-parameters of the affine transformation must also be set up.
 
 \begin{itemize}
  \item \todo{how to build new $S$ and $S^{-1}$ for $w\neq 8$.}
@@ -686,7 +686,7 @@ This would the most complicated step in the \rijndael\, under mathematical terms
 \begin{figure}[ht]
 \begin{center}
 \input{images/mixColumnsFigure.pgf}
-\caption{Diagram of the {\tt mixColumns()} operation over the polynomial ring with coeficients in a polynomial field. Invert the {\tt mixColumns()} is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
+\caption{Diagram of the {\tt mixColumns()} operation over the polynomial ring with coefficients in a polynomial field. Invert the {\tt mixColumns()} is operate with $c^{-1}(x)=d(x)$ in the polynomial ring}
 \label{fig:mixColumns}
 \end{center}
 \end{figure}
@@ -701,7 +701,7 @@ In the specification of the \rijndael\, schema \cite{Daemen01aes-ammended} is pr
 
 Then the fix polynomial element in the ring have set in the standard:
 $$c(x) = (z+1)x^3+(1)x^2+(1)x+(z)$$
-This is using the best notation to denote that the coefficients on the polynomial ring are elements of a polynomial field. The polynomial field have binary coefficients, then those polynomials can be shorted using a binary notation. Like $(z+1)=\texttt{0b11}=\texttt{0x3}$ and other like $(z^3+z+1)=\texttt{0b1011}=\texttt{0xB}$. Then this $c(x)$ can be shorted represented by: $c(x) = \texttt{0x3}x^3+\texttt{0x1}x^2+\texttt{0x1}x+\texttt{0x2}$. This polynomial element is coprime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the {\tt mixColumns()}: $c^{-1}(x) = \texttt{0xB}x^3+\texttt{0xD}x^2+\texttt{0x9}x+\texttt{0xE}=d(x)$.
+This is using the best notation to denote that the coefficients on the polynomial ring are elements of a polynomial field. The polynomial field have binary coefficients, then those polynomials can be shorted using a binary notation. Like $(z+1)=\texttt{0b11}=\texttt{0x3}$ and other like $(z^3+z+1)=\texttt{0b1011}=\texttt{0xB}$. Then this $c(x)$ can be shorted represented by: $c(x) = \texttt{0x3}x^3+\texttt{0x1}x^2+\texttt{0x1}x+\texttt{0x2}$. This polynomial element is co-prime to the modulo ($x^4+1$) and therefore has an inverse in the ring used to revert the {\tt mixColumns()}: $c^{-1}(x) = \texttt{0xB}x^3+\texttt{0xD}x^2+\texttt{0x9}x+\texttt{0xE}=d(x)$.
 
 The matrix multiplication of this polynomial ring operation can be written as:
 \begin{equation}\label{eq:MDS}
@@ -777,7 +777,7 @@ Even this is the first operation in in the \rijndael\, schema (review figure \re
 \begin{itemize}
     \item \todo{This paper has proposed a new way to use the \rijndael\,, but it is not the last word as never is said in cryptography.}
     \item \todo{The implications of the known attacks to the \rijndael\, has been studied in section \ref{sec:newSizes} in the sense that was studied the original algorithm, but it is has not yet review the degree to which will affect other attacks proposed over the time.}
-    \item \todo{This proposal, with the required calm and leisurely revision that cryptography needs, can be used to extend the live of this algorithm over the time like in asymmetric algorithms the increase of key size is used instead of discard completelly the algorithm. This as long as the maths behind keep valid.}
+    \item \todo{This proposal, with the required calm and leisurely revision that cryptography needs, can be used to extend the live of this algorithm over the time like in asymmetric algorithms the increase of key size is used instead of discard completely the algorithm. This as long as the maths behind keep valid.}
     \item \todo{Block encryption modes}
 \end{itemize}
 
