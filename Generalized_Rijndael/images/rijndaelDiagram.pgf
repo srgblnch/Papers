@@ -1,7 +1,7 @@
 % Graphic for TeX using PGF
 % Title: /home/serguei/src/Papers/Generalized_Rijndael/images/rijndaelDiagram.dia
 % Creator: Dia v0.97.2
-% CreationDate: Sun Aug 25 21:18:43 2013
+% CreationDate: Sat Nov 16 19:27:21 2013
 % For: serguei
 % \usepackage{tikz}
 % The following commands are not supported in PSTricks at present
@@ -18,10 +18,6 @@
 \pgfsetstrokecolor{dialinecolor}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-% setfont left to latex
-\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
-\pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (22.350000\du,2.600000\du){Rijdael Schematic};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (15.714800\du,12.969300\du)--(15.714800\du,14.869300\du)--(21.712300\du,14.869300\du)--(21.712300\du,12.969300\du)--cycle;
