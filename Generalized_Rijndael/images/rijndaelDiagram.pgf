@@ -31,7 +31,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.713550\du,14.114300\du){addRoundKey()};
+\node at (18.713550\du,14.114300\du){{\tt addRoundKey()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -89,7 +89,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.725000\du,18.195000\du){subBytes()};
+\node at (18.725000\du,18.195000\du){{\tt subBytes()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (16.386800\du,20.027100\du)--(16.386800\du,21.927100\du)--(21.031800\du,21.927100\du)--(21.031800\du,20.027100\du)--cycle;
@@ -103,7 +103,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.709300\du,21.172100\du){shiftRows()};
+\node at (18.709300\du,21.172100\du){{\tt shiftRows()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (15.980200\du,22.900000\du)--(15.980200\du,24.800000\du)--(21.542700\du,24.800000\du)--(21.542700\du,22.900000\du)--cycle;
@@ -117,7 +117,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.761450\du,24.045000\du){mixColumns()};
+\node at (18.761450\du,24.045000\du){{\tt mixColumns()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (15.766300\du,25.788600\du)--(15.766300\du,27.688600\du)--(21.763800\du,27.688600\du)--(21.763800\du,25.788600\du)--cycle;
@@ -131,7 +131,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.765050\du,26.933600\du){addRoundKey()};
+\node at (18.765050\du,26.933600\du){{\tt addRoundKey()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (15.882200\du,32.160000\du)--(15.882200\du,34.060000\du)--(21.832200\du,34.060000\du)--(21.832200\du,32.160000\du)--cycle;
@@ -145,7 +145,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.857200\du,33.305000\du){subBytes()};
+\node at (18.857200\du,33.305000\du){{\tt {\tt subBytes()}}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (16.535800\du,35.310000\du)--(16.535800\du,37.210000\du)--(21.180800\du,37.210000\du)--(21.180800\du,35.310000\du)--cycle;
@@ -159,7 +159,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.858300\du,36.455000\du){shiftRows()};
+\node at (18.858300\du,36.455000\du){{\tt shiftRows()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (15.855100\du,38.710000\du)--(15.855100\du,40.610000\du)--(21.852600\du,40.610000\du)--(21.852600\du,38.710000\du)--cycle;
@@ -173,7 +173,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (18.853850\du,39.855000\du){addRoundKey()};
+\node at (18.853850\du,39.855000\du){{\tt addRoundKey()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -291,7 +291,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (26.130750\du,14.106400\du){k\_0};
+\node at (26.130750\du,14.106400\du){$k_0$};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (24.741100\du,26.746400\du)--(24.741100\du,28.646400\du)--(26.936100\du,28.646400\du)--(26.936100\du,26.746400\du)--cycle;
@@ -305,7 +305,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (25.838600\du,27.891400\du){k\_i};
+\node at (25.838600\du,27.891400\du){$k_i$};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (25.123200\du,38.711400\du)--(25.123200\du,40.611400\du)--(27.138200\du,40.611400\du)--(27.138200\du,38.711400\du)--cycle;
@@ -319,7 +319,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (26.130700\du,39.856400\du){k\_f};
+\node at (26.130700\du,39.856400\du){$k_f$};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -376,7 +376,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (12.700000\du,29.600000\du){(n-1) Rounds};
+\node[anchor=west,rotate=-90] at (13.300000\du,19.600000\du){(n-1) Rounds};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -421,7 +421,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (33.038750\du,39.855000\du){addRoundKey()};
+\node at (33.038750\du,39.855000\du){{\tt addRoundKey()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -461,7 +461,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (32.996400\du,32.414300\du){invSubBytes()};
+\node at (32.996400\du,32.414300\du){{\tt invSubBytes()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -488,7 +488,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (32.992950\du,29.035700\du){addRoundKey()};
+\node at (32.992950\du,29.035700\du){{\tt addRoundKey()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -515,7 +515,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (33.000600\du,25.764300\du){invMixColumns()};
+\node at (33.000600\du,25.764300\du){{\tt invMixColumns()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -546,7 +546,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (35.450000\du,22.550000\du){(n-1) Rounds};
+\node[anchor=west,rotate=90] at (37.950000\du,32.550000\du){(n-1) Rounds};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (30.178000\du,34.419300\du)--(30.178000\du,36.319300\du)--(35.860500\du,36.319300\du)--(35.860500\du,34.419300\du)--cycle;
@@ -560,7 +560,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (33.019250\du,35.564300\du){invShiftRows()};
+\node at (33.019250\du,35.564300\du){{\tt invShiftRows()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (30.056300\du,18.932300\du)--(30.056300\du,20.832300\du)--(35.738800\du,20.832300\du)--(35.738800\du,18.932300\du)--cycle;
@@ -574,7 +574,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (32.897550\du,20.077300\du){invShiftRows()};
+\node at (32.897550\du,20.077300\du){{\tt invShiftRows()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
@@ -601,7 +601,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (32.881200\du,17.050800\du){invSubBytes()};
+\node at (32.881200\du,17.050800\du){{\tt invSubBytes()}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (29.890600\du,12.960000\du)--(29.890600\du,14.860000\du)--(35.888100\du,14.860000\du)--(35.888100\du,12.960000\du)--cycle;
@@ -615,7 +615,7 @@
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (32.889350\du,14.105000\du){addRoundKey()};
+\node at (32.889350\du,14.105000\du){{\tt addRoundKey()}};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetdash{}{0pt}
