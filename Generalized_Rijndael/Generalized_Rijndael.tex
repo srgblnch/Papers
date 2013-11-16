@@ -284,6 +284,8 @@ What \rijndael\, does as a PRP is find a way to reach the goal of perfect secrec
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Generalising the schema}\label{sec:generalising}
 
+This section has been divided in 6 parts. The first one about the \emph{key expansion} used in the \rijndael\, to generate the subkeys needed for the algorithm rounds. The second section tries to clarify why the algorithm has been set up with this number of rounds. And the next four are dedicated to review the maths behind each of the operations in the \rijndael\, from a more generic view than the used in the official, in order to understand the steps of the next sections.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{key expansion}\label{sec:keyExpansion}
 % define s Pseudo-Random Generator (PRG), What a Pseudo-Random Generator is?
@@ -376,7 +378,7 @@ With this figure seems to be easier to recognise this iterative algorithm, that 
 
 Each step finish with 3 \emph{xor} operations to catch together all the partials on this step generation. The \emph{xor} operation is the most important operation and is the most used in the lower level of the \rijndael\,. This is one of the bests characteristics of this algorithm.
 
-Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the line 5 of the algorithm \ref{alg:keyExpansion}, and two extra primitive arr called over certain columns (the ones multiple of the initial number of columns), the {\tt rotWord()} and the {\tt Rcon} (name used in the algorithm \ref{alg:keyExpansion} represented as $1^{i} \in\frac{\mathbb{F}_{2^{w}}[z]}{m(z)}$ in the figure \ref{fig:keyExpansionDiagram}), when the {\tt subBytes()} is called on each iteration. The effect of these different transformations on certain columns is propagated to the next columns on the subset because the input to build a new one uses the previous. But lets seen a bit what they do.
+Looking on the figure \ref{fig:keyExpansionDiagram} and corresponding to the line 5 of the algorithm \ref{alg:keyExpansion}, and two extra primitive arr called over certain columns (the ones multiple of the initial number of columns), the {\tt rotWord()} and the {\tt Rcon} (name used in the algorithm \ref{alg:keyExpansion} represented as $1^{i} \in\frac{\mathbb{F}_{2^{w}}[z]}{m(z)}$ in the figure \ref{fig:keyExpansionDiagram}), when the {\tt subBytes()} is called on each iteration. The effect of these different transformations on certain columns is propagated toel llibre tracta sobre una gent the next columns on the subset because the input to build a new one uses the previous. But lets seen a bit what they do.
 
 At this point we only need to know that the {\tt subBytes()} uses an \emph{SBox} and the other details are explained in section \ref{sec:subBytes}. The {\tt rotWord()} does a cyclic permutation of one step to the left. And the {\tt Rcon} best way to define it is the formulation in the figure \ref{fig:keyExpansionDiagram}, and more formally:
 \begin{equation}\label{eq:rcon}
@@ -426,6 +428,11 @@ $N_k = 8$ &    $14$   &    $14$   &    $14$   \\ \hline
 This function means that the number of rounds is the biggest number of columns between the block and the key, plus the security margin set as $6$.
 
 There is not theoretical method to stablish which is the good number of rounds, it is only an empirical attempt base on known attacks, As this paper tries to propose different sizes for the \rijndael, will be in section \ref{sec:parameterCombinations} about the parameter combinations where this number will be discussed.
+
+\begin{itemize}
+    \item \todo{Which is the contribution of each round to the confusion and diffusion?}
+    \item \todo{From the known cryptoanalysis, how can be set up a good number of rounds?}
+\end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -694,7 +701,7 @@ This would the most complicated step in the \rijndael\, under mathematical terms
 The inverse of this operation requires to inverse the polynomial $c(x)$ to do the same operation in the polynomial ring to reverse the column on the state matrix. As long as this $c(x)$ polynomial is an element of a ring, it must be chosen carefully because not all the elements in the ring are invertible.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
+\subsubsection{Speeding the polynomial ring product operation}\label{sec:improvePolynomialRingProduct}
 In section \ref{sec:polynomialRing} the operation between elements of this kind of polynomial ring that has coefficients in a binary polynomial field, has been explained. But there is an specific improvement of the \emph{product} operation that gives a valuable advantage to speed up this step of the process. 
 
 In the specification of the \rijndael\, schema \cite{Daemen01aes-ammended} is proposed the use of a circulant invertible matrix. In the {\tt mixColumns()} operation, is set one fix element of the ring to be operated with each of the columns of the state matrix (in the interpretation of the column where each cell is one coefficient of this polynomial).
