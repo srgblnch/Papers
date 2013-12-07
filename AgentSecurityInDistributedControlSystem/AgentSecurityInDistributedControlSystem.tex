@@ -11,7 +11,7 @@
 \usepackage{epsfig}
 \usepackage{algorithmic,algorithm}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
-
+\usepackage{tikz}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% VERSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{gitinfo}
@@ -358,7 +358,8 @@ The 8 transparencies shall be divided in 3 groups: the ones provided by the midd
 
 \paragraph{Transparencies provided by middleware:} The first group, starts with the \emph{access} transparency. It is because of the \corba\, common data types in the \emph{IDL} (Interface Definition Language) files that the data types are homogenized in a tango system. Forget if compiler set an \texttt{int} of 16 or 32 bits, a DevShort will have 16 every where and DevLong, 32. Next, \emph{Location} transparency is not supported by the middleware, every search for an agent (for example, by name) will require an access to a \tango-db, that one can see it as a '\emph{phone-book}' of agents and this is a \emph{centralized} weak point. Any issue on the database server makes you blind in the system. Even is the agents continue working you would be unable to see it, and the performance of the system decays when agents are trying to communicate with other agents.
 
-\paragraph{Transparencies provided by agent developer:} The second group of transparencies are the ones that depends on developer sensitivities. In this case, there is no supervision about if it supports it or not. The first transparency that depends on the developer of an specific \emph{DeviceServer} is the \emph{concurrency}. The way the specific devices does the job when an operation is requested to them, is only managed by the agent developer. From the code in \emph{SourceForge}\footnote{See \href{http://tango-ds.sourceforge.net/}{tango-ds.sf.net}}, there are more examples of agents that does not support concurrency than examples to follow in a new development. This is very related with the \emph{persistence} transparency, because again, the code to access an specialised hardware is embedded in the agent code. To often a user can not distinguish a hang agent than a hanged instrument. And again this links to the \emph{failure} transparency. In my humble opinion, the issue comes from a non-well undestood of \emph{extreme programming}\footnote{See \href{http://en.wikipedia.org/wiki/Extreme_programming}{Extreme programming} for further information} philosophy when there is no real time in code review and unit testing. Then too often, when a \emph{DeviceServer} is launched with the hardware not present, instead of a notification from the \emph{Device}, the situation is a premature death of the agent.
+\paragraph{Transparencies provided by agent developer:} The second group of transparencies are the ones that depends on developer sensitivities. In this case, there is no supervision about if it supports it or not. The first transparency that depends on the developer of an specific \emph{DeviceServer} is the \emph{concurrency}. The way the specific devices does the job when an operation is requested to them, is only managed by the agent developer. From the code in \emph{SourceForge}\footnote{See \href{http://tango-ds.sourceforge.net/}{tango-ds.sf.net}}, there are more examples of agents that does not support concurrency than examples to follow in a new development. This is very related with the \emph{persistence} transparency, because again, the code to access an specialised hardware is embedded in the agent code. To often a user can not distinguish a hang agent than a hanged instrument. And again this links to the \emph{failure} transparency. In my humble opinion, the issue comes from a non-well undestood 
+of \emph{extreme programming}\footnote{See \href{http://en.wikipedia.org/wiki/Extreme_programming}{Extreme programming} for further information} philosophy when there is no real time in code review and unit testing. Then too often, when a \emph{DeviceServer} is launched with the hardware not present, instead of a notification from the \emph{Device}, the situation is a premature death of the agent.
 
 \paragraph{Not supported transparencies:} And the third group are transparencies not supported at all. \emph{Migration}, \emph{relocation} and \emph{replication} are transparencies not supported by \tango. But despite a weakness it is a design choice. The agents cannot move their code from one machine to another while you use them. When a device is restarted, event in the same machine, it has lost any request you made to it. When \emph{migration} is not supported, \emph{relocation} even less. \emph{Replication} is a task to be made by humans and agents have not capabilities to decide anything about that.
 
@@ -406,7 +407,26 @@ Once said this points, it is time to go inside of the proposed solutions for \ta
 
 \subsection{Key Managing Infrastructure}
 
-\todo{...}
+\begin{enumerate}
+    \item Based on the figure \ref{fig:DistribKMI}:
+    \begin{itemize}
+        \item \todo{Any \tango\, installation will start with one machine that contains the \tango-db an an expert \emph{user interface} to access it.}
+        \item \todo{Any database access must be restricted to be set up using the \emph{middleware interface}. Other ways the system can become vulnerable.}
+        \item \todo{After that \emph{agents} can be introduced, and later on the \emph{user interfaces} will come to to the scene. The process of introduce new of these objects is key. A trusted machine must be who generates key-pairs.}
+        \item \todo{As it is a distributed system, more machines will be added to it. Any new machine must be trusted and securely append to the system.}
+        \item Given a \tango-db with a subset of the \emph{agents} in this database together with a subset of the \emph{user interfaces}, they will describe a \emph{Distributed \tango\, Application}.
+    \end{itemize}
+
+    \item \todo{Any \emph{actor} that wants to perform an action against the \emph{middleware} must be recognized by it. By \emph{actor} is understood all the agents involved in the system, together with all the user interfaces to the system, and also (and this is a new interesting part) the data base itself can be saw as another of the \emph{actors}.}
+\end{enumerate}
+
+\begin{figure}[ht]
+\begin{center}
+ \scalebox{0.65}{\input{imgs/DistributedSystemOrganization.pgf}}
+ \caption{Schematic of a DCS using \tango\, as example of the elements involved in a design of a KMI.}
+ \label{fig:DistribKMI}
+\end{center}
+\end{figure}
 
 \subsection{Use of \emph{Elliptic curves} for authentication and public key encryption}\label{sec:authentication}
 
