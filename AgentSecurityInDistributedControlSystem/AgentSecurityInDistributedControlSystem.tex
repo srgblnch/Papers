@@ -395,11 +395,11 @@ It is mandatory in any system that likes to practice security, not only to have 
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%
-\section{Solutions}\label{sec:solutions}
+\section{Proposed solutions}\label{sec:solutions}
 
 Although in security engineering section \ref{sec:SecurityEngineering} the pointed scenarios can lead to think in solutions like \emph{fingerprint readers} or \emph{iris scanners}, the purpose of this paper focus on agents interrelations inside networked computers, and is not about human access to the system. But once a user is authenticated it can act like another agent.
 
-What \tango\, needs as final product that introduces security, is to add to the URI naming an '{\tt s}' of secure in the protocol name like web had with ``\emph{http}{\tt s}'' or many other service like ``\emph{smtp}{\tt s}'', ``\emph{imap}{\tt s}'' or if need be, how the ``{\tt ssh}'' has replaced the ``\emph{telnet}''. There is not enough activating the {\tt OpenSSL} flag in the \omniorb\, compilation, there are levels of abstraction above \corba\, that must be covered. \todo{What about the \zmq security?}.
+What \tango\, needs as final product that introduces security, is to add to the URI naming an '{\tt s}' of secure in the protocol name like web had with ``\emph{http}{\tt s}'' or many other service like ``\emph{smtp}{\tt s}'', ``\emph{imap}{\tt s}'' or if need be, how the ``{\tt ssh}'' has replaced the ``\emph{telnet}''. There is not enough activating the {\tt OpenSSL} flag in the \omniorb\, compilation, there are levels of abstraction above \corba\, that must be covered. In the case of the \zmq, the security is under development with several RFCs: \cite{rfc24zmq}, \cite{rfc25zmq}, \cite{rfc27zmq} and \cite{rfc34zmq}; what means it is already more advanced than inside \tango.
 
 Another fact has been mention in section \ref{sec:SecurityEngineering} and it is about the issue that any agent can not be trusted if the machine where this agent runs can not be trusted. It does not have any sense to trust in an agent that is carrying a secret key that may have been compromised during an execution inside a machine that is out of our trust ring. But this can be necessary and perhaps can be helpful to have some '\emph{trust}' flag like in the \emph{OpenPGP} \emph{Public Key Infrastructure} (abbreviation PKI), but from the \emph{Certificate Authority} (abbreviation CA).
 
