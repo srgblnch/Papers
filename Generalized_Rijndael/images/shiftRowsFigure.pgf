@@ -18,6 +18,54 @@
                                     draw=gray!80,
                                     fill=red!20]
 
+\tikzstyle{s00}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!20]
+
+\tikzstyle{s01}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=red!20]
+
+\tikzstyle{s02}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!20]
+
+\tikzstyle{s03}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=orange!20]
+
+\tikzstyle{s10}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!30]
+
+\tikzstyle{s11}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=red!30]
+
+\tikzstyle{s12}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!30]
+
+\tikzstyle{s13}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=orange!30]
+
+\tikzstyle{s20}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!40]
+
+\tikzstyle{s21}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=red!40]
+
+\tikzstyle{s22}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!40]
+
+\tikzstyle{s23}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=orange!40]
+
+\tikzstyle{s30}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!50]
+
+\tikzstyle{s31}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=red!50]
+
+\tikzstyle{s32}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!50]
+
+\tikzstyle{s33}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=orange!50]
+
 \tikzset{
     oneloop/.style={decorate, 
         decoration={coil,amplitude=9pt, segment length=19pt}},
@@ -32,46 +80,46 @@
 
 
 %input state matrix
-\node (s00) at (\origin,\height) [statecell] {$\mathbf{s_{00}}$};
-\node (s01) at (\origin+1*\dist,\height) [statecell] {$\mathbf{s_{01}}$};
-\node (s02) at (\origin+2*\dist,\height) [statecell] {$\mathbf{s_{02}}$};
-\node (s03) at (\origin+3*\dist,\height) [statecell] {$\mathbf{s_{03}}$};
+\node (s00) at (\origin,\height) [s00] {$\mathbf{s_{00}}$};
+\node (s01) at (\origin+1*\dist,\height) [s01] {$\mathbf{s_{01}}$};
+\node (s02) at (\origin+2*\dist,\height) [s02] {$\mathbf{s_{02}}$};
+\node (s03) at (\origin+3*\dist,\height) [s03] {$\mathbf{s_{03}}$};
 
-\node (s10) at (\origin,\height-1*\dist) [statecell] {$\mathbf{s_{10}}$};
-\node (s11) at (\origin+1*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{11}}$};
-\node (s12) at (\origin+2*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{12}}$};
-\node (s13) at (\origin+3*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{13}}$};
+\node (s10) at (\origin,\height-1*\dist) [s10] {$\mathbf{s_{10}}$};
+\node (s11) at (\origin+1*\dist,\height-1*\dist) [s11] {$\mathbf{s_{11}}$};
+\node (s12) at (\origin+2*\dist,\height-1*\dist) [s12] {$\mathbf{s_{12}}$};
+\node (s13) at (\origin+3*\dist,\height-1*\dist) [s13] {$\mathbf{s_{13}}$};
 
-\node (s20) at (\origin,\height-2*\dist) [statecell] {$\mathbf{s_{20}}$};
-\node (s21) at (\origin+1*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{21}}$};
-\node (s22) at (\origin+2*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{22}}$};
-\node (s23) at (\origin+3*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{23}}$};
+\node (s20) at (\origin,\height-2*\dist) [s20] {$\mathbf{s_{20}}$};
+\node (s21) at (\origin+1*\dist,\height-2*\dist) [s21] {$\mathbf{s_{21}}$};
+\node (s22) at (\origin+2*\dist,\height-2*\dist) [s22] {$\mathbf{s_{22}}$};
+\node (s23) at (\origin+3*\dist,\height-2*\dist) [s23] {$\mathbf{s_{23}}$};
 
-\node (s30) at (\origin,\height-3*\dist) [statecell] {$\mathbf{s_{30}}$};
-\node (s31) at (\origin+1*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{31}}$};
-\node (s32) at (\origin+2*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{32}}$};
-\node (s33) at (\origin+3*\dist,\height-3*\dist) [statecell] {$\mathbf{s_{33}}$};
+\node (s30) at (\origin,\height-3*\dist) [s30] {$\mathbf{s_{30}}$};
+\node (s31) at (\origin+1*\dist,\height-3*\dist) [s31] {$\mathbf{s_{31}}$};
+\node (s32) at (\origin+2*\dist,\height-3*\dist) [s32] {$\mathbf{s_{32}}$};
+\node (s33) at (\origin+3*\dist,\height-3*\dist) [s33] {$\mathbf{s_{33}}$};
 
 %output state matrix
-\node (s00_) at (\dest,\height) [statecell] {$\mathbf{s_{00}}$};
-\node (s01_) at (\dest+1*\dist,\height) [statecell] {$\mathbf{s_{01}}$};
-\node (s02_) at (\dest+2*\dist,\height) [statecell] {$\mathbf{s_{02}}$};
-\node (s03_) at (\dest+3*\dist,\height) [statecell] {$\mathbf{s_{03}}$};
+\node (s00_) at (\dest,\height) [s00] {$\mathbf{s_{00}}$};
+\node (s01_) at (\dest+1*\dist,\height) [s01] {$\mathbf{s_{01}}$};
+\node (s02_) at (\dest+2*\dist,\height) [s02] {$\mathbf{s_{02}}$};
+\node (s03_) at (\dest+3*\dist,\height) [s03] {$\mathbf{s_{03}}$};
 
-\node (s11_) at (\dest,\height-1*\dist) [statecell] {$\mathbf{s_{11}}$};
-\node (s12_) at (\dest+1*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{12}}$};
-\node (s13_) at (\dest+2*\dist,\height-1*\dist) [statecell] {$\mathbf{s_{13}}$};
-\node (s10_) at (\dest+3*\dist,\height-1*\dist) [shiftedcell] {$\mathbf{s_{10}}$};
+\node (s11_) at (\dest,\height-1*\dist) [s11] {$\mathbf{s_{11}}$};
+\node (s12_) at (\dest+1*\dist,\height-1*\dist) [s12] {$\mathbf{s_{12}}$};
+\node (s13_) at (\dest+2*\dist,\height-1*\dist) [s13] {$\mathbf{s_{13}}$};
+\node (s10_) at (\dest+3*\dist,\height-1*\dist) [s10] {$\mathbf{s_{10}}$};
 
-\node (s22_) at (\dest,\height-2*\dist) [statecell] {$\mathbf{s_{22}}$};
-\node (s23_) at (\dest+1*\dist,\height-2*\dist) [statecell] {$\mathbf{s_{23}}$};
-\node (s20_) at (\dest+2*\dist,\height-2*\dist) [shiftedcell] {$\mathbf{s_{20}}$};
-\node (s21_) at (\dest+3*\dist,\height-2*\dist) [shiftedcell] {$\mathbf{s_{21}}$};
+\node (s22_) at (\dest,\height-2*\dist) [s22] {$\mathbf{s_{22}}$};
+\node (s23_) at (\dest+1*\dist,\height-2*\dist) [s23] {$\mathbf{s_{23}}$};
+\node (s20_) at (\dest+2*\dist,\height-2*\dist) [s20] {$\mathbf{s_{20}}$};
+\node (s21_) at (\dest+3*\dist,\height-2*\dist) [s21] {$\mathbf{s_{21}}$};
 
-\node (s33_) at (\dest,\height-3*\dist) [statecell] {$\mathbf{s_{33}}$};
-\node (s30_) at (\dest+1*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{30}}$};
-\node (s31_) at (\dest+2*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{31}}$};
-\node (s32_) at (\dest+3*\dist,\height-3*\dist) [shiftedcell] {$\mathbf{s_{32}}$};
+\node (s33_) at (\dest,\height-3*\dist) [s33] {$\mathbf{s_{33}}$};
+\node (s30_) at (\dest+1*\dist,\height-3*\dist) [s30] {$\mathbf{s_{30}}$};
+\node (s31_) at (\dest+2*\dist,\height-3*\dist) [s31] {$\mathbf{s_{31}}$};
+\node (s32_) at (\dest+3*\dist,\height-3*\dist) [s32] {$\mathbf{s_{32}}$};
 
 %arrows
 %\draw[->] (s03) -- (s00_);
