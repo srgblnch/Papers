@@ -359,7 +359,7 @@ Following definition \ref{def:unpredictability} about the unpredictability, the 
  \end{algorithmic}
 \end{algorithm}
 
-Back to the \emph{key expansion} of the \rijndael\,, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. Different but equivalent than the algorithm give in the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns}, and also the \emph{word size}.
+Back to the \emph{key expansion} of the \rijndael\,, and assuming that it is a \emph{secure PRG}, it is time to take a look on the algorithm itself to ``read'' what can be generalized because this is the purpose of this paper. The input of the algorithm \ref{alg:keyExpansion}\footnote{This algorithm has been taken from the version 2 of the AES proposal \cite{Daemen01aes-ammended} that is the same than becomes the NIST standard \cite{AES-FIPS}. Different but equivalent than the algorithm give in the book from the Rijndael authors \cite{Daemen:2002:DR:560131}, published later than the standard} takes, further than the seed key, the number of \emph{rounds}, the number of \emph{rows} and \emph{columns} (of the \emph{key}, do not confuse with the \emph{block} columns of the state matrix that has been represented in equation \ref{eq:stateMatrix}), and also the \emph{word size}.
 %TODO: check how it was the keyExpansion in the first proposal \cite{Daemen98aesproposal:}
 
 All those parameters are necessary to have in the output an expanded key large enough to use all the necessary subparts under each round, as it is shown in the figure \ref{fig:RijndaelDiagram}.
@@ -368,7 +368,7 @@ All those parameters are necessary to have in the output an expanded key large e
 \begin{figure}[ht]
 \begin{center}
 \input{images/keyExpansionFigure.pgf}
-\caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{PseudoRandomGenerator}, PRG \fixme{this figure has a mistake and is not corresponding with algorithm \ref{alg:keyExpansion}}}
+\caption{Block diagram of the iterative construction of the \emph{Rijndael Key Expansion} as a \emph{Pseudo Random Generator} (acronym PRG). }%\fixme{this figure has a mistake and is not corresponding with algorithm \ref{alg:keyExpansion}}}
 \label{fig:keyExpansionDiagram}
 \end{center}
 \end{figure}
@@ -391,19 +391,28 @@ with an initial value of $x(1)=2$ in \Fpn{2}{8}.
 
 This {\tt Rcon} can be pre-calculated and stored in a table or recursively generated in each of the rounds on the loop.
 
-\begin{itemize}
+In this paper we are trying to generalize the \rijndael\, parameters and from this set of parameters there is one that the \emph{AES} standard allow to play with: the number of columns. The \emph{block} size would be different than the \emph{key} size and they fit together because the algorithm allows to have different number of columns between these two sizes. But to have them different have implications for the subsequent application of the algorithm.
+
+Once the \emph{key} size is from the same size of the \emph{block} of information to be encrypted, the \emph{key expansion} algorithm \ref{alg:keyExpansion} will stretch the key in as many sub-keys as the number of \emph{rounds} plus $1$ to loop on. In the original case of the $128$ bit block and key, the original key will be stretch up to $1408$ bits, having a reuse rate of the original key $10$ times.
+
+In the other options of the \emph{AES}, with \emph{key} sizes of $192$ and $256$ bits having the block constant at $128$, those keys will be less stretched event if the number of \emph{rounds} are increased. Then from the $192$ case, the expansion will only pull the key $8$ times to have the needed $1536$ bits for the $12$ rounds; and in the $256$ case, the key will be pull $7$ times for the $1792$ bits needed on the $14$ rounds.
+
+%\begin{itemize}
  %\item \todo{subBytes()} is used here (then the SBox) but will be explained deeper in section \ref{sec:subBytes}.
  %\item \todo{rotWord()} should be explained here because is not used before and cannot be postponed because is not used later.
- \item \todo{What means to have different number of columns in the message than in the key matrix representation.}
+ %\item \todo{What means to have different number of columns in the message than in the key matrix representation.}
  %\item \todo{Explain what is the proposal of the Rcon matrix (or as a recursive function).}
-\end{itemize}
+%\end{itemize}
 
 % weakness in the key expansion of rijndael when key size != block size
-An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to distrust the algorithm. Also avoiding to use related keys, this attack would not apply.
+An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-256} and affects the cases where the size of the key is not the same than the size of the block. Even that, this attack requires up to $2^{99}$ pairs $(m,c)$ and $4$ \emph{related keys}\footnote{\emph{Related keys} means that the \emph{Hamming} distances (definition \ref{def:hammingDistance}) are very short and the difference between one key to another are a few bits that are flipped.}. The recover time of this attack is around $2^{99}$ that is still far away from a weakness to be worried to distrust the algorithm. Also avoiding to use related keys, this attack would not apply, then it is mandatory to avoid the use of related keys in generalized cases where the \emph{distance} between \emph{block} and \emph{key} sizes grows up.
+
 %FIXME:it may would be developed or rewritten better
 %FIXME: check better this article \cite{fullaes-192-256} to review if it have relation with use the number of columns of the block size instead of the key size.
 
-\todo{Explain why the key sizes of $192$ and $256$ bits have a weakness on the design of the key expansion}
+%\todo{Explain why the key sizes of $192$ and $256$ bits have a weakness on the design of the key expansion}
+
+\todo{How the distance between block and key size affect? There are some situations where this weakness does steps? Perhaps when key size is a multiple of the block?}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Rounds}\label{sec:rounds}
@@ -789,6 +798,7 @@ Even this is the first operation in in the \rijndael\, schema (review figure \re
     \item \todo{Block encryption modes}
 \end{itemize}
 
+%http://en.wikipedia.org/wiki/Related-key_attack
 
 % postponed for a later paper
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

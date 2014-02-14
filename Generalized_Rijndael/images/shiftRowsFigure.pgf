@@ -6,65 +6,65 @@
 \def\height{5}
 \def\dist{1}
 
-\tikzstyle{statecell}=[rectangle,
-                                    thick,
-                                    minimum size=\dist cm,
-                                    draw=gray!80,
-                                    fill=gray!20]
+%\tikzstyle{statecell}=[rectangle,
+%                                    thick,
+%                                    minimum size=\dist cm,
+%                                    draw=gray!80,
+%                                    fill=gray!20]
 
-\tikzstyle{shiftedcell}=[rectangle,
-                                    thick,
-                                    minimum size=\dist cm,
-                                    draw=gray!80,
-                                    fill=red!20]
+%\tikzstyle{shiftedcell}=[rectangle,
+%                                    thick,
+%                                    minimum size=\dist cm,
+%                                    draw=gray!80,
+%                                    fill=red!20]
 
 \tikzstyle{s00}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=blue!20]
-
-\tikzstyle{s01}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=red!20]
-
-\tikzstyle{s02}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=yellow!20]
-
-\tikzstyle{s03}=[rectangle,thick,minimum size=\dist cm,
                             draw=gray!80,fill=orange!20]
 
+\tikzstyle{s01}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!20]
+
+\tikzstyle{s02}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=green!20]
+
+\tikzstyle{s03}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!20]
+
 \tikzstyle{s10}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=blue!30]
-
-\tikzstyle{s11}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=red!30]
-
-\tikzstyle{s12}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=yellow!30]
-
-\tikzstyle{s13}=[rectangle,thick,minimum size=\dist cm,
                             draw=gray!80,fill=orange!30]
 
+\tikzstyle{s11}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!30]
+
+\tikzstyle{s12}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=green!30]
+
+\tikzstyle{s13}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!30]
+
 \tikzstyle{s20}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=blue!40]
-
-\tikzstyle{s21}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=red!40]
-
-\tikzstyle{s22}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=yellow!40]
-
-\tikzstyle{s23}=[rectangle,thick,minimum size=\dist cm,
                             draw=gray!80,fill=orange!40]
 
+\tikzstyle{s21}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=yellow!40]
+
+\tikzstyle{s22}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=green!40]
+
+\tikzstyle{s23}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=blue!40]
+
 \tikzstyle{s30}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=blue!50]
+                            draw=gray!80,fill=orange!50]
 
 \tikzstyle{s31}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=red!50]
-
-\tikzstyle{s32}=[rectangle,thick,minimum size=\dist cm,
                             draw=gray!80,fill=yellow!50]
 
+\tikzstyle{s32}=[rectangle,thick,minimum size=\dist cm,
+                            draw=gray!80,fill=green!50]
+
 \tikzstyle{s33}=[rectangle,thick,minimum size=\dist cm,
-                            draw=gray!80,fill=orange!50]
+                            draw=gray!80,fill=blue!50]
 
 \tikzset{
     oneloop/.style={decorate, 
