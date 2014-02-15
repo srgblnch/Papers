@@ -151,17 +151,101 @@ Those basic mathematical bricks of the \rijndael\, algorithm is what gives to it
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operation example over the polynomial field}\label{sec:polynomialField}
 
-\begin{itemize}
- \item \todo{Pick two ``random'' elements of the polynomial field of degree $8$, using the $m(z)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Choose this two ``random'' elements to have a result bigger than $m(z)$ that requires the reduction.}
- \item \todo{Explain that in the lower level the addition operation can be set as a bitwise \emph{xor} of the binary representation of the polynomial.}
-\end{itemize}
+%\begin{itemize}
+ %\item \todo{Pick two ``random'' elements of the polynomial field of degree $8$, using the $m(z)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Choose this two ``random'' elements to have a result bigger than $m(z)$ that requires the reduction.}
+ %\item \todo{Explain that in the lower level the addition operation can be set as a bitwise \emph{xor} of the binary representation of the polynomial.}
+%\end{itemize}
+
+To be used as an example, the parameters will be set up to be the same than the standardised \rijndael. The polynomial finite field will be $\Fpn{2}{8}$ where, from equation \ref{eq:polynomialField} $n=8$ and $m(z)=z^8+z^4+z^3+z+1$. For both operation in the field, the same ``random'' elements will be used:
+
+\begin{equation}\label{eq:randomPolynomialField}
+ \begin{tabular}{l}
+  $a(z), b(z) \in_R \Fpn{2}{8}$\\
+  $a(z)=z^7+z^6+z^5+z^3+z$\\
+  $b(z)=z^6+z^3+z^2+z+1$\\
+ \end{tabular}
+\end{equation}
+
+\paragraph*{Polynomial Field Addition:}
+
+\begin{equation}
+ s(z)=a(z)+b(z) \Leftrightarrow c_i = a_i + b_i, 0\leqslant i < n
+\end{equation}
+
+Where this coefficient addition is an operation in the field $\mathbb{F}_{2}$ and corresponds to the very basic \emph{xor}.
+
+\begin{equation}
+ \begin{tabular}{rrrrrrrrrrrrr}
+      &$z^7$&$+z^6$&$+z^5$&      &$+z^3$&      &$+z$&    &$=a(z)$\\
+   $+$&     &$ z^6$&      &      &$+z^3$&$+z^2$&$+z$&$+1$&$=b(z)$\\
+   \hline
+      &$z^7$&      &$+z^5$&      &      &$+z^2$&    &$+1$&$=s(z)$\\
+ \end{tabular}
+\end{equation}
+
+$s(z)=z^7+z^5+z^2+1$
+
+\paragraph*{Polynomial Field Product:}
+
+\begin{equation}
+ r(z)=a(z)\cdot b(z) \Leftrightarrow r(z) \equiv a(z) \times b(z) \, (mod\,m(z))
+\end{equation}
+
+\begin{equation}
+  \begin{tabular}{rrrrrrrrrrrrrrrr}
+  &&&&&&        &$z^7$&$+z^6$&$+z^5$&      &$+z^3$&      &$+z$&    &$=a(z)$\\
+  &&&&&&$\times$&     &$ z^6$&      &      &$+z^3$&$+z^2$&$+z$&$+1$&$=b(z)$\\
+  \hline
+   $z^{13}$&$+z^{12}$&$+z^{11}$&$+z^{10}$&$+z^9$&$+z^8$&     &$+z^6$&      &      &      &$+z^2$&$+z$&    &    &$=p(z)$\\
+ \end{tabular}
+\end{equation}
+
+\fixme{This tabular view is not cleaner than lineal without the detail within the product}
+
+Then \emph{reduce} this $p(z)$ as \emph{modulo} $m(z)$
+
+\begin{equation}
+ \begin{tabular}{lrl}
+  $p(z)=$&$q(z)\cdot m(z)$&$+r(z)$\\
+  $p(z)=$&$(z^5+z^4+z^3+z^2+1)\cdot m(z)$&$+(z^5+z^4+z^3+1)$\\
+ \end{tabular}
+\end{equation}
+
+\fixme{Perhaps this remainder reduction is not clean enough and would be better to have the division details in here.}
+
+$r(z)=z^5+z^4+z^3+1$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Operate in a polynomial ring, with coefficients in a polynomial field}\label{sec:polynomialRing}
-\begin{itemize}
-\item \todo{Pick two ``random'' elements of the polynomial ring of degree $4$, using the $l(x)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Like in the previous, pick this ``random'' elements to require reduction to get the result.}
- \item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
-\end{itemize}
+%\begin{itemize}
+ %\item \todo{Pick two ``random'' elements of the polynomial ring of degree $4$, using the $l(x)$ of the original \rijndael\,, and show their possible representations and operations like sum and product. (specially with the modular reduction). Like in the previous, pick this ``random'' elements to require reduction to get the result.}
+ %\item \todo{Addition operation is not used, only the product (and don't forget it is not commutative)}.
+%\end{itemize}
+
+A similar procedure is used as an example of how elements in a polynomial ring with coefficients in a polynomial field can be operated. For simplicity only the product operation will be described, because the addition is not used within the \rijndael\,. And apart from that, one have the remember that this product operation is \emph{not commutative} as this is a ring. Like before the set up parameters are taken to be the same than the standard \rijndael, where $l(x)=x^4+1$.
+
+Start taking two ``random'' elements\footnote{As they are examples, the \emph{random} means simplicity and the coefficients has been chosen to have only 2 non-zero \emph{sub}coefficients.} from the polynomial ring:
+
+\begin{equation}\label{eq:randomPolynomialRing}
+ \begin{tabular}{rllll}
+  $\alpha(x),\beta(x)$&$ \in_R (\Fpn{2}{8})^l$&&\\
+  $\alpha(x)=$&$(z^7+z^5)*x^3$&$+(z^7+z^3)*x^2$&$+(z^7+z^6)*x$&$+(z^7+z^4)$\\
+  $\beta(x)=$ &$(z^6+z^4)*x^3$&$+(z^5+z^4)*x^2$&$+(z^4+z^1)*x$&$+(z^7+z^3)$\\
+ \end{tabular}
+\end{equation}
+
+If $l(x)$ divides $\beta(x)$ this element will not have an inverse and the operation will not be possible to undo.
+
+\begin{equation}
+ \rho(x)=\alpha(x)\cdot \beta(x) \Leftrightarrow \rho(x) \equiv \alpha(x) \times \beta(x) \, (mod\,l(x))
+\end{equation}
+
+\begin{equation}
+ \alpha(x)*\beta(x)=(z^5 + z^4)*x^3 + (z^7 + z^6 + z^4)*x^2 + (z^6 + z^5 + z^4 + z^3 + z^2 +
+z + 1)*x + z^7 + z^5 + 1
+\end{equation}
+
+\fixme{This subsection is not clear at all. It must be refactored. Perhaps move the hexadecimal representation explanation here}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Linear Codes}\label{sec:LinearCodes}
