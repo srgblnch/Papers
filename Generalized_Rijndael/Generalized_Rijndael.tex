@@ -538,31 +538,37 @@ An attack to the \emph{PRG} of the Rijndael is described in \cite{fullaes-192-25
 \subsection{Rounds}\label{sec:rounds}
 % why n rounds and not more, not less?
 
-In the AES proposal of the Rijndael \cite{Daemen01aes-ammended} (section 4.1) the number of rounds is described as a function of the block and the key length, followed by the table:
+In the book about the design of this algorithm \cite{Daemen:2002:DR:560131}, specially section 3.5 there is a summary table describing the number of rounds as a function of the key length:
+
 \begin{equation}\label{tab:nrounds}
 %\begin{center}
-\begin{tabular}{|c||c|c|c|}
+\begin{tabular}{|c||c|c|c|c|c|}
 \hline
-$N_r$     & $N_b = 4$ & $N_b = 6$ & $N_b = 8$ \\ \hline\hline
-$N_k = 4$ &    $10$   &    $12$   &    $14$   \\ \hline
-$N_k = 6$ &    $12$   &    $12$   &    $14$   \\ \hline
-$N_k = 8$ &    $14$   &    $14$   &    $14$   \\ \hline
+$N_r$     & $N_b = 4$ & $N_b = 5$ & $N_b = 6$ & $N_b = 7$ & $N_b = 8$ \\ \hline\hline
+$N_k = 4$ &    $10$   &    $11$   &    $12$   &    $13$   &    $14$   \\ \hline
+$N_k = 5$ &    $11$   &    $11$   &    $12$   &    $13$   &    $14$   \\ \hline
+$N_k = 6$ &    $12$   &    $12$   &    $12$   &    $13$   &    $14$   \\ \hline
+$N_k = 7$ &    $13$   &    $13$   &    $13$   &    $13$   &    $14$   \\ \hline
+$N_k = 8$ &    $14$   &    $14$   &    $14$   &    $14$   &    $14$   \\ \hline
 \end{tabular}
 %\end{center}
 \end{equation}
 
- But is in section 7.6 where is said that this number has been determined by looking in to the most efficient attacks (known at that time) and adding a security margin. That is improved with in section 12.1, where the number of rounds is described by a function:
+In the AES proposal of the Rijndael \cite{Daemen01aes-ammended} (section 4.1) this table is simplified to include only the sizes for the standard. But continuing to the section 7.6, there is an explanation about how these numbers are chosen. By looking in to the most efficient attacks (known at the time of those publications) and adding a security margin. Section 12.1 improves this description setting according to the function:
 \begin{equation}\label{eq:nrounds}
  N_r = max(N_k,N_b)+6
 \end{equation}
-This function means that the number of rounds is the biggest number of columns between the block and the key, plus the security margin set as $6$.
+This function means that the number of rounds is the biggest number of columns between the block and the key, plus the security margin set as $6$. With the basic configuration of the \rijndael, those $N_b$ and $N_k$ steps means steps of $32$ bits, and can be summarized as each increase of $32$ bits (or decrease) adds (or reduces) on round.
 
-There is not theoretical method to stablish which is the good number of rounds, it is only an empirical attempt base on known attacks, As this paper tries to propose different sizes for the \rijndael, will be in section \ref{sec:parameterCombinations} about the parameter combinations where this number will be discussed.
+Although this formula, there is no theoretical method to stablish which is the good number of rounds. This seems to be only an empirical approach based on the known attacks. As this paper tries to propose different sizes for the \rijndael, will be in section \ref{sec:parameterCombinations} about the parameter combinations where this number will be discussed.
+
+Extrapolate a discrete section of parameter choice outside its boundaries would be a mistake because what can be true inside the region may not still valid outside it. Back to \cite{Daemen:2002:DR:560131}, two rounds of the \rijndael\, provides 'full diffusion', that is to say '\emph{every state bit depends on all the other state bits values from 2 rounds a go}' or in other words, change one bit on the origin will produce an effect on all the state bits. Then this equation \ref{eq:nrounds} can be extended to require $4$ rounds as a minimum for a 'full diffusion step' at the beginning and at the end of the cipher, but this is absorbed by the $6$ added.
 
 \begin{itemize}
-    \item \todo{Which is the contribution of each round to the confusion and diffusion?}
+    \item \todo{In the original \rijndael, two rounds provides full diffusion, is this still valid changing those sizes?}
     \item \todo{From the known cryptoanalysis, how can be set up a good number of rounds?}
 \end{itemize}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
